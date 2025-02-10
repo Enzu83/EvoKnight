@@ -272,6 +272,9 @@ position = Vector2(317, -31)
 [node name="star2" parent="Stars" instance=ExtResource("4_xu4hh")]
 position = Vector2(-203, -55)
 
+[node name="star3" parent="Stars" instance=ExtResource("4_xu4hh")]
+position = Vector2(0, -108)
+
 [node name="Platforms" type="Node" parent="."]
 
 [node name="platform" parent="Platforms" instance=ExtResource("3_iirao")]
@@ -289,7 +292,7 @@ autoplay = "move"
 [node name="Enemies" type="Node" parent="."]
 
 [node name="bat" parent="Enemies" instance=ExtResource("6_tareb")]
-position = Vector2(-132, -19)
+position = Vector2(-165, -2)
 
 [node name="KillZone" parent="." instance=ExtResource("8_52dha")]
 position = Vector2(59, 71)

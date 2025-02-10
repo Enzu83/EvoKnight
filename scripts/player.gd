@@ -30,6 +30,10 @@ func handle_movement() -> void:
 		velocity.y = JUMP_VELOCITY
 		jumps_left -= 1
 		jump_sound.play()
+		
+		# restart animation
+		animated_sprite.stop()
+		animated_sprite.play("jump")
 
 	# Handle movements.
 	direction = Input.get_axis("left", "right")
@@ -43,19 +47,14 @@ func handle_flip_h() -> void:
 func handle_basic_slash() -> void:
 	is_attacking = basic_slash.active
 	if Input.is_action_just_pressed("basic_slash") and not is_attacking:
-		var orientation := ""
-		
 		if Input.is_action_pressed("up"):
-			orientation = "up"
-			print("up")
+			basic_slash.start("up")
 		elif Input.is_action_pressed("down"):
-			orientation = "down"
+			basic_slash.start("down")
 		elif animated_sprite.flip_h:
-			orientation = "left"
+			basic_slash.start("left")
 		else:
-			orientation = "right"
-			
-		basic_slash.start(orientation)
+			basic_slash.start("right")
 
 func handle_velocity(delta: float) -> void:
 	var speed_force := SPEED # usual speed
@@ -83,6 +82,7 @@ func animate() -> void:
 			if animated_sprite.animation != "fall":
 				animated_sprite.play("fall")
 		else:
+			# Need to restart animation for jumping in mid-air
 			if animated_sprite.animation != "jump":
 				animated_sprite.play("jump")
 	else:

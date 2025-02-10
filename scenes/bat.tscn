@@ -1,40 +1,112 @@
-[gd_scene load_steps=12 format=3 uid="uid://cf8j7ywt5hk2k"]
+[gd_scene load_steps=23 format=3 uid="uid://cf8j7ywt5hk2k"]
 
 [ext_resource type="Texture2D" uid="uid://tsbfh5vqxi7w" path="res://assets/sprites/chars/spr_bat.png" id="1_7l1al"]
 [ext_resource type="Script" path="res://scripts/bat.gd" id="1_ttpqr"]
 [ext_resource type="AudioStream" uid="uid://ddualpt1elkrs" path="res://assets/sfx/snd_bat_hurt.wav" id="3_k27jp"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_luhtb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjvva"]
 atlas = ExtResource("1_7l1al")
 region = Rect2(0, 128, 48, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y2d5r"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_afck5"]
 atlas = ExtResource("1_7l1al")
 region = Rect2(48, 128, 48, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6r8b6"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_l80vy"]
 atlas = ExtResource("1_7l1al")
 region = Rect2(96, 128, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ax7l"]
+atlas = ExtResource("1_7l1al")
+region = Rect2(144, 128, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ol3nw"]
+atlas = ExtResource("1_7l1al")
+region = Rect2(192, 128, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_crmjb"]
+atlas = ExtResource("1_7l1al")
+region = Rect2(240, 128, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cti3u"]
+atlas = ExtResource("1_7l1al")
+region = Rect2(288, 128, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpk8f"]
+atlas = ExtResource("1_7l1al")
+region = Rect2(336, 128, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1nqc"]
+atlas = ExtResource("1_7l1al")
+region = Rect2(384, 128, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yft4w"]
+atlas = ExtResource("1_7l1al")
+region = Rect2(432, 128, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awvqg"]
+atlas = ExtResource("1_7l1al")
+region = Rect2(0, 96, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adk73"]
+atlas = ExtResource("1_7l1al")
+region = Rect2(48, 96, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rhdwr"]
+atlas = ExtResource("1_7l1al")
+region = Rect2(96, 96, 48, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tq2ml"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_luhtb")
+"texture": SubResource("AtlasTexture_cjvva")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_y2d5r")
+"texture": SubResource("AtlasTexture_afck5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6r8b6")
+"texture": SubResource("AtlasTexture_l80vy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ax7l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ol3nw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_crmjb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cti3u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dpk8f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1nqc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yft4w")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awvqg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adk73")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rhdwr")
 }],
 "loop": true,
 "name": &"idle",
-"speed": 15.0
+"speed": 10.0
 }]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_a3rgj"]
-radius = 6.32456
 
 [sub_resource type="Animation" id="Animation_5pl8n"]
 length = 0.001
@@ -53,7 +125,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/path = NodePath("Hurttbox:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -93,7 +165,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/path = NodePath("Hurttbox:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -135,28 +207,25 @@ _data = {
 "death": SubResource("Animation_0arq5")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_6m1gi"]
+radius = 121.004
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a3rgj"]
+radius = 6.32456
+
 [node name="bat" type="Area2D" groups=["enemies", "players"]]
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_ttpqr")
 
+[node name="ChaseCooldown" type="Timer" parent="."]
+wait_time = 0.5
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_tq2ml")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.143562
-
-[node name="RayCastRight" type="RayCast2D" parent="."]
-position = Vector2(0, 3)
-target_position = Vector2(12, 0)
-
-[node name="RayCastLeft" type="RayCast2D" parent="."]
-position = Vector2(0, 3)
-target_position = Vector2(-12, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1.19209e-07, 3)
-shape = SubResource("CircleShape2D_a3rgj")
+frame_progress = 0.55245
 
 [node name="HurtSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_k27jp")
@@ -166,4 +235,18 @@ libraries = {
 "": SubResource("AnimationLibrary_fw0lg")
 }
 
+[node name="Detector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="DetectionRange" type="CollisionShape2D" parent="Detector"]
+shape = SubResource("CircleShape2D_6m1gi")
+
+[node name="Hurttbox" type="CollisionShape2D" parent="."]
+position = Vector2(1.19209e-07, 3)
+shape = SubResource("CircleShape2D_a3rgj")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="ChaseCooldown" to="." method="_on_chase_cooldown_timeout"]
+[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]
+[connection signal="body_exited" from="Detector" to="." method="_on_detector_body_exited"]
