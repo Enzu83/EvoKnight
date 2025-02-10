@@ -4,7 +4,6 @@ const OFFSET = 10
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var cooldown: Timer = $Cooldown
-@onready var slash_sound: AudioStreamPlayer = $SlashSound
 
 var active: bool = false
 
@@ -16,10 +15,9 @@ func start(orientation: String) -> void:
 	active = true
 	cooldown.start()
 	animation_player.play(orientation)
-	slash_sound.play()
 
 func _on_cooldown_timeout() -> void:
 	reset()
 
-func _on_body_entered(body: Node2D) -> void:
-	body.hurt()
+func _on_area_entered(area: Area2D) -> void:
+	area.hurt()

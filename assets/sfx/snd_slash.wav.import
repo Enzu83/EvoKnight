@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://4hbwekryavdg"
-path="res://.godot/imported/cherry_hurt.wav-dd86b0aafd150d5a42c9b13bcdc4dc9d.sample"
+uid="uid://cijbm8cl0rqu6"
+path="res://.godot/imported/snd_slash.wav-686d95abfc6baa69e48485ad9e242777.sample"
 
 [deps]
 
-source_file="res://assets/sfx/cherry_hurt.wav"
-dest_files=["res://.godot/imported/cherry_hurt.wav-dd86b0aafd150d5a42c9b13bcdc4dc9d.sample"]
+source_file="res://assets/sfx/snd_slash.wav"
+dest_files=["res://.godot/imported/snd_slash.wav-686d95abfc6baa69e48485ad9e242777.sample"]
 
 [params]
 

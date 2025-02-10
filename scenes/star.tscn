@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://7g8lw8o3aenr"]
 
 [ext_resource type="Script" path="res://scripts/star.gd" id="1_iieke"]
-[ext_resource type="Texture2D" uid="uid://hpjnmb1knvbo" path="res://assets/sprites/items/star.png" id="1_sd4e5"]
-[ext_resource type="AudioStream" uid="uid://dsv02menelc4n" path="res://assets/sfx/pick_star.wav" id="3_esb3b"]
+[ext_resource type="Texture2D" uid="uid://hpjnmb1knvbo" path="res://assets/sprites/items/spr_star.png" id="1_sd4e5"]
+[ext_resource type="AudioStream" uid="uid://dsv02menelc4n" path="res://assets/sfx/snd_pick_star.wav" id="3_esb3b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dl5l4"]
 radius = 5.0

@@ -13,8 +13,9 @@ const MAX_JUMPS = 2 # Multiple jumps
 @onready var jump_sound: AudioStreamPlayer = $JumpSound
 
 var fainted := false
-var direction := 0
+var direction : float
 var jumps_left := MAX_JUMPS
+var is_attacking := false
 
 func handle_movement() -> void:
 	# Restore jumps if grounded.
@@ -25,7 +26,7 @@ func handle_movement() -> void:
 		jumps_left = MAX_JUMPS-1
 	
 	# Jump if there are jumps left
-	if Input.is_action_just_pressed("jump") and jumps_left > 0:
+	if Input.is_action_just_pressed("jump") and jumps_left > 0 and not is_attacking:
 		velocity.y = JUMP_VELOCITY
 		jumps_left -= 1
 		jump_sound.play()
@@ -39,20 +40,16 @@ func handle_flip_h() -> void:
 	elif direction < 0:
 		animated_sprite.flip_h = true
 
-func handle_basic_slash() -> void:	
-	if Input.is_action_just_pressed("basic_slash") and not basic_slash.active:
+func handle_basic_slash() -> void:
+	is_attacking = basic_slash.active
+	if Input.is_action_just_pressed("basic_slash") and not is_attacking:
 		var orientation := ""
 		
-		if Input.is_action_just_pressed("up"):
+		if Input.is_action_pressed("up"):
 			orientation = "up"
-		elif Input.is_action_just_pressed("down"):
+			print("up")
+		elif Input.is_action_pressed("down"):
 			orientation = "down"
-		elif Input.is_action_just_pressed("left"):
-			orientation = "left"
-		elif Input.is_action_just_pressed("right"):
-			orientation = "right"
-	
-		# Default direction
 		elif animated_sprite.flip_h:
 			orientation = "left"
 		else:
@@ -64,7 +61,7 @@ func handle_velocity(delta: float) -> void:
 	var speed_force := SPEED # usual speed
 	
 	# move slower if the player is attacking
-	if basic_slash.active:
+	if is_attacking:
 		speed_force *= 0.7
 	
 	if direction:
@@ -98,13 +95,12 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# handle player's actions if they are not defeated
 	if not fainted:
+		handle_basic_slash() # attack
 		handle_movement() # left, right and jump
 		
 		# flip sprite horizontally if the player is not attacking
-		if not basic_slash.active:
+		if not is_attacking:
 			handle_flip_h()
-		
-		handle_basic_slash() # attack
 	else:
 		direction = 0
 	
@@ -113,6 +109,9 @@ func _physics_process(delta: float) -> void:
 
 	animate()
 	move_and_slide()
+	
+	if Input.is_action_just_pressed("up"):
+		print("up")
 
 func hurt() -> void:
 	if not fainted:

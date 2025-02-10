@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bltntevtakqwm"
-path="res://.godot/imported/BTmap.png-1c094132ee44a50bfcc996b0851e6107.ctex"
+uid="uid://yx6p3eyombnl"
+path="res://.godot/imported/spr_cherry.png-952bdd286f04260375256ae4f02623ff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/platforms/BTmap.png"
-dest_files=["res://.godot/imported/BTmap.png-1c094132ee44a50bfcc996b0851e6107.ctex"]
+source_file="res://assets/sprites/chars/spr_cherry.png"
+dest_files=["res://.godot/imported/spr_cherry.png-952bdd286f04260375256ae4f02623ff.ctex"]
 
 [params]
 

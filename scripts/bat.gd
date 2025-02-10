@@ -6,6 +6,7 @@ var direction := 1
 @onready var ray_cast_right: RayCast2D = $RayCastRight
 @onready var ray_cast_left: RayCast2D = $RayCastLeft
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -22,7 +23,7 @@ func _process(delta: float) -> void:
 	position.x += direction * SPEED * delta
 
 func _on_body_entered(body: Node2D) -> void:
-	body.hurt()
+	body.hurt() # hurt the player
 
 func hurt() -> void:
-	queue_free()
+	animation_player.play("death")
