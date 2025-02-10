@@ -1,7 +1,6 @@
 extends Node2D
 
 const SPEED = 70
-
 var direction = 1
 
 @onready var ray_cast_right: RayCast2D = $RayCastRight
@@ -19,3 +18,5 @@ func _process(delta: float) -> void:
 	
 	position.x += direction * SPEED * delta
 	
+func _on_body_entered(body: Node2D) -> void:
+	queue_free()

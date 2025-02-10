@@ -1,5 +1,7 @@
 extends Area2D
 
+const OFFSET = 10
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var cooldown: Timer = $Cooldown
 
@@ -9,23 +11,9 @@ func reset() -> void:
 	animation_player.play("RESET")
 	active = false
 
-func start(direction: int) -> void:
-	active = true
+func start(orientation: String) -> void:
 	cooldown.start()
-	
-	if Input.is_action_just_pressed("up"):
-		animation_player.play("up")
-	elif Input.is_action_just_pressed("down"):
-		animation_player.play("down")
-	elif Input.is_action_just_pressed("left"):
-		animation_player.play("left")
-	elif Input.is_action_just_pressed("right"):
-		animation_player.play("right")
-	# Default direction
-	elif direction > 0:
-		animation_player.play("right")
-	else:
-		animation_player.play("left")
+	animation_player.play(orientation)
 
-func _on_timer_timeout() -> void:
+func _on_cooldown_timeout() -> void:
 	reset()

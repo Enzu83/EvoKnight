@@ -213,3 +213,5 @@ position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_4hr24")
 
 [node name="BasicSlash" parent="." instance=ExtResource("3_bjkct")]
+z_index = 1
+position = Vector2(0, -11)
