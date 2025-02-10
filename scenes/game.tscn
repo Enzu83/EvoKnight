@@ -295,5 +295,7 @@ libraries = {
 }
 autoplay = "move"
 
-[node name="bat" parent="." instance=ExtResource("6_tareb")]
+[node name="Enemies" type="Node" parent="."]
+
+[node name="bat" parent="Enemies" instance=ExtResource("6_tareb")]
 position = Vector2(-134, -19)

@@ -8,6 +8,7 @@ func _on_body_entered(body: Node2D) -> void:
 		death_sound.play()
 		body.get_node("AnimatedSprite2D").play("faint")
 		body.fainted = true
+		body.velocity.y = 0
 		timer.start()
 	
 
