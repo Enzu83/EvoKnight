@@ -7,29 +7,30 @@
 ## Game features
 
 - Stats
-	- HP
-	- Strength
-	- Mana
-	- EXP
+	- [ ] HP
+	- [ ] Strength
+	- [ ] Mana
+	- [ ] EXP
 
 - Abilities
-	- Double Jump
-	- Basic Slash (4-directions)
-	- Dash
-	- Magic Slash (Left/Right)
+	- [x] Double Jump
+	- [x] Basic Slash (4-directions)
+	- [ ] Dash
+	- [ ] Magic Slash (Left/Right)
 
 - Enemies
-	- Flying mage
-	- Grounded spiky enemy
-	- Boss with similar abilities
+	- [x] Bat
+	- [ ] Flying mage
+	- [ ] Grounded spiky enemy
+	- [ ] Boss with similar abilities
 
 ## Controls (AZERTY Keyboard)
 
 - Left/Right: movement
 - SPACE: Jump
-- A: Basic Slash (Not implemented yet)
-- Z: Dash (Not implemented yet)
-- E: Magic Slash (Not implemented yet)
+- A: Basic Slash
+- Z: Dash
+- E: Magic Slash
 
 ## Resources
 
