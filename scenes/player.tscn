@@ -1,9 +1,10 @@
-[gd_scene load_steps=30 format=3 uid="uid://dwitea1wpbdjp"]
+[gd_scene load_steps=37 format=3 uid="uid://dwitea1wpbdjp"]
 
 [ext_resource type="Texture2D" uid="uid://yx6p3eyombnl" path="res://assets/sprites/chars/cherry.png" id="1_0563r"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kiiks"]
 [ext_resource type="PackedScene" uid="uid://cx6s7ukd3uwci" path="res://scenes/basic_slash.tscn" id="3_bjkct"]
 [ext_resource type="AudioStream" uid="uid://4hbwekryavdg" path="res://assets/sfx/cherry_hurt.wav" id="4_28bed"]
+[ext_resource type="AudioStream" uid="uid://xy35lwtkq2h4" path="res://assets/sfx/cherry_jump.wav" id="5_d4byh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tp4jt"]
 atlas = ExtResource("1_0563r")
@@ -49,9 +50,33 @@ region = Rect2(0, 96, 48, 32)
 atlas = ExtResource("1_0563r")
 region = Rect2(48, 96, 48, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_q2ia0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vq18m"]
 atlas = ExtResource("1_0563r")
 region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x8mdk"]
+atlas = ExtResource("1_0563r")
+region = Rect2(48, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apafj"]
+atlas = ExtResource("1_0563r")
+region = Rect2(96, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vmacg"]
+atlas = ExtResource("1_0563r")
+region = Rect2(144, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_alksw"]
+atlas = ExtResource("1_0563r")
+region = Rect2(192, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37uvk"]
+atlas = ExtResource("1_0563r")
+region = Rect2(240, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdjo6"]
+atlas = ExtResource("1_0563r")
+region = Rect2(288, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_86jh8"]
 atlas = ExtResource("1_0563r")
@@ -144,7 +169,25 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_q2ia0")
+"texture": SubResource("AtlasTexture_vq18m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x8mdk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apafj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vmacg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_alksw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37uvk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pdjo6")
 }],
 "loop": true,
 "name": &"idle",
@@ -207,6 +250,7 @@ position = Vector2(0, -15)
 sprite_frames = SubResource("SpriteFrames_4ho1h")
 animation = &"idle"
 autoplay = "idle"
+frame_progress = 0.332705
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
@@ -223,5 +267,9 @@ bus = &"SFX"
 
 [node name="DeathTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_d4byh")
+bus = &"SFX"
 
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

@@ -292,4 +292,4 @@ autoplay = "move"
 position = Vector2(-132, -19)
 
 [node name="KillZone" parent="." instance=ExtResource("8_52dha")]
-position = Vector2(59, 62)
+position = Vector2(59, 71)

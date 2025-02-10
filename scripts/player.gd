@@ -10,6 +10,8 @@ const MAX_JUMPS = 2 # Multiple jumps
 @onready var death_timer: Timer = $DeathTimer
 @onready var death_sound: AudioStreamPlayer = $DeathSound
 
+@onready var jump_sound: AudioStreamPlayer = $JumpSound
+
 var fainted := false
 var direction := 0
 var jumps_left := MAX_JUMPS
@@ -18,15 +20,20 @@ func handle_movement() -> void:
 	# Restore jumps if grounded.
 	if is_on_floor():
 		jumps_left = MAX_JUMPS
+	# If the player leaves the ground without jumping, it should be counted as a jump
+	elif jumps_left == MAX_JUMPS:
+		jumps_left = MAX_JUMPS-1
 	
 	# Jump if there are jumps left
 	if Input.is_action_just_pressed("jump") and jumps_left > 0:
 		velocity.y = JUMP_VELOCITY
 		jumps_left -= 1
+		jump_sound.play()
 
 	# Handle movements.
 	direction = Input.get_axis("left", "right")
-	
+
+func handle_flip_h() -> void:
 	if direction > 0:
 		animated_sprite.flip_h = false
 	elif direction < 0:
@@ -53,6 +60,21 @@ func handle_basic_slash() -> void:
 			
 		basic_slash.start(orientation)
 
+func handle_velocity(delta: float) -> void:
+	var speed_force := SPEED # usual speed
+	
+	# move slower if the player is attacking
+	if basic_slash.active:
+		speed_force *= 0.7
+	
+	if direction:
+		velocity.x = direction * speed_force
+	else:
+		velocity.x = move_toward(velocity.x, 0, speed_force)
+	
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
 func animate() -> void:
 	if not fainted:
 		if is_on_floor():
@@ -74,19 +96,20 @@ func _ready() -> void:
 	add_to_group("players")	
 
 func _physics_process(delta: float) -> void:
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-	
+	# handle player's actions if they are not defeated
 	if not fainted:
-		handle_movement()
-		handle_basic_slash()
+		handle_movement() # left, right and jump
+		
+		# flip sprite horizontally if the player is not attacking
+		if not basic_slash.active:
+			handle_flip_h()
+		
+		handle_basic_slash() # attack
 	else:
 		direction = 0
 	
-	if direction:
-		velocity.x = direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+	# update velocity
+	handle_velocity(delta)
 
 	animate()
 	move_and_slide()
