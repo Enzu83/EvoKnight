@@ -7,6 +7,9 @@ const MAX_JUMPS = 2 # Multiple jumps
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var basic_slash: Area2D = $BasicSlash
 
+@onready var death_timer: Timer = $DeathTimer
+@onready var death_sound: AudioStreamPlayer = $DeathSound
+
 var fainted := false
 var direction := 0
 var jumps_left := MAX_JUMPS
@@ -67,6 +70,9 @@ func animate() -> void:
 		if animated_sprite.animation != "faint":
 			animated_sprite.play("faint")
 
+func _ready() -> void:
+	add_to_group("players")	
+
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -84,3 +90,14 @@ func _physics_process(delta: float) -> void:
 
 	animate()
 	move_and_slide()
+
+func hurt() -> void:
+	if not fainted:
+		death_sound.play()
+		animated_sprite.play("faint")
+		fainted = true
+		velocity.y = 0
+		death_timer.start()
+
+func _on_death_timer_timeout() -> void:
+	get_tree().reload_current_scene()

@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://cf8j7ywt5hk2k"]
+[gd_scene load_steps=8 format=3 uid="uid://cf8j7ywt5hk2k"]
 
 [ext_resource type="Texture2D" uid="uid://tsbfh5vqxi7w" path="res://assets/sprites/chars/bat.png" id="1_7l1al"]
 [ext_resource type="Script" path="res://scripts/bat.gd" id="1_ttpqr"]
-[ext_resource type="PackedScene" uid="uid://dybitf3a12nnp" path="res://scenes/kill_area.tscn" id="2_s27lx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_luhtb"]
 atlas = ExtResource("1_7l1al")
@@ -36,7 +35,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_a3rgj"]
 radius = 6.32456
 
-[node name="bat" type="Node2D"]
+[node name="bat" type="Area2D" groups=["enemies", "players"]]
+collision_layer = 4
+collision_mask = 2
 script = ExtResource("1_ttpqr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -45,13 +46,6 @@ animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.143562
 
-[node name="killArea" parent="." instance=ExtResource("2_s27lx")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="killArea"]
-position = Vector2(1.19209e-07, 3)
-rotation = -0.261799
-shape = SubResource("CircleShape2D_a3rgj")
-
 [node name="RayCastRight" type="RayCast2D" parent="."]
 position = Vector2(0, 3)
 target_position = Vector2(12, 0)
@@ -59,3 +53,9 @@ target_position = Vector2(12, 0)
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 position = Vector2(0, 3)
 target_position = Vector2(-12, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.19209e-07, 3)
+shape = SubResource("CircleShape2D_a3rgj")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -17,3 +17,6 @@ func start(orientation: String) -> void:
 
 func _on_cooldown_timeout() -> void:
 	reset()
+
+func _on_body_entered(body: Node2D) -> void:
+	body.hurt()

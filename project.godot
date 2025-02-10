@@ -20,6 +20,11 @@ config/icon="res://icon.png"
 
 Music="*res://scenes/music.tscn"
 
+[global_group]
+
+enemies="Nodes hurting the player"
+players=""
+
 [input]
 
 jump={

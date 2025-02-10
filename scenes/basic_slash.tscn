@@ -241,6 +241,7 @@ _data = {
 }
 
 [node name="basic_slash" type="Area2D"]
+collision_mask = 4
 script = ExtResource("1_litir")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -264,4 +265,5 @@ libraries = {
 "": SubResource("AnimationLibrary_ijga3")
 }
 
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]

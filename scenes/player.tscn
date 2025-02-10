@@ -1,8 +1,9 @@
-[gd_scene load_steps=29 format=3 uid="uid://dwitea1wpbdjp"]
+[gd_scene load_steps=30 format=3 uid="uid://dwitea1wpbdjp"]
 
 [ext_resource type="Texture2D" uid="uid://yx6p3eyombnl" path="res://assets/sprites/chars/cherry.png" id="1_0563r"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kiiks"]
 [ext_resource type="PackedScene" uid="uid://cx6s7ukd3uwci" path="res://scenes/basic_slash.tscn" id="3_bjkct"]
+[ext_resource type="AudioStream" uid="uid://4hbwekryavdg" path="res://assets/sfx/cherry_hurt.wav" id="4_28bed"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tp4jt"]
 atlas = ExtResource("1_0563r")
@@ -215,3 +216,12 @@ shape = SubResource("RectangleShape2D_4hr24")
 [node name="BasicSlash" parent="." instance=ExtResource("3_bjkct")]
 z_index = 1
 position = Vector2(0, -11)
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_28bed")
+bus = &"SFX"
+
+[node name="DeathTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
