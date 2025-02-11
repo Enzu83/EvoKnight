@@ -24,13 +24,13 @@
 	- [ ] Grounded spiky enemy
 	- [ ] Boss with similar abilities
 
-## Controls (AZERTY Keyboard)
+## Controls
 
-- Left/Right: movement
-- SPACE: Jump
-- A: Basic Slash
-- Z: Dash
-- E: Magic Slash
+- `Left/Right`: movement
+- `SPACE`: Jump
+- `Q/A`: Basic Slash
+- `W/Z`: Dash
+- `E`: Magic Slash
 
 ## Resources
 
