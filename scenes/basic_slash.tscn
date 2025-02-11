@@ -451,6 +451,7 @@ script = ExtResource("1_litir")
 position = Vector2(-6, -13)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_8ewha")
+disabled = true
 
 [node name="Cooldown" type="Timer" parent="."]
 wait_time = 0.5

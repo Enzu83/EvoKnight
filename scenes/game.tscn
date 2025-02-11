@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://doe73oqnq40n3"]
+[gd_scene load_steps=15 format=3 uid="uid://doe73oqnq40n3"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_jbpg2"]
 [ext_resource type="Texture2D" uid="uid://w47tw46p1f1u" path="res://assets/sprites/tilesets/ts_reflection.png" id="1_m0ul6"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cf8j7ywt5hk2k" path="res://scenes/bat.tscn" id="6_tareb"]
 [ext_resource type="PackedScene" uid="uid://cvx745hhmp0k6" path="res://scenes/kill_zone.tscn" id="8_52dha"]
 [ext_resource type="FontFile" uid="uid://d1oajvjlhivng" path="res://assets/fonts/8bitOperatorPlus8-Regular.ttf" id="8_png6o"]
+[ext_resource type="PackedScene" uid="uid://cvvewevudo2kf" path="res://scenes/hud.tscn" id="9_6pnxb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ngg24"]
 texture = ExtResource("1_m0ul6")
@@ -261,7 +262,6 @@ layer_0/tile_data = PackedInt32Array(262139, 0, 0, 262140, 0, 0, 262141, 0, 0, 2
 position = Vector2(-1, 24)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(3, 3)
 limit_bottom = 48
 
 [node name="Stars" type="Node" parent="."]
@@ -296,3 +296,6 @@ position = Vector2(-165, -2)
 
 [node name="KillZone" parent="." instance=ExtResource("8_52dha")]
 position = Vector2(59, 71)
+
+[node name="HUD" parent="." instance=ExtResource("9_6pnxb")]
+unique_name_in_owner = true
