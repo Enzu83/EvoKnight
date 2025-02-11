@@ -9,18 +9,6 @@ extends CanvasLayer
 
 func _process(_delta: float) -> void:
 	health_bar.value = int((player.health / float(player.max_health)) * health_bar.max_value)
-	exp_bar.value = 0 * exp_bar.max_value
+	exp_bar.value = int((player.experience / float(player.next_level_experience)) * exp_bar.max_value)
 	
 	score_label.text = "Stars: " + str(game_manager.score)
-
-func set_health_bar(value: int) -> void:
-	health_bar.value = value
-
-func set_relative_health_bar(value: int) -> void:
-	health_bar.value += value
-
-func set_exp_bar(value: int) -> void:
-	exp_bar.value = value
-
-func set_relative_exp_bar(value: int) -> void:
-	exp_bar.value += value

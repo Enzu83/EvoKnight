@@ -12,8 +12,15 @@ var state := State.Default # handle all states of the player
 
 var direction : float # direction input
 var jumps := MAX_JUMPS # jumps left
-var max_health := 100 # current maximum health
-var health := max_health # remaining health
+
+# stats
+var max_health := 10
+var health := max_health
+
+var next_level_experience := 50
+var experience := 0
+
+var strength := 1 # damage dealt to enemies
 
 # Imports
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -22,8 +29,8 @@ var health := max_health # remaining health
 @onready var jump_sound: AudioStreamPlayer = $JumpSound
 
 @onready var hurtbox: CollisionShape2D = $Hurt/Hurtbox
-@onready var hurt_sound: AudioStreamPlayer = $HurtSound
-@onready var hurt_invicibility_timer: Timer = $HurtInvicibilityTimer
+@onready var hurt_sound: AudioStreamPlayer = $Hurt/HurtSound
+@onready var hurt_invicibility_timer: Timer = $Hurt/HurtInvicibilityTimer
 
 @onready var death_timer: Timer = $DeathTimer
 @onready var death_sound: AudioStreamPlayer = $DeathSound

@@ -7,10 +7,10 @@
 ## Game features
 
 - Stats
-	- [ ] HP
-	- [ ] Strength
+	- [x] HP
+	- [x] Strength
+	- [x] EXP
 	- [ ] Mana
-	- [ ] EXP
 
 - Abilities
 	- [x] Double Jump

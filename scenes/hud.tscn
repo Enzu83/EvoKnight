@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://cvvewevudo2kf"]
+[gd_scene load_steps=6 format=3 uid="uid://cvvewevudo2kf"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_llsyg"]
 [ext_resource type="Texture2D" uid="uid://dfobe5bchkqus" path="res://assets/sprites/ui/spr_ui_bar.png" id="2_5714a"]
 [ext_resource type="Texture2D" uid="uid://b7u6236m7y18h" path="res://assets/sprites/ui/spr_health_bar.png" id="3_1pc4k"]
 [ext_resource type="Texture2D" uid="uid://bdsyj5ksya7a6" path="res://assets/sprites/ui/spr_exp_bar.png" id="4_vuae4"]
+[ext_resource type="FontFile" uid="uid://d1oajvjlhivng" path="res://assets/fonts/8bitOperatorPlus8-Regular.ttf" id="5_v7132"]
 
 [node name="HUD" type="CanvasLayer"]
+scale = Vector2(1.5, 1.5)
+transform = Transform2D(1.5, 0, 0, 1.5, 0, 0)
 script = ExtResource("1_llsyg")
 
 [node name="Stats" type="TextureRect" parent="."]
@@ -33,3 +36,13 @@ offset_right = 49.0
 offset_bottom = 15.0
 max_value = 35.0
 texture_progress = ExtResource("4_vuae4")
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 114.0
+offset_top = 4.66667
+offset_right = 212.0
+offset_bottom = 20.6667
+theme_override_fonts/font = ExtResource("5_v7132")
+theme_override_font_sizes/font_size = 14
+text = "Stars: 0"
+horizontal_alignment = 2

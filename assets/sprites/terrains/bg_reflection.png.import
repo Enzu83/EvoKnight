@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://w47tw46p1f1u"
-path="res://.godot/imported/ts_reflection.png-dbf205396530225e46933a804b54e864.ctex"
+uid="uid://bmixdkavp031j"
+path="res://.godot/imported/bg_reflection.png-54f66b9485ed2873de62eceb002f0df3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/tilesets/ts_reflection.png"
-dest_files=["res://.godot/imported/ts_reflection.png-dbf205396530225e46933a804b54e864.ctex"]
+source_file="res://assets/sprites/terrains/bg_reflection.png"
+dest_files=["res://.godot/imported/bg_reflection.png-54f66b9485ed2873de62eceb002f0df3.ctex"]
 
 [params]
 

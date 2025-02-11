@@ -105,7 +105,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 10.0
+"speed": 15.0
 }]
 
 [sub_resource type="Animation" id="Animation_5pl8n"]
@@ -245,6 +245,7 @@ shape = SubResource("CircleShape2D_a3rgj")
 
 [node name="HurtSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_k27jp")
+bus = &"SFX"
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]

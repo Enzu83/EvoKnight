@@ -155,7 +155,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"faint",
-"speed": 10.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -238,6 +238,9 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4hr24"]
+size = Vector2(6, 16)
+
 [sub_resource type="Animation" id="Animation_xm5nq"]
 length = 0.001
 tracks/0/type = "value"
@@ -275,9 +278,6 @@ _data = {
 "blink": SubResource("Animation_s2rvf")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4hr24"]
-size = Vector2(6, 16)
-
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_kiiks")
@@ -288,6 +288,11 @@ position = Vector2(0, -15)
 sprite_frames = SubResource("SpriteFrames_4ho1h")
 animation = &"idle"
 autoplay = "idle"
+
+[node name="WallCollider" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_4hr24")
 
 [node name="EffectsPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -306,21 +311,17 @@ z_index = 1
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_4hr24")
 
-[node name="Collider" type="CollisionShape2D" parent="."]
-z_index = 1
-position = Vector2(0, -8)
-shape = SubResource("RectangleShape2D_4hr24")
-
-[node name="HurtSound" type="AudioStreamPlayer" parent="."]
+[node name="HurtSound" type="AudioStreamPlayer" parent="Hurt"]
 stream = ExtResource("4_28bed")
 bus = &"SFX"
 
-[node name="HurtInvicibilityTimer" type="Timer" parent="."]
+[node name="HurtInvicibilityTimer" type="Timer" parent="Hurt"]
 wait_time = 1.5
 one_shot = true
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_m274p")
+bus = &"SFX"
 
 [node name="DeathTimer" type="Timer" parent="."]
 one_shot = true
@@ -329,5 +330,5 @@ one_shot = true
 z_index = 1
 position = Vector2(0, -11)
 
-[connection signal="timeout" from="HurtInvicibilityTimer" to="." method="_on_hurt_invicibility_timer_timeout"]
+[connection signal="timeout" from="Hurt/HurtInvicibilityTimer" to="." method="_on_hurt_invicibility_timer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
