@@ -1,10 +1,11 @@
-[gd_scene load_steps=37 format=3 uid="uid://dwitea1wpbdjp"]
+[gd_scene load_steps=41 format=3 uid="uid://dwitea1wpbdjp"]
 
 [ext_resource type="Texture2D" uid="uid://yx6p3eyombnl" path="res://assets/sprites/chars/spr_cherry.png" id="1_0563r"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kiiks"]
 [ext_resource type="PackedScene" uid="uid://cx6s7ukd3uwci" path="res://scenes/basic_slash.tscn" id="3_bjkct"]
 [ext_resource type="AudioStream" uid="uid://4hbwekryavdg" path="res://assets/sfx/snd_cherry_hurt.wav" id="4_28bed"]
 [ext_resource type="AudioStream" uid="uid://xy35lwtkq2h4" path="res://assets/sfx/snd_cherry_jump.wav" id="5_d4byh"]
+[ext_resource type="AudioStream" uid="uid://by8urjgg31rjt" path="res://assets/sfx/snd_cherry_death.wav" id="5_m274p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tp4jt"]
 atlas = ExtResource("1_0563r")
@@ -237,6 +238,43 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="Animation" id="Animation_xm5nq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_s2rvf"]
+resource_name = "blink"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.166667, 0.266667, 0.3, 0.4, 0.466667, 0.566667, 0.6, 0.7, 0.733333, 0.833333, 0.866667, 0.941667, 0.966667, 1.04167, 1.06667, 1.14167, 1.16667, 1.24167, 1.26667, 1.34167, 1.36667, 1.44167, 1.46667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_37knw"]
+_data = {
+"RESET": SubResource("Animation_xm5nq"),
+"blink": SubResource("Animation_s2rvf")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4hr24"]
 size = Vector2(6, 16)
 
@@ -251,24 +289,45 @@ sprite_frames = SubResource("SpriteFrames_4ho1h")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-z_index = 1
-position = Vector2(0, -8)
-shape = SubResource("RectangleShape2D_4hr24")
-
-[node name="BasicSlash" parent="." instance=ExtResource("3_bjkct")]
-z_index = 1
-position = Vector2(0, -11)
-
-[node name="DeathSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_28bed")
-bus = &"SFX"
-
-[node name="DeathTimer" type="Timer" parent="."]
-one_shot = true
+[node name="EffectsPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_37knw")
+}
 
 [node name="JumpSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_d4byh")
 bus = &"SFX"
 
+[node name="Hurt" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="Hurtbox" type="CollisionShape2D" parent="Hurt"]
+z_index = 1
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_4hr24")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_4hr24")
+
+[node name="HurtSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_28bed")
+bus = &"SFX"
+
+[node name="HurtInvicibilityTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_m274p")
+
+[node name="DeathTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="BasicSlash" parent="." instance=ExtResource("3_bjkct")]
+z_index = 1
+position = Vector2(0, -11)
+
+[connection signal="timeout" from="HurtInvicibilityTimer" to="." method="_on_hurt_invicibility_timer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

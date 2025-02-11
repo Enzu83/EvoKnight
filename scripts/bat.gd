@@ -1,6 +1,7 @@
 extends Area2D
 
 const SPEED = 100
+const STRENGTH = 10 # damage caused by the enemy
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -21,14 +22,15 @@ func _physics_process(delta: float) -> void:
 		else:
 			animated_sprite.flip_h = true
 		
-		# move toward the target
-		position += position.direction_to(target.position) * SPEED * delta
+		# move toward the middle of the target's hurtbox
+		position += position.direction_to(target.get_middle_position()) * SPEED * delta
 
-func _on_body_entered(body: Node2D) -> void:
+func _on_area_entered(area: Area2D) -> void:
+	var body := area.get_parent() # get the player
+
 	# hurt the player
 	if body.is_in_group("players"):
-		body.hurt()
-	
+		body.hurt(STRENGTH)
 
 func hurt() -> void:
 	animation_player.play("death")
