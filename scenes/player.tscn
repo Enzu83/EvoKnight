@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://dwitea1wpbdjp"]
+[gd_scene load_steps=46 format=3 uid="uid://dwitea1wpbdjp"]
 
 [ext_resource type="Texture2D" uid="uid://yx6p3eyombnl" path="res://assets/sprites/chars/spr_cherry.png" id="1_0563r"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kiiks"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://4hbwekryavdg" path="res://assets/sfx/snd_cherry_hurt.wav" id="4_28bed"]
 [ext_resource type="AudioStream" uid="uid://xy35lwtkq2h4" path="res://assets/sfx/snd_cherry_jump.wav" id="5_d4byh"]
 [ext_resource type="AudioStream" uid="uid://by8urjgg31rjt" path="res://assets/sfx/snd_cherry_death.wav" id="5_m274p"]
+[ext_resource type="PackedScene" uid="uid://b2o03c77jm22l" path="res://scenes/magic_slash.tscn" id="8_pexea"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tp4jt"]
 atlas = ExtResource("1_0563r")
@@ -394,6 +395,10 @@ one_shot = true
 [node name="BasicSlash" parent="." instance=ExtResource("3_bjkct")]
 z_index = 1
 position = Vector2(0, -11)
+
+[node name="MagicSlash" parent="." instance=ExtResource("8_pexea")]
+top_level = true
+position = Vector2(0, -14)
 
 [node name="ManaRecoveryTimer" type="Timer" parent="."]
 wait_time = 0.2

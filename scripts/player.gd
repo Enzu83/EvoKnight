@@ -41,6 +41,7 @@ var strength := 1 # damage dealt to enemies
 @onready var death_sound: AudioStreamPlayer = $DeathSound
 
 @onready var basic_slash: Area2D = $BasicSlash
+@onready var magic_slash: Area2D = $MagicSlash
 
 func handle_movement() -> void:
 	# Restore jumps if grounded.
@@ -73,14 +74,15 @@ func handle_flip_h() -> void:
 	elif direction < 0:
 		animated_sprite.flip_h = true
 
-func handle_basic_slash() -> void:
+func handle_slash() -> void:
 	# attacking state corresponds to the basic slash being active
 	if basic_slash.active:
 		state = State.Attacking
 	elif state == State.Attacking:
 		state = State.Default
 
-	if Input.is_action_just_pressed("basic_slash") and state != State.Attacking:
+	# basic slash
+	if Input.is_action_just_pressed("basic_slash") and state == State.Default:
 		if Input.is_action_pressed("up"):
 			basic_slash.start("up")
 		elif Input.is_action_pressed("down"):
@@ -89,6 +91,15 @@ func handle_basic_slash() -> void:
 			basic_slash.start("left")
 		else:
 			basic_slash.start("right")
+	
+	# magic slash
+	elif Input.is_action_just_pressed("magic_slash") and state == State.Default and not magic_slash.active and mana >= MAGIC_SLASH_MANA:
+		mana -= MAGIC_SLASH_MANA
+		
+		if animated_sprite.flip_h:
+			magic_slash.start("left")
+		else:
+			magic_slash.start("right")
 
 func handle_velocity(delta: float) -> void:
 	var speed_force := SPEED # usual speed
@@ -133,7 +144,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# handle player's actions if they are not defeated
 	if state != State.Fainted:
-		handle_basic_slash() # attack
+		handle_slash() # attacks
 		handle_movement() # left, right and jump
 		
 		# flip sprite horizontally if the player is not attacking
