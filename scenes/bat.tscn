@@ -1,8 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://cf8j7ywt5hk2k"]
+[gd_scene load_steps=25 format=3 uid="uid://cf8j7ywt5hk2k"]
 
 [ext_resource type="Texture2D" uid="uid://tsbfh5vqxi7w" path="res://assets/sprites/chars/spr_bat.png" id="1_7l1al"]
 [ext_resource type="Script" path="res://scripts/bat.gd" id="1_ttpqr"]
-[ext_resource type="AudioStream" uid="uid://ddualpt1elkrs" path="res://assets/sfx/snd_bat_hurt.wav" id="3_k27jp"]
+[ext_resource type="AudioStream" uid="uid://dvafbeny530jy" path="res://assets/sfx/snd_bat_hurt.wav" id="3_k27jp"]
+[ext_resource type="AudioStream" uid="uid://ddualpt1elkrs" path="res://assets/sfx/snd_bat_death.wav" id="4_dh8ji"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cjvva"]
 atlas = ExtResource("1_7l1al")
@@ -201,10 +202,27 @@ tracks/3/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_kp34c"]
+resource_name = "hit"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fw0lg"]
 _data = {
 "RESET": SubResource("Animation_5pl8n"),
-"death": SubResource("Animation_0arq5")
+"death": SubResource("Animation_0arq5"),
+"hit": SubResource("Animation_kp34c")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6m1gi"]
@@ -244,6 +262,15 @@ shape = SubResource("CircleShape2D_a3rgj")
 stream = ExtResource("3_k27jp")
 bus = &"SFX"
 
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_dh8ji")
+bus = &"SFX"
+
+[node name="HurtInvicibilityTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]
 [connection signal="body_exited" from="Detector" to="." method="_on_detector_body_exited"]
+[connection signal="timeout" from="HurtInvicibilityTimer" to="." method="_on_hurt_invicibility_timer_timeout"]

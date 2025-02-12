@@ -26,7 +26,8 @@ var strength := 1 # damage dealt to enemies
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var effects_player: AnimationPlayer = $EffectsPlayer
 
-@onready var jump_sound: AudioStreamPlayer = $JumpSound
+@onready var jump_circle: AnimationPlayer = $Jump/JumpCircle
+@onready var jump_sound: AudioStreamPlayer = $Jump/JumpSound
 
 @onready var hurtbox: CollisionShape2D = $Hurt/Hurtbox
 @onready var hurt_sound: AudioStreamPlayer = $Hurt/HurtSound
@@ -54,6 +55,10 @@ func handle_movement() -> void:
 		# restart animation
 		animated_sprite.stop()
 		animated_sprite.play("jump")
+		
+		# draw circle below player if they jump in the air
+		if not is_on_floor():
+			jump_circle.play("default")
 
 	# Handle movements.
 	direction = Input.get_axis("left", "right")
@@ -96,7 +101,7 @@ func handle_velocity(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 func handle_bounce() -> void:
-	if !is_on_floor():
+	if not is_on_floor():
 		velocity.y = JUMP_VELOCITY * 0.8
 
 func animate() -> void:
