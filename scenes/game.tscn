@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=4 uid="uid://doe73oqnq40n3"]
+[gd_scene load_steps=16 format=4 uid="uid://doe73oqnq40n3"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_jbpg2"]
 [ext_resource type="PackedScene" uid="uid://dwitea1wpbdjp" path="res://scenes/player.tscn" id="1_msogt"]
-[ext_resource type="Texture2D" uid="uid://bmixdkavp031j" path="res://assets/sprites/terrains/bg_reflection.png" id="2_204o0"]
+[ext_resource type="Texture2D" uid="uid://c3ruqeec58wyr" path="res://assets/sprites/terrains/bg_mushroom_back.png" id="2_tgpdf"]
 [ext_resource type="Texture2D" uid="uid://tjhswsdx1h4g" path="res://assets/sprites/terrains/tile_reflection.png" id="2_vqaio"]
 [ext_resource type="PackedScene" uid="uid://ixnghv7tms0i" path="res://scenes/platform.tscn" id="3_iirao"]
+[ext_resource type="Texture2D" uid="uid://dqq0un7sgshcb" path="res://assets/sprites/terrains/bg_mushroom_front.png" id="3_toab8"]
 [ext_resource type="PackedScene" uid="uid://7g8lw8o3aenr" path="res://scenes/star.tscn" id="4_xu4hh"]
 [ext_resource type="PackedScene" uid="uid://cf8j7ywt5hk2k" path="res://scenes/bat.tscn" id="6_tareb"]
 [ext_resource type="PackedScene" uid="uid://cvx745hhmp0k6" path="res://scenes/kill_zone.tscn" id="8_52dha"]
@@ -227,13 +228,20 @@ _data = {
 unique_name_in_owner = true
 script = ExtResource("1_jbpg2")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-visible = false
+[node name="Background" type="TextureRect" parent="."]
 offset_left = -589.0
-offset_top = -428.0
+offset_top = -599.0
 offset_right = 959.0
 offset_bottom = 48.0
-texture = ExtResource("2_204o0")
+texture = ExtResource("2_tgpdf")
+stretch_mode = 1
+
+[node name="Midground" type="TextureRect" parent="."]
+offset_left = -749.0
+offset_top = -177.0
+offset_right = 1096.0
+offset_bottom = 101.0
+texture = ExtResource("3_toab8")
 stretch_mode = 1
 
 [node name="Ground" type="TileMapLayer" parent="."]

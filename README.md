@@ -15,8 +15,8 @@
 - Abilities
 	- [x] Double Jump
 	- [x] Basic Slash (4-directions)
-	- [ ] Dash
-	- [ ] Magic Slash (Left/Right)
+	- [x] Magic Slash (Left/Right)
+	- [ ] Dash (8-directions)
 
 - Enemies
 	- [x] Bat
@@ -26,7 +26,7 @@
 
 ## Controls
 
-- `Left/Right`: Movement
+- `LEFT/RIGHT`: Movement
 - `SPACE`: Jump
 - `Q/A`: Basic Slash
 - `W/Z`: Dash
