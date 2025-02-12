@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://7g8lw8o3aenr"]
+[gd_scene load_steps=9 format=3 uid="uid://7g8lw8o3aenr"]
 
 [ext_resource type="Script" path="res://scripts/star.gd" id="1_iieke"]
 [ext_resource type="Texture2D" uid="uid://hpjnmb1knvbo" path="res://assets/sprites/items/spr_star.png" id="1_sd4e5"]
@@ -9,42 +9,6 @@ radius = 5.0
 
 [sub_resource type="Animation" id="Animation_owfc3"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PickStar:playing")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 
 [sub_resource type="Animation" id="Animation_o18nq"]
 resource_name = "pickup"
@@ -99,9 +63,27 @@ tracks/3/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_11b41"]
+resource_name = "idle"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.296852, 0.396852, 0.496852, 0.596852, 0.696852, 0.796852),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(0, 0), Vector2(0, 1), Vector2(0, 2), Vector2(0, 1), Vector2(0, 0), Vector2(0, -1), Vector2(0, -2), Vector2(0, -1), Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hcten"]
 _data = {
 "RESET": SubResource("Animation_owfc3"),
+"idle": SubResource("Animation_11b41"),
 "pickup": SubResource("Animation_o18nq")
 }
 
@@ -110,6 +92,7 @@ collision_mask = 2
 script = ExtResource("1_iieke")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -2)
 texture = ExtResource("1_sd4e5")
 offset = Vector2(-0.5, 0)
 
@@ -125,5 +108,6 @@ bus = &"SFX"
 libraries = {
 "": SubResource("AnimationLibrary_hcten")
 }
+autoplay = "idle"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

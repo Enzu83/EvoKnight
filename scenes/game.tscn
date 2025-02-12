@@ -229,9 +229,9 @@ script = ExtResource("1_jbpg2")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 visible = false
-offset_left = -480.0
-offset_top = -315.0
-offset_right = 491.0
+offset_left = -589.0
+offset_top = -428.0
+offset_right = 959.0
 offset_bottom = 48.0
 texture = ExtResource("2_204o0")
 stretch_mode = 1

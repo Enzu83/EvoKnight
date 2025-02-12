@@ -24,3 +24,7 @@ func _on_cooldown_timeout() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemies"):
 		area.hurt(STRENGTH * player.strength)
+		
+		# make player bounce on the enemy
+		if animation_player.current_animation == "down":
+			player.handle_bounce()

@@ -236,9 +236,6 @@ collision_mask = 2
 [node name="DetectionRange" type="CollisionShape2D" parent="Detector"]
 shape = SubResource("CircleShape2D_6m1gi")
 
-[node name="ChaseCooldown" type="Timer" parent="."]
-wait_time = 0.5
-
 [node name="Hurtbox" type="CollisionShape2D" parent="."]
 position = Vector2(1.19209e-07, 3)
 shape = SubResource("CircleShape2D_a3rgj")
@@ -250,4 +247,3 @@ bus = &"SFX"
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]
 [connection signal="body_exited" from="Detector" to="." method="_on_detector_body_exited"]
-[connection signal="timeout" from="ChaseCooldown" to="." method="_on_chase_cooldown_timeout"]

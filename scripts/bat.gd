@@ -1,13 +1,12 @@
 extends Area2D
 
-const SPEED = 100
+const SPEED = 70
 const STRENGTH = 3 # damage caused by the enemy
 const MAX_HEALTH = 5
 const EXP_GIVEN = 3
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var chase_cooldown: Timer = $ChaseCooldown
 
 @onready var hurt_sound: AudioStreamPlayer = $HurtSound
 
@@ -16,7 +15,6 @@ const EXP_GIVEN = 3
 
 var chase := false # enable chasing the player
 var target: CharacterBody2D = null # chase target
-
 var health := 5
 
 func _ready() -> void:
@@ -38,7 +36,7 @@ func _on_area_entered(area: Area2D) -> void:
 	var body := area.get_parent() # get the player
 
 	# hurt the player
-	if body == player:
+	if body == player and player.is_hurtable():
 		body.hurt(STRENGTH)
 
 func hurt(damage: int) -> void:
@@ -57,17 +55,11 @@ func fainted() -> void:
 
 func _on_detector_body_entered(body: Node2D) -> void:
 	if body == player:
-		chase_cooldown.start()
 		chase = true
 		target = body
 
 
 func _on_detector_body_exited(body: Node2D) -> void:
 	if body == player:
-		chase_cooldown.stop()
 		chase = false
 		target = null
-
-
-func _on_chase_cooldown_timeout() -> void:	
-	chase = !chase # invert chase state

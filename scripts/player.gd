@@ -95,6 +95,10 @@ func handle_velocity(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
+func handle_bounce() -> void:
+	if !is_on_floor():
+		velocity.y = JUMP_VELOCITY * 0.8
+
 func animate() -> void:
 	if state != State.Fainted:
 		if is_on_floor():
@@ -129,7 +133,6 @@ func _physics_process(delta: float) -> void:
 		direction = 0
 	
 	handle_velocity(delta) # velocity update based on the above modification
-
 	animate() # update the sprite animation if necessary
 	move_and_slide()
 
@@ -137,6 +140,12 @@ func _physics_process(delta: float) -> void:
 # get the position of the player with a vertical offset depending on the hurtbox's size
 func get_middle_position() -> Vector2:
 	return position - Vector2(0, hurtbox.shape.get_rect().size.y)
+
+func is_hurtable() -> bool:
+	if effects_player.current_animation == "blink":
+		return false
+	else:
+		return true
 
 func hurt(damage: int) -> void:
 	# player is still alive
