@@ -395,5 +395,10 @@ one_shot = true
 z_index = 1
 position = Vector2(0, -11)
 
+[node name="ManaRecoveryTimer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
 [connection signal="timeout" from="Hurt/HurtInvicibilityTimer" to="." method="_on_hurt_invicibility_timer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
+[connection signal="timeout" from="ManaRecoveryTimer" to="." method="_on_mana_recovery_timer_timeout"]

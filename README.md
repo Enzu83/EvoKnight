@@ -10,7 +10,7 @@
 	- [x] HP
 	- [x] Strength
 	- [x] EXP
-	- [ ] Mana
+	- [x] Mana
 
 - Abilities
 	- [x] Double Jump
@@ -36,3 +36,4 @@
 
 - https://www.spriters-resource.com/pc_computer/evolandii/
 - https://berrycamp.github.io/
+- https://craftpix.net/

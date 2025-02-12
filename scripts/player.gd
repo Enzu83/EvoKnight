@@ -4,6 +4,7 @@ extends CharacterBody2D
 const SPEED = 150.0
 const JUMP_VELOCITY = -300.0
 const MAX_JUMPS = 2 # Multiple jumps
+const MAGIC_SLASH_MANA = 25 # mana required for magic slash
 
 enum State {Default, Fainted, Attacking}
 
@@ -19,6 +20,9 @@ var health := max_health
 
 var next_level_experience := 50
 var experience := 0
+
+var max_mana := 40
+var mana := max_mana
 
 var strength := 1 # damage dealt to enemies
 
@@ -183,3 +187,7 @@ func _on_death_timer_timeout() -> void:
 func _on_hurt_invicibility_timer_timeout() -> void:
 	hurtbox.set_deferred("disabled", false)
 	effects_player.stop()
+
+func _on_mana_recovery_timer_timeout() -> void:
+	if mana < max_mana:
+		mana += 1
