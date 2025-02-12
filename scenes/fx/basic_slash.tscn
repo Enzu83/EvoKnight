@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://exhbp23wyoal" path="res://assets/sprites/fx/spr_basic_slash.png" id="4_qf52m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ewha"]
-size = Vector2(24.3319, 8.36036)
+size = Vector2(1, 1)
 
 [sub_resource type="Animation" id="Animation_ndktr"]
 length = 0.001
@@ -55,7 +55,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(24.3319, 8.36036)]
+"values": [Vector2(1, 1)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -67,7 +67,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(17, -7)]
+"values": [Vector2(0, 0)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -79,7 +79,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-1.95128]
+"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_3yiit"]
@@ -600,8 +600,6 @@ texture = ExtResource("4_qf52m")
 hframes = 6
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-position = Vector2(17, -7)
-rotation = -1.95128
 shape = SubResource("RectangleShape2D_8ewha")
 disabled = true
 

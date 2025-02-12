@@ -93,7 +93,7 @@ func handle_slash() -> void:
 			basic_slash.start("right")
 	
 	# magic slash
-	elif Input.is_action_just_pressed("magic_slash") and state == State.Default and not magic_slash.active and mana >= MAGIC_SLASH_MANA:
+	if Input.is_action_just_pressed("magic_slash") and state == State.Default and not magic_slash.active and mana >= MAGIC_SLASH_MANA:
 		mana -= MAGIC_SLASH_MANA
 		
 		if animated_sprite.flip_h:

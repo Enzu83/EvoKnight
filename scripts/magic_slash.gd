@@ -35,6 +35,8 @@ func _process(delta: float) -> void:
 	# move the magic slash
 	if active:
 		position.x += direction * SPEED * delta
+	else:
+		position = player.get_middle_position()
 
 
 func _on_duration_timer_timeout() -> void:

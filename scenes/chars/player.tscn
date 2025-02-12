@@ -398,7 +398,7 @@ position = Vector2(0, -11)
 
 [node name="MagicSlash" parent="." instance=ExtResource("8_pexea")]
 top_level = true
-position = Vector2(0, -14)
+position = Vector2(0, -11)
 
 [node name="ManaRecoveryTimer" type="Timer" parent="."]
 wait_time = 0.2
