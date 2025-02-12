@@ -1,0 +1,17 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://6yposqicmu5l"
+path="res://.godot/imported/bonus.fnt-6c5ed0cf21c794623ae7d9a5f2f94c92.fontdata"
+
+[deps]
+
+source_file="res://assets/fonts/bonus.fnt"
+dest_files=["res://.godot/imported/bonus.fnt-6c5ed0cf21c794623ae7d9a5f2f94c92.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
+scaling_mode=2

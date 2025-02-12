@@ -2,12 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://yx6p3eyombnl" path="res://assets/sprites/chars/spr_cherry.png" id="1_0563r"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kiiks"]
-[ext_resource type="PackedScene" uid="uid://cx6s7ukd3uwci" path="res://scenes/basic_slash.tscn" id="3_bjkct"]
+[ext_resource type="PackedScene" uid="uid://cx6s7ukd3uwci" path="res://scenes/fx/basic_slash.tscn" id="3_bjkct"]
 [ext_resource type="Texture2D" uid="uid://b6fexcfnjb43p" path="res://assets/sprites/fx/spr_jump_circle.png" id="3_es3b5"]
 [ext_resource type="AudioStream" uid="uid://4hbwekryavdg" path="res://assets/sfx/snd_cherry_hurt.wav" id="4_28bed"]
 [ext_resource type="AudioStream" uid="uid://xy35lwtkq2h4" path="res://assets/sfx/snd_cherry_jump.wav" id="5_d4byh"]
 [ext_resource type="AudioStream" uid="uid://by8urjgg31rjt" path="res://assets/sfx/snd_cherry_death.wav" id="5_m274p"]
-[ext_resource type="PackedScene" uid="uid://b2o03c77jm22l" path="res://scenes/magic_slash.tscn" id="8_pexea"]
+[ext_resource type="PackedScene" uid="uid://b2o03c77jm22l" path="res://scenes/fx/magic_slash.tscn" id="8_pexea"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tp4jt"]
 atlas = ExtResource("1_0563r")

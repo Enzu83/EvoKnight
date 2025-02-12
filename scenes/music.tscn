@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b43fxr383pguw"]
-
-[ext_resource type="AudioStream" uid="uid://chwwo3aobfyur" path="res://assets/music/iles.mp3" id="1_pxafo"]
-
-[node name="Music" type="AudioStreamPlayer2D"]
-stream = ExtResource("1_pxafo")
-autoplay = true
-bus = &"Music"
