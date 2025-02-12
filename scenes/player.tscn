@@ -279,6 +279,21 @@ _data = {
 "blink": SubResource("Animation_s2rvf")
 }
 
+[sub_resource type="Animation" id="Animation_jdnfn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Jump:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_52m6i"]
 resource_name = "default"
 length = 0.15
@@ -305,21 +320,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
-}
-
-[sub_resource type="Animation" id="Animation_jdnfn"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Jump:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5fwcj"]
@@ -351,7 +351,7 @@ libraries = {
 
 [node name="Jump" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(0, -4)
+position = Vector2(0, -2)
 texture = ExtResource("3_es3b5")
 hframes = 3
 frame = 2
@@ -388,6 +388,7 @@ stream = ExtResource("5_m274p")
 bus = &"SFX"
 
 [node name="DeathTimer" type="Timer" parent="."]
+wait_time = 1.2
 one_shot = true
 
 [node name="BasicSlash" parent="." instance=ExtResource("3_bjkct")]

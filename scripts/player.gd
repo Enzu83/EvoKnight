@@ -70,6 +70,7 @@ func handle_flip_h() -> void:
 		animated_sprite.flip_h = true
 
 func handle_basic_slash() -> void:
+	# attacking state corresponds to the basic slash being active
 	if basic_slash.active:
 		state = State.Attacking
 	elif state == State.Attacking:
@@ -161,6 +162,7 @@ func hurt(damage: int) -> void:
 		hurtbox.set_deferred("disabled", true)
 		hurt_invicibility_timer.start()
 		effects_player.play("blink")
+		basic_slash.reset()
 	
 	# player is dead
 	else:

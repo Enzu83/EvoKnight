@@ -26,7 +26,7 @@
 
 ## Controls
 
-- `Left/Right`: movement
+- `Left/Right`: Movement
 - `SPACE`: Jump
 - `Q/A`: Basic Slash
 - `W/Z`: Dash
