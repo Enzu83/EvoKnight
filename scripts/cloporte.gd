@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 const SPEED = 40
+const MAX_FALLING_VELOCITY = 450
 const STRENGTH = 4
 const MAX_HEALTH = 10
 const EXP_GIVEN = 6
@@ -34,6 +35,10 @@ func handle_velocity(delta: float) -> void:
 	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+		
+		# prevent cloporte to go too fast
+		if velocity.y > MAX_FALLING_VELOCITY:
+			velocity.y = MAX_FALLING_VELOCITY
 
 func handle_flip_h() -> void:
 	if velocity.x > 0:

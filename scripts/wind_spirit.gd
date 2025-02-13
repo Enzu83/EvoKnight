@@ -89,6 +89,7 @@ func fainted() -> void:
 		player.experience += EXP_GIVEN
 		animation_player.play("death")
 		death_sound.play()
+		tornado.reset()
 
 func get_middle_position() -> Vector2:
 	return position - Vector2(0, hurtbox.shape.get_rect().size.y)

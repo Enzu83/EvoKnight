@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://by16cfh7w1h7r"]
 
-[ext_resource type="Texture2D" uid="uid://yx6p3eyombnl" path="res://assets/sprites/chars/spr_cherry.png" id="1_g0df7"]
+[ext_resource type="Texture2D" uid="uid://yx6p3eyombnl" path="res://assets/sprites/chars/player/spr_cherry.png" id="1_g0df7"]
 [ext_resource type="Script" path="res://scripts/dash_phantom.gd" id="2_sk2vj"]
 
 [sub_resource type="Animation" id="Animation_tnr15"]

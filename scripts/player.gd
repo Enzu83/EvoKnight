@@ -5,6 +5,7 @@ extends CharacterBody2D
 const SPEED = 150.0
 
 const JUMP_VELOCITY = -300.0
+const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
 
 const MANA_RECOVERY_RATE = 20 # mana recovered per frame
@@ -13,9 +14,11 @@ const DASH_MANA = 100 # mana required for dashing
 const DASH_SPEED = 2 * SPEED
 
 enum State {Default, Fainted, Attacking, Dashing}
+enum Anim {idle, run, dash, jump, fall, faint}
 
 # player state and actions
 var state := State.Default # handle all states of the player
+var anim := Anim.idle # handle the current animation to be played
 
 var direction: float # direction input
 var jumps := MAX_JUMPS # jumps left
@@ -36,7 +39,8 @@ var mana := max_mana
 var strength := 1 # damage dealt to enemies
 
 # node imports
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var sprite: Sprite2D = $Sprite
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var effects_player: AnimationPlayer = $EffectsPlayer
 
 @onready var jump_circle: AnimationPlayer = $Jump/JumpCircle
@@ -73,8 +77,9 @@ func handle_movement() -> void:
 		jump_sound.play()
 		
 		# restart animation
-		animated_sprite.stop()
-		animated_sprite.play("jump")
+		anim = Anim.jump
+		animation_player.stop()
+		animation_player.play("jump")
 		
 		# draw circle below player if they jump in the air
 		if not is_on_floor():
@@ -96,7 +101,7 @@ func handle_slash() -> void:
 			basic_slash.start("up")
 		elif Input.is_action_pressed("down"):
 			basic_slash.start("down")
-		elif animated_sprite.flip_h:
+		elif sprite.flip_h:
 			basic_slash.start("left")
 		else:
 			basic_slash.start("right")
@@ -105,7 +110,7 @@ func handle_slash() -> void:
 	if Input.is_action_just_pressed("magic_slash") and state == State.Default and not magic_slash.active and mana >= MAGIC_SLASH_MANA:
 		mana -= MAGIC_SLASH_MANA
 		
-		if animated_sprite.flip_h:
+		if sprite.flip_h:
 			magic_slash.start("left")
 		else:
 			magic_slash.start("right")
@@ -137,7 +142,7 @@ func handle_dash() -> void:
 		
 		# forward dash by default if no inputs
 		if dash_direction == Vector2.ZERO:
-			if animated_sprite.flip_h:
+			if sprite.flip_h:
 				dash_direction.x = -1
 			else:
 				dash_direction.x = 1
@@ -147,9 +152,11 @@ func handle_dash() -> void:
 
 func handle_flip_h() -> void:
 	if direction > 0:
-		animated_sprite.flip_h = false
+		sprite.flip_h = false
+		sprite.flip_h = false
 	elif direction < 0:
-		animated_sprite.flip_h = true
+		sprite.flip_h = true
+		sprite.flip_h = true
 
 func handle_velocity(delta: float) -> void:
 	var speed_force := SPEED # usual speed
@@ -165,33 +172,40 @@ func handle_velocity(delta: float) -> void:
 	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+		
+		# prevent player to go too fast
+		if velocity.y > MAX_FALLING_VELOCITY:
+			velocity.y = MAX_FALLING_VELOCITY
 
 func handle_bounce() -> void:
 	if not is_on_floor():
 		velocity.y = JUMP_VELOCITY * 0.8
 
+func play_animation(anim_name: String) -> void:
+	# play the animation if it's no the current one
+	if anim != Anim.get(anim_name):
+		animation_player.play(anim_name)
+		anim = Anim.get(anim_name)
+
 func animate() -> void:
 	if state == State.Dashing:
-		animated_sprite.play("dash")
+		play_animation("dash")
 
 	elif state != State.Fainted:
 		if is_on_floor():
 			if direction == 0:
-				animated_sprite.play("idle")
+				play_animation("idle")
 			else:
-				animated_sprite.play("run")
+				play_animation("run")
 		elif velocity.y > 0:
-			if animated_sprite.animation != "fall":
-				animated_sprite.play("fall")
+			play_animation("fall")
 		else:
-			# Need to restart animation for jumping in mid-air
-			if animated_sprite.animation != "jump":
-				animated_sprite.play("jump")
+			play_animation("jump")
 	else:
-		if animated_sprite.animation != "faint":
-			animated_sprite.play("faint")
+		play_animation("faint")
 
 func _ready() -> void:
+	sprite.texture = Global.player_sprite
 	add_to_group("players")	
 
 func _physics_process(delta: float) -> void:
@@ -244,7 +258,7 @@ func hurt(damage: int) -> void:
 func fainted() -> void:
 	if state != State.Fainted:
 		health = 0
-		animated_sprite.play("faint")
+		play_animation("faint")
 		state = State.Fainted
 		velocity.y = 0
 		death_sound.play()
@@ -270,7 +284,7 @@ func _on_mana_recovery_timer_timeout() -> void:
 			mana += MANA_RECOVERY_RATE
 
 func _on_dash_phantom_cooldown_timeout() -> void:
-	var new_dash_phantom = dash_phantom.instantiate().init(get_middle_position(), animated_sprite.flip_h)
+	var new_dash_phantom = dash_phantom.instantiate().init(get_middle_position(), sprite.flip_h)
 	add_child(new_dash_phantom)
 
 func _on_dash_duration_timeout() -> void:

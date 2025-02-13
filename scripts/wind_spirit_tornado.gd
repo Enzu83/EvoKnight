@@ -14,7 +14,8 @@ var active: bool = false
 var direction := 0
 
 func reset() -> void:
-	animation_player.play("RESET")
+	animation_player.call_deferred("play", "RESET")
+	duration.stop()
 	direction = 0
 	active = false
 

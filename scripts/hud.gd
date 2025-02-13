@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-@onready var game_manager: Node = %GameManager
 @onready var player: CharacterBody2D = %Player
 
 @onready var health_bar: TextureProgressBar = $Main/HealthBar
@@ -61,4 +60,4 @@ func _process(_delta: float) -> void:
 	mana_bar.value = int((player.mana / float(player.max_mana)) * mana_bar.max_value)
 	
 	# stars collected
-	score_label.text = str(game_manager.score) + "/" + str(game_manager.max_score)
+	score_label.text = str(Global.stars) + "/" + str(Global.total_stars)
