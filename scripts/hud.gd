@@ -4,6 +4,9 @@ extends CanvasLayer
 @onready var player: CharacterBody2D = %Player
 
 @onready var health_bar: TextureProgressBar = $Main/HealthBar
+@onready var health_value: Label = $Main/HealthValue
+@onready var health_color_manager: AnimationPlayer = $Main/HealthValue/ColorManager
+
 @onready var exp_bar: TextureProgressBar = $Main/ExpBar
 @onready var mana_bar: TextureProgressBar = $Mana/ManaBar
 @onready var mana_threshold: Line2D = $Mana/ManaThreshold
@@ -16,8 +19,18 @@ func _ready() -> void:
 	mana_threshold_initial_position = mana_threshold.position
 
 func _process(_delta: float) -> void:
+	# get player stats
 	health_bar.value = int((player.health / float(player.max_health)) * health_bar.max_value)
 	exp_bar.value = int((player.experience / float(player.next_level_experience)) * exp_bar.max_value)
+	
+	# update health value
+	health_value.text = str(health_bar.value)
+	
+	# draw the value green is health is full
+	if health_bar.value == health_bar.max_value:
+		health_color_manager.play("green")
+	else:
+		health_color_manager.play("white")
 	
 	# magic slash threshold indicator
 	mana_threshold.position.x = mana_threshold_initial_position.x + (player.MAGIC_SLASH_MANA / float(player.max_mana)) * mana_bar.max_value

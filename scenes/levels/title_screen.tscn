@@ -113,7 +113,7 @@ text = "Quit"
 position = Vector2(123, 131)
 sprite_frames = SubResource("SpriteFrames_wdmb5")
 autoplay = "default"
-frame_progress = 0.55592
+frame_progress = 0.803466
 script = ExtResource("3_t6r2d")
 
 [node name="CursorSound" type="AudioStreamPlayer2D" parent="Cursor"]

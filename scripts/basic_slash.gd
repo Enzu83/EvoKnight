@@ -10,7 +10,6 @@ const STRENGTH = 5
 var active: bool = false
 
 func reset() -> void:
-	animation_player.play("RESET")
 	active = false
 
 func start(orientation: String) -> void:
