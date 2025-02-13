@@ -11,21 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://cyuvn1fox3gos" path="res://assets/sprites/ui/spr_dash_icon.png" id="8_wt0cw"]
 [ext_resource type="Texture2D" uid="uid://pf3053hlgifu" path="res://assets/sprites/ui/spr_magic_slash_icon.png" id="9_dc4p7"]
 
-[sub_resource type="Animation" id="Animation_gjx3w"]
-resource_name = "green"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:theme_override_colors/font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.32549, 0.737255, 0.121569, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_jpkuv"]
 length = 0.001
 tracks/0/type = "value"
@@ -39,6 +24,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_gjx3w"]
+resource_name = "green"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.32549, 0.737255, 0.121569, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_lucsj"]
@@ -140,9 +140,9 @@ default_color = Color(0.215686, 0.156863, 0.137255, 1)
 
 [node name="DashIcon" type="TextureRect" parent="Mana"]
 layout_mode = 0
-offset_left = 12.0
+offset_left = 13.3333
 offset_top = 12.0
-offset_right = 24.0
+offset_right = 25.3333
 offset_bottom = 24.0
 texture = ExtResource("8_wt0cw")
 
@@ -155,10 +155,10 @@ default_color = Color(0.215686, 0.156863, 0.137255, 1)
 
 [node name="MagicSlashIcon" type="TextureRect" parent="Mana"]
 layout_mode = 0
-offset_left = 28.0
-offset_top = 10.6667
-offset_right = 40.0
-offset_bottom = 22.6667
+offset_left = 29.3333
+offset_top = 12.0
+offset_right = 41.3333
+offset_bottom = 24.0
 texture = ExtResource("9_dc4p7")
 
 [node name="ScoreLabel" type="Label" parent="."]

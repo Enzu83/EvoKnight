@@ -42,14 +42,20 @@ func _process(_delta: float) -> void:
 	# dash threshold indicator
 	dash_threshold.position.x = dash_threshold_initial_position.x + (player.DASH_MANA / float(player.max_mana)) * mana_bar.max_value
 	
-	# dash icon displayed if enough mana
-	dash_icon.visible = player.mana >= player.DASH_MANA
+	# dash icon displayed if it can be perfomed
+	if player.can_dash and player.state == player.State.Default and player.mana >= player.DASH_MANA:
+		dash_icon.visible = true
+	else:
+		dash_icon.visible = false
 		
 	# magic slash threshold indicator
 	magic_slash_threshold.position.x = magic_slash_threshold_initial_position.x + (player.MAGIC_SLASH_MANA / float(player.max_mana)) * mana_bar.max_value
 	
-	# magic slash icon displayed if enough mana
-	magic_slash_icon.visible = player.mana >= player.MAGIC_SLASH_MANA
+	# magic slash icon displayed if it can be casted
+	if player.state == player.State.Default and not player.magic_slash.active and player.mana >= player.MAGIC_SLASH_MANA:
+		magic_slash_icon.visible = true
+	else:
+		magic_slash_icon.visible = false
 	
 	# get player mana
 	mana_bar.value = int((player.mana / float(player.max_mana)) * mana_bar.max_value)

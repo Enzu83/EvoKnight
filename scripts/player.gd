@@ -7,8 +7,8 @@ const SPEED = 150.0
 const JUMP_VELOCITY = -300.0
 const MAX_JUMPS = 2 # Multiple jumps
 
+const MANA_RECOVERY_RATE = 2 # mana recover per frame
 const MAGIC_SLASH_MANA = 25 # mana required for magic slash
-
 const DASH_MANA = 10 # mana required for dashing
 const DASH_SPEED = 2 * SPEED
 
@@ -263,7 +263,7 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 func _on_mana_recovery_timer_timeout() -> void:
 	if state != State.Fainted:
 		if mana < max_mana:
-			mana += 1
+			mana += MANA_RECOVERY_RATE
 
 func _on_dash_phantom_cooldown_timeout() -> void:
 	var new_dash_phantom = dash_phantom.instantiate().init(get_middle_position(), animated_sprite.flip_h)
