@@ -9,8 +9,12 @@ extends CanvasLayer
 
 @onready var exp_bar: TextureProgressBar = $Main/ExpBar
 @onready var mana_bar: TextureProgressBar = $Mana/ManaBar
+
 @onready var dash_threshold: Line2D = $Mana/DashThreshold
+@onready var dash_icon: TextureRect = $Mana/DashIcon
+
 @onready var magic_slash_threshold: Line2D = $Mana/MagicSlashThreshold
+@onready var magic_slash_icon: TextureRect = $Mana/MagicSlashIcon
 
 @onready var score_label: Label = $ScoreLabel
 
@@ -35,11 +39,18 @@ func _process(_delta: float) -> void:
 	else:
 		health_color_manager.play("white")
 	
-	# magic slash threshold indicator
-	magic_slash_threshold.position.x = magic_slash_threshold_initial_position.x + (player.MAGIC_SLASH_MANA / float(player.max_mana)) * mana_bar.max_value
 	# dash threshold indicator
 	dash_threshold.position.x = dash_threshold_initial_position.x + (player.DASH_MANA / float(player.max_mana)) * mana_bar.max_value
+	
+	# dash icon displayed if enough mana
+	dash_icon.visible = player.mana >= player.DASH_MANA
 		
+	# magic slash threshold indicator
+	magic_slash_threshold.position.x = magic_slash_threshold_initial_position.x + (player.MAGIC_SLASH_MANA / float(player.max_mana)) * mana_bar.max_value
+	
+	# magic slash icon displayed if enough mana
+	magic_slash_icon.visible = player.mana >= player.MAGIC_SLASH_MANA
+	
 	# get player mana
 	mana_bar.value = int((player.mana / float(player.max_mana)) * mana_bar.max_value)
 	

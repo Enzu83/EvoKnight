@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cvvewevudo2kf"]
+[gd_scene load_steps=15 format=3 uid="uid://cvvewevudo2kf"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_llsyg"]
 [ext_resource type="Texture2D" uid="uid://dfobe5bchkqus" path="res://assets/sprites/ui/spr_main_bar.png" id="2_5714a"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://c0cfiod5vy0d7" path="res://assets/sprites/ui/spr_mana_ui.png" id="5_7bbpp"]
 [ext_resource type="FontFile" uid="uid://d1oajvjlhivng" path="res://assets/fonts/8bitOperatorPlus8-Regular.ttf" id="5_v7132"]
 [ext_resource type="Texture2D" uid="uid://dkf1fc3fmyqoy" path="res://assets/sprites/ui/spr_mana_bar.png" id="6_7a3li"]
+[ext_resource type="Texture2D" uid="uid://cyuvn1fox3gos" path="res://assets/sprites/ui/spr_dash_icon.png" id="8_wt0cw"]
+[ext_resource type="Texture2D" uid="uid://pf3053hlgifu" path="res://assets/sprites/ui/spr_magic_slash_icon.png" id="9_dc4p7"]
 
 [sub_resource type="Animation" id="Animation_gjx3w"]
 resource_name = "green"
@@ -136,12 +138,28 @@ points = PackedVector2Array(0, 0.333, 0, 2.333)
 width = 1.0
 default_color = Color(0.215686, 0.156863, 0.137255, 1)
 
+[node name="DashIcon" type="TextureRect" parent="Mana"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 24.0
+offset_bottom = 24.0
+texture = ExtResource("8_wt0cw")
+
 [node name="MagicSlashThreshold" type="Line2D" parent="Mana"]
 modulate = Color(1, 1, 1, 0.486275)
 position = Vector2(13.3333, 4.66667)
 points = PackedVector2Array(0, 0.333, 0, 2.333)
 width = 1.0
 default_color = Color(0.215686, 0.156863, 0.137255, 1)
+
+[node name="MagicSlashIcon" type="TextureRect" parent="Mana"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 10.6667
+offset_right = 40.0
+offset_bottom = 22.6667
+texture = ExtResource("9_dc4p7")
 
 [node name="ScoreLabel" type="Label" parent="."]
 offset_left = 114.0
