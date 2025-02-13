@@ -3,6 +3,9 @@ extends Area2D
 @onready var game_manager = %GameManager
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+func _ready() -> void:
+	game_manager.max_score += 1
+
 func _on_body_entered(_body: Node2D) -> void:
 	game_manager.add_point()
 	animation_player.play("pickup")

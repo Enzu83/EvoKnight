@@ -45,7 +45,7 @@ func _on_area_entered(area: Area2D) -> void:
 	if body == player and player.is_hurtable():
 		body.hurt(STRENGTH)
 
-func hurt(damage: int) -> void:
+func hurt(damage: int, _attack: Area2D) -> void:
 	if health > damage:
 		health -= damage
 		hurt_sound.play()

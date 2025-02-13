@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cvvewevudo2kf"]
+[gd_scene load_steps=18 format=3 uid="uid://cvvewevudo2kf"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_llsyg"]
 [ext_resource type="Texture2D" uid="uid://dfobe5bchkqus" path="res://assets/sprites/ui/spr_main_bar.png" id="2_5714a"]
@@ -10,6 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://dkf1fc3fmyqoy" path="res://assets/sprites/ui/spr_mana_bar.png" id="6_7a3li"]
 [ext_resource type="Texture2D" uid="uid://cyuvn1fox3gos" path="res://assets/sprites/ui/spr_dash_icon.png" id="8_wt0cw"]
 [ext_resource type="Texture2D" uid="uid://pf3053hlgifu" path="res://assets/sprites/ui/spr_magic_slash_icon.png" id="9_dc4p7"]
+[ext_resource type="Texture2D" uid="uid://c0cboejd5sohi" path="res://assets/sprites/ui/spr_collectables_ui.png" id="10_aj2gh"]
+[ext_resource type="Texture2D" uid="uid://hpjnmb1knvbo" path="res://assets/sprites/items/spr_star.png" id="11_kx5sy"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_37i1y"]
 
 [sub_resource type="Animation" id="Animation_jpkuv"]
 length = 0.001
@@ -68,6 +72,13 @@ scale = Vector2(1.5, 1.5)
 transform = Transform2D(1.5, 0, 0, 1.5, 0, 0)
 script = ExtResource("1_llsyg")
 
+[node name="ScreenResolutionHelper" type="TextureRect" parent="."]
+visible = false
+offset_right = 320.0
+offset_bottom = 180.0
+scale = Vector2(0.666, 0.666)
+texture = SubResource("PlaceholderTexture2D_37i1y")
+
 [node name="Main" type="TextureRect" parent="."]
 offset_top = 4.0
 offset_right = 57.0
@@ -91,7 +102,7 @@ anchors_preset = -1
 anchor_left = 0.825
 anchor_right = 0.825
 offset_left = -9.025
-offset_right = -0.0250015
+offset_right = -0.0249977
 offset_bottom = 6.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("4_irlro")
@@ -161,7 +172,33 @@ offset_right = 41.3333
 offset_bottom = 24.0
 texture = ExtResource("9_dc4p7")
 
+[node name="Score" type="TextureRect" parent="."]
+offset_left = 165.333
+offset_right = 213.333
+offset_bottom = 32.0
+texture = ExtResource("10_aj2gh")
+
+[node name="Icon" type="TextureRect" parent="Score"]
+layout_mode = 0
+offset_left = 3.33333
+offset_top = 8.0
+offset_right = 19.3333
+offset_bottom = 24.0
+texture = ExtResource("11_kx5sy")
+
+[node name="ScoreLabel" type="Label" parent="Score"]
+layout_mode = 0
+offset_left = 24.6667
+offset_top = 12.6667
+offset_right = 37.6667
+offset_bottom = 18.6667
+theme_override_fonts/font = ExtResource("4_irlro")
+theme_override_font_sizes/font_size = 6
+text = "0/0"
+horizontal_alignment = 2
+
 [node name="ScoreLabel" type="Label" parent="."]
+visible = false
 offset_left = 114.0
 offset_top = 4.66667
 offset_right = 212.0

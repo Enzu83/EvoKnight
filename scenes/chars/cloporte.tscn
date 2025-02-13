@@ -1,0 +1,245 @@
+[gd_scene load_steps=20 format=3 uid="uid://c27tot3rib7r5"]
+
+[ext_resource type="Texture2D" uid="uid://bponovdfjgmag" path="res://assets/sprites/chars/cloporte.png" id="1_4j8xs"]
+[ext_resource type="Script" path="res://scripts/cloporte.gd" id="1_hr381"]
+[ext_resource type="Script" path="res://scripts/cloporte_hurtbox.gd" id="3_eqcsl"]
+[ext_resource type="AudioStream" uid="uid://dvafbeny530jy" path="res://assets/sfx/snd_bat_hurt.wav" id="3_fgfod"]
+[ext_resource type="AudioStream" uid="uid://ddualpt1elkrs" path="res://assets/sfx/snd_bat_death.wav" id="4_bvhmj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i707n"]
+atlas = ExtResource("1_4j8xs")
+region = Rect2(0, 32, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gsrf0"]
+atlas = ExtResource("1_4j8xs")
+region = Rect2(48, 32, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ecqvg"]
+atlas = ExtResource("1_4j8xs")
+region = Rect2(96, 32, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dywww"]
+atlas = ExtResource("1_4j8xs")
+region = Rect2(144, 32, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_godeg"]
+atlas = ExtResource("1_4j8xs")
+region = Rect2(192, 32, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojy1j"]
+atlas = ExtResource("1_4j8xs")
+region = Rect2(240, 32, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x43jp"]
+atlas = ExtResource("1_4j8xs")
+region = Rect2(288, 32, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xoak"]
+atlas = ExtResource("1_4j8xs")
+region = Rect2(336, 32, 48, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_50yja"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i707n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gsrf0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ecqvg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dywww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_godeg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojy1j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x43jp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1xoak")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="Animation" id="Animation_5pl8n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hurtbox/Hurtbox:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_0arq5"]
+resource_name = "death"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hurtbox/DeathSound:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hurtbox/Hurtbox:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_kp34c"]
+resource_name = "hit"
+length = 0.1
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hurtbox/HurtSound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fw0lg"]
+_data = {
+"RESET": SubResource("Animation_5pl8n"),
+"death": SubResource("Animation_0arq5"),
+"hit": SubResource("Animation_kp34c")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6ngan"]
+radius = 5.0
+height = 22.0
+
+[node name="Cloporte" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 0
+script = ExtResource("1_hr381")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_50yja")
+animation = &"walk"
+autoplay = "walk"
+frame_progress = 0.693778
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fw0lg")
+}
+
+[node name="WallCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0, 9)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_6ngan")
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+position = Vector2(0, 9)
+target_position = Vector2(-12, 0)
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+position = Vector2(0, 9)
+target_position = Vector2(12, 0)
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("3_eqcsl")
+
+[node name="Hurtbox" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 8)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_6ngan")
+
+[node name="HurtInvicibilityTimer" type="Timer" parent="Hurtbox"]
+wait_time = 0.4
+one_shot = true
+
+[node name="HurtSound" type="AudioStreamPlayer" parent="Hurtbox"]
+stream = ExtResource("3_fgfod")
+bus = &"SFX"
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="Hurtbox"]
+stream = ExtResource("4_bvhmj")
+bus = &"SFX"
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="timeout" from="Hurtbox/HurtInvicibilityTimer" to="." method="_on_hurt_invicibility_timer_timeout"]

@@ -16,7 +16,7 @@ extends CanvasLayer
 @onready var magic_slash_threshold: Line2D = $Mana/MagicSlashThreshold
 @onready var magic_slash_icon: TextureRect = $Mana/MagicSlashIcon
 
-@onready var score_label: Label = $ScoreLabel
+@onready var score_label: Label = $Score/ScoreLabel
 
 var dash_threshold_initial_position: Vector2
 var magic_slash_threshold_initial_position: Vector2
@@ -31,7 +31,7 @@ func _process(_delta: float) -> void:
 	exp_bar.value = int((player.experience / float(player.next_level_experience)) * exp_bar.max_value)
 	
 	# update health value
-	health_value.text = str(health_bar.value)
+	health_value.text = str(player.health)
 	
 	# draw the value green is health is full
 	if health_bar.value == health_bar.max_value:
@@ -60,5 +60,5 @@ func _process(_delta: float) -> void:
 	# get player mana
 	mana_bar.value = int((player.mana / float(player.max_mana)) * mana_bar.max_value)
 	
-	
-	score_label.text = "Stars: " + str(game_manager.score)
+	# stars collected
+	score_label.text = str(game_manager.score) + "/" + str(game_manager.max_score)

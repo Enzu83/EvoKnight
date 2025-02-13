@@ -7,18 +7,21 @@ const SPEED = 150.0
 const JUMP_VELOCITY = -300.0
 const MAX_JUMPS = 2 # Multiple jumps
 
-const MANA_RECOVERY_RATE = 2 # mana recover per frame
-const MAGIC_SLASH_MANA = 25 # mana required for magic slash
-const DASH_MANA = 10 # mana required for dashing
+const MANA_RECOVERY_RATE = 20 # mana recovered per frame
+const MAGIC_SLASH_MANA = 250 # mana required for magic slash
+const DASH_MANA = 100 # mana required for dashing
 const DASH_SPEED = 2 * SPEED
 
 enum State {Default, Fainted, Attacking, Dashing}
 
-# Variables
+# player state and actions
 var state := State.Default # handle all states of the player
 
-var direction : float # direction input
+var direction: float # direction input
 var jumps := MAX_JUMPS # jumps left
+
+var can_dash := true
+var dash_phantom = preload("res://scenes/chars/dash_phantom.tscn")
 
 # stats
 var max_health := 10
@@ -27,15 +30,12 @@ var health := max_health
 var next_level_experience := 50
 var experience := 0
 
-var max_mana := 40
+var max_mana := 400
 var mana := max_mana
 
 var strength := 1 # damage dealt to enemies
 
-var can_dash := true
-var dash_phantom = preload("res://scenes/chars/dash_phantom.tscn")
-
-# Imports
+# node imports
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var effects_player: AnimationPlayer = $EffectsPlayer
 
@@ -49,6 +49,8 @@ var dash_phantom = preload("res://scenes/chars/dash_phantom.tscn")
 @onready var death_sound: AudioStreamPlayer = $Hurt/DeathSound
 
 @onready var basic_slash: Area2D = $BasicSlash
+@onready var basic_slash_cooldown: Timer = $BasicSlashCooldown
+
 @onready var magic_slash: Area2D = $MagicSlash
 
 @onready var dash_cooldown: Timer = $DashCooldown
@@ -79,12 +81,6 @@ func handle_movement() -> void:
 
 	# Handle movements.
 	direction = Input.get_axis("left", "right")
-
-func handle_flip_h() -> void:
-	if direction > 0:
-		animated_sprite.flip_h = false
-	elif direction < 0:
-		animated_sprite.flip_h = true
 
 func handle_slash() -> void:
 	# attacking state corresponds to the basic slash being active
@@ -146,6 +142,12 @@ func handle_dash() -> void:
 		
 		# normalize the dash direction vector to keep the same velocity for each direction
 		velocity = DASH_SPEED * dash_direction.normalized()
+
+func handle_flip_h() -> void:
+	if direction > 0:
+		animated_sprite.flip_h = false
+	elif direction < 0:
+		animated_sprite.flip_h = true
 
 func handle_velocity(delta: float) -> void:
 	var speed_force := SPEED # usual speed
