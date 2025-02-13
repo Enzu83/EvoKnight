@@ -20,7 +20,7 @@
 
 - Enemies
 	- [x] Bat
-	- [ ] Flying mage
+	- [x] Flying mage
 	- [x] Grounded spiky enemy
 	- [ ] Boss with similar abilities
 

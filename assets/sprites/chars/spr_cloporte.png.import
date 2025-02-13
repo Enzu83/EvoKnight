@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dm8jhpcd4s368"
-path="res://.godot/imported/magic_slash.png-73f4811080120c8ea2a6a036834465b0.ctex"
+uid="uid://bponovdfjgmag"
+path="res://.godot/imported/spr_cloporte.png-f49505fe1c440266c16295ccfbaaddb3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/fx/magic_slash.png"
-dest_files=["res://.godot/imported/magic_slash.png-73f4811080120c8ea2a6a036834465b0.ctex"]
+source_file="res://assets/sprites/chars/spr_cloporte.png"
+dest_files=["res://.godot/imported/spr_cloporte.png-f49505fe1c440266c16295ccfbaaddb3.ctex"]
 
 [params]
 

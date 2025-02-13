@@ -14,8 +14,8 @@ const EXP_GIVEN = 6
 @onready var hurtbox: CollisionShape2D = $Hurtbox/Hurtbox
 @onready var hurt_invicibility_timer: Timer = $Hurtbox/HurtInvicibilityTimer
 @onready var hurt_sound: AudioStreamPlayer = $Hurtbox/HurtSound
-
 @onready var death_sound: AudioStreamPlayer = $Hurtbox/DeathSound
+
 @onready var clang_sound: AudioStreamPlayer2D = $ClangSound
 
 @onready var player: CharacterBody2D = %Player
