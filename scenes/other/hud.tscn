@@ -129,7 +129,14 @@ offset_bottom = 7.0
 max_value = 31.0
 texture_progress = ExtResource("6_7a3li")
 
-[node name="ManaThreshold" type="Line2D" parent="Mana"]
+[node name="DashThreshold" type="Line2D" parent="Mana"]
+modulate = Color(1, 1, 1, 0.486275)
+position = Vector2(12.6666, 4.66667)
+points = PackedVector2Array(0, 0.333, 0, 2.333)
+width = 1.0
+default_color = Color(0.215686, 0.156863, 0.137255, 1)
+
+[node name="MagicSlashThreshold" type="Line2D" parent="Mana"]
 modulate = Color(1, 1, 1, 0.486275)
 position = Vector2(13.3333, 4.66667)
 points = PackedVector2Array(0, 0.333, 0, 2.333)

@@ -9,14 +9,17 @@ extends CanvasLayer
 
 @onready var exp_bar: TextureProgressBar = $Main/ExpBar
 @onready var mana_bar: TextureProgressBar = $Mana/ManaBar
-@onready var mana_threshold: Line2D = $Mana/ManaThreshold
+@onready var dash_threshold: Line2D = $Mana/DashThreshold
+@onready var magic_slash_threshold: Line2D = $Mana/MagicSlashThreshold
 
 @onready var score_label: Label = $ScoreLabel
 
-var mana_threshold_initial_position: Vector2
+var dash_threshold_initial_position: Vector2
+var magic_slash_threshold_initial_position: Vector2
 
 func _ready() -> void:
-	mana_threshold_initial_position = mana_threshold.position
+	dash_threshold_initial_position = dash_threshold.position
+	magic_slash_threshold_initial_position = magic_slash_threshold.position
 
 func _process(_delta: float) -> void:
 	# get player stats
@@ -33,7 +36,11 @@ func _process(_delta: float) -> void:
 		health_color_manager.play("white")
 	
 	# magic slash threshold indicator
-	mana_threshold.position.x = mana_threshold_initial_position.x + (player.MAGIC_SLASH_MANA / float(player.max_mana)) * mana_bar.max_value
+	magic_slash_threshold.position.x = magic_slash_threshold_initial_position.x + (player.MAGIC_SLASH_MANA / float(player.max_mana)) * mana_bar.max_value
+	# dash threshold indicator
+	dash_threshold.position.x = dash_threshold_initial_position.x + (player.DASH_MANA / float(player.max_mana)) * mana_bar.max_value
+		
+	# get player mana
 	mana_bar.value = int((player.mana / float(player.max_mana)) * mana_bar.max_value)
 	
 	

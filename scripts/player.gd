@@ -1,12 +1,18 @@
+class_name Player
 extends CharacterBody2D
 
 # Parameters
 const SPEED = 150.0
+
 const JUMP_VELOCITY = -300.0
 const MAX_JUMPS = 2 # Multiple jumps
+
 const MAGIC_SLASH_MANA = 25 # mana required for magic slash
 
-enum State {Default, Fainted, Attacking}
+const DASH_MANA = 10 # mana required for dashing
+const DASH_SPEED = 2 * SPEED
+
+enum State {Default, Fainted, Attacking, Dashing}
 
 # Variables
 var state := State.Default # handle all states of the player
@@ -26,6 +32,9 @@ var mana := max_mana
 
 var strength := 1 # damage dealt to enemies
 
+var can_dash := true
+var dash_phantom = preload("res://scenes/chars/dash_phantom.tscn")
+
 # Imports
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var effects_player: AnimationPlayer = $EffectsPlayer
@@ -36,12 +45,15 @@ var strength := 1 # damage dealt to enemies
 @onready var hurtbox: CollisionShape2D = $Hurt/Hurtbox
 @onready var hurt_sound: AudioStreamPlayer = $Hurt/HurtSound
 @onready var hurt_invicibility_timer: Timer = $Hurt/HurtInvicibilityTimer
-
-@onready var death_timer: Timer = $DeathTimer
-@onready var death_sound: AudioStreamPlayer = $DeathSound
+@onready var death_timer: Timer = $Hurt/DeathTimer
+@onready var death_sound: AudioStreamPlayer = $Hurt/DeathSound
 
 @onready var basic_slash: Area2D = $BasicSlash
 @onready var magic_slash: Area2D = $MagicSlash
+
+@onready var dash_cooldown: Timer = $DashCooldown
+@onready var dash_duration: Timer = $DashDuration
+@onready var dash_phantom_cooldown: Timer = $DashPhantomCooldown
 
 func handle_movement() -> void:
 	# Restore jumps if grounded.
@@ -101,6 +113,40 @@ func handle_slash() -> void:
 		else:
 			magic_slash.start("right")
 
+func handle_dash() -> void:
+	if Input.is_action_just_pressed("dash") and can_dash and state == State.Default and mana >= DASH_MANA:
+		can_dash = false
+		state = State.Dashing
+		mana -= DASH_MANA
+		dash_cooldown.start()
+		dash_duration.start()
+		dash_phantom_cooldown.start()
+		
+		# find dash direction
+		var dash_direction := Vector2.ZERO
+		
+		# horizontal dash direction
+		if Input.is_action_pressed("left"):
+			dash_direction.x = -1
+		elif Input.is_action_pressed("right"):
+			dash_direction.x = 1
+		
+		# vertical dash direction
+		if Input.is_action_pressed("up"):
+			dash_direction.y = -1
+		elif Input.is_action_pressed("down"):
+			dash_direction.y = 1
+		
+		# forward dash by default if no inputs
+		if dash_direction == Vector2.ZERO:
+			if animated_sprite.flip_h:
+				dash_direction.x = -1
+			else:
+				dash_direction.x = 1
+		
+		# normalize the dash direction vector to keep the same velocity for each direction
+		velocity = DASH_SPEED * dash_direction.normalized()
+
 func handle_velocity(delta: float) -> void:
 	var speed_force := SPEED # usual speed
 	
@@ -121,7 +167,10 @@ func handle_bounce() -> void:
 		velocity.y = JUMP_VELOCITY * 0.8
 
 func animate() -> void:
-	if state != State.Fainted:
+	if state == State.Dashing:
+		animated_sprite.play("dash")
+
+	elif state != State.Fainted:
 		if is_on_floor():
 			if direction == 0:
 				animated_sprite.play("idle")
@@ -144,16 +193,19 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# handle player's actions if they are not defeated
 	if state != State.Fainted:
-		handle_slash() # attacks
-		handle_movement() # left, right and jump
+		if state != State.Dashing:
+			handle_slash() # attacks
+			handle_movement() # left, right and jump
 		
-		# flip sprite horizontally if the player is not attacking
 		if state != State.Attacking:
-			handle_flip_h()
+			handle_flip_h() # flip sprite horizontally if the player is not attacking
+			handle_dash() # can't dash while attacking
 	else:
 		direction = 0
 	
-	handle_velocity(delta) # velocity update based on the above modification
+	if state != State.Dashing:
+		handle_velocity(delta) # velocity update based on the above modification
+	
 	animate() # update the sprite animation if necessary
 	move_and_slide()
 
@@ -169,6 +221,8 @@ func is_hurtable() -> bool:
 		return true
 
 func hurt(damage: int) -> void:
+	end_dash()
+	
 	# player is still alive
 	if health > damage:
 		health -= damage
@@ -192,6 +246,13 @@ func fainted() -> void:
 		death_sound.play()
 		death_timer.start()
 
+func end_dash() -> void:
+	# end player dash animation and stop its velocity
+	if state == State.Dashing:
+		state = State.Default
+		velocity = Vector2.ZERO
+		dash_phantom_cooldown.stop() # stop dash phantom display
+
 func _on_death_timer_timeout() -> void:
 	get_tree().reload_current_scene()
 
@@ -200,5 +261,16 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 	effects_player.stop()
 
 func _on_mana_recovery_timer_timeout() -> void:
-	if mana < max_mana:
-		mana += 1
+	if state != State.Fainted:
+		if mana < max_mana:
+			mana += 1
+
+func _on_dash_phantom_cooldown_timeout() -> void:
+	var new_dash_phantom = dash_phantom.instantiate().init(get_middle_position(), animated_sprite.flip_h)
+	add_child(new_dash_phantom)
+
+func _on_dash_duration_timeout() -> void:
+	end_dash()
+
+func _on_dash_cooldown_timeout() -> void:
+	can_dash = true
