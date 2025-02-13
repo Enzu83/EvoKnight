@@ -205,6 +205,7 @@ tracks/3/keys = {
 [sub_resource type="Animation" id="Animation_kp34c"]
 resource_name = "hit"
 length = 0.1
+loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -267,7 +268,7 @@ stream = ExtResource("4_dh8ji")
 bus = &"SFX"
 
 [node name="HurtInvicibilityTimer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.4
 one_shot = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

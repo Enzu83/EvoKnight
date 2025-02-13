@@ -16,7 +16,7 @@
 	- [x] Double Jump
 	- [x] Basic Slash (4-directions)
 	- [x] Magic Slash (Left/Right)
-	- [ ] Dash (8-directions)
+	- [x] Dash (8-directions)
 
 - Enemies
 	- [x] Bat

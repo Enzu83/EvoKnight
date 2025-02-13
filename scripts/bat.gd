@@ -69,13 +69,12 @@ func _on_detector_body_entered(body: Node2D) -> void:
 		chase = true
 		target = body
 
-
 func _on_detector_body_exited(body: Node2D) -> void:
 	if body == player:
 		chase = false
 		target = null
 
-
 func _on_hurt_invicibility_timer_timeout() -> void:
 	hit = false
 	hurtbox.set_deferred("disabled", false)
+	animation_player.play("RESET")
