@@ -3,7 +3,7 @@ extends CharacterBody2D
 const SPEED = 40
 const STRENGTH = 4
 const MAX_HEALTH = 10
-const EXP_GIVEN = 5
+const EXP_GIVEN = 6
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var ray_cast_left: RayCast2D = $RayCastLeft
@@ -14,7 +14,9 @@ const EXP_GIVEN = 5
 @onready var hurtbox: CollisionShape2D = $Hurtbox/Hurtbox
 @onready var hurt_invicibility_timer: Timer = $Hurtbox/HurtInvicibilityTimer
 @onready var hurt_sound: AudioStreamPlayer = $Hurtbox/HurtSound
+
 @onready var death_sound: AudioStreamPlayer = $Hurtbox/DeathSound
+@onready var clang_sound: AudioStreamPlayer2D = $ClangSound
 
 @onready var player: CharacterBody2D = %Player
 
@@ -63,9 +65,14 @@ func hurt(damage: int, attack: Area2D) -> void:
 			hurtbox.set_deferred("disabled", true)
 			hurt_invicibility_timer.start()
 			animation_player.play("hit")
+			
 		else:
 			fainted()
-		
+	# clang between basic slash and cloporte
+	else:
+		clang_sound.play()
+		hurtbox.set_deferred("disabled", true)
+		hurt_invicibility_timer.start()
 
 func fainted() -> void:
 	if animation_player.current_animation != "death":

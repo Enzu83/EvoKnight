@@ -56,6 +56,7 @@ var strength := 1 # damage dealt to enemies
 @onready var dash_cooldown: Timer = $DashCooldown
 @onready var dash_duration: Timer = $DashDuration
 @onready var dash_phantom_cooldown: Timer = $DashPhantomCooldown
+@onready var dash_sound: AudioStreamPlayer2D = $DashSound
 
 func handle_movement() -> void:
 	# Restore jumps if grounded.
@@ -117,6 +118,7 @@ func handle_dash() -> void:
 		dash_cooldown.start()
 		dash_duration.start()
 		dash_phantom_cooldown.start()
+		dash_sound.play()
 		
 		# find dash direction
 		var dash_direction := Vector2.ZERO

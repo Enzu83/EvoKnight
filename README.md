@@ -21,7 +21,7 @@
 - Enemies
 	- [x] Bat
 	- [ ] Flying mage
-	- [ ] Grounded spiky enemy
+	- [x] Grounded spiky enemy
 	- [ ] Boss with similar abilities
 
 ## Controls
