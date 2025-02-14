@@ -9,6 +9,3 @@ extends Node2D
 func _ready() -> void:
 	Global.player = player
 	Global.boss = boss_mirror
-	
-	hud.mode = hud.DisplayMode.Boss
-	

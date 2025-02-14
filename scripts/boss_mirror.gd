@@ -1,6 +1,11 @@
 extends CharacterBody2D
 
+@onready var music: AudioStreamPlayer2D = %Music
+@onready var hud: CanvasLayer = %HUD
+
 @onready var player: Player = %Player
+
+@onready var spawn_sprite: Sprite2D = $SpawnSprite
 
 @onready var sprite: Sprite2D = $Sprite
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -40,6 +45,8 @@ var jumps := MAX_JUMPS # jumps left
 var health := MAX_HEALTH
 
 # mirror boss specific variables
+
+var active := false
 
 enum Action {None, RunToward, RunAway, Jump, Dash, BasicSlash, MagicSlash}
 var action := Action.None # indicate what the mirror boss is trying to do
@@ -122,31 +129,43 @@ func animate() -> void:
 	else:
 		play_animation("faint")
 
+func activate() -> void:
+	active = true
+	music.play()
+	player.state = player.State.Default
+	hud.mode = hud.DisplayMode.Boss
+
 func _ready() -> void:
-	add_to_group("enemies")	
+	add_to_group("enemies")
+	
+	spawn_sprite.flip_h = true
+	sprite.flip_h = true
+	music.stop()
+	player.state = player.State.Stop
 
 func _physics_process(delta: float) -> void:
-	if can_change_action:
-		find_action()
-	#print(Action.find_key(action))
+	if active:
+		if can_change_action:
+			find_action()
+		#print(Action.find_key(action))
 
-	# handle player's actions if they are not defeated
-	if state != State.Fainted:
-		if state != State.Dashing:
-			#handle_slash() # attacks
-			handle_movement() # left, right and jump
+		# handle player's actions if they are not defeated
+		if state != State.Fainted:
+			if state != State.Dashing:
+				#handle_slash() # attacks
+				handle_movement() # left, right and jump
+			
+			if state != State.Attacking:
+				handle_flip_h() # flip sprite horizontally if the player is not attacking
+				#handle_dash() # can't dash while attacking
+		else:
+			direction = 0
 		
-		if state != State.Attacking:
-			handle_flip_h() # flip sprite horizontally if the player is not attacking
-			#handle_dash() # can't dash while attacking
-	else:
-		direction = 0
-	
-	if state != State.Dashing:
-		handle_velocity(delta) # velocity update based on the above modification
-	
-	animate() # update the sprite animation if necessary
-	move_and_slide()
+		if state != State.Dashing:
+			handle_velocity(delta) # velocity update based on the above modification
+		
+		animate() # update the sprite animation if necessary
+		move_and_slide()
 
 func change_action(new_action: Action) -> void:
 	if can_change_action:
@@ -206,7 +225,7 @@ func fainted() -> void:
 		state = State.Fainted
 		velocity.y = 0
 		death_sound.play()
-		death_timer.start()
+		#death_timer.start()
 
 func _on_jump_cooldown_timeout() -> void:
 	can_jump = true

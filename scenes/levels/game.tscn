@@ -56,6 +56,7 @@ _data = {
 script = ExtResource("1_git5u")
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
 stream = ExtResource("11_3t6jf")
 autoplay = true
 bus = &"Music"

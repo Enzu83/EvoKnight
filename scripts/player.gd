@@ -37,7 +37,7 @@ const MAGIC_SLASH_MANA = 250 # mana required for magic slash
 const DASH_MANA = 100 # mana required for dashing
 const DASH_SPEED = 2 * SPEED
 
-enum State {Default, Fainted, Attacking, Dashing}
+enum State {Default, Fainted, Attacking, Dashing, Stop}
 enum Anim {idle, run, dash, jump, fall, faint}
 
 # player state and actions
@@ -192,7 +192,10 @@ func play_animation(anim_name: String) -> void:
 		anim = Anim.get(anim_name)
 
 func animate() -> void:
-	if state == State.Dashing:
+	if state == State.Stop:
+		play_animation("idle")
+	
+	elif state == State.Dashing:
 		play_animation("dash")
 
 	elif state != State.Fainted:
@@ -210,24 +213,26 @@ func animate() -> void:
 
 func _ready() -> void:
 	sprite.texture = Global.player_sprite
-	add_to_group("players")	
+	add_to_group("players")
+	
 
 func _physics_process(delta: float) -> void:
-	# handle player's actions if they are not defeated
-	if state != State.Fainted:
-		if state != State.Dashing:
-			handle_slash() # attacks
-			handle_movement() # left, right and jump
+	if state != State.Stop:
+		# handle player's actions if they are not defeated
+		if state != State.Fainted:
+			if state != State.Dashing:
+				handle_slash() # attacks
+				handle_movement() # left, right and jump
+			
+			if state != State.Attacking:
+				handle_flip_h() # flip sprite horizontally if the player is not attacking
+				handle_dash() # can't dash while attacking
+		else:
+			direction = 0
 		
-		if state != State.Attacking:
-			handle_flip_h() # flip sprite horizontally if the player is not attacking
-			handle_dash() # can't dash while attacking
-	else:
-		direction = 0
-	
-	if state != State.Dashing:
-		handle_velocity(delta) # velocity update based on the above modification
-	
+		if state != State.Dashing:
+			handle_velocity(delta) # velocity update based on the above modification
+		
 	animate() # update the sprite animation if necessary
 	move_and_slide()
 

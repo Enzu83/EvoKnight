@@ -13,11 +13,17 @@ var direction: String
 
 func reset() -> void:
 	active = false
+	animation_player.play("RESET")
 
 func start(orientation: String) -> void:
 	direction = orientation
 	active = true
 	animation_player.play(orientation)
+	
+	# flip horizontally the attack to match the player's direction
+	if (orientation == "up" and player.sprite.flip_h) \
+	or (orientation == "down" and not player.sprite.flip_h):
+		scale.x = -1
 
 func _ready() -> void:
 	sprite.texture = Global.basic_slash_sprite

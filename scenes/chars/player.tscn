@@ -265,7 +265,7 @@ frame = 2
 libraries = {
 "": SubResource("AnimationLibrary_w2yvc")
 }
-autoplay = "RESET"
+autoplay = "idle"
 
 [node name="WallCollider" type="CollisionShape2D" parent="."]
 z_index = 1
