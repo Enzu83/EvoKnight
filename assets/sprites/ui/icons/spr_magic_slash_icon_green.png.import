@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pf3053hlgifu"
-path="res://.godot/imported/spr_magic_slash_icon.png-1992526cb512a8c8de2301f74efd90c6.ctex"
+uid="uid://bky8iua8fc750"
+path="res://.godot/imported/spr_magic_slash_icon_green.png-2e785214ee126e0edb394766d5b604de.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/spr_magic_slash_icon.png"
-dest_files=["res://.godot/imported/spr_magic_slash_icon.png-1992526cb512a8c8de2301f74efd90c6.ctex"]
+source_file="res://assets/sprites/ui/icons/spr_magic_slash_icon_green.png"
+dest_files=["res://.godot/imported/spr_magic_slash_icon_green.png-2e785214ee126e0edb394766d5b604de.ctex"]
 
 [params]
 

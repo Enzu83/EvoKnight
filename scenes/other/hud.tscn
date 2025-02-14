@@ -7,13 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://bdsyj5ksya7a6" path="res://assets/sprites/ui/spr_exp_bar.png" id="4_vuae4"]
 [ext_resource type="Texture2D" uid="uid://c0cfiod5vy0d7" path="res://assets/sprites/ui/spr_mana_ui.png" id="5_7bbpp"]
 [ext_resource type="Texture2D" uid="uid://dkf1fc3fmyqoy" path="res://assets/sprites/ui/spr_mana_bar.png" id="6_7a3li"]
-[ext_resource type="Texture2D" uid="uid://cyuvn1fox3gos" path="res://assets/sprites/ui/spr_dash_icon.png" id="8_wt0cw"]
-[ext_resource type="Texture2D" uid="uid://pf3053hlgifu" path="res://assets/sprites/ui/spr_magic_slash_icon.png" id="9_dc4p7"]
+[ext_resource type="Texture2D" uid="uid://cyuvn1fox3gos" path="res://assets/sprites/ui/icons/spr_dash_icon.png" id="8_wt0cw"]
+[ext_resource type="Texture2D" uid="uid://pf3053hlgifu" path="res://assets/sprites/ui/icons/spr_magic_slash_icon_red.png" id="9_dc4p7"]
 [ext_resource type="Texture2D" uid="uid://c0cboejd5sohi" path="res://assets/sprites/ui/spr_collectables_ui.png" id="10_aj2gh"]
 [ext_resource type="Texture2D" uid="uid://hpjnmb1knvbo" path="res://assets/sprites/items/spr_star.png" id="11_kx5sy"]
 [ext_resource type="Texture2D" uid="uid://dfhmehkjsmb5a" path="res://assets/sprites/ui/spr_boss_ui.png" id="12_6f7g8"]
 [ext_resource type="Texture2D" uid="uid://vkifsbrorbmk" path="res://assets/sprites/ui/spr_boss_health_bar.png" id="13_fhkyp"]
-[ext_resource type="Texture2D" uid="uid://bwsxdaj1enfvn" path="res://assets/sprites/ui/spr_boss_ui_icon.png" id="14_ar2xq"]
+[ext_resource type="Texture2D" uid="uid://bwsxdaj1enfvn" path="res://assets/sprites/ui/icons/spr_boss_ui_icon.png" id="14_ar2xq"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_37i1y"]
 

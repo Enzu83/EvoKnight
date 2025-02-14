@@ -24,7 +24,7 @@ const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
 
 const MAX_HEALTH = 100
-const EXP_GIVEN = 30
+const EXP_GIVEN = 50
 
 enum State {Default, Fainted, Attacking, Dashing}
 enum Anim {idle, run, dash, jump, fall, faint}

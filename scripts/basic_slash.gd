@@ -2,6 +2,8 @@ extends Area2D
 
 const STRENGTH = 5
 
+@onready var sprite: Sprite2D = $Sprite
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 @onready var player: CharacterBody2D = $".."
@@ -16,6 +18,9 @@ func start(orientation: String) -> void:
 	direction = orientation
 	active = true
 	animation_player.play(orientation)
+
+func _ready() -> void:
+	sprite.texture = Global.basic_slash_sprite
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemies"):

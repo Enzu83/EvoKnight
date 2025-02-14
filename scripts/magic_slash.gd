@@ -3,6 +3,8 @@ extends Area2D
 const SPEED = 300
 const STRENGTH = 10
 
+@onready var sprite: Sprite2D = $Sprite
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var duration: Timer = $Duration
 @onready var slash_sound: AudioStreamPlayer = $SlashSound
@@ -30,6 +32,9 @@ func start(orientation) -> void:
 		direction = 1
 	
 	animation_player.play(orientation)
+
+func _ready() -> void:
+	sprite.texture = Global.magic_slash_sprite
 
 func _process(delta: float) -> void:
 	# move the magic slash

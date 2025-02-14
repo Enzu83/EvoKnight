@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwsxdaj1enfvn"
-path="res://.godot/imported/spr_boss_ui_icon.png-84ccec8154c0116364a46d0e92707cad.ctex"
+uid="uid://bhjrhnmg5nc66"
+path="res://.godot/imported/spr_magic_slash_icon_purple.png-42da0e49d5778834a51e3bcf11347450.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/spr_boss_ui_icon.png"
-dest_files=["res://.godot/imported/spr_boss_ui_icon.png-84ccec8154c0116364a46d0e92707cad.ctex"]
+source_file="res://assets/sprites/ui/icons/spr_magic_slash_icon_purple.png"
+dest_files=["res://.godot/imported/spr_magic_slash_icon_purple.png-42da0e49d5778834a51e3bcf11347450.ctex"]
 
 [params]
 

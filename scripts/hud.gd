@@ -28,9 +28,12 @@ var boss: CharacterBody2D = null
 var dash_threshold_initial_position: Vector2
 var magic_slash_threshold_initial_position: Vector2
 
-func _ready() -> void:	
+func _ready() -> void:
 	dash_threshold_initial_position = dash_threshold.position
 	magic_slash_threshold_initial_position = magic_slash_threshold.position
+	
+	dash_icon.texture = Global.dash_icon
+	magic_slash_icon.texture = Global.magic_slash_icon
 
 func _process(_delta: float) -> void:
 	player = Global.player

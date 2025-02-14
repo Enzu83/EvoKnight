@@ -16,19 +16,25 @@ var menu := Menu.Main
 var cursor_main_position := Vector2(123, 131)
 var selected_button: Label
 
-var player_skin_list = [
-	"res://assets/sprites/chars/player/spr_cherry.png",
+var player_skin_list := [
+	"res://assets/sprites/chars/player/spr_cherry_red.png",
 	"res://assets/sprites/chars/player/spr_cherry_blue.png",
 	"res://assets/sprites/chars/player/spr_cherry_green.png",
 	"res://assets/sprites/chars/player/spr_cherry_purple.png",
 ]
 
-var player_color_list = [
-	Color(67, 163, 245, 1),
-	Color(245, 72, 67, 1),
-	Color(245, 67, 104, 1),
-	Color(67, 245, 208, 1),
-]
+var color_list := ["red", "blue", "green", "purple"]
+
+var colors := {
+	"red": Color(67, 163, 245, 1),
+	"blue": Color(245, 72, 67, 1),
+	"green": Color(245, 67, 104, 1),
+	"purple": Color(67, 245, 208, 1),
+}
+
+var player_sprite_path := "res://assets/sprites/chars/player/"
+var slash_sprite_path := "res://assets/sprites/fx/slash/"
+var ui_icon_path := "res://assets/sprites/ui/icons/"
 
 var selected_skin: int = 0
 
@@ -52,8 +58,17 @@ func handle_button_selection() -> void:
 func handle_click_button() -> void:
 	if Input.is_action_just_pressed("confirm"):
 		if selected_button == play_button:
-			Global.player_sprite = load(player_skin_list[selected_skin])
-			Global.player_color = player_color_list[selected_skin]
+			# apply skin
+			var color: String = color_list[selected_skin]
+			
+			Global.player_sprite = load(player_sprite_path + "spr_cherry_" + color + ".png")
+			Global.basic_slash_sprite = load(slash_sprite_path + "spr_basic_slash_" + color + ".png")
+			Global.magic_slash_sprite = load(slash_sprite_path + "spr_magic_slash_" + color + ".png")
+			Global.magic_slash_icon = load(ui_icon_path + "spr_magic_slash_icon_" + color + ".png")
+			Global.dash_icon = load(ui_icon_path + "spr_dash_icon_" + color + ".png")
+
+			Global.player_color = colors[color]
+			
 			# go to the level
 			get_tree().change_scene_to_file("res://scenes/levels/game.tscn")
 		

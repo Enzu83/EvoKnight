@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://yx6p3eyombnl"
-path="res://.godot/imported/spr_cherry.png-2fadda5b85157309d6bf168472922c95.ctex"
+uid="uid://dnjm78dsfqi63"
+path="res://.godot/imported/spr_magic_slash_purple.png-9d14f26fd9b89ddfec49d4b2dfe39f22.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/chars/player/spr_cherry.png"
-dest_files=["res://.godot/imported/spr_cherry.png-2fadda5b85157309d6bf168472922c95.ctex"]
+source_file="res://assets/sprites/fx/slash/spr_magic_slash_purple.png"
+dest_files=["res://.godot/imported/spr_magic_slash_purple.png-9d14f26fd9b89ddfec49d4b2dfe39f22.ctex"]
 
 [params]
 

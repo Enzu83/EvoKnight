@@ -1,6 +1,11 @@
 extends Node
 
-var player_sprite: Resource = load("res://assets/sprites/chars/player/spr_cherry.png")
+var player_sprite: Resource = load("res://assets/sprites/chars/player/spr_cherry_red.png")
+var basic_slash_sprite: Resource = load("res://assets/sprites/fx/slash/spr_basic_slash_red.png")
+var magic_slash_sprite: Resource = load("res://assets/sprites/fx/slash/spr_magic_slash_red.png")
+var magic_slash_icon: Resource = load("res://assets/sprites/ui/icons/spr_magic_slash_icon_red.png")
+var dash_icon: Resource = load("res://assets/sprites/ui/icons/spr_dash_icon_red.png")
+
 var player_color: Color
 var stars: int
 var total_stars: int
