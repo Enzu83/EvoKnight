@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://bvd0y2way7av1"]
+
+[node name="BossMirror" type="CharacterBody2D"]

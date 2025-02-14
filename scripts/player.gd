@@ -24,6 +24,7 @@ var direction: float # direction input
 var jumps := MAX_JUMPS # jumps left
 
 var can_dash := true
+var dash_direction := Vector2.ZERO
 var dash_phantom = preload("res://scenes/chars/dash_phantom.tscn")
 
 # stats
@@ -124,14 +125,15 @@ func handle_dash() -> void:
 		dash_duration.start()
 		dash_phantom_cooldown.start()
 		dash_sound.play()
+		create_dash_phantom()
 		
 		# find dash direction
-		var dash_direction := Vector2.ZERO
+		dash_direction = Vector2.ZERO
 		
 		# horizontal dash direction
-		if Input.is_action_pressed("left"):
+		if direction < 0:
 			dash_direction.x = -1
-		elif Input.is_action_pressed("right"):
+		elif direction > 0:
 			dash_direction.x = 1
 		
 		# vertical dash direction
@@ -140,7 +142,11 @@ func handle_dash() -> void:
 		elif Input.is_action_pressed("down"):
 			dash_direction.y = 1
 		
-		# forward dash by default if no inputs
+		# downward dash direction while on floor is irrelevant
+		if dash_direction.y == 1 and is_on_floor():
+			dash_direction.y = 0
+		
+		# if the dash has no direction, find one with the orientation
 		if dash_direction == Vector2.ZERO:
 			if sprite.flip_h:
 				dash_direction.x = -1
@@ -164,7 +170,7 @@ func handle_velocity(delta: float) -> void:
 	# move slower if the player is attacking
 	if state == State.Attacking:
 		speed_force *= 0.7
-	
+
 	if direction:
 		velocity.x = direction * speed_force
 	else:
@@ -227,7 +233,6 @@ func _physics_process(delta: float) -> void:
 	animate() # update the sprite animation if necessary
 	move_and_slide()
 
-
 # get the position of the player with a vertical offset depending on the hurtbox's size
 func get_middle_position() -> Vector2:
 	return position - Vector2(0, hurtbox.shape.get_rect().size.y)
@@ -264,8 +269,12 @@ func fainted() -> void:
 		death_sound.play()
 		death_timer.start()
 
+func create_dash_phantom() -> void:
+	var new_dash_phantom = dash_phantom.instantiate().init(get_middle_position(), sprite.flip_h)
+	add_child(new_dash_phantom)
+
 func end_dash() -> void:
-	# end player dash animation and stop its velocity
+	# end player dash animation and stop its velocity if not sliding
 	if state == State.Dashing:
 		state = State.Default
 		velocity = Vector2.ZERO
@@ -284,8 +293,7 @@ func _on_mana_recovery_timer_timeout() -> void:
 			mana += MANA_RECOVERY_RATE
 
 func _on_dash_phantom_cooldown_timeout() -> void:
-	var new_dash_phantom = dash_phantom.instantiate().init(get_middle_position(), sprite.flip_h)
-	add_child(new_dash_phantom)
+	create_dash_phantom()
 
 func _on_dash_duration_timeout() -> void:
 	end_dash()

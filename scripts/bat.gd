@@ -2,7 +2,7 @@ extends Area2D
 
 const SPEED = 80
 const STRENGTH = 3 # damage caused by the enemy
-const MAX_HEALTH = 120
+const MAX_HEALTH = 12
 const EXP_GIVEN = 3
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D

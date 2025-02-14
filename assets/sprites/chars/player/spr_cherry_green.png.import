@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpoiutvj15v6x"
-path="res://.godot/imported/spr_plum.png-0b0d6e7bcbfee9192a0f0f6b28216f88.ctex"
+uid="uid://bh7tl6kq53bgq"
+path="res://.godot/imported/spr_cherry_green.png-918dd232379e0df9d092c7a937b085fd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/chars/player/spr_plum.png"
-dest_files=["res://.godot/imported/spr_plum.png-0b0d6e7bcbfee9192a0f0f6b28216f88.ctex"]
+source_file="res://assets/sprites/chars/player/spr_cherry_green.png"
+dest_files=["res://.godot/imported/spr_cherry_green.png-918dd232379e0df9d092c7a937b085fd.ctex"]
 
 [params]
 

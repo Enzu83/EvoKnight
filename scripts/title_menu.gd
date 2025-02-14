@@ -18,9 +18,9 @@ var selected_button: Label
 
 var player_skin_list = [
 	"res://assets/sprites/chars/player/spr_cherry.png",
-	"res://assets/sprites/chars/player/spr_plum.png",
-	"res://assets/sprites/chars/player/spr_cherry_dark.png",
-	"res://assets/sprites/chars/player/spr_cherry_black.png",
+	"res://assets/sprites/chars/player/spr_cherry_blue.png",
+	"res://assets/sprites/chars/player/spr_cherry_green.png",
+	"res://assets/sprites/chars/player/spr_cherry_purple.png",
 ]
 var selected_skin: int = 0
 
