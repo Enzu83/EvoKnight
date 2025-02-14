@@ -41,7 +41,7 @@ func _process(delta: float) -> void:
 		position = wind_spirit.get_middle_position()
 
 func _on_body_entered(body: Node2D) -> void:
-	if body == wind_spirit.player:
+	if body == wind_spirit.player and wind_spirit.player.is_hurtable():
 		wind_spirit.player.hurt(STRENGTH)
 
 func _on_duration_timeout() -> void:

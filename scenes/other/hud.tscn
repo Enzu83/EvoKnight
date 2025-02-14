@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cvvewevudo2kf"]
+[gd_scene load_steps=17 format=3 uid="uid://cvvewevudo2kf"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_llsyg"]
 [ext_resource type="Texture2D" uid="uid://dfobe5bchkqus" path="res://assets/sprites/ui/spr_main_bar.png" id="2_5714a"]
@@ -6,7 +6,6 @@
 [ext_resource type="FontFile" uid="uid://dalt325jhindk" path="res://assets/fonts/fnt_tiny_number.png" id="4_irlro"]
 [ext_resource type="Texture2D" uid="uid://bdsyj5ksya7a6" path="res://assets/sprites/ui/spr_exp_bar.png" id="4_vuae4"]
 [ext_resource type="Texture2D" uid="uid://c0cfiod5vy0d7" path="res://assets/sprites/ui/spr_mana_ui.png" id="5_7bbpp"]
-[ext_resource type="FontFile" uid="uid://d1oajvjlhivng" path="res://assets/fonts/8bitOperatorPlus8-Regular.ttf" id="5_v7132"]
 [ext_resource type="Texture2D" uid="uid://dkf1fc3fmyqoy" path="res://assets/sprites/ui/spr_mana_bar.png" id="6_7a3li"]
 [ext_resource type="Texture2D" uid="uid://cyuvn1fox3gos" path="res://assets/sprites/ui/spr_dash_icon.png" id="8_wt0cw"]
 [ext_resource type="Texture2D" uid="uid://pf3053hlgifu" path="res://assets/sprites/ui/spr_magic_slash_icon.png" id="9_dc4p7"]
@@ -196,15 +195,4 @@ offset_bottom = 18.6667
 theme_override_fonts/font = ExtResource("4_irlro")
 theme_override_font_sizes/font_size = 6
 text = "0/0"
-horizontal_alignment = 2
-
-[node name="ScoreLabel" type="Label" parent="."]
-visible = false
-offset_left = 114.0
-offset_top = 4.66667
-offset_right = 212.0
-offset_bottom = 20.6667
-theme_override_fonts/font = ExtResource("5_v7132")
-theme_override_font_sizes/font_size = 14
-text = "Stars: 0"
 horizontal_alignment = 2

@@ -14,7 +14,7 @@ config/name="EvoKnight"
 run/main_scene="res://scenes/levels/game.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/show_image=false
-config/icon="res://icon.png"
+config/icon="res://assets/sprites/other/application_icon.png"
 
 [autoload]
 

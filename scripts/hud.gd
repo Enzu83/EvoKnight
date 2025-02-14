@@ -15,7 +15,11 @@ extends CanvasLayer
 @onready var magic_slash_threshold: Line2D = $Mana/MagicSlashThreshold
 @onready var magic_slash_icon: TextureRect = $Mana/MagicSlashIcon
 
+@onready var score: TextureRect = $Score
 @onready var score_label: Label = $Score/ScoreLabel
+
+enum DisplayMode {Collectable, Boss}
+var mode := DisplayMode.Collectable
 
 var dash_threshold_initial_position: Vector2
 var magic_slash_threshold_initial_position: Vector2
@@ -59,5 +63,19 @@ func _process(_delta: float) -> void:
 	# get player mana
 	mana_bar.value = int((player.mana / float(player.max_mana)) * mana_bar.max_value)
 	
-	# stars collected
+	hide_all() # hide all specific ui before make some of them visible
+	
+	if mode == DisplayMode.Collectable:
+		draw_collectable_ui()
+	elif mode == DisplayMode.Boss:
+		draw_boss_ui()
+	
+func hide_all() -> void:
+	score.visible = false	
+
+func draw_collectable_ui() -> void:
+	score.visible = true
 	score_label.text = str(Global.stars) + "/" + str(Global.total_stars)
+
+func draw_boss_ui() -> void:
+	pass

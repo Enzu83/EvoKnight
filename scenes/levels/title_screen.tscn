@@ -116,6 +116,7 @@ bus = &"SFX"
 
 [node name="PlayButton" type="Label" parent="Menu"]
 top_level = true
+layout_mode = 0
 offset_left = 134.0
 offset_top = 124.0
 offset_right = 186.0
@@ -125,6 +126,7 @@ text = "Play"
 
 [node name="SkinButton" type="Label" parent="Menu"]
 top_level = true
+layout_mode = 0
 offset_left = 135.0
 offset_top = 152.0
 offset_right = 185.0

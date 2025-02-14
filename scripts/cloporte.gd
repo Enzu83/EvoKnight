@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 40
+const SPEED = 35
 const MAX_FALLING_VELOCITY = 450
 const STRENGTH = 4
 const MAX_HEALTH = 10
@@ -22,6 +22,7 @@ const EXP_GIVEN = 6
 @onready var player: CharacterBody2D = %Player
 
 var health := MAX_HEALTH
+var hit := false # enemy stun if hit by an attack, can't chase during this period
 
 func _ready() -> void:
 	animated_sprite.flip_h = false
@@ -49,7 +50,9 @@ func handle_flip_h() -> void:
 func _physics_process(delta: float) -> void:
 	handle_velocity(delta)
 	handle_flip_h()
-	move_and_slide()
+	
+	if not hit:
+		move_and_slide()
 
 func hurt(damage: int, attack: Area2D) -> void:
 	# check if the attack can hit the cloporte
@@ -70,7 +73,7 @@ func hurt(damage: int, attack: Area2D) -> void:
 			hurtbox.set_deferred("disabled", true)
 			hurt_invicibility_timer.start()
 			animation_player.play("hit")
-			
+			hit = true
 		else:
 			fainted()
 	# clang between basic slash and cloporte
@@ -95,5 +98,6 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		body.hurt(STRENGTH)
 
 func _on_hurt_invicibility_timer_timeout() -> void:
+	hit = false
 	hurtbox.set_deferred("disabled", false)
 	animation_player.play("RESET")

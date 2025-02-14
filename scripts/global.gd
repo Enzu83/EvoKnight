@@ -6,8 +6,12 @@ var total_stars: int
 
 func _ready() -> void:
 	stars = 0
-	total_stars = 3
+	total_stars = 0
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("reset"):
-		get_tree().reload_current_scene()
+		reset()
+
+func reset() -> void:
+	_ready()
+	get_tree().reload_current_scene()

@@ -1,7 +1,7 @@
 [gd_scene load_steps=21 format=3 uid="uid://bus5n18gsp1ad"]
 
 [ext_resource type="Script" path="res://scripts/wind_spirit.gd" id="1_u86kq"]
-[ext_resource type="Texture2D" uid="uid://6ur4g7pe24ap" path="res://assets/sprites/chars/spr_wind_spirit.png" id="2_v4mar"]
+[ext_resource type="Texture2D" uid="uid://6ur4g7pe24ap" path="res://assets/sprites/chars/enemies/spr_wind_spirit.png" id="2_v4mar"]
 [ext_resource type="AudioStream" uid="uid://b1pt3uc7c7vaf" path="res://assets/sfx/snd_wind_spirit_hurt.wav" id="3_0xjtr"]
 [ext_resource type="AudioStream" uid="uid://dko557q8r321m" path="res://assets/sfx/snd_wind_spirit_death.wav" id="4_xe5pk"]
 [ext_resource type="PackedScene" uid="uid://dnwt0qqjgh7f0" path="res://scenes/fx/wind_spirit_tornado.tscn" id="5_6hqdy"]

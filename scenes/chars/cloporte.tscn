@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://c27tot3rib7r5"]
 
-[ext_resource type="Texture2D" uid="uid://bponovdfjgmag" path="res://assets/sprites/chars/spr_cloporte.png" id="1_4j8xs"]
+[ext_resource type="Texture2D" uid="uid://bponovdfjgmag" path="res://assets/sprites/chars/enemies/spr_cloporte.png" id="1_4j8xs"]
 [ext_resource type="Script" path="res://scripts/cloporte.gd" id="1_hr381"]
 [ext_resource type="Script" path="res://scripts/cloporte_hurtbox.gd" id="3_eqcsl"]
 [ext_resource type="AudioStream" uid="uid://wsloe8ioq0d0" path="res://assets/sfx/snd_cloporte_hurt.wav" id="4_nv27m"]

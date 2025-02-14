@@ -272,7 +272,7 @@ func end_dash() -> void:
 		dash_phantom_cooldown.stop() # stop dash phantom display
 
 func _on_death_timer_timeout() -> void:
-	get_tree().reload_current_scene()
+	Global.reset()
 
 func _on_hurt_invicibility_timer_timeout() -> void:
 	hurtbox.set_deferred("disabled", false)

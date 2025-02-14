@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://cf8j7ywt5hk2k"]
 
-[ext_resource type="Texture2D" uid="uid://tsbfh5vqxi7w" path="res://assets/sprites/chars/spr_bat.png" id="1_7l1al"]
+[ext_resource type="Texture2D" uid="uid://tsbfh5vqxi7w" path="res://assets/sprites/chars/enemies/spr_bat.png" id="1_7l1al"]
 [ext_resource type="Script" path="res://scripts/bat.gd" id="1_ttpqr"]
 [ext_resource type="AudioStream" uid="uid://dvafbeny530jy" path="res://assets/sfx/snd_bat_hurt.wav" id="3_k27jp"]
 [ext_resource type="AudioStream" uid="uid://ddualpt1elkrs" path="res://assets/sfx/snd_bat_death.wav" id="4_dh8ji"]

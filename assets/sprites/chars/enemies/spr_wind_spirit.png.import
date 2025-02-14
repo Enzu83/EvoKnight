@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tsbfh5vqxi7w"
-path="res://.godot/imported/spr_bat.png-c452205161b1524b60fe3bfa2cb1fb0d.ctex"
+uid="uid://6ur4g7pe24ap"
+path="res://.godot/imported/spr_wind_spirit.png-abaca0c86b2032de77cb135561e00ff9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/chars/spr_bat.png"
-dest_files=["res://.godot/imported/spr_bat.png-c452205161b1524b60fe3bfa2cb1fb0d.ctex"]
+source_file="res://assets/sprites/chars/enemies/spr_wind_spirit.png"
+dest_files=["res://.godot/imported/spr_wind_spirit.png-abaca0c86b2032de77cb135561e00ff9.ctex"]
 
 [params]
 

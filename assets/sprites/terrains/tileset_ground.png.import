@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bponovdfjgmag"
-path="res://.godot/imported/spr_cloporte.png-f49505fe1c440266c16295ccfbaaddb3.ctex"
+uid="uid://ccrra6s726p0n"
+path="res://.godot/imported/tileset_ground.png-28ee5bd9f22383ba9a1980eb84ff7edd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/chars/spr_cloporte.png"
-dest_files=["res://.godot/imported/spr_cloporte.png-f49505fe1c440266c16295ccfbaaddb3.ctex"]
+source_file="res://assets/sprites/terrains/tileset_ground.png"
+dest_files=["res://.godot/imported/tileset_ground.png-28ee5bd9f22383ba9a1980eb84ff7edd.ctex"]
 
 [params]
 
