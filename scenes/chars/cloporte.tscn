@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bponovdfjgmag" path="res://assets/sprites/chars/enemies/spr_cloporte.png" id="1_4j8xs"]
 [ext_resource type="Script" path="res://scripts/cloporte.gd" id="1_hr381"]
-[ext_resource type="Script" path="res://scripts/cloporte_hurtbox.gd" id="3_eqcsl"]
+[ext_resource type="Script" path="res://scripts/body_hurtbox.gd" id="3_eqcsl"]
 [ext_resource type="AudioStream" uid="uid://wsloe8ioq0d0" path="res://assets/sfx/snd_cloporte_hurt.wav" id="4_nv27m"]
 [ext_resource type="AudioStream" uid="uid://d4jw0ltccdfes" path="res://assets/sfx/snd_cloporte_death.wav" id="5_g47ou"]
 [ext_resource type="AudioStream" uid="uid://8aur0ki6cwrp" path="res://assets/sfx/snd_clang.wav" id="6_fgkvl"]

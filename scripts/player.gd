@@ -1,9 +1,33 @@
 class_name Player
 extends CharacterBody2D
 
+# node imports
+@onready var sprite: Sprite2D = $Sprite
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var effects_player: AnimationPlayer = $EffectsPlayer
+
+@onready var jump_circle: AnimationPlayer = $Jump/JumpCircle
+@onready var jump_sound: AudioStreamPlayer = $Jump/JumpSound
+
+@onready var hurtbox: CollisionShape2D = $Hurtbox/Hurtbox
+@onready var hurt_sound: AudioStreamPlayer = $Hurtbox/HurtSound
+@onready var hurt_invicibility_timer: Timer = $Hurtbox/HurtInvicibilityTimer
+@onready var death_sound: AudioStreamPlayer = $Hurtbox/DeathSound
+
+@onready var death_timer: Timer = $DeathTimer
+
+@onready var basic_slash: Area2D = $BasicSlash
+@onready var basic_slash_cooldown: Timer = $BasicSlashCooldown
+
+@onready var magic_slash: Area2D = $MagicSlash
+
+@onready var dash_cooldown: Timer = $DashCooldown
+@onready var dash_duration: Timer = $DashDuration
+@onready var phantom_cooldown: Timer = $PhantomCooldown
+@onready var dash_sound: AudioStreamPlayer2D = $DashSound
+
 # Parameters
 const SPEED = 150.0
-
 const JUMP_VELOCITY = -300.0
 const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
@@ -25,7 +49,7 @@ var jumps := MAX_JUMPS # jumps left
 
 var can_dash := true
 var dash_direction := Vector2.ZERO
-var dash_phantom = preload("res://scenes/chars/dash_phantom.tscn")
+var phantom = preload("res://scenes/chars/phantom.tscn")
 
 # stats
 var max_health := 10
@@ -38,30 +62,6 @@ var max_mana := 400
 var mana := max_mana
 
 var strength := 1 # damage dealt to enemies
-
-# node imports
-@onready var sprite: Sprite2D = $Sprite
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var effects_player: AnimationPlayer = $EffectsPlayer
-
-@onready var jump_circle: AnimationPlayer = $Jump/JumpCircle
-@onready var jump_sound: AudioStreamPlayer = $Jump/JumpSound
-
-@onready var hurtbox: CollisionShape2D = $Hurt/Hurtbox
-@onready var hurt_sound: AudioStreamPlayer = $Hurt/HurtSound
-@onready var hurt_invicibility_timer: Timer = $Hurt/HurtInvicibilityTimer
-@onready var death_timer: Timer = $Hurt/DeathTimer
-@onready var death_sound: AudioStreamPlayer = $Hurt/DeathSound
-
-@onready var basic_slash: Area2D = $BasicSlash
-@onready var basic_slash_cooldown: Timer = $BasicSlashCooldown
-
-@onready var magic_slash: Area2D = $MagicSlash
-
-@onready var dash_cooldown: Timer = $DashCooldown
-@onready var dash_duration: Timer = $DashDuration
-@onready var dash_phantom_cooldown: Timer = $DashPhantomCooldown
-@onready var dash_sound: AudioStreamPlayer2D = $DashSound
 
 func handle_movement() -> void:
 	# Restore jumps if grounded.
@@ -123,9 +123,9 @@ func handle_dash() -> void:
 		mana -= DASH_MANA
 		dash_cooldown.start()
 		dash_duration.start()
-		dash_phantom_cooldown.start()
+		phantom_cooldown.start()
 		dash_sound.play()
-		create_dash_phantom()
+		create_phantom()
 		
 		# find dash direction
 		dash_direction = Vector2.ZERO
@@ -159,9 +159,7 @@ func handle_dash() -> void:
 func handle_flip_h() -> void:
 	if direction > 0:
 		sprite.flip_h = false
-		sprite.flip_h = false
 	elif direction < 0:
-		sprite.flip_h = true
 		sprite.flip_h = true
 
 func handle_velocity(delta: float) -> void:
@@ -238,10 +236,7 @@ func get_middle_position() -> Vector2:
 	return position - Vector2(0, hurtbox.shape.get_rect().size.y)
 
 func is_hurtable() -> bool:
-	if effects_player.current_animation == "blink":
-		return false
-	else:
-		return true
+	return not effects_player.current_animation == "blink"
 
 func hurt(damage: int) -> void:
 	end_dash()
@@ -269,16 +264,17 @@ func fainted() -> void:
 		death_sound.play()
 		death_timer.start()
 
-func create_dash_phantom() -> void:
-	var new_dash_phantom = dash_phantom.instantiate().init(get_middle_position(), sprite.flip_h)
-	add_child(new_dash_phantom)
+func create_phantom() -> void:
+	# create a phantom only if the player is moving or dashing
+	if velocity != Vector2.ZERO or state == State.Dashing:
+		add_child(phantom.instantiate())
 
 func end_dash() -> void:
 	# end player dash animation and stop its velocity if not sliding
 	if state == State.Dashing:
 		state = State.Default
 		velocity = Vector2.ZERO
-		dash_phantom_cooldown.stop() # stop dash phantom display
+		phantom_cooldown.stop() # stop phantom display
 
 func _on_death_timer_timeout() -> void:
 	Global.reset()
@@ -292,8 +288,8 @@ func _on_mana_recovery_timer_timeout() -> void:
 		if mana < max_mana:
 			mana += MANA_RECOVERY_RATE
 
-func _on_dash_phantom_cooldown_timeout() -> void:
-	create_dash_phantom()
+func _on_phantom_cooldown_timeout() -> void:
+	create_phantom()
 
 func _on_dash_duration_timeout() -> void:
 	end_dash()

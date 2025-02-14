@@ -1,7 +1,5 @@
 extends CanvasLayer
 
-@onready var player: CharacterBody2D = %Player
-
 @onready var health_bar: TextureProgressBar = $Main/HealthBar
 @onready var health_value: Label = $Main/HealthValue
 @onready var health_color_manager: AnimationPlayer = $Main/HealthValue/ColorManager
@@ -18,17 +16,26 @@ extends CanvasLayer
 @onready var score: TextureRect = $Score
 @onready var score_label: Label = $Score/ScoreLabel
 
-enum DisplayMode {Collectable, Boss}
-var mode := DisplayMode.Collectable
+@onready var boss_bar: TextureRect = $BossBar
+@onready var boss_health_bar: TextureProgressBar = $BossBar/HealthBar
+
+enum DisplayMode {None, Collectable, Boss}
+var mode := DisplayMode.None
+
+var player: CharacterBody2D = null
+var boss: CharacterBody2D = null
 
 var dash_threshold_initial_position: Vector2
 var magic_slash_threshold_initial_position: Vector2
 
-func _ready() -> void:
+func _ready() -> void:	
 	dash_threshold_initial_position = dash_threshold.position
 	magic_slash_threshold_initial_position = magic_slash_threshold.position
 
 func _process(_delta: float) -> void:
+	player = Global.player
+	boss = Global.boss
+	
 	# get player stats
 	health_bar.value = int((player.health / float(player.max_health)) * health_bar.max_value)
 	exp_bar.value = int((player.experience / float(player.next_level_experience)) * exp_bar.max_value)
@@ -71,11 +78,13 @@ func _process(_delta: float) -> void:
 		draw_boss_ui()
 	
 func hide_all() -> void:
-	score.visible = false	
+	score.visible = false
+	boss_bar.visible = false
 
 func draw_collectable_ui() -> void:
 	score.visible = true
 	score_label.text = str(Global.stars) + "/" + str(Global.total_stars)
 
 func draw_boss_ui() -> void:
-	pass
+	boss_bar.visible = true
+	boss_health_bar.value = int((boss.health / float(boss.MAX_HEALTH)) * boss_health_bar.max_value)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cvvewevudo2kf"]
+[gd_scene load_steps=20 format=3 uid="uid://cvvewevudo2kf"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_llsyg"]
 [ext_resource type="Texture2D" uid="uid://dfobe5bchkqus" path="res://assets/sprites/ui/spr_main_bar.png" id="2_5714a"]
@@ -11,6 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://pf3053hlgifu" path="res://assets/sprites/ui/spr_magic_slash_icon.png" id="9_dc4p7"]
 [ext_resource type="Texture2D" uid="uid://c0cboejd5sohi" path="res://assets/sprites/ui/spr_collectables_ui.png" id="10_aj2gh"]
 [ext_resource type="Texture2D" uid="uid://hpjnmb1knvbo" path="res://assets/sprites/items/spr_star.png" id="11_kx5sy"]
+[ext_resource type="Texture2D" uid="uid://dfhmehkjsmb5a" path="res://assets/sprites/ui/spr_boss_ui.png" id="12_6f7g8"]
+[ext_resource type="Texture2D" uid="uid://vkifsbrorbmk" path="res://assets/sprites/ui/spr_boss_health_bar.png" id="13_fhkyp"]
+[ext_resource type="Texture2D" uid="uid://bwsxdaj1enfvn" path="res://assets/sprites/ui/spr_boss_ui_icon.png" id="14_ar2xq"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_37i1y"]
 
@@ -173,6 +176,7 @@ offset_bottom = 24.0
 texture = ExtResource("9_dc4p7")
 
 [node name="Score" type="TextureRect" parent="."]
+visible = false
 offset_left = 191.59
 offset_right = 239.59
 offset_bottom = 32.0
@@ -196,3 +200,37 @@ theme_override_fonts/font = ExtResource("4_irlro")
 theme_override_font_sizes/font_size = 6
 text = "0/0"
 horizontal_alignment = 2
+
+[node name="BossBar" type="TextureRect" parent="."]
+offset_left = 64.0
+offset_top = 8.0
+offset_right = 174.0
+offset_bottom = 19.0
+texture = ExtResource("12_6f7g8")
+
+[node name="HealthBar" type="TextureProgressBar" parent="BossBar"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 3.0
+offset_right = 103.0
+offset_bottom = 8.0
+max_value = 96.0
+texture_progress = ExtResource("13_fhkyp")
+
+[node name="BossName" type="Label" parent="BossBar"]
+visible = false
+layout_mode = 0
+offset_left = 23.7719
+offset_top = -8.0
+offset_right = 84.7719
+offset_bottom = 15.0
+text = "Boss"
+horizontal_alignment = 1
+
+[node name="Icon" type="TextureRect" parent="BossBar"]
+layout_mode = 0
+offset_left = 92.0
+offset_top = -3.0
+offset_right = 100.0
+offset_bottom = 5.0
+texture = ExtResource("14_ar2xq")

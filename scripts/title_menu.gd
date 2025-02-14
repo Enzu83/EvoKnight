@@ -22,6 +22,14 @@ var player_skin_list = [
 	"res://assets/sprites/chars/player/spr_cherry_green.png",
 	"res://assets/sprites/chars/player/spr_cherry_purple.png",
 ]
+
+var player_color_list = [
+	Color(67, 163, 245, 1),
+	Color(245, 72, 67, 1),
+	Color(245, 67, 104, 1),
+	Color(67, 245, 208, 1),
+]
+
 var selected_skin: int = 0
 
 func handle_button_selection() -> void:
@@ -45,7 +53,7 @@ func handle_click_button() -> void:
 	if Input.is_action_just_pressed("confirm"):
 		if selected_button == play_button:
 			Global.player_sprite = load(player_skin_list[selected_skin])
-			
+			Global.player_color = player_color_list[selected_skin]
 			# go to the level
 			get_tree().change_scene_to_file("res://scenes/levels/game.tscn")
 		

@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://b5lkpj31afxx5" path="res://assets/sfx/snd_cherry_dash.wav" id="9_4sjii"]
 
 [sub_resource type="Animation" id="Animation_u4cfc"]
+resource_name = "RESET"
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -295,27 +296,27 @@ autoplay = "RESET"
 stream = ExtResource("5_d4byh")
 bus = &"SFX"
 
-[node name="Hurt" type="Area2D" parent="."]
+[node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 2
 
-[node name="Hurtbox" type="CollisionShape2D" parent="Hurt"]
+[node name="Hurtbox" type="CollisionShape2D" parent="Hurtbox"]
 z_index = 1
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_4hr24")
 
-[node name="HurtSound" type="AudioStreamPlayer" parent="Hurt"]
+[node name="HurtSound" type="AudioStreamPlayer" parent="Hurtbox"]
 stream = ExtResource("4_28bed")
 bus = &"SFX"
 
-[node name="HurtInvicibilityTimer" type="Timer" parent="Hurt"]
+[node name="HurtInvicibilityTimer" type="Timer" parent="Hurtbox"]
 wait_time = 1.5
 one_shot = true
 
-[node name="DeathSound" type="AudioStreamPlayer" parent="Hurt"]
+[node name="DeathSound" type="AudioStreamPlayer" parent="Hurtbox"]
 stream = ExtResource("5_m274p")
 bus = &"SFX"
 
-[node name="DeathTimer" type="Timer" parent="Hurt"]
+[node name="DeathTimer" type="Timer" parent="."]
 wait_time = 1.2
 one_shot = true
 
@@ -341,16 +342,16 @@ one_shot = true
 wait_time = 0.2
 one_shot = true
 
-[node name="DashPhantomCooldown" type="Timer" parent="."]
+[node name="PhantomCooldown" type="Timer" parent="."]
 wait_time = 0.09
 
 [node name="DashSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_4sjii")
 bus = &"SFX"
 
-[connection signal="timeout" from="Hurt/HurtInvicibilityTimer" to="." method="_on_hurt_invicibility_timer_timeout"]
-[connection signal="timeout" from="Hurt/DeathTimer" to="." method="_on_death_timer_timeout"]
+[connection signal="timeout" from="Hurtbox/HurtInvicibilityTimer" to="." method="_on_hurt_invicibility_timer_timeout"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="timeout" from="ManaRecoveryTimer" to="." method="_on_mana_recovery_timer_timeout"]
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
 [connection signal="timeout" from="DashDuration" to="." method="_on_dash_duration_timeout"]
-[connection signal="timeout" from="DashPhantomCooldown" to="." method="_on_dash_phantom_cooldown_timeout"]
+[connection signal="timeout" from="PhantomCooldown" to="." method="_on_phantom_cooldown_timeout"]

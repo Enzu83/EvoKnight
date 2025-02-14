@@ -7,11 +7,13 @@ const STRENGTH = 5
 @onready var player: CharacterBody2D = $".."
 
 var active: bool = false
+var direction: String
 
 func reset() -> void:
 	active = false
 
 func start(orientation: String) -> void:
+	direction = orientation
 	active = true
 	animation_player.play(orientation)
 

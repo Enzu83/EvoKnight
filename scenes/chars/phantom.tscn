@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://by16cfh7w1h7r"]
 
-[ext_resource type="Texture2D" uid="uid://yx6p3eyombnl" path="res://assets/sprites/chars/player/spr_cherry.png" id="1_g0df7"]
-[ext_resource type="Script" path="res://scripts/dash_phantom.gd" id="2_sk2vj"]
+[ext_resource type="Texture2D" uid="uid://yx6p3eyombnl" path="res://assets/sprites/chars/player/spr_cherry.png" id="1_hjnaq"]
+[ext_resource type="Script" path="res://scripts/phantom.gd" id="2_bm2r2"]
 
 [sub_resource type="Animation" id="Animation_tnr15"]
 length = 0.001
@@ -54,15 +54,15 @@ _data = {
 "vanish": SubResource("Animation_08hoh")
 }
 
-[node name="DashPhantom" type="Sprite2D"]
+[node name="Phantom" type="Sprite2D"]
 modulate = Color(1, 1, 1, 0)
 top_level = true
 position = Vector2(0, -16)
-texture = ExtResource("1_g0df7")
+texture = ExtResource("1_hjnaq")
 hframes = 9
 vframes = 6
 frame = 45
-script = ExtResource("2_sk2vj")
+script = ExtResource("2_bm2r2")
 
 [node name="Vanish" type="AnimationPlayer" parent="."]
 libraries = {
