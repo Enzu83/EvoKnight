@@ -21,12 +21,17 @@ extends CharacterBody2D
 
 @onready var death_timer: Timer = $DeathTimer
 
+@onready var basic_slash: Area2D = $BossBasicSlash
+@onready var basic_slash_cooldown: Timer = $BasicSlashCooldown
+
+
 @onready var action_decision_cooldown: Timer = $ActionDecisionCooldown
 
 const SPEED = 150.0
 const JUMP_VELOCITY = -300.0
 const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
+const STRENGTH = 2
 
 const MAX_HEALTH = 100
 const EXP_GIVEN = 50
@@ -48,11 +53,12 @@ var health := MAX_HEALTH
 
 var active := false
 
-enum Action {None, RunToward, RunAway, Jump, Dash, BasicSlash, MagicSlash}
+enum Action {None, RunToward, RunAway, Jump, Dash, BasicSlashUp,  BasicSlashDown,  BasicSlashLeft,  BasicSlashRight, MagicSlash}
 var action := Action.None # indicate what the mirror boss is trying to do
 var can_change_action := true
 
 var can_jump := true
+var can_attack := true
 
 func handle_movement() -> void:
 	# Restore jumps if grounded.
@@ -63,9 +69,10 @@ func handle_movement() -> void:
 		jumps = MAX_JUMPS-1
 	
 	# Jump if there are jumps left
-	if action == Action.Jump and jumps > 0 and state != State.Attacking:
+	if action == Action.Jump and can_jump and jumps > 0 and state != State.Attacking:
 		velocity.y = JUMP_VELOCITY
 		jumps -= 1
+		can_jump = false
 		jump_cooldown.start()
 		
 		# restart animation
@@ -74,12 +81,55 @@ func handle_movement() -> void:
 		animation_player.play("jump")
 
 	# Handle movements.
-	if action == Action.RunToward and abs(position.x - player.position.x) >= 8:
+	if action == Action.RunToward:
 		direction = -sign(position.x - player.position.x)
-	elif action == Action.RunAway and abs(position.x - player.position.x) >= 8:
+	elif action == Action.RunAway:
 		direction = sign(position.x - player.position.x)
 	else:
 		direction = 0
+
+func handle_slash() -> void:
+	# attacking state corresponds to the basic slash being active
+	if basic_slash.active:
+		state = State.Attacking
+	elif state == State.Attacking:
+		state = State.Default
+
+	# basic slash up
+	if action == Action.BasicSlashUp and can_attack and is_hurtable() and state == State.Default:
+		can_attack = false
+		basic_slash.start("up")
+		basic_slash_cooldown.start()
+	
+	# basic slash down
+	elif action == Action.BasicSlashDown and can_attack and is_hurtable() and state == State.Default:
+		can_attack = false
+		basic_slash.start("down")
+		basic_slash_cooldown.start()
+	
+	# basic slash left
+	elif action == Action.BasicSlashLeft and can_attack and is_hurtable() and state == State.Default:
+		can_attack = false
+		basic_slash.start("left")
+		basic_slash_cooldown.start()
+		sprite.flip_h = true
+	
+	# basic slash right	
+	elif action == Action.BasicSlashRight and can_attack and is_hurtable() and state == State.Default:
+		can_attack = false
+		basic_slash.start("right")
+		basic_slash_cooldown.start()
+		sprite.flip_h = false
+	
+	## magic slash
+	#if Input.is_action_just_pressed("magic_slash") and state == State.Default and not magic_slash.active and mana >= MAGIC_SLASH_MANA:
+		#mana -= MAGIC_SLASH_MANA
+		#
+		#if sprite.flip_h:
+			#magic_slash.start("left")
+		#else:
+			#magic_slash.start("right")
+
 
 func handle_flip_h() -> void:
 	if direction > 0:
@@ -105,6 +155,10 @@ func handle_velocity(delta: float) -> void:
 		# prevent player to go too fast
 		if velocity.y > MAX_FALLING_VELOCITY:
 			velocity.y = MAX_FALLING_VELOCITY
+
+func handle_bounce() -> void:
+	if not is_on_floor():
+		velocity.y = JUMP_VELOCITY * 0.8
 
 func play_animation(anim_name: String) -> void:
 	# play the animation if it's no the current one
@@ -155,7 +209,7 @@ func _physics_process(delta: float) -> void:
 		# handle player's actions if they are not defeated
 		if state != State.Fainted:
 			if state != State.Dashing:
-				#handle_slash() # attacks
+				handle_slash() # attacks
 				handle_movement() # left, right and jump
 			
 			if state != State.Attacking:
@@ -169,6 +223,7 @@ func _physics_process(delta: float) -> void:
 		
 		animate() # update the sprite animation if necessary
 		move_and_slide()
+		#print(Action.find_key(action))
 
 func change_action(new_action: Action) -> void:
 	if can_change_action:
@@ -178,22 +233,66 @@ func change_action(new_action: Action) -> void:
 
 # what to do on that frame
 func find_action() -> void:
+	# attack up if the player is in range
+	if state == State.Default \
+	and position.y - player.position.y > 32 \
+	and abs(position.x - player.position.x) < 24:
+		change_action(Action.BasicSlashUp)
+	
+	# attack down if the player is in range
+	elif state == State.Default \
+	and player.position.y - position.y > 32 \
+	and abs(position.x - player.position.x) < 24:
+		change_action(Action.BasicSlashDown)
+	
+	# attack left if the player is in range
+	elif state == State.Default \
+	and position.x > player.position.x \
+	and abs(position.x - player.position.x) < 32 \
+	and abs(position.y - player.position.y) < 40:
+		change_action(Action.BasicSlashLeft)
+	
+	# attack right if the player is in range
+	elif state == State.Default \
+	and position.x < player.position.x \
+	and abs(position.x - player.position.x) < 32 \
+	and abs(position.y - player.position.y) < 40:
+		change_action(Action.BasicSlashRight)
+	
+	# run away if player is attacking forward
 	if player.state == player.State.Attacking \
 	and (abs(position.x - player.position.x) < 96) \
 	and (abs(position.y - player.position.y) < 32) \
 	and ((player.basic_slash.direction == "left" and position.x < player.position.x) or (player.basic_slash.direction == "right" and position.x > player.position.x)):
 		change_action(Action.RunAway)
 	
+	# run away if player is attacking from above
+	elif player.state == player.State.Attacking \
+	and (abs(position.x - player.position.x) < 32) \
+	and (position.y - player.position.y > 32) \
+	and player.basic_slash.direction == "down":
+		change_action(Action.RunAway)
+	
+	# jump if the player casts a magic slash and it's coming close
+	elif player.magic_slash.active \
+	and ((player.magic_slash.direction == 1 and position.x > player.magic_slash.position.x and position.x - player.magic_slash.position.x < 96) or (player.magic_slash.direction == -1 and player.magic_slash.position.x > position.x and player.magic_slash.position.x - position.x < 96)) \
+	and abs(position.y - player.magic_slash.position.y) < 32:
+		change_action(Action.Jump)
+	
+	# run toward if it's safe to do it
 	elif not (player.state == player.State.Attacking and (abs(position.x - player.position.x) > 96)) \
-	and abs(position.x - player.position.x) > 36:
+	and abs(position.x - player.position.x) >= 32:
 		change_action(Action.RunToward)
 
+	# jump to reach the player that is above but not too far
 	elif action != Action.RunAway and position.y - player.get_middle_position().y > 32 and can_jump:
 		change_action(Action.Jump)
-		
+	
+	# run away if the player is too close
 	elif abs(position.x - player.position.x) < 16:
 		change_action(Action.RunAway)
 
+	# do nothing
 	else:
 		change_action(Action.None)
 
@@ -242,3 +341,11 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 
 func _on_death_timer_timeout() -> void:
 	visible = false
+
+func _on_basic_slash_cooldown_timeout() -> void:
+	can_attack = true
+
+# when the player collide with the boss hurtbox
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	if body == player and player.is_hurtable():
+		player.hurt(STRENGTH)

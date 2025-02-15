@@ -1,10 +1,11 @@
-[gd_scene load_steps=25 format=3 uid="uid://dwitea1wpbdjp"]
+[gd_scene load_steps=26 format=3 uid="uid://dwitea1wpbdjp"]
 
 [ext_resource type="Texture2D" uid="uid://yx6p3eyombnl" path="res://assets/sprites/chars/player/spr_cherry_red.png" id="1_0563r"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kiiks"]
 [ext_resource type="PackedScene" uid="uid://cx6s7ukd3uwci" path="res://scenes/fx/basic_slash.tscn" id="3_bjkct"]
 [ext_resource type="Texture2D" uid="uid://b6fexcfnjb43p" path="res://assets/sprites/fx/spr_jump_circle.png" id="3_es3b5"]
 [ext_resource type="AudioStream" uid="uid://4hbwekryavdg" path="res://assets/sfx/snd_cherry_hurt.wav" id="4_28bed"]
+[ext_resource type="Script" path="res://scripts/jump_circle.gd" id="4_duish"]
 [ext_resource type="AudioStream" uid="uid://xy35lwtkq2h4" path="res://assets/sfx/snd_cherry_jump.wav" id="5_d4byh"]
 [ext_resource type="AudioStream" uid="uid://by8urjgg31rjt" path="res://assets/sfx/snd_cherry_death.wav" id="5_m274p"]
 [ext_resource type="PackedScene" uid="uid://b2o03c77jm22l" path="res://scenes/fx/magic_slash.tscn" id="8_pexea"]
@@ -284,6 +285,7 @@ position = Vector2(0, -2)
 texture = ExtResource("3_es3b5")
 hframes = 2
 frame = 1
+script = ExtResource("4_duish")
 
 [node name="JumpCircle" type="AnimationPlayer" parent="Jump"]
 root_node = NodePath("../..")
@@ -323,8 +325,6 @@ one_shot = true
 [node name="BasicSlash" parent="." instance=ExtResource("3_bjkct")]
 z_index = 1
 position = Vector2(0, -11)
-
-[node name="BasicSlashCooldown" type="Timer" parent="."]
 
 [node name="MagicSlash" parent="." instance=ExtResource("8_pexea")]
 top_level = true

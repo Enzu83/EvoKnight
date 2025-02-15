@@ -48,7 +48,9 @@ position = Vector2(-110, -20)
 [node name="platform2" parent="Platforms" instance=ExtResource("6_h1fn3")]
 position = Vector2(110, -20)
 
-[node name="Enemies" type="Node" parent="."]
+[node name="BossMirror" parent="." instance=ExtResource("8_gf3ln")]
+z_index = 1
+position = Vector2(40, 16)
 
 [node name="Player" parent="." instance=ExtResource("7_cms48")]
 unique_name_in_owner = true
@@ -59,9 +61,6 @@ limit_left = -216
 limit_top = -480
 limit_right = 216
 limit_bottom = 48
-
-[node name="BossMirror" parent="." instance=ExtResource("8_gf3ln")]
-position = Vector2(40, 16)
 
 [node name="HUD" parent="." instance=ExtResource("8_ry3vd")]
 unique_name_in_owner = true

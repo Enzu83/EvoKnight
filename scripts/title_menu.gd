@@ -13,7 +13,7 @@ extends Control
 enum Menu {Main, Skin}
 var menu := Menu.Main
 
-var cursor_main_position := Vector2(123, 131)
+var cursor_main_position := Vector2(120, 134)
 var selected_button: Label
 
 var player_skin_list := [
@@ -70,7 +70,9 @@ func handle_click_button() -> void:
 			Global.player_color = colors[color]
 			
 			# go to the level
-			get_tree().change_scene_to_file("res://scenes/levels/game.tscn")
+			#get_tree().change_scene_to_file("res://scenes/levels/game.tscn")
+			# boss level
+			get_tree().change_scene_to_file("res://scenes/levels/boss_area.tscn")
 		
 		elif selected_button == skin_button:
 			menu = Menu.Skin
@@ -107,7 +109,7 @@ func _process(_delta: float) -> void:
 		handle_click_button()
 		
 		cursor.position = cursor_main_position
-		cursor.position.y = selected_button.position.y + 7 # update cursor position
+		cursor.position.y = selected_button.position.y + 10 # update cursor position
 
 	elif menu == Menu.Skin:
 		handle_skin_selection()

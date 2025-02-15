@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bvd0y2way7av1"]
+[gd_scene load_steps=25 format=3 uid="uid://bvd0y2way7av1"]
 
 [ext_resource type="Script" path="res://scripts/boss_mirror.gd" id="1_4dj4v"]
 [ext_resource type="Texture2D" uid="uid://d14lpsdoxjpba" path="res://assets/sprites/chars/player/spr_cherry_dark.png" id="2_lfobn"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scripts/body_hurtbox.gd" id="5_ou6xc"]
 [ext_resource type="AudioStream" uid="uid://4hbwekryavdg" path="res://assets/sfx/snd_cherry_hurt.wav" id="6_n82m1"]
 [ext_resource type="AudioStream" uid="uid://by8urjgg31rjt" path="res://assets/sfx/snd_cherry_death.wav" id="7_waurh"]
+[ext_resource type="PackedScene" uid="uid://dyd2dd5k75qhh" path="res://scenes/fx/boss_basic_slash.tscn" id="8_rxfvs"]
 
 [sub_resource type="Animation" id="Animation_j2afk"]
 length = 0.001
@@ -218,7 +219,7 @@ tracks/3/path = NodePath(".")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.733333, 1.8),
+"times": PackedFloat32Array(1.03333, 1.8),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
@@ -300,17 +301,6 @@ size = Vector2(6, 16)
 collision_layer = 0
 script = ExtResource("1_4dj4v")
 
-[node name="SpawnSprite" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(1, -39)
-texture = ExtResource("3_sfu4y")
-hframes = 12
-frame = 11
-
-[node name="SpawnSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_eswf0")
-bus = &"SFX"
-
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(0, -15)
 texture = ExtResource("2_lfobn")
@@ -348,10 +338,6 @@ one_shot = true
 stream = ExtResource("4_x76s1")
 bus = &"SFX"
 
-[node name="ActionDecisionCooldown" type="Timer" parent="."]
-wait_time = 0.05
-one_shot = true
-
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 4
 collision_mask = 2
@@ -377,7 +363,29 @@ bus = &"SFX"
 wait_time = 2.0
 one_shot = true
 
+[node name="BossBasicSlash" parent="." instance=ExtResource("8_rxfvs")]
+position = Vector2(0, -11)
+
+[node name="BasicSlashCooldown" type="Timer" parent="."]
+
+[node name="SpawnSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(1, -39)
+texture = ExtResource("3_sfu4y")
+hframes = 12
+frame = 11
+
+[node name="SpawnSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_eswf0")
+bus = &"SFX"
+
+[node name="ActionDecisionCooldown" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
 [connection signal="timeout" from="Jump/JumpCooldown" to="." method="_on_jump_cooldown_timeout"]
-[connection signal="timeout" from="ActionDecisionCooldown" to="." method="_on_action_decision_cooldown_timeout"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
 [connection signal="timeout" from="Hurtbox/HurtInvicibilityTimer" to="." method="_on_hurt_invicibility_timer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
+[connection signal="timeout" from="BasicSlashCooldown" to="." method="_on_basic_slash_cooldown_timeout"]
+[connection signal="timeout" from="ActionDecisionCooldown" to="." method="_on_action_decision_cooldown_timeout"]

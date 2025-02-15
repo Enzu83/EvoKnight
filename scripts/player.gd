@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var effects_player: AnimationPlayer = $EffectsPlayer
 
+@onready var jump: Sprite2D = $Jump
 @onready var jump_circle: AnimationPlayer = $Jump/JumpCircle
 @onready var jump_sound: AudioStreamPlayer = $Jump/JumpSound
 
@@ -17,7 +18,6 @@ extends CharacterBody2D
 @onready var death_timer: Timer = $DeathTimer
 
 @onready var basic_slash: Area2D = $BasicSlash
-@onready var basic_slash_cooldown: Timer = $BasicSlashCooldown
 
 @onready var magic_slash: Area2D = $MagicSlash
 
@@ -98,6 +98,8 @@ func handle_slash() -> void:
 
 	# basic slash
 	if Input.is_action_just_pressed("basic_slash") and state == State.Default:
+		state = State.Attacking
+		
 		if Input.is_action_pressed("up"):
 			basic_slash.start("up")
 		elif Input.is_action_pressed("down"):
@@ -241,15 +243,17 @@ func get_middle_position() -> Vector2:
 	return position - Vector2(0, hurtbox.shape.get_rect().size.y)
 
 func is_hurtable() -> bool:
-	return not effects_player.current_animation == "blink"
+	# can't be hurt if the player sprite blinks or the player is dashing
+	return not effects_player.current_animation == "blink" and not state == State.Dashing
 
 func hurt(damage: int) -> void:
-	end_dash()
-	
 	# player is still alive
 	if health > damage:
+		# slow the player if player isn't dashing
+		if state != State.Dashing:
+			velocity.x *= 0.5
+		
 		health -= damage
-		velocity.x *= 0.5
 		hurt_sound.play()
 		hurtbox.set_deferred("disabled", true)
 		hurt_invicibility_timer.start()
