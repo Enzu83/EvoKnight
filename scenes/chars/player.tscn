@@ -323,7 +323,6 @@ wait_time = 1.2
 one_shot = true
 
 [node name="BasicSlash" parent="." instance=ExtResource("3_bjkct")]
-z_index = 1
 position = Vector2(0, -11)
 
 [node name="MagicSlash" parent="." instance=ExtResource("8_pexea")]

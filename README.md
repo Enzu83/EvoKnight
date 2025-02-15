@@ -22,7 +22,7 @@
 	- [x] Bat
 	- [x] Flying mage
 	- [x] Grounded spiky enemy
-	- [ ] Boss with similar abilities
+	- [x] Boss with similar abilities
 
 ## Controls
 
@@ -36,4 +36,3 @@
 
 - https://www.spriters-resource.com/pc_computer/evolandii/
 - https://berrycamp.github.io/
-- https://craftpix.net/

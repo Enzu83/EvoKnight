@@ -16,6 +16,9 @@ var menu := Menu.Main
 var cursor_main_position := Vector2(120, 134)
 var selected_button: Label
 
+var next_scene := "res://scenes/levels/game.tscn"
+# "res://scenes/levels/boss_area.tscn"
+
 var player_skin_list := [
 	"res://assets/sprites/chars/player/spr_cherry_red.png",
 	"res://assets/sprites/chars/player/spr_cherry_blue.png",
@@ -69,10 +72,8 @@ func handle_click_button() -> void:
 
 			Global.player_color = colors[color]
 			
-			# go to the level
-			#get_tree().change_scene_to_file("res://scenes/levels/game.tscn")
-			# boss level
-			get_tree().change_scene_to_file("res://scenes/levels/boss_area.tscn")
+			# go to the next scene
+			get_tree().change_scene_to_file(next_scene)
 		
 		elif selected_button == skin_button:
 			menu = Menu.Skin

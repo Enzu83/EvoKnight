@@ -13,6 +13,7 @@ var direction: String
 
 func reset() -> void:
 	active = false
+	sprite.scale = Vector2.ONE
 
 func start(orientation: String) -> void:
 	direction = orientation
@@ -23,6 +24,8 @@ func start(orientation: String) -> void:
 	if (orientation == "up" and player.sprite.flip_h) \
 	or (orientation == "down" and not player.sprite.flip_h):
 		scale.x = -1
+	else:
+		scale.x = 1
 
 func _ready() -> void:
 	sprite.texture = Global.basic_slash_sprite

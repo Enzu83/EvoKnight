@@ -24,11 +24,13 @@ extends CharacterBody2D
 @onready var basic_slash: Area2D = $BossBasicSlash
 @onready var basic_slash_cooldown: Timer = $BasicSlashCooldown
 
+@onready var ray_cast_left: RayCast2D = $RayCastLeft
+@onready var ray_cast_right: RayCast2D = $RayCastRight
 
 @onready var action_decision_cooldown: Timer = $ActionDecisionCooldown
 
-const SPEED = 150.0
-const JUMP_VELOCITY = -300.0
+const SPEED = 140.0
+const JUMP_VELOCITY = -280.0
 const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
 const STRENGTH = 2
@@ -233,34 +235,43 @@ func change_action(new_action: Action) -> void:
 
 # what to do on that frame
 func find_action() -> void:
-	# attack up if the player is in range
-	if state == State.Default \
+	# do nothing if the player is defeated
+	if player.health == 0:
+		change_action(Action.None)
+	
+	# attack up if the player is in range and hurtable
+	elif state == State.Default \
+	and player.is_hurtable() \
 	and position.y - player.position.y > 32 \
 	and abs(position.x - player.position.x) < 24:
 		change_action(Action.BasicSlashUp)
 	
-	# attack down if the player is in range
+	# attack down if the player is in range and hurtable
 	elif state == State.Default \
+	and player.is_hurtable() \
 	and player.position.y - position.y > 32 \
 	and abs(position.x - player.position.x) < 24:
 		change_action(Action.BasicSlashDown)
 	
-	# attack left if the player is in range
+	# attack left if the player is in range and hurtable
 	elif state == State.Default \
+	and player.is_hurtable() \
 	and position.x > player.position.x \
 	and abs(position.x - player.position.x) < 32 \
 	and abs(position.y - player.position.y) < 40:
 		change_action(Action.BasicSlashLeft)
 	
-	# attack right if the player is in range
+	# attack right if the player is in range and hurtable
 	elif state == State.Default \
+	and player.is_hurtable() \
 	and position.x < player.position.x \
 	and abs(position.x - player.position.x) < 32 \
 	and abs(position.y - player.position.y) < 40:
 		change_action(Action.BasicSlashRight)
 	
 	# run away if player is attacking forward
-	if player.state == player.State.Attacking \
+	elif player.state == player.State.Attacking \
+	and not (ray_cast_left.is_colliding() or ray_cast_right.is_colliding()) \
 	and (abs(position.x - player.position.x) < 96) \
 	and (abs(position.y - player.position.y) < 32) \
 	and ((player.basic_slash.direction == "left" and position.x < player.position.x) or (player.basic_slash.direction == "right" and position.x > player.position.x)):
@@ -268,6 +279,7 @@ func find_action() -> void:
 	
 	# run away if player is attacking from above
 	elif player.state == player.State.Attacking \
+	and not (ray_cast_left.is_colliding() or ray_cast_right.is_colliding()) \
 	and (abs(position.x - player.position.x) < 32) \
 	and (position.y - player.position.y > 32) \
 	and player.basic_slash.direction == "down":
@@ -281,14 +293,14 @@ func find_action() -> void:
 	
 	# run toward if it's safe to do it
 	elif not (player.state == player.State.Attacking and (abs(position.x - player.position.x) > 96)) \
-	and abs(position.x - player.position.x) >= 32:
+	and abs(position.x - player.position.x) >= 28:
 		change_action(Action.RunToward)
 
 	# jump to reach the player that is above but not too far
 	elif action != Action.RunAway and position.y - player.get_middle_position().y > 32 and can_jump:
 		change_action(Action.Jump)
 	
-	# run away if the player is too close
+	# run away if the player is too close and there's no wall
 	elif abs(position.x - player.position.x) < 16:
 		change_action(Action.RunAway)
 

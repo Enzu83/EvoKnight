@@ -249,11 +249,8 @@ func is_hurtable() -> bool:
 func hurt(damage: int) -> void:
 	# player is still alive
 	if health > damage:
-		# slow the player if player isn't dashing
-		if state != State.Dashing:
-			velocity.x *= 0.5
-		
 		health -= damage
+		velocity.x *= 0.5
 		hurt_sound.play()
 		hurtbox.set_deferred("disabled", true)
 		hurt_invicibility_timer.start()
