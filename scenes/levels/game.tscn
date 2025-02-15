@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_git5u"]
 [ext_resource type="Texture2D" uid="uid://c3ruqeec58wyr" path="res://assets/sprites/terrains/bg_mushroom_back.png" id="2_r7ibb"]
+[ext_resource type="AudioStream" uid="uid://dhxu30whe2x6i" path="res://assets/music/mus_quicksand_cave.mp3" id="2_vpxja"]
 [ext_resource type="Texture2D" uid="uid://dqq0un7sgshcb" path="res://assets/sprites/terrains/bg_mushroom_front.png" id="3_y3wsv"]
 [ext_resource type="PackedScene" uid="uid://bggby2h6prvx3" path="res://scenes/terrains/ground.tscn" id="4_f2vt5"]
 [ext_resource type="PackedScene" uid="uid://dwitea1wpbdjp" path="res://scenes/chars/player.tscn" id="5_tcsbb"]
@@ -12,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://cvx745hhmp0k6" path="res://scenes/other/kill_zone.tscn" id="9_v58lx"]
 [ext_resource type="PackedScene" uid="uid://cvvewevudo2kf" path="res://scenes/other/hud.tscn" id="10_40xyb"]
 [ext_resource type="PackedScene" uid="uid://bus5n18gsp1ad" path="res://scenes/chars/wind_spirit.tscn" id="10_mutg2"]
-[ext_resource type="AudioStream" uid="uid://chwwo3aobfyur" path="res://assets/music/mus_plains.mp3" id="11_3t6jf"]
 
 [sub_resource type="Animation" id="Animation_knrqr"]
 length = 0.001
@@ -57,7 +57,8 @@ script = ExtResource("1_git5u")
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true
-stream = ExtResource("11_3t6jf")
+stream = ExtResource("2_vpxja")
+volume_db = 4.0
 autoplay = true
 bus = &"Music"
 

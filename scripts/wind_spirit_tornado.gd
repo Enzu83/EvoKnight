@@ -13,8 +13,10 @@ const STRENGTH = 5
 var active: bool = false
 var direction := 0
 
+func stop_animation() -> void:
+	animation_player.play("RESET")
+
 func reset() -> void:
-	animation_player.call_deferred("play", "RESET")
 	duration.stop()
 	direction = 0
 	active = false
@@ -46,3 +48,7 @@ func _on_body_entered(body: Node2D) -> void:
 
 func _on_duration_timeout() -> void:
 	effects_player.play("fade_out")
+
+func _on_effects_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "fade_out":
+		effects_player.play("RESET")

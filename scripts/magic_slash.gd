@@ -15,7 +15,6 @@ var active: bool = false
 var direction := 0
 
 func reset() -> void:
-	animation_player.play("RESET")
 	direction = 0
 	active = false
 
@@ -48,4 +47,10 @@ func _on_area_entered(area: Area2D) -> void:
 		area.hurt(STRENGTH * player.strength, self)
 
 func _on_duration_timeout() -> void:
+	print("fade")
 	animation_player.play("fade_out")
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "fade_out":
+		animation_player.play("RESET")

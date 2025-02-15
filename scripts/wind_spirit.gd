@@ -36,7 +36,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	# go toward the target	
-	if chase and target != null and not tornado.active:
+	if chase and target != null and tornado != null and not tornado.active:
 		# move toward the middle of the target's hurtbox with an offset on x
 		if not hit:
 			target_position = target.position # target position
@@ -89,7 +89,7 @@ func fainted() -> void:
 		player.experience += EXP_GIVEN
 		animation_player.play("death")
 		death_sound.play()
-		tornado.reset()
+		tornado.queue_free()
 
 func get_middle_position() -> Vector2:
 	return position - Vector2(0, hurtbox.shape.get_rect().size.y)
@@ -110,7 +110,6 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 	hit = false
 	hurtbox.set_deferred("disabled", false)
 	animation_player.play("RESET")
-
 
 func _on_initial_wait_before_firing_timeout() -> void:
 	can_fire = true

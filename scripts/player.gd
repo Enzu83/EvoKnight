@@ -129,6 +129,8 @@ func handle_dash() -> void:
 		dash_sound.play()
 		create_phantom()
 		
+		hurtbox.set_deferred("disabled", true) # invicible during the dash
+		
 		# find dash direction
 		dash_direction = Vector2.ZERO
 		
@@ -243,8 +245,8 @@ func get_middle_position() -> Vector2:
 	return position - Vector2(0, hurtbox.shape.get_rect().size.y)
 
 func is_hurtable() -> bool:
-	# can't be hurt if the player sprite blinks or the player is dashing
-	return not effects_player.current_animation == "blink" and not state == State.Dashing
+	# can't be hurt if the sprite blinks
+	return not effects_player.current_animation == "blink"
 
 func hurt(damage: int) -> void:
 	# player is still alive
@@ -269,6 +271,8 @@ func fainted() -> void:
 		velocity.y = 0
 		death_sound.play()
 		death_timer.start()
+		basic_slash.reset()
+		magic_slash.reset()
 
 func create_phantom() -> void:
 	# create a phantom only if the player is moving or dashing
@@ -277,10 +281,10 @@ func create_phantom() -> void:
 
 func end_dash() -> void:
 	# end player dash animation and stop its velocity if not sliding
-	if state == State.Dashing:
-		state = State.Default
-		velocity = Vector2.ZERO
-		phantom_cooldown.stop() # stop phantom display
+	state = State.Default
+	velocity = Vector2.ZERO
+	phantom_cooldown.stop() # stop phantom display
+	hurtbox.set_deferred("disabled", false)
 
 func _on_death_timer_timeout() -> void:
 	Global.reset()
