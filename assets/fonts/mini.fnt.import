@@ -1,0 +1,17 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://b1nohaspagshb"
+path="res://.godot/imported/mini.fnt-a96db2b1a58917734c84638169979adb.fontdata"
+
+[deps]
+
+source_file="res://assets/fonts/mini.fnt"
+dest_files=["res://.godot/imported/mini.fnt-a96db2b1a58917734c84638169979adb.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
+scaling_mode=2

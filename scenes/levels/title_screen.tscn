@@ -1,11 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://dt10hsybag1bs"]
+[gd_scene load_steps=18 format=3 uid="uid://dt10hsybag1bs"]
 
 [ext_resource type="Texture2D" uid="uid://o5ptqb46t71y" path="res://assets/sprites/other/spr_title.png" id="1_x6j3q"]
 [ext_resource type="Texture2D" uid="uid://bh0aix7o5fojc" path="res://assets/sprites/ui/spr_cursor.png" id="2_v5b3i"]
 [ext_resource type="Script" path="res://scripts/title_menu.gd" id="4_ob0g2"]
-[ext_resource type="FontFile" uid="uid://d1oajvjlhivng" path="res://assets/fonts/8bitOperatorPlus8-Regular.ttf" id="4_ohhs5"]
 [ext_resource type="AudioStream" uid="uid://b4a8b5pdfafa4" path="res://assets/music/mus_title.mp3" id="5_o03bw"]
 [ext_resource type="AudioStream" uid="uid://0o3xl6dywkn8" path="res://assets/sfx/snd_cursor.wav" id="5_psxkj"]
+[ext_resource type="FontFile" uid="uid://camhtmnphwiu5" path="res://assets/fonts/8bit.fnt" id="6_bnf46"]
 [ext_resource type="Texture2D" uid="uid://cwf4o71h6yy2x" path="res://assets/sprites/chars/player/spr_player_skin.png" id="8_oq45q"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1p1qc"]
@@ -74,10 +74,6 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="Theme" id="Theme_0n7hr"]
-default_font = ExtResource("4_ohhs5")
-default_font_size = 23
-
 [node name="TitleScreen" type="Node2D"]
 
 [node name="ScreenResolutionHelper" type="TextureRect" parent="."]
@@ -121,7 +117,8 @@ offset_left = 134.0
 offset_top = 124.0
 offset_right = 186.0
 offset_bottom = 140.0
-theme = SubResource("Theme_0n7hr")
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
 text = "Play"
 
 [node name="SkinButton" type="Label" parent="Menu"]
@@ -131,7 +128,8 @@ offset_left = 135.0
 offset_top = 152.0
 offset_right = 185.0
 offset_bottom = 168.0
-theme = SubResource("Theme_0n7hr")
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
 text = "Skin"
 
 [node name="PlayerSkin" type="Sprite2D" parent="Menu"]

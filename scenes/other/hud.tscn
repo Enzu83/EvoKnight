@@ -1,19 +1,20 @@
-[gd_scene load_steps=20 format=3 uid="uid://cvvewevudo2kf"]
+[gd_scene load_steps=21 format=3 uid="uid://cvvewevudo2kf"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_llsyg"]
 [ext_resource type="Texture2D" uid="uid://dfobe5bchkqus" path="res://assets/sprites/ui/spr_main_bar.png" id="2_5714a"]
 [ext_resource type="Texture2D" uid="uid://b7u6236m7y18h" path="res://assets/sprites/ui/spr_health_bar.png" id="3_1pc4k"]
-[ext_resource type="FontFile" uid="uid://dalt325jhindk" path="res://assets/fonts/fnt_tiny_number.png" id="4_irlro"]
+[ext_resource type="FontFile" uid="uid://b1nohaspagshb" path="res://assets/fonts/mini.fnt" id="4_b31nm"]
 [ext_resource type="Texture2D" uid="uid://bdsyj5ksya7a6" path="res://assets/sprites/ui/spr_exp_bar.png" id="4_vuae4"]
 [ext_resource type="Texture2D" uid="uid://c0cfiod5vy0d7" path="res://assets/sprites/ui/spr_mana_ui.png" id="5_7bbpp"]
 [ext_resource type="Texture2D" uid="uid://dkf1fc3fmyqoy" path="res://assets/sprites/ui/spr_mana_bar.png" id="6_7a3li"]
-[ext_resource type="Texture2D" uid="uid://cyuvn1fox3gos" path="res://assets/sprites/ui/icons/spr_dash_icon.png" id="8_wt0cw"]
+[ext_resource type="Texture2D" uid="uid://cor1v0rrk6ht7" path="res://assets/sprites/ui/icons/spr_dash_icon_red.png" id="8_u88n7"]
 [ext_resource type="Texture2D" uid="uid://pf3053hlgifu" path="res://assets/sprites/ui/icons/spr_magic_slash_icon_red.png" id="9_dc4p7"]
 [ext_resource type="Texture2D" uid="uid://c0cboejd5sohi" path="res://assets/sprites/ui/spr_collectables_ui.png" id="10_aj2gh"]
 [ext_resource type="Texture2D" uid="uid://hpjnmb1knvbo" path="res://assets/sprites/items/spr_star.png" id="11_kx5sy"]
 [ext_resource type="Texture2D" uid="uid://dfhmehkjsmb5a" path="res://assets/sprites/ui/spr_boss_ui.png" id="12_6f7g8"]
 [ext_resource type="Texture2D" uid="uid://vkifsbrorbmk" path="res://assets/sprites/ui/spr_boss_health_bar.png" id="13_fhkyp"]
 [ext_resource type="Texture2D" uid="uid://bwsxdaj1enfvn" path="res://assets/sprites/ui/icons/spr_boss_ui_icon.png" id="14_ar2xq"]
+[ext_resource type="FontFile" uid="uid://bs0e3kolxkpmn" path="res://assets/fonts/small.fnt" id="14_b67fq"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_37i1y"]
 
@@ -82,6 +83,7 @@ scale = Vector2(0.75, 0.75)
 texture = SubResource("PlaceholderTexture2D_37i1y")
 
 [node name="Main" type="TextureRect" parent="."]
+visible = false
 offset_top = 4.0
 offset_right = 57.0
 offset_bottom = 24.0
@@ -103,12 +105,12 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.825
 anchor_right = 0.825
-offset_left = -10.5254
-offset_top = -0.750188
-offset_right = -0.525372
-offset_bottom = 6.24981
+offset_left = -10.525
+offset_top = -1.50038
+offset_right = -2.525
+offset_bottom = 5.49962
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("4_irlro")
+theme_override_fonts/font = ExtResource("4_b31nm")
 theme_override_font_sizes/font_size = 7
 text = "00"
 horizontal_alignment = 2
@@ -130,6 +132,7 @@ max_value = 35.0
 texture_progress = ExtResource("4_vuae4")
 
 [node name="Mana" type="TextureRect" parent="."]
+visible = false
 offset_left = 2.0
 offset_top = 26.0
 offset_right = 50.0
@@ -158,7 +161,7 @@ offset_left = 13.3333
 offset_top = 12.0
 offset_right = 25.3333
 offset_bottom = 24.0
-texture = ExtResource("8_wt0cw")
+texture = ExtResource("8_u88n7")
 
 [node name="MagicSlashThreshold" type="Line2D" parent="Mana"]
 modulate = Color(1, 1, 1, 0.486275)
@@ -192,16 +195,17 @@ texture = ExtResource("11_kx5sy")
 
 [node name="ScoreLabel" type="Label" parent="Score"]
 layout_mode = 0
-offset_left = 24.6667
-offset_top = 12.6667
-offset_right = 37.6667
-offset_bottom = 18.6667
-theme_override_fonts/font = ExtResource("4_irlro")
-theme_override_font_sizes/font_size = 6
+offset_left = 23.9168
+offset_top = 12.0
+offset_right = 35.9168
+offset_bottom = 19.0
+theme_override_fonts/font = ExtResource("4_b31nm")
+theme_override_font_sizes/font_size = 7
 text = "0/0"
 horizontal_alignment = 2
 
 [node name="BossBar" type="TextureRect" parent="."]
+visible = false
 offset_left = 64.0
 offset_top = 8.0
 offset_right = 174.0
@@ -218,12 +222,18 @@ max_value = 96.0
 texture_progress = ExtResource("13_fhkyp")
 
 [node name="BossName" type="Label" parent="BossBar"]
-visible = false
-layout_mode = 0
-offset_left = 23.7719
-offset_top = -8.0
-offset_right = 84.7719
-offset_bottom = 15.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.064
+anchor_top = 0.182
+anchor_right = 0.064
+anchor_bottom = 0.182
+offset_left = -0.0400004
+offset_top = -0.00200009
+offset_right = 95.96
+offset_bottom = 7.998
+theme_override_fonts/font = ExtResource("14_b67fq")
+theme_override_font_sizes/font_size = 8
 text = "Boss"
 horizontal_alignment = 1
 

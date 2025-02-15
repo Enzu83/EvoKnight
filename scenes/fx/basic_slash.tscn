@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://cx6s7ukd3uwci"]
 
 [ext_resource type="Script" path="res://scripts/basic_slash.gd" id="1_litir"]
+[ext_resource type="Texture2D" uid="uid://bupawpd57bpjq" path="res://assets/sprites/fx/slash/spr_basic_slash_red.png" id="2_v8r85"]
 [ext_resource type="AudioStream" uid="uid://cijbm8cl0rqu6" path="res://assets/sfx/snd_basic_slash.wav" id="3_t0prt"]
-[ext_resource type="Texture2D" uid="uid://exhbp23wyoal" path="res://assets/sprites/fx/spr_basic_slash.png" id="4_qf52m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ewha"]
 size = Vector2(1, 1)
@@ -664,7 +664,7 @@ visible = false
 position = Vector2(9, -7)
 rotation = 1.5708
 scale = Vector2(-1, 1)
-texture = ExtResource("4_qf52m")
+texture = ExtResource("2_v8r85")
 hframes = 6
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]

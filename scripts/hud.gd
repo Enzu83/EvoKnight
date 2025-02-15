@@ -1,12 +1,13 @@
 extends CanvasLayer
 
+@onready var main: TextureRect = $Main
 @onready var health_bar: TextureProgressBar = $Main/HealthBar
 @onready var health_value: Label = $Main/HealthValue
 @onready var health_color_manager: AnimationPlayer = $Main/HealthValue/ColorManager
-
 @onready var exp_bar: TextureProgressBar = $Main/ExpBar
-@onready var mana_bar: TextureProgressBar = $Mana/ManaBar
 
+@onready var mana: TextureRect = $Mana
+@onready var mana_bar: TextureProgressBar = $Mana/ManaBar
 @onready var dash_threshold: Line2D = $Mana/DashThreshold
 @onready var dash_icon: TextureRect = $Mana/DashIcon
 
@@ -18,6 +19,7 @@ extends CanvasLayer
 
 @onready var boss_bar: TextureRect = $BossBar
 @onready var boss_health_bar: TextureProgressBar = $BossBar/HealthBar
+@onready var boss_name: Label = $BossBar/BossName
 
 enum DisplayMode {None, Collectable, Boss}
 var mode := DisplayMode.None
@@ -79,6 +81,10 @@ func _process(_delta: float) -> void:
 		draw_collectable_ui()
 	elif mode == DisplayMode.Boss:
 		draw_boss_ui()
+	
+	# make visible the main and mana UI after the bars update
+	main.visible = true
+	mana.visible = true
 	
 func hide_all() -> void:
 	score.visible = false

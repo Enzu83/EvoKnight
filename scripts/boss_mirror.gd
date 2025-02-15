@@ -129,11 +129,14 @@ func animate() -> void:
 	else:
 		play_animation("faint")
 
+func draw_health_bar() -> void:
+	hud.mode = hud.DisplayMode.Boss
+	hud.boss_name.text = "Dark Cherry"
+
 func activate() -> void:
 	active = true
 	music.play()
 	player.state = player.State.Default
-	hud.mode = hud.DisplayMode.Boss
 
 func _ready() -> void:
 	add_to_group("enemies")
