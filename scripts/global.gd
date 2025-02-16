@@ -1,5 +1,12 @@
 extends Node
 
+var current_level := 0
+var level_paths = [
+	"res://scenes/levels/title_screen.tscn",
+	"res://scenes/levels/level_1.tscn",
+	"res://scenes/levels/boss_area.tscn",
+]
+
 var player_sprite: Resource = load("res://assets/sprites/chars/player/spr_cherry_red.png")
 var basic_slash_sprite: Resource = load("res://assets/sprites/fx/slash/spr_basic_slash_red.png")
 var magic_slash_sprite: Resource = load("res://assets/sprites/fx/slash/spr_magic_slash_red.png")
@@ -25,3 +32,8 @@ func _process(_delta: float) -> void:
 func reset() -> void:
 	_ready()
 	get_tree().reload_current_scene()
+
+func next_level() -> void:
+	if current_level < level_paths.size():
+		current_level += 1
+		get_tree().call_deferred("change_scene_to_file", level_paths[current_level])

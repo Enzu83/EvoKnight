@@ -26,7 +26,7 @@ extends CharacterBody2D
 @onready var dash_cooldown: Timer = $DashCooldown
 @onready var dash_duration: Timer = $DashDuration
 @onready var phantom_cooldown: Timer = $PhantomCooldown
-@onready var dash_sound: AudioStreamPlayer2D = $DashSound
+@onready var dash_sound: AudioStreamPlayer = $DashSound
 
 # Parameters
 const SPEED = 150.0

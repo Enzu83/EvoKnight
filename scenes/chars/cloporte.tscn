@@ -241,7 +241,7 @@ bus = &"SFX"
 stream = ExtResource("5_g47ou")
 bus = &"SFX"
 
-[node name="ClangSound" type="AudioStreamPlayer2D" parent="."]
+[node name="ClangSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_fgkvl")
 bus = &"SFX"
 

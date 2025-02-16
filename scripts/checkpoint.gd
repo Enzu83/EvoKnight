@@ -1,7 +1,7 @@
 extends Area2D
 
 @onready var sprite: Sprite2D = $Sprite
-@onready var get_sound: AudioStreamPlayer2D = $GetSound
+@onready var get_sound: AudioStreamPlayer = $GetSound
 
 var red_sprite := preload("res://assets/sprites/items/spr_flag_red.png")
 var green_sprite := preload("res://assets/sprites/items/spr_flag_green.png")

@@ -122,6 +122,11 @@ offset_right = 320.0
 offset_bottom = 180.0
 texture = SubResource("PlaceholderTexture2D_1p1qc")
 
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_o03bw")
+autoplay = true
+bus = &"Music"
+
 [node name="Background" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -159,11 +164,6 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_x6j3q")
 stretch_mode = 3
 
-[node name="Music" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_o03bw")
-autoplay = true
-bus = &"Music"
-
 [node name="Menu" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -176,8 +176,7 @@ sprite_frames = SubResource("SpriteFrames_wdmb5")
 autoplay = "default"
 frame_progress = 0.803466
 
-[node name="SelectSound" type="AudioStreamPlayer2D" parent="Menu"]
-position = Vector2(123, 131)
+[node name="SelectSound" type="AudioStreamPlayer" parent="Menu"]
 stream = ExtResource("5_psxkj")
 bus = &"SFX"
 

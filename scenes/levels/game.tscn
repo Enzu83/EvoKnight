@@ -55,7 +55,7 @@ _data = {
 [node name="Game" type="Node2D"]
 script = ExtResource("1_git5u")
 
-[node name="Music" type="AudioStreamPlayer2D" parent="."]
+[node name="Music" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("2_vpxja")
 volume_db = 4.0

@@ -42,7 +42,6 @@ func _on_area_entered(area: Area2D) -> void:
 		if animation_player.current_animation == "down":
 			player.handle_bounce()
 
-
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name != "RESET":
 		animation_player.play("RESET")

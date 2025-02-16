@@ -7,5 +7,6 @@ extends Node2D
 
 
 func _ready() -> void:
+	Global.current_level = 2
 	Global.player = player
 	Global.boss = boss_mirror

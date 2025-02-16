@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@onready var music: AudioStreamPlayer2D = %Music
+@onready var music: AudioStreamPlayer = %Music
 @onready var hud: CanvasLayer = %HUD
 
 @onready var player: Player = %Player
@@ -283,9 +283,11 @@ func find_action() -> void:
 	and abs(position.y - player.magic_slash.position.y) < 32:
 		change_action(Action.Jump)
 	
-	# run toward if it's safe to do it
-	elif not (player.state == player.State.Attacking and (abs(position.x - player.position.x) > 96)) \
-	and abs(position.x - player.position.x) >= 28:
+	# run toward if it's safe to do it and if the player is not too high
+	elif not (player.state == player.State.Attacking 
+	and (abs(position.x - player.position.x) > 96)) \
+	and abs(position.x - player.position.x) >= 28 \
+	and abs(position.y - player.position.y) < 64:
 		change_action(Action.RunToward)
 
 	# jump to reach the player that is above but not too far

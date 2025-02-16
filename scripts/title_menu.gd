@@ -1,7 +1,7 @@
 extends Control
 
 @onready var cursor: AnimatedSprite2D = $Cursor
-@onready var select_sound: AudioStreamPlayer2D = $SelectSound
+@onready var select_sound: AudioStreamPlayer = $SelectSound
 
 @onready var play_button: Label = $PlayButton
 @onready var skin_button: Label = $SkinButton
@@ -15,9 +15,6 @@ var menu := Menu.Main
 
 var cursor_main_position := Vector2(120, 134)
 var selected_button: Label
-
-var next_scene := "res://scenes/levels/game.tscn"
-# "res://scenes/levels/boss_area.tscn"
 
 var player_skin_list := [
 	"res://assets/sprites/chars/player/spr_cherry_red.png",
@@ -73,7 +70,7 @@ func handle_click_button() -> void:
 			Global.player_color = colors[color]
 			
 			# go to the next scene
-			get_tree().change_scene_to_file(next_scene)
+			Global.next_level()
 		
 		elif selected_button == skin_button:
 			menu = Menu.Skin

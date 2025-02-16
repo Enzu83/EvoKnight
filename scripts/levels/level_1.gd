@@ -4,6 +4,7 @@ extends Node2D
 @onready var player: Player = %Player
 
 func _ready() -> void:
+	Global.current_level = 1
 	Global.player = player
 	hud.mode = hud.DisplayMode.Collectable
 
