@@ -29,7 +29,7 @@ extends CharacterBody2D
 
 @onready var action_decision_cooldown: Timer = $ActionDecisionCooldown
 
-const SPEED = 140.0
+const SPEED = 125.0
 const JUMP_VELOCITY = -280.0
 const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
@@ -284,7 +284,8 @@ func find_action() -> void:
 		change_action(Action.Jump)
 	
 	# run toward if it's safe to do it and if the player is not too high
-	elif not (player.state == player.State.Attacking 
+	elif not (player.state == player.State.Attacking \
+	and player.state == player.State.Dashing \
 	and (abs(position.x - player.position.x) > 96)) \
 	and abs(position.x - player.position.x) >= 28 \
 	and abs(position.y - player.position.y) < 64:

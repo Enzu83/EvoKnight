@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://d1ndtnjybdaoa"]
+[gd_scene load_steps=15 format=4 uid="uid://d1ndtnjybdaoa"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_1.gd" id="1_6qo60"]
 [ext_resource type="AudioStream" uid="uid://dhxu30whe2x6i" path="res://assets/music/mus_quicksand_cave.mp3" id="1_503x6"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cojlgfhlxmwfs" path="res://scenes/items/checkpoint.tscn" id="6_ocfhr"]
 [ext_resource type="PackedScene" uid="uid://c27tot3rib7r5" path="res://scenes/chars/cloporte.tscn" id="7_eafeb"]
 [ext_resource type="PackedScene" uid="uid://cvvewevudo2kf" path="res://scenes/other/hud.tscn" id="7_g5sgy"]
+[ext_resource type="PackedScene" uid="uid://c0q4ajyur6afq" path="res://scenes/other/player_camera_point.tscn" id="10_ew7k0"]
 [ext_resource type="PackedScene" uid="uid://cvmw3fdnu5d7w" path="res://scenes/other/end_of_level.tscn" id="12_y7177"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hsmr0"]
@@ -81,7 +82,11 @@ position = Vector2(1074, -86)
 unique_name_in_owner = true
 position = Vector2(49, 8)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="PlayerCameraPoint" parent="Player" instance=ExtResource("10_ew7k0")]
+top_level = true
+
+[node name="Camera" type="Camera2D" parent="Player/PlayerCameraPoint"]
+position = Vector2(49, 8)
 limit_left = 0
 limit_bottom = 48
 
@@ -95,5 +100,5 @@ unique_name_in_owner = true
 position = Vector2(1291, -90)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EndOfLevel"]
-position = Vector2(181, 142)
+position = Vector2(181, 150)
 shape = SubResource("RectangleShape2D_hsmr0")

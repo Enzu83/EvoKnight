@@ -65,3 +65,8 @@ limit_bottom = 48
 
 [node name="HUD" parent="." instance=ExtResource("8_ry3vd")]
 unique_name_in_owner = true
+
+[node name="HeartRespawnTimer" type="Timer" parent="."]
+wait_time = 20.0
+
+[connection signal="timeout" from="HeartRespawnTimer" to="." method="_on_heart_respawn_timer_timeout"]

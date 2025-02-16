@@ -291,6 +291,12 @@ func end_dash() -> void:
 		phantom_cooldown.stop() # stop phantom display
 		hurtbox.set_deferred("disabled", false)
 
+func heal(amount: int) -> void:
+	if health + amount > max_health:
+		health = max_health
+	else:
+		health += amount
+
 func _on_death_timer_timeout() -> void:
 	Global.reset()
 
