@@ -6,6 +6,8 @@ extends CharacterBody2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var effects_player: AnimationPlayer = $EffectsPlayer
 
+@onready var wall_collider: CollisionShape2D = $WallCollider
+
 @onready var jump: Sprite2D = $Jump
 @onready var jump_circle: AnimationPlayer = $Jump/JumpCircle
 @onready var jump_sound: AudioStreamPlayer = $Jump/JumpSound
@@ -188,6 +190,7 @@ func handle_velocity(delta: float) -> void:
 func handle_bounce() -> void:
 	if not is_on_floor():
 		velocity.y = JUMP_VELOCITY * 0.8
+		jumps = MAX_JUMPS - 1
 
 func play_animation(anim_name: String) -> void:
 	# play the animation if it's no the current one
@@ -242,11 +245,14 @@ func _physics_process(delta: float) -> void:
 
 # get the position of the player with a vertical offset depending on the hurtbox's size
 func get_middle_position() -> Vector2:
-	return position - Vector2(0, hurtbox.shape.get_rect().size.y)
+	return position - Vector2(0, wall_collider.shape.get_rect().size.y)
 
 func is_hurtable() -> bool:
-	# can't be hurt if the sprite blinks
-	return not effects_player.current_animation == "blink"
+	# can't be hurt if:
+	#	- the sprite blinks
+	#	- the player faints
+	#	- the player is dashing
+	return not effects_player.current_animation == "blink" and state != State.Fainted and state != State.Dashing
 
 func hurt(damage: int) -> void:
 	# player is still alive
@@ -271,8 +277,6 @@ func fainted() -> void:
 		velocity.y = 0
 		death_sound.play()
 		death_timer.start()
-		basic_slash.reset()
-		magic_slash.reset()
 
 func create_phantom() -> void:
 	# create a phantom only if the player is moving or dashing
@@ -281,10 +285,11 @@ func create_phantom() -> void:
 
 func end_dash() -> void:
 	# end player dash animation and stop its velocity if not sliding
-	state = State.Default
-	velocity = Vector2.ZERO
-	phantom_cooldown.stop() # stop phantom display
-	hurtbox.set_deferred("disabled", false)
+	if state == State.Dashing:
+		state = State.Default
+		velocity = Vector2.ZERO
+		phantom_cooldown.stop() # stop phantom display
+		hurtbox.set_deferred("disabled", false)
 
 func _on_death_timer_timeout() -> void:
 	Global.reset()

@@ -15,6 +15,7 @@ var active: bool = false
 var direction := 0
 
 func reset() -> void:
+	sprite.visible = false
 	direction = 0
 	active = false
 
@@ -41,6 +42,9 @@ func _process(delta: float) -> void:
 		position.x += direction * SPEED * delta
 	else:
 		position = player.get_middle_position()
+	
+	if player.state == player.State.Fainted:
+		hide()
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemies"):

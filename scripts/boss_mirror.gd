@@ -122,16 +122,6 @@ func handle_slash() -> void:
 		basic_slash.start("right")
 		basic_slash_cooldown.start()
 		sprite.flip_h = false
-	
-	## magic slash
-	#if Input.is_action_just_pressed("magic_slash") and state == State.Default and not magic_slash.active and mana >= MAGIC_SLASH_MANA:
-		#mana -= MAGIC_SLASH_MANA
-		#
-		#if sprite.flip_h:
-			#magic_slash.start("left")
-		#else:
-			#magic_slash.start("right")
-
 
 func handle_flip_h() -> void:
 	if direction > 0:
@@ -239,26 +229,12 @@ func find_action() -> void:
 	if player.health == 0:
 		change_action(Action.None)
 	
-	# attack up if the player is in range and hurtable
-	elif state == State.Default \
-	and player.is_hurtable() \
-	and position.y - player.position.y > 32 \
-	and abs(position.x - player.position.x) < 24:
-		change_action(Action.BasicSlashUp)
-	
-	# attack down if the player is in range and hurtable
-	elif state == State.Default \
-	and player.is_hurtable() \
-	and player.position.y - position.y > 32 \
-	and abs(position.x - player.position.x) < 24:
-		change_action(Action.BasicSlashDown)
-	
 	# attack left if the player is in range and hurtable
 	elif state == State.Default \
 	and player.is_hurtable() \
 	and position.x > player.position.x \
 	and abs(position.x - player.position.x) < 32 \
-	and abs(position.y - player.position.y) < 40:
+	and abs(position.y - player.position.y) < 24:
 		change_action(Action.BasicSlashLeft)
 	
 	# attack right if the player is in range and hurtable
@@ -266,8 +242,24 @@ func find_action() -> void:
 	and player.is_hurtable() \
 	and position.x < player.position.x \
 	and abs(position.x - player.position.x) < 32 \
-	and abs(position.y - player.position.y) < 40:
+	and abs(position.y - player.position.y) < 24:
 		change_action(Action.BasicSlashRight)
+	
+	# attack up if the player is in range and hurtable
+	elif state == State.Default \
+	and player.is_hurtable() \
+	and position.y > player.position.y \
+	and abs(position.y - player.position.y) < 32 \
+	and abs(position.x - player.position.x) < 24:
+		change_action(Action.BasicSlashUp)
+	
+	# attack down if the player is in range and hurtable
+	elif state == State.Default \
+	and player.is_hurtable() \
+	and player.position.y > position.y \
+	and abs(position.y - player.position.y) < 32 \
+	and abs(position.x - player.position.x) < 24:
+		change_action(Action.BasicSlashDown)
 	
 	# run away if player is attacking forward
 	elif player.state == player.State.Attacking \
@@ -297,7 +289,9 @@ func find_action() -> void:
 		change_action(Action.RunToward)
 
 	# jump to reach the player that is above but not too far
-	elif action != Action.RunAway and position.y - player.get_middle_position().y > 32 and can_jump:
+	elif action != Action.RunAway \
+	and abs(position.x - player.position.x) < 64 \
+	and position.y - player.get_middle_position().y > 32 and can_jump:
 		change_action(Action.Jump)
 	
 	# run away if the player is too close and there's no wall

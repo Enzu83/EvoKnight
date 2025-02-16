@@ -1,9 +1,9 @@
 [gd_scene load_steps=17 format=4 uid="uid://doe73oqnq40n3"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_git5u"]
-[ext_resource type="Texture2D" uid="uid://c3ruqeec58wyr" path="res://assets/sprites/terrains/bg_mushroom_back.png" id="2_r7ibb"]
 [ext_resource type="AudioStream" uid="uid://dhxu30whe2x6i" path="res://assets/music/mus_quicksand_cave.mp3" id="2_vpxja"]
-[ext_resource type="Texture2D" uid="uid://dqq0un7sgshcb" path="res://assets/sprites/terrains/bg_mushroom_front.png" id="3_y3wsv"]
+[ext_resource type="Texture2D" uid="uid://c4qbiwlj3sncw" path="res://assets/sprites/terrains/bg_trees_back.png" id="3_3n1av"]
+[ext_resource type="Texture2D" uid="uid://ci6ljojlkose4" path="res://assets/sprites/terrains/bg_trees_front.png" id="4_3ollv"]
 [ext_resource type="PackedScene" uid="uid://bggby2h6prvx3" path="res://scenes/terrains/ground.tscn" id="4_f2vt5"]
 [ext_resource type="PackedScene" uid="uid://dwitea1wpbdjp" path="res://scenes/chars/player.tscn" id="5_tcsbb"]
 [ext_resource type="PackedScene" uid="uid://7g8lw8o3aenr" path="res://scenes/items/star.tscn" id="6_p8fxj"]
@@ -62,21 +62,33 @@ volume_db = 4.0
 autoplay = true
 bus = &"Music"
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Background" type="TextureRect" parent="Background"]
+layout_mode = 0
 offset_left = -480.0
 offset_top = -491.0
 offset_right = 480.0
 offset_bottom = 48.0
-texture = ExtResource("2_r7ibb")
+texture = ExtResource("3_3n1av")
 stretch_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Midground" type="TextureRect" parent="."]
+[node name="Midground" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 2.05
+anchor_right = 11.25
+anchor_bottom = 2.05
 offset_left = -480.0
 offset_top = -177.0
-offset_right = 480.0
-offset_bottom = 101.0
-texture = ExtResource("3_y3wsv")
+offset_right = 32.0
+offset_bottom = -25.0
+texture = ExtResource("4_3ollv")
 stretch_mode = 1
 metadata/_edit_use_anchors_ = true
 

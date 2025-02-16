@@ -30,6 +30,10 @@ func start(orientation: String) -> void:
 func _ready() -> void:
 	sprite.texture = Global.basic_slash_sprite
 
+func _process(_delta: float) -> void:
+	if player.state == player.State.Fainted:
+		hide()
+
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemies"):
 		area.hurt(STRENGTH * player.strength, self)
