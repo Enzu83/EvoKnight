@@ -10,8 +10,6 @@
 [ext_resource type="FontFile" uid="uid://camhtmnphwiu5" path="res://assets/fonts/8bit.fnt" id="6_bnf46"]
 [ext_resource type="Texture2D" uid="uid://cwf4o71h6yy2x" path="res://assets/sprites/chars/player/spr_player_skin.png" id="8_oq45q"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1p1qc"]
-
 [sub_resource type="Animation" id="Animation_apgp8"]
 length = 0.001
 tracks/0/type = "value"
@@ -49,6 +47,8 @@ _data = {
 "RESET": SubResource("Animation_apgp8"),
 "loop": SubResource("Animation_2s3an")
 }
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1p1qc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oh3ve"]
 atlas = ExtResource("2_v5b3i")
@@ -116,12 +116,6 @@ animations = [{
 
 [node name="TitleScreen" type="Node2D"]
 
-[node name="ScreenResolutionHelper" type="TextureRect" parent="."]
-visible = false
-offset_right = 320.0
-offset_bottom = 180.0
-texture = SubResource("PlaceholderTexture2D_1p1qc")
-
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_o03bw")
 autoplay = true
@@ -156,6 +150,12 @@ libraries = {
 "": SubResource("AnimationLibrary_v3ed4")
 }
 autoplay = "loop"
+
+[node name="ScreenResolutionHelper" type="TextureRect" parent="."]
+visible = false
+offset_right = 320.0
+offset_bottom = 180.0
+texture = SubResource("PlaceholderTexture2D_1p1qc")
 
 [node name="Title" type="TextureRect" parent="."]
 offset_right = 1280.0
@@ -225,3 +225,31 @@ position = Vector2(183, 146)
 sprite_frames = SubResource("SpriteFrames_wdmb5")
 autoplay = "default"
 frame_progress = 0.803466
+
+[node name="ControlsInfo" type="Label" parent="."]
+top_level = true
+offset_left = 4.0
+offset_top = 160.0
+offset_right = 108.0
+offset_bottom = 182.0
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 9
+text = "RETURN: Confirm
+BACKSPACE: Cancel"
+
+[node name="PlayerControlsInfo" type="Label" parent="."]
+top_level = true
+offset_left = 194.0
+offset_top = 128.0
+offset_right = 316.0
+offset_bottom = 183.0
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 9
+text = "Q/A: Basic Slash
+W/Z: Dash
+E: Magic Slash
+SPACE: Jump
+LEFT/RIGHT: Movement"
+horizontal_alignment = 2

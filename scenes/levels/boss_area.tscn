@@ -28,7 +28,7 @@ texture = ExtResource("3_ojk4e")
 stretch_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Midground" type="TextureRect" parent="."]
+[node name="Foreground" type="TextureRect" parent="."]
 offset_left = -480.0
 offset_top = -177.0
 offset_right = 480.0
