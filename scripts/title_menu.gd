@@ -93,7 +93,7 @@ func handle_skin_selection() -> void:
 		selected_skin = posmod(selected_skin + 1, player_skin_list.size())
 		select_sound.play()
 	
-	elif Input.is_action_just_pressed("back") or Input.is_action_just_pressed("confirm"):
+	elif Input.is_action_just_pressed("confirm"):
 		menu = Menu.Main
 		select_sound.play()
 

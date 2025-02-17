@@ -35,6 +35,12 @@ func _ready() -> void:
 	can_fire = false
 
 func _physics_process(delta: float) -> void:
+	# flip the sprite to match the direction
+	if position.x < player.position.x:
+		animated_sprite.flip_h = false
+	elif position.x > player.position.x:
+		animated_sprite.flip_h = true
+	
 	# go toward the target	
 	if chase and target != null and tornado != null and not tornado.active:
 		# move toward the middle of the target's hurtbox with an offset on x
@@ -58,12 +64,6 @@ func _physics_process(delta: float) -> void:
 			
 			else:			
 				position += position.direction_to(target_position) * SPEED * delta
-
-		# flip the sprite to match the direction
-		if position.x < target.position.x:
-			animated_sprite.flip_h = false
-		elif position.x > target.position.x:
-			animated_sprite.flip_h = true
 
 func _on_area_entered(area: Area2D) -> void:
 	var body := area.get_parent() # get the player

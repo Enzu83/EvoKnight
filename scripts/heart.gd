@@ -1,6 +1,6 @@
 extends Area2D
 
-var heal_value := 3
+var heal_value := 5
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 

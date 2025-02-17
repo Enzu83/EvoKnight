@@ -26,13 +26,14 @@ func _ready() -> void:
 	add_to_group("enemies") 
 
 func _physics_process(delta: float) -> void:
+	# flip the sprite to match the direction
+	if position.x < player.position.x:
+		animated_sprite.flip_h = false
+	elif position.x > player.position.x:
+		animated_sprite.flip_h = true
+	
 	# go toward the target
 	if chase and target != null:
-		# flip the sprite to match the direction
-		if position.x < target.position.x:
-			animated_sprite.flip_h = false
-		elif position.x > target.position.x:
-			animated_sprite.flip_h = true
 		
 		# move toward the middle of the target's hurtbox
 		if not hit:

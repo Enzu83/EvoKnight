@@ -12,8 +12,8 @@ func find_aimed_position() -> void:
 #
 	#elif player.direction > 0:
 		#aimed_position.x =  player.position.x + 32
-		
-	aimed_position.y = player.get_middle_position().y - 32
+	
+	aimed_position.y = player.get_middle_position().y - 20
 
 func move_toward_aimed_position(_delta) -> void:
 	position = aimed_position

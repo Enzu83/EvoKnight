@@ -5,10 +5,34 @@
 [ext_resource type="AudioStream" uid="uid://dsv02menelc4n" path="res://assets/sfx/snd_pick_star.wav" id="3_esb3b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dl5l4"]
-radius = 5.0
+radius = 7.0
 
 [sub_resource type="Animation" id="Animation_owfc3"]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:shape:radius")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [7.0]
+}
 
 [sub_resource type="Animation" id="Animation_11b41"]
 resource_name = "default"
@@ -21,7 +45,7 @@ tracks/0/path = NodePath("Sprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.296852, 0.396852, 0.496852, 0.596852, 0.696852, 0.796852),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [Vector2(0, 0), Vector2(0, 1), Vector2(0, 2), Vector2(0, 1), Vector2(0, 0), Vector2(0, -1), Vector2(0, -2), Vector2(0, -1), Vector2(0, 0)]
@@ -49,6 +73,30 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-1, 1), Vector2(-1, 2), Vector2(-1, 3), Vector2(-1, 1.66667), Vector2(-1, 0.666667), Vector2(-1, -0.333333), Vector2(-1, -1.33333), Vector2(-1, -0.333333), Vector2(-1, 0.666667)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CollisionShape2D:shape:radius")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [7.0]
 }
 
 [sub_resource type="Animation" id="Animation_o18nq"]
@@ -111,7 +159,7 @@ _data = {
 "pickup": SubResource("Animation_o18nq")
 }
 
-[node name="star" type="Area2D"]
+[node name="Star" type="Area2D"]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_iieke")
@@ -121,6 +169,7 @@ texture = ExtResource("1_sd4e5")
 offset = Vector2(-0.5, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 1)
 shape = SubResource("CircleShape2D_dl5l4")
 
 [node name="PickStar" type="AudioStreamPlayer" parent="."]

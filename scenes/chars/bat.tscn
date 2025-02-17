@@ -220,7 +220,7 @@ radius = 121.004
 [sub_resource type="CircleShape2D" id="CircleShape2D_a3rgj"]
 radius = 6.32456
 
-[node name="bat" type="Area2D" groups=["enemies", "players"]]
+[node name="Bat" type="Area2D" groups=["enemies", "players"]]
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_ttpqr")

@@ -1,7 +1,7 @@
 extends Area2D
 
 const SPEED = 300
-const STRENGTH = 10
+const STRENGTH = 8
 
 @onready var sprite: Sprite2D = $Sprite
 
