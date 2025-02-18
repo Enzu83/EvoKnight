@@ -137,9 +137,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Midground" type="TextureRect" parent="Background"]
 layout_mode = 0
-offset_top = -32.0
+offset_top = -66.0
 offset_right = 1200.0
-offset_bottom = 246.0
+offset_bottom = 212.0
 texture = ExtResource("2_tjndk")
 stretch_mode = 1
 metadata/_edit_use_anchors_ = true

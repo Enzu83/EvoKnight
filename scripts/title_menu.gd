@@ -56,7 +56,10 @@ func handle_button_selection() -> void:
 		select_sound.play()
 
 func handle_click_button() -> void:
-	if Input.is_action_just_pressed("confirm"):
+	if Input.is_action_just_pressed("confirm") \
+	or Input.is_action_just_pressed("basic_slash") \
+	or Input.is_action_just_pressed("dash") \
+	or Input.is_action_just_pressed("magic_slash"):
 		if selected_button == play_button:
 			# apply skin
 			var color: String = color_list[selected_skin]
@@ -93,7 +96,10 @@ func handle_skin_selection() -> void:
 		selected_skin = posmod(selected_skin + 1, player_skin_list.size())
 		select_sound.play()
 	
-	elif Input.is_action_just_pressed("confirm"):
+	elif Input.is_action_just_pressed("confirm") \
+	or Input.is_action_just_pressed("basic_slash") \
+	or Input.is_action_just_pressed("dash") \
+	or Input.is_action_just_pressed("magic_slash"):
 		menu = Menu.Main
 		select_sound.play()
 

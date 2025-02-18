@@ -349,6 +349,8 @@ func end_dash() -> void:
 		velocity = Vector2.ZERO
 		phantom_cooldown.stop() # stop phantom display
 		hurtbox.set_deferred("disabled", false)
+		blue_dash = false
+		blue_dash_hit = false
 		
 
 func heal(amount: int) -> void:
@@ -382,5 +384,3 @@ func _on_dash_duration_timeout() -> void:
 
 func _on_dash_cooldown_timeout() -> void:
 	can_dash = true
-	blue_dash = false
-	blue_dash_hit = false

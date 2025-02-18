@@ -37,10 +37,10 @@
 ### Controller (XBOX)
 
 - `Left Joystick`: Movement
-- `A`: Jump
-- `X`: Basic Slash
+- `Button A`: Jump
+- `Button X`: Basic Slash
 - `Right Trigger`: Dash
-- `B`: Magic Slash
+- `Button B`: Magic Slash
 
 ## Resources
 
