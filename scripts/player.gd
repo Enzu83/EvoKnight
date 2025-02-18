@@ -34,6 +34,7 @@ extends CharacterBody2D
 @onready var dash_duration: Timer = $DashDuration
 @onready var phantom_cooldown: Timer = $PhantomCooldown
 @onready var dash_sound: AudioStreamPlayer = $DashSound
+@onready var blue_dash_sound: AudioStreamPlayer = $BlueDashSound
 
 # Parameters
 const SPEED = 150.0
@@ -43,7 +44,7 @@ const MAX_JUMPS = 2 # Multiple jumps
 
 const MANA_RECOVERY_RATE = 20 # mana recovered per frame
 const MAGIC_SLASH_MANA = 250 # mana required for magic slash
-const DASH_MANA = 100 # mana required for dashing
+const BLUE_DASH_MANA = 100 # mana required for dashing without taking damage
 const DASH_SPEED = 2 * SPEED
 
 enum State {Default, Fainted, Attacking, Dashing, DashingAndAttacking, Stop}
@@ -59,6 +60,8 @@ var jumps := MAX_JUMPS # jumps left
 
 var can_dash := true
 var dash_direction := Vector2.ZERO
+var blue_dash := false # dash that will consume mana instead of taking damage
+var blue_dash_hit := false # indicate if the blue dash absorbed an hit
 var phantom = preload("res://scenes/chars/phantom.tscn")
 
 # stats
@@ -75,8 +78,11 @@ var strength := 1 # damage dealt to enemies
 
 # Allow grounded jump short after leaving the floor without jumping
 func jump_is_on_floor() -> bool:
+	if is_on_floor():
+		return true
+	
 	# always grounded if the main ray cast down is colliding
-	if jump_ray_cast_down.is_colliding():
+	elif jump_ray_cast_down.is_colliding():
 		return true
 	
 	# raycast down left colliding but not left (jumping next to a wall)
@@ -111,11 +117,11 @@ func handle_movement() -> void:
 		animation_player.play("jump")
 		
 		# draw circle below player if they jump in the air
-		if jumps == 0:
+		if not jump_is_on_floor():
 			jump_circle.play("default")
 
 	# Handle movements.
-	direction = Input.get_axis("left", "right")
+	direction = sign(Input.get_axis("left", "right"))
 
 func handle_slash() -> void:
 	# reset attack state
@@ -154,17 +160,20 @@ func handle_slash() -> void:
 			magic_slash.start("right")
 
 func handle_dash() -> void:
-	if Input.is_action_just_pressed("dash") and can_dash and state == State.Default and mana >= DASH_MANA:
+	if Input.is_action_just_pressed("dash") and can_dash and state == State.Default:
 		can_dash = false
 		state = State.Dashing
-		mana -= DASH_MANA
 		dash_cooldown.start()
 		dash_duration.start()
 		phantom_cooldown.start()
 		dash_sound.play()
-		create_phantom()
 		
-		hurtbox.set_deferred("disabled", true) # invicible during the dash
+		if mana >= BLUE_DASH_MANA:
+			blue_dash = true
+		else:
+			blue_dash = false
+		
+		create_phantom()
 		
 		# find dash direction
 		dash_direction = Vector2.ZERO
@@ -254,7 +263,6 @@ func animate() -> void:
 func _ready() -> void:
 	sprite.texture = Global.player_sprite
 	add_to_group("players")
-	
 
 func _physics_process(delta: float) -> void:
 	if state != State.Stop:
@@ -276,6 +284,7 @@ func _physics_process(delta: float) -> void:
 		
 	animate() # update the sprite animation if necessary
 	move_and_slide()
+	print(direction)
 
 # get the position of the player with a vertical offset depending on the hurtbox's size
 func get_middle_position() -> Vector2:
@@ -285,12 +294,18 @@ func is_hurtable() -> bool:
 	# can't be hurt if:
 	#	- the sprite blinks
 	#	- the player faints
-	#	- the player is dashing
-	return not effects_player.current_animation == "blink" and state != State.Fainted and state != State.Dashing and state != State.DashingAndAttacking
+	return not effects_player.current_animation == "blink" and state != State.Fainted
 
 func hurt(damage: int) -> void:
+	# hit during blue dash: animation and mana cost
+	if blue_dash:
+		if not blue_dash_hit:
+			blue_dash_hit = true
+			mana -= BLUE_DASH_MANA
+			blue_dash_sound.play()
+	
 	# player is still alive
-	if health > damage:
+	elif health > damage:
 		health -= damage
 		velocity.x *= 0.5
 		hurt_sound.play()
@@ -309,6 +324,7 @@ func fainted() -> void:
 		play_animation("faint")
 		state = State.Fainted
 		velocity.y = 0
+		phantom_cooldown.stop()
 		death_sound.play()
 		death_timer.start()
 
@@ -357,3 +373,5 @@ func _on_dash_duration_timeout() -> void:
 
 func _on_dash_cooldown_timeout() -> void:
 	can_dash = true
+	blue_dash = false
+	blue_dash_hit = false

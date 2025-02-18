@@ -55,10 +55,10 @@ func _process(_delta: float) -> void:
 		health_color_manager.play("white")
 	
 	# dash threshold indicator
-	dash_threshold.position.x = dash_threshold_initial_position.x + (player.DASH_MANA / float(player.max_mana)) * mana_bar.max_value
+	dash_threshold.position.x = dash_threshold_initial_position.x + (player.BLUE_DASH_MANA / float(player.max_mana)) * mana_bar.max_value
 	
 	# dash icon displayed if it can be perfomed
-	if player.can_dash and player.state == player.State.Default and player.mana >= player.DASH_MANA:
+	if player.can_dash and player.state == player.State.Default and player.mana >= player.BLUE_DASH_MANA:
 		dash_icon.visible = true
 	else:
 		dash_icon.visible = false

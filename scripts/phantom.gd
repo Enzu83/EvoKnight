@@ -11,11 +11,11 @@ func _ready() -> void:
 	texture = Global.player_sprite
 	modulate = Global.player_color
 	
-	# if the player is in idle animation, chane the frame to the dashing one
-	if player.sprite.frame < 9:
-		frame = 11
+	# phantom is blue if the player's dash is invicible
+	if player.blue_dash:
+		frame = 45
+	# regular dash sprite
 	else:
-		frame = player.sprite.frame
+		frame = 11
 		
-	frame = 45
-	flip_h = player.sprite.flip_h
+	flip_h = player.sprite.flip_h  # match player's orientation

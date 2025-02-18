@@ -24,13 +24,23 @@
 	- [x] Grounded spiky enemy
 	- [x] Boss with similar abilities
 
-## Controls (QWERTY)
+## Controls
+
+### Keyboard (QWERTY)
 
 - `WASD`: Movement
 - `SPACE`: Jump
 - `J`: Basic Slash
 - `I`: Dash
 - `L`: Magic Slash
+
+### Controller (XBOX)
+
+- `Left Joystick`: Movement
+- `A`: Jump
+- `X`: Basic Slash
+- `Right Shoulder`: Dash
+- `B`: Magic Slash
 
 ## Resources
 

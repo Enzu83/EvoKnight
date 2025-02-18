@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dwitea1wpbdjp"]
+[gd_scene load_steps=28 format=3 uid="uid://dwitea1wpbdjp"]
 
 [ext_resource type="Texture2D" uid="uid://yx6p3eyombnl" path="res://assets/sprites/chars/player/spr_cherry_red.png" id="1_0563r"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kiiks"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://by8urjgg31rjt" path="res://assets/sfx/snd_cherry_death.wav" id="5_m274p"]
 [ext_resource type="PackedScene" uid="uid://b2o03c77jm22l" path="res://scenes/fx/magic_slash.tscn" id="8_pexea"]
 [ext_resource type="AudioStream" uid="uid://b5lkpj31afxx5" path="res://assets/sfx/snd_cherry_dash.wav" id="9_4sjii"]
+[ext_resource type="AudioStream" uid="uid://bornuxk5r8gs4" path="res://assets/sfx/snd_blue_dash.wav" id="11_y42j7"]
 
 [sub_resource type="Animation" id="Animation_u4cfc"]
 resource_name = "RESET"
@@ -588,6 +589,10 @@ wait_time = 0.09
 
 [node name="DashSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_4sjii")
+bus = &"SFX"
+
+[node name="BlueDashSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_y42j7")
 bus = &"SFX"
 
 [connection signal="timeout" from="Hurtbox/HurtInvicibilityTimer" to="." method="_on_hurt_invicibility_timer_timeout"]
