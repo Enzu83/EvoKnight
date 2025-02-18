@@ -317,7 +317,7 @@ func is_hurtable() -> bool:
 func end_dash() -> void:
 	pass
 
-func hurt(damage: int, _attack: Area2D) -> void:
+func hurt(damage: int, _attack: Area2D) -> bool:
 	if is_hurtable():
 		end_dash()
 		
@@ -333,7 +333,9 @@ func hurt(damage: int, _attack: Area2D) -> void:
 		# player is dead
 		else:
 			fainted()
-		
+
+	return not is_hurtable()
+
 func fainted() -> void:
 	if state != State.Fainted:
 		health = 0

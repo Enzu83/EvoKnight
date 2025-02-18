@@ -72,7 +72,7 @@ var next_level_experience := 50
 var experience := 0
 
 var max_mana := 400
-var mana := max_mana
+var mana := 0
 
 var strength := 1 # damage dealt to enemies
 
@@ -126,7 +126,7 @@ func handle_movement() -> void:
 func handle_slash() -> void:
 	# reset attack state
 	if not basic_slash.active \
-	and (state == State.Attacking or state == State.DashingAndAttacking):
+	and state == State.Attacking:
 		state = State.Default
 
 	# basic slash
@@ -160,14 +160,23 @@ func handle_slash() -> void:
 			magic_slash.start("right")
 
 func handle_dash() -> void:
-	if Input.is_action_just_pressed("dash") and can_dash and state == State.Default:
+	if Input.is_action_just_pressed("dash") \
+	and can_dash \
+	and (state == State.Default or state == State.Attacking):
+		# dashing while attacking
+		if state == State.Attacking:
+			state = State.DashingAndAttacking
+		else:
+			state = State.Dashing
+		
 		can_dash = false
-		state = State.Dashing
 		dash_cooldown.start()
 		dash_duration.start()
 		phantom_cooldown.start()
 		dash_sound.play()
+		handle_flip_h()
 		
+		# phantom trace
 		if mana >= BLUE_DASH_MANA:
 			blue_dash = true
 		else:
@@ -230,7 +239,7 @@ func handle_velocity(delta: float) -> void:
 			velocity.y = MAX_FALLING_VELOCITY
 
 func handle_bounce() -> void:
-	if not is_on_floor():
+	if not is_on_floor() and state != State.DashingAndAttacking:
 		velocity.y = JUMP_VELOCITY * 0.8
 		jumps = MAX_JUMPS - 1
 
@@ -275,7 +284,8 @@ func _physics_process(delta: float) -> void:
 			
 			if state != State.Attacking and state != State.DashingAndAttacking:
 				handle_flip_h() # flip sprite horizontally if the player is not attacking
-				handle_dash() # can't dash while attacking
+			
+			handle_dash() # can't dash while attacking
 		else:
 			direction = 0
 		
@@ -284,7 +294,6 @@ func _physics_process(delta: float) -> void:
 		
 	animate() # update the sprite animation if necessary
 	move_and_slide()
-	print(direction)
 
 # get the position of the player with a vertical offset depending on the hurtbox's size
 func get_middle_position() -> Vector2:

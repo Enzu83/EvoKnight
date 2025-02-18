@@ -54,7 +54,7 @@ func _physics_process(delta: float) -> void:
 	if not hit:
 		move_and_slide()
 
-func hurt(damage: int, attack: Area2D) -> void:
+func hurt(damage: int, attack: Area2D) -> bool:
 	# check if the attack can hit the cloporte
 	var is_hit = false
 
@@ -76,11 +76,17 @@ func hurt(damage: int, attack: Area2D) -> void:
 			hit = true
 		else:
 			fainted()
+		
 	# clang between basic slash and cloporte
 	else:
 		clang_sound.play()
 		hurtbox.set_deferred("disabled", true)
 		hurt_invicibility_timer.start()
+		
+	if attack == player.magic_slash:
+		return false
+	else:
+		return is_hit
 
 func fainted() -> void:
 	if animation_player.current_animation != "death":

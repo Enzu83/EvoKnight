@@ -46,7 +46,7 @@ func _on_area_entered(area: Area2D) -> void:
 	if body == player and player.is_hurtable():
 		body.hurt(STRENGTH)
 
-func hurt(damage: int, _attack: Area2D) -> void:
+func hurt(damage: int, _attack: Area2D) -> bool:
 	if health > damage:
 		health -= damage
 		hurt_sound.play()
@@ -56,7 +56,8 @@ func hurt(damage: int, _attack: Area2D) -> void:
 		hit = true
 	else:
 		fainted()
-		
+	
+	return true
 
 func fainted() -> void:
 	if animation_player.current_animation != "death":
