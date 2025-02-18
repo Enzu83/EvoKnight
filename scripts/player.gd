@@ -42,7 +42,7 @@ const JUMP_VELOCITY = -300.0
 const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
 
-const MANA_RECOVERY_RATE = 20 # mana recovered per frame
+const MANA_RECOVERY_RATE = 0 #20 # mana recovered per frame
 const MAGIC_SLASH_MANA = 250 # mana required for magic slash
 const BLUE_DASH_MANA = 100 # mana required for dashing without taking damage
 const DASH_SPEED = 2 * SPEED

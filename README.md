@@ -39,7 +39,7 @@
 - `Left Joystick`: Movement
 - `A`: Jump
 - `X`: Basic Slash
-- `Right Shoulder`: Dash
+- `Right Trigger`: Dash
 - `B`: Magic Slash
 
 ## Resources
