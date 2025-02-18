@@ -39,7 +39,7 @@ const MAGIC_SLASH_MANA = 250 # mana required for magic slash
 const DASH_MANA = 100 # mana required for dashing
 const DASH_SPEED = 2 * SPEED
 
-enum State {Default, Fainted, Attacking, Dashing, Stop}
+enum State {Default, Fainted, Attacking, Dashing, DashingAndAttacking, Stop}
 enum Anim {idle, run, dash, jump, fall, faint}
 
 # player state and actions
@@ -92,15 +92,19 @@ func handle_movement() -> void:
 	direction = Input.get_axis("left", "right")
 
 func handle_slash() -> void:
-	# attacking state corresponds to the basic slash being active
-	if basic_slash.active:
-		state = State.Attacking
-	elif state == State.Attacking:
+	# reset attack state
+	if not basic_slash.active \
+	and (state == State.Attacking or state == State.DashingAndAttacking):
 		state = State.Default
 
 	# basic slash
-	if Input.is_action_just_pressed("basic_slash") and state == State.Default:
-		state = State.Attacking
+	if Input.is_action_just_pressed("basic_slash") \
+	and (state == State.Default or state == State.Dashing):
+		# attacking while dashing
+		if state == State.Dashing:
+			state = State.DashingAndAttacking
+		else:
+			state = State.Attacking
 		
 		if Input.is_action_pressed("up"):
 			basic_slash.start("up")
@@ -112,7 +116,10 @@ func handle_slash() -> void:
 			basic_slash.start("right")
 	
 	# magic slash
-	if Input.is_action_just_pressed("magic_slash") and state == State.Default and not magic_slash.active and mana >= MAGIC_SLASH_MANA:
+	elif Input.is_action_just_pressed("magic_slash") \
+	and (state == State.Default or state == State.Dashing) \
+	and not magic_slash.active \
+	and mana >= MAGIC_SLASH_MANA:
 		mana -= MAGIC_SLASH_MANA
 		
 		if sprite.flip_h:
@@ -202,7 +209,7 @@ func animate() -> void:
 	if state == State.Stop:
 		play_animation("idle")
 	
-	elif state == State.Dashing:
+	elif state == State.Dashing or state == State.DashingAndAttacking:
 		play_animation("dash")
 
 	elif state != State.Fainted:
@@ -227,17 +234,18 @@ func _physics_process(delta: float) -> void:
 	if state != State.Stop:
 		# handle player's actions if they are not defeated
 		if state != State.Fainted:
-			if state != State.Dashing:
-				handle_slash() # attacks
+			handle_slash() # attacks
+			
+			if state != State.Dashing and state != State.DashingAndAttacking:
 				handle_movement() # left, right and jump
 			
-			if state != State.Attacking:
+			if state != State.Attacking and state != State.DashingAndAttacking:
 				handle_flip_h() # flip sprite horizontally if the player is not attacking
 				handle_dash() # can't dash while attacking
 		else:
 			direction = 0
 		
-		if state != State.Dashing:
+		if state != State.Dashing and state != State.DashingAndAttacking:
 			handle_velocity(delta) # velocity update based on the above modification
 		
 	animate() # update the sprite animation if necessary
@@ -252,7 +260,7 @@ func is_hurtable() -> bool:
 	#	- the sprite blinks
 	#	- the player faints
 	#	- the player is dashing
-	return not effects_player.current_animation == "blink" and state != State.Fainted and state != State.Dashing
+	return not effects_player.current_animation == "blink" and state != State.Fainted and state != State.Dashing and state != State.DashingAndAttacking
 
 func hurt(damage: int) -> void:
 	# player is still alive
@@ -285,11 +293,12 @@ func create_phantom() -> void:
 
 func end_dash() -> void:
 	# end player dash animation and stop its velocity if not sliding
-	if state == State.Dashing:
+	if state == State.Dashing or state == State.DashingAndAttacking:
 		state = State.Default
 		velocity = Vector2.ZERO
 		phantom_cooldown.stop() # stop phantom display
 		hurtbox.set_deferred("disabled", false)
+		
 
 func heal(amount: int) -> void:
 	if health + amount > max_health:

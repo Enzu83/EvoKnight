@@ -17,6 +17,21 @@
 [ext_resource type="PackedScene" uid="uid://bus5n18gsp1ad" path="res://scenes/chars/wind_spirit.tscn" id="12_8w2sx"]
 [ext_resource type="PackedScene" uid="uid://cvmw3fdnu5d7w" path="res://scenes/other/end_of_level.tscn" id="12_y7177"]
 
+[sub_resource type="Animation" id="Animation_gibnw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2732, -42)]
+}
+
 [sub_resource type="Animation" id="Animation_edsqk"]
 resource_name = "move"
 length = 2.5
@@ -34,7 +49,13 @@ tracks/0/keys = {
 "values": [Vector2(2588, -42), Vector2(2720, -42)]
 }
 
-[sub_resource type="Animation" id="Animation_gibnw"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ao0ct"]
+_data = {
+"RESET": SubResource("Animation_gibnw"),
+"move": SubResource("Animation_edsqk")
+}
+
+[sub_resource type="Animation" id="Animation_wdepk"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -47,12 +68,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(2732, -42)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ao0ct"]
-_data = {
-"RESET": SubResource("Animation_gibnw"),
-"move": SubResource("Animation_edsqk")
 }
 
 [sub_resource type="Animation" id="Animation_gvsy2"]
@@ -70,21 +85,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(2876, -42), Vector2(2744, -42)]
-}
-
-[sub_resource type="Animation" id="Animation_wdepk"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2732, -42)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rdvlb"]

@@ -283,6 +283,12 @@ func find_action() -> void:
 	and abs(position.y - player.magic_slash.position.y) < 32:
 		change_action(Action.Jump)
 	
+	# jump if the player attacks while dashin horizontally toward and near
+	elif player.state == player.State.DashingAndAttacking \
+	and ((player.dash_direction.x == 1 and position.x > player.position.x and position.x - player.position.x < 128) or (player.dash_direction.x == -1 and player.position.x > position.x and player.position.x - position.x < 128)) \
+	and abs(position.y - player.get_middle_position().y) < 32:
+		change_action(Action.Jump)
+	
 	# run toward if it's safe to do it and if the player is not too high
 	elif not (player.state == player.State.Attacking \
 	and player.state == player.State.Dashing \
