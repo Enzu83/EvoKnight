@@ -12,6 +12,13 @@ extends CharacterBody2D
 @onready var jump_circle: AnimationPlayer = $Jump/JumpCircle
 @onready var jump_sound: AudioStreamPlayer = $Jump/JumpSound
 
+@onready var jump_ray_cast_down: RayCast2D = $JumpRayCast/Down
+@onready var jump_ray_cast_down_left: RayCast2D = $JumpRayCast/DownLeft
+@onready var jump_ray_cast_down_right: RayCast2D = $JumpRayCast/DownRight
+@onready var jump_ray_cast_left: RayCast2D = $JumpRayCast/Left
+@onready var jump_ray_cast_right: RayCast2D = $JumpRayCast/Right
+
+
 @onready var hurtbox: CollisionShape2D = $Hurtbox/Hurtbox
 @onready var hurt_sound: AudioStreamPlayer = $Hurtbox/HurtSound
 @onready var hurt_invicibility_timer: Timer = $Hurtbox/HurtInvicibilityTimer
@@ -47,6 +54,7 @@ var state := State.Default # handle all states of the player
 var anim := Anim.idle # handle the current animation to be played
 
 var direction: float # direction input
+
 var jumps := MAX_JUMPS # jumps left
 
 var can_dash := true
@@ -65,16 +73,34 @@ var mana := max_mana
 
 var strength := 1 # damage dealt to enemies
 
+# Allow grounded jump short after leaving the floor without jumping
+func jump_is_on_floor() -> bool:
+	# always grounded if the main ray cast down is colliding
+	if jump_ray_cast_down.is_colliding():
+		return true
+	
+	# raycast down left colliding but not left (jumping next to a wall)
+	elif jump_ray_cast_down_left.is_colliding() \
+	and not jump_ray_cast_left.is_colliding():
+		return true
+		
+	# raycast down right colliding but not right (jumping next to a wall)
+	elif jump_ray_cast_down_right.is_colliding() and not jump_ray_cast_right.is_colliding():
+		return true
+	
+	else:
+		return false
+
 func handle_movement() -> void:
-	# Restore jumps if grounded.
+	# Restore jumps if grounded (slight margin for jumping few frames after leaving the floor).
 	if is_on_floor():
 		jumps = MAX_JUMPS
 	# If the player leaves the ground without jumping, it should be counted as a jump
-	elif jumps == MAX_JUMPS:
+	elif jumps == MAX_JUMPS and not jump_is_on_floor():
 		jumps = MAX_JUMPS-1
 	
 	# Jump if there are jumps left
-	if Input.is_action_just_pressed("jump") and jumps > 0 and state != State.Attacking:
+	if Input.is_action_just_pressed("jump") and jumps > 0:
 		velocity.y = JUMP_VELOCITY
 		jumps -= 1
 		jump_sound.play()
@@ -85,7 +111,7 @@ func handle_movement() -> void:
 		animation_player.play("jump")
 		
 		# draw circle below player if they jump in the air
-		if not is_on_floor():
+		if jumps == 0:
 			jump_circle.play("default")
 
 	# Handle movements.
@@ -306,6 +332,12 @@ func heal(amount: int) -> void:
 	else:
 		health += amount
 
+func restore_mana(amount: int) -> void:
+	if mana + amount > max_mana:
+		mana = max_mana
+	else:
+		mana += amount
+
 func _on_death_timer_timeout() -> void:
 	Global.reset()
 
@@ -314,9 +346,8 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 	effects_player.stop()
 
 func _on_mana_recovery_timer_timeout() -> void:
-	if state != State.Fainted:
-		if mana < max_mana:
-			mana += MANA_RECOVERY_RATE
+	if state != State.Fainted and velocity == Vector2.ZERO:
+		restore_mana(MANA_RECOVERY_RATE)
 
 func _on_phantom_cooldown_timeout() -> void:
 	create_phantom()

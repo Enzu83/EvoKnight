@@ -518,6 +518,28 @@ autoplay = "RESET"
 stream = ExtResource("5_d4byh")
 bus = &"SFX"
 
+[node name="JumpRayCast" type="Node2D" parent="."]
+
+[node name="Down" type="RayCast2D" parent="JumpRayCast"]
+position = Vector2(0, -2)
+target_position = Vector2(0, 4)
+
+[node name="DownLeft" type="RayCast2D" parent="JumpRayCast"]
+position = Vector2(-14, -2)
+target_position = Vector2(0, 4)
+
+[node name="DownRight" type="RayCast2D" parent="JumpRayCast"]
+position = Vector2(14, -2)
+target_position = Vector2(0, 4)
+
+[node name="Left" type="RayCast2D" parent="JumpRayCast"]
+position = Vector2(0, -6)
+target_position = Vector2(-8, 0)
+
+[node name="Right" type="RayCast2D" parent="JumpRayCast"]
+position = Vector2(0, -6)
+target_position = Vector2(8, 0)
+
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 2
 

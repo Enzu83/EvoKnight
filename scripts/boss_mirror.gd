@@ -29,13 +29,13 @@ extends CharacterBody2D
 
 @onready var action_decision_cooldown: Timer = $ActionDecisionCooldown
 
-const SPEED = 125.0
+const SPEED = 120.0
 const JUMP_VELOCITY = -280.0
 const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
 const STRENGTH = 2
 
-const MAX_HEALTH = 100
+const MAX_HEALTH = 80
 const EXP_GIVEN = 50
 
 enum State {Default, Fainted, Attacking, Dashing}
