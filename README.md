@@ -40,7 +40,7 @@
 - `Button A`: Jump
 - `Button X`: Basic Slash
 - `Right Trigger`: Dash
-- `Button B`: Magic Slash
+- `Left Trigger`: Magic Slash
 
 ## Resources
 
