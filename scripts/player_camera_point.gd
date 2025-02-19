@@ -1,5 +1,7 @@
 extends Node2D
 
+const SPEED = 250
+
 @onready var player: Player = $".."
 @onready var camera: Camera2D = $Camera
 
@@ -9,7 +11,7 @@ func find_aimed_position() -> void:
 	aimed_position = player.get_middle_position()
 	#if player.sprite.flip_h and player.direction < 0:
 		#aimed_position.x = player.position.x - 32
-#
+
 	#elif player.direction > 0:
 		#aimed_position.x =  player.position.x + 32
 	
@@ -24,4 +26,3 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	find_aimed_position()
 	move_toward_aimed_position(delta)
-	

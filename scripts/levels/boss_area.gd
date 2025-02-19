@@ -6,6 +6,6 @@ extends Node2D
 @onready var boss_mirror: CharacterBody2D = $BossMirror
 
 func _ready() -> void:
-	Global.current_level = 2
+	Global.current_level = 3
 	Global.player = player
 	Global.boss = boss_mirror
