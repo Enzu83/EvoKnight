@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://f5padrph2ypl"]
 
-[ext_resource type="Script" path="res://scripts/spiked_eyebat.gd" id="1_8m8ut"]
+[ext_resource type="Script" path="res://scripts/spiky_eyebat.gd" id="1_8m8ut"]
 [ext_resource type="Texture2D" uid="uid://bya02jy083mpd" path="res://assets/sprites/chars/enemies/spiked_eyebat.png" id="2_j7mtt"]
 [ext_resource type="Script" path="res://scripts/body_hurtbox.gd" id="3_0ddaf"]
 [ext_resource type="AudioStream" uid="uid://bt05olm6c01yx" path="res://assets/sfx/snd_eyebat_hurt.wav" id="4_uc4uu"]
@@ -179,8 +179,8 @@ radius = 9.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_my74k"]
 radius = 9.0
 
-[node name="SpikedEyebat" type="CharacterBody2D" groups=["enemies"]]
-collision_layer = 0
+[node name="SpikyEyebat" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 4
 script = ExtResource("1_8m8ut")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -201,9 +201,11 @@ shape = SubResource("CircleShape2D_axsjt")
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 target_position = Vector2(-10, 0)
+collision_mask = 5
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
 target_position = Vector2(10, 0)
+collision_mask = 5
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 4

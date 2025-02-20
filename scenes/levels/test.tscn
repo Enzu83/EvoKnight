@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bggby2h6prvx3" path="res://scenes/terrains/ground.tscn" id="4_f2vt5"]
 [ext_resource type="PackedScene" uid="uid://dwitea1wpbdjp" path="res://scenes/chars/player.tscn" id="5_tcsbb"]
 [ext_resource type="PackedScene" uid="uid://7g8lw8o3aenr" path="res://scenes/items/star.tscn" id="6_p8fxj"]
-[ext_resource type="PackedScene" uid="uid://ixnghv7tms0i" path="res://scenes/platforms/platform.tscn" id="7_10ryl"]
+[ext_resource type="PackedScene" uid="uid://ixnghv7tms0i" path="res://scenes/platforms/small_platform.tscn" id="7_10ryl"]
 [ext_resource type="PackedScene" uid="uid://cf8j7ywt5hk2k" path="res://scenes/chars/bat.tscn" id="8_5gmw2"]
 [ext_resource type="PackedScene" uid="uid://c27tot3rib7r5" path="res://scenes/chars/cloporte.tscn" id="9_7wxmw"]
 [ext_resource type="PackedScene" uid="uid://cvx745hhmp0k6" path="res://scenes/other/kill_zone.tscn" id="9_v58lx"]

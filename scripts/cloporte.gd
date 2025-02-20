@@ -59,7 +59,7 @@ func hurt(damage: int, attack: Area2D) -> bool:
 	var is_hit = false
 
 	if attack == player.basic_slash:
-		var attack_orientation =  player.basic_slash.animation_player.current_animation
+		var attack_orientation = player.basic_slash.animation_player.current_animation
 		if attack_orientation == "up" or (attack_orientation == "left" and not animated_sprite.flip_h) or (attack_orientation == "right" and animated_sprite.flip_h):
 			is_hit = true
 			

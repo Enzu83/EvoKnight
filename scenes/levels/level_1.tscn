@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://bl5lwkiegxvn6" path="res://scenes/items/mana_orb.tscn" id="8_w1rty"]
 [ext_resource type="PackedScene" uid="uid://7g8lw8o3aenr" path="res://scenes/items/star.tscn" id="9_6kd0l"]
 [ext_resource type="PackedScene" uid="uid://c0q4ajyur6afq" path="res://scenes/other/player_camera_point.tscn" id="10_ew7k0"]
-[ext_resource type="PackedScene" uid="uid://ixnghv7tms0i" path="res://scenes/platforms/platform.tscn" id="11_7xat0"]
+[ext_resource type="PackedScene" uid="uid://ixnghv7tms0i" path="res://scenes/platforms/small_platform.tscn" id="11_7xat0"]
 [ext_resource type="PackedScene" uid="uid://bus5n18gsp1ad" path="res://scenes/chars/wind_spirit.tscn" id="12_8w2sx"]
 [ext_resource type="PackedScene" uid="uid://cvmw3fdnu5d7w" path="res://scenes/other/end_of_level.tscn" id="12_y7177"]
 
@@ -200,9 +200,6 @@ position = Vector2(3053, -48)
 
 [node name="ManaOrb" parent="Items" instance=ExtResource("8_w1rty")]
 position = Vector2(162, -4)
-
-[node name="Star3" parent="Items" instance=ExtResource("9_6kd0l")]
-position = Vector2(653, -4)
 
 [node name="Star4" parent="Items" instance=ExtResource("9_6kd0l")]
 position = Vector2(1068, -242)
