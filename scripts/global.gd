@@ -29,33 +29,58 @@ var boss: CharacterBody2D = null
 var pause_menu : CanvasLayer = load("res://scenes/other/pause.tscn").instantiate()
 var paused := false
 
+# player info
+var player_max_health := 10
+var player_health := player_max_health
+
+var player_level := 1
+var player_level_experience := [0, 0, 50, 70]
+var player_experience := 0
+
+# [max_health_increase, max_mana_increase, strength_increase]
+var player_level_stats_increase := {
+	"max_health": [0, 0, 3, 2],
+	"strength": [0, 0, 1, 1],
+	"defense": [0, 0, 0, 1]
+}
+
+var player_max_mana := 400
+var player_mana := 0
+
+var player_strength := 1
+var player_defense := 0
+
 func _ready() -> void:
-	init_stars()
+	init_stars_score()
 	add_child(pause_menu)
 
 func _process(_delta: float) -> void:
 	# debug inputs
 	if Input.is_action_just_pressed("reset"):
-		reset()
+		reset_level()
 	elif Input.is_action_just_pressed("previous_level"):
 		previous_level()
 	elif Input.is_action_just_pressed("next_level"):
 		next_level()
+	elif Input.is_action_pressed("exp") and player != null:
+		player.gain_exp(1)
 
-func init_stars() -> void:
+func init_stars_score() -> void:
 	stars = 0
 	total_stars = 0
 
-func reset() -> void:
-	init_stars()
+func reset_level() -> void:
+	init_stars_score()
 	get_tree().call_deferred("reload_current_scene")
+	
+	if player != null:
+		player.init_info()
 
 func goto_level(level_id: int) -> void:
 	current_level = level_id
-	reset()
+	reset_level()
 	respawn_position = Vector2.INF # reset checkpoint position
 	get_tree().call_deferred("change_scene_to_file", level_paths[current_level])
-
 
 func next_level() -> void:
 	if current_level < level_paths.size() - 1:
@@ -64,3 +89,16 @@ func next_level() -> void:
 func previous_level() -> void:
 	if current_level > 0:
 		goto_level(current_level - 1)
+
+func store_player_info() -> void:
+	player_max_health = player.max_health
+	player_health = player.health
+	
+	player_level = player.level
+	player_experience = player.experience
+
+	player_max_mana = player.max_mana
+	player_mana = player.mana
+
+	player_strength = player.strength
+	player_defense = player.defense

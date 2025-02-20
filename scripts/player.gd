@@ -51,7 +51,7 @@ enum State {Default, Fainted, Attacking, Dashing, DashingAndAttacking, Stop}
 enum Anim {idle, run, dash, jump, fall, faint}
 
 # player state and actions
-var state := State.Default # handle all states of the player
+var state: State # handle all states of the player
 var anim := Anim.idle # handle the current animation to be played
 
 var direction: float # direction input
@@ -65,16 +65,20 @@ var blue_dash_hit := false # indicate if the blue dash absorbed an hit
 var phantom = preload("res://scenes/chars/phantom.tscn")
 
 # stats
-var max_health := 10
-var health := max_health
+var max_health: int
+var health: int
 
-var next_level_experience := 50
-var experience := 0
+var level: int
+var level_experience := []
+var experience: int
 
-var max_mana := 400
-var mana := 0
+var level_stats_increase := {}
 
-var strength := 1 # damage dealt to enemies
+var max_mana: int
+var mana: int
+
+var strength: int
+var defense: int
 
 # Allow grounded jump short after leaving the floor without jumping
 func jump_is_on_floor() -> bool:
@@ -244,7 +248,7 @@ func handle_bounce() -> void:
 		jumps = MAX_JUMPS - 1
 
 func play_animation(anim_name: String) -> void:
-	# play the animation if it's no the current one
+	# play the animation if it's not the current one
 	if anim != Anim.get(anim_name):
 		animation_player.play(anim_name)
 		anim = Anim.get(anim_name)
@@ -256,22 +260,48 @@ func animate() -> void:
 	elif state == State.Dashing or state == State.DashingAndAttacking:
 		play_animation("dash")
 
-	elif state != State.Fainted:
+	if state == State.Fainted:
+		play_animation("faint")
+	else:
 		if is_on_floor():
 			if direction == 0:
 				play_animation("idle")
 			else:
 				play_animation("run")
+
 		elif velocity.y > 0:
 			play_animation("fall")
 		else:
 			play_animation("jump")
-	else:
-		play_animation("faint")
+
+func init_info() -> void:
+	# retrieve info for global
+	sprite.texture = Global.player_sprite
+	
+	max_health = Global.player_max_health
+	health = Global.player_health
+	
+	level = Global.player_level
+	level_experience = Global.player_level_experience
+	experience = Global.player_experience
+	
+	level_stats_increase = Global.player_level_stats_increase
+	
+	max_mana = Global.player_max_mana
+	mana = Global.player_mana
+	
+	strength = Global.player_strength
+	defense = Global.player_defense
+	
+	# restore health of the player if the player fainted
+	if health == 0:
+		health = max_health
+		mana = 0
 
 func _ready() -> void:
-	sprite.texture = Global.player_sprite
 	add_to_group("players")
+	init_info()
+	state = State.Default
 
 func _physics_process(delta: float) -> void:
 	if state != State.Stop:
@@ -295,6 +325,10 @@ func _physics_process(delta: float) -> void:
 	animate() # update the sprite animation if necessary
 	move_and_slide()
 
+func _process(_delta: float) -> void:
+	# store the info after each frame
+	Global.store_player_info()
+
 # get the position of the player with a vertical offset depending on the hurtbox's size
 func get_middle_position() -> Vector2:
 	return position - Vector2(0, wall_collider.shape.get_rect().size.y)
@@ -314,8 +348,8 @@ func hurt(damage: int) -> void:
 			blue_dash_sound.play()
 	
 	# player is still alive
-	elif health > damage:
-		health -= damage
+	elif health > max(1, damage - defense):
+		health -= max(1, damage - defense)
 		velocity.x *= 0.5
 		hurt_sound.play()
 		hurtbox.set_deferred("disabled", true)
@@ -365,8 +399,28 @@ func restore_mana(amount: int) -> void:
 	else:
 		mana += amount
 
+func gain_exp(amount: int) -> void:
+	experience += amount
+	
+	while level < level_experience.size()-1 \
+	and experience >= level_experience[level + 1]:
+		level_up()
+		
+
+func level_up() -> void:
+	level += 1
+	
+	experience -= level_experience[level]
+	
+	max_health += level_stats_increase["max_health"][level]
+	strength += level_stats_increase["strength"][level]
+	defense += level_stats_increase["defense"][level]
+	
+	health = max_health
+
 func _on_death_timer_timeout() -> void:
-	Global.reset()
+	Global.store_player_info()
+	Global.reset_level()
 
 func _on_hurt_invicibility_timer_timeout() -> void:
 	hurtbox.set_deferred("disabled", false)

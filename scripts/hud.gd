@@ -43,7 +43,12 @@ func _process(_delta: float) -> void:
 	
 	# get player stats
 	health_bar.value = int((player.health / float(player.max_health)) * health_bar.max_value)
-	exp_bar.value = int((player.experience / float(player.next_level_experience)) * exp_bar.max_value)
+	
+	# max level reached
+	if player.level == player.level_experience.size()-1:
+		exp_bar.value = exp_bar.max_value
+	else:
+		exp_bar.value = int((player.experience / float(player.level_experience[player.level + 1])) * exp_bar.max_value)
 	
 	# update health value
 	health_value.text = str(player.health)

@@ -88,7 +88,7 @@ func hurt(damage: int, _attack: Area2D) -> bool:
 func fainted() -> void:
 	if animation_player.current_animation != "death":
 		health = 0
-		player.experience += EXP_GIVEN
+		player.gain_exp(EXP_GIVEN)
 		animation_player.play("death")
 		death_sound.play()
 		tornado.queue_free()

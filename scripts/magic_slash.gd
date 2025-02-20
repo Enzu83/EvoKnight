@@ -1,7 +1,7 @@
 extends Area2D
 
 const SPEED = 300
-const STRENGTH = 8
+const STRENGTH = 7
 
 @onready var sprite: Sprite2D = $Sprite
 
@@ -48,7 +48,7 @@ func _process(delta: float) -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemies"):
-		area.hurt(STRENGTH * player.strength, self)
+		area.hurt(STRENGTH + player.strength, self)
 
 func _on_duration_timeout() -> void:
 	animation_player.play("fade_out")

@@ -1,7 +1,7 @@
 extends Area2D
 
-const STRENGTH = 5
-const MANA_RECOVERY_FACTOR = 10
+const STRENGTH = 4
+const MANA_RECOVERY_FACTOR = 12
 
 @onready var sprite: Sprite2D = $Sprite
 
@@ -37,9 +37,9 @@ func _process(_delta: float) -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemies"):
-		if area.hurt(STRENGTH * player.strength, self):
+		if area.hurt(STRENGTH + player.strength, self):
 			# restore mana only if the slash hurt the enemy
-			player.restore_mana(MANA_RECOVERY_FACTOR * STRENGTH * player.strength)
+			player.restore_mana(MANA_RECOVERY_FACTOR * STRENGTH + player.strength)
 		
 		# make player bounce on the enemy
 		if animation_player.current_animation == "down":

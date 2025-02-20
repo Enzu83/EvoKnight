@@ -339,7 +339,7 @@ func hurt(damage: int, _attack: Area2D) -> bool:
 func fainted() -> void:
 	if state != State.Fainted:
 		health = 0
-		player.experience += EXP_GIVEN
+		player.gain_exp(EXP_GIVEN)
 		play_animation("faint")
 		state = State.Fainted
 		velocity.y = 0
