@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://beq88lmemfiik"]
+
+[ext_resource type="Script" path="res://scripts/spike.gd" id="1_6tf5u"]
+[ext_resource type="Texture2D" uid="uid://2yflvrgoj60p" path="res://assets/sprites/terrains/spike.png" id="1_gcw33"]
+[ext_resource type="Script" path="res://scripts/body_hurtbox.gd" id="3_r57wl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qi5hn"]
+size = Vector2(6.5, 3.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_44ihx"]
+size = Vector2(7, 4)
+
+[node name="Spike" type="CharacterBody2D"]
+collision_mask = 0
+script = ExtResource("1_6tf5u")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(0, -4)
+texture = ExtResource("1_gcw33")
+region_enabled = true
+region_rect = Rect2(0, 0, 8, 8)
+
+[node name="WallCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_qi5hn")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("3_r57wl")
+
+[node name="Hitbox" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_44ihx")
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
