@@ -14,7 +14,11 @@ func _ready() -> void:
 	state = State.Resume
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("pause") and Global.current_level != 0:
+	# can't pause on the title screen
+	# and can't pause while leveling up
+	if Input.is_action_just_pressed("pause") \
+	and Global.current_level != 0 \
+	and not Global.level_up.visible:
 		toggle_pause()
 	
 	# pause menu is active
@@ -53,7 +57,7 @@ func toggle_pause() -> void:
 	
 	if not visible:
 		visible = true
-		get_tree().paused = true	
+		get_tree().paused = true
 	else:
 		visible = false
 		get_tree().paused = false

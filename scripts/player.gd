@@ -30,11 +30,12 @@ extends CharacterBody2D
 
 @onready var magic_slash: Area2D = $MagicSlash
 
-@onready var dash_cooldown: Timer = $DashCooldown
-@onready var dash_duration: Timer = $DashDuration
+@onready var dash_cooldown: Timer = $Dash/DashCooldown
+@onready var dash_duration: Timer = $Dash/DashDuration
+@onready var dash_sound: AudioStreamPlayer = $Dash/DashSound
+@onready var blue_dash_sound: AudioStreamPlayer = $Dash/BlueDashSound
+
 @onready var phantom_cooldown: Timer = $PhantomCooldown
-@onready var dash_sound: AudioStreamPlayer = $DashSound
-@onready var blue_dash_sound: AudioStreamPlayer = $BlueDashSound
 
 # Parameters
 const SPEED = 150.0
@@ -260,7 +261,7 @@ func animate() -> void:
 	elif state == State.Dashing or state == State.DashingAndAttacking:
 		play_animation("dash")
 
-	if state == State.Fainted:
+	elif state == State.Fainted:
 		play_animation("faint")
 	else:
 		if is_on_floor():
@@ -417,6 +418,13 @@ func level_up() -> void:
 	defense += level_stats_increase["defense"][level]
 	
 	health = max_health
+	
+	# level up animation
+	Global.level_up.start(
+		level_stats_increase["max_health"][level], 
+		level_stats_increase["strength"][level],
+		level_stats_increase["defense"][level]
+		)
 
 func _on_death_timer_timeout() -> void:
 	Global.store_player_info()

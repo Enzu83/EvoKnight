@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://cenfhvybnahpy"]
+
+[ext_resource type="Texture2D" uid="uid://c3vghu2x4huw" path="res://assets/sprites/ui/level_up/spr_level_up_orb_red.png" id="2_uv210"]
+
+[node name="LevelUpOrbs" type="Node2D"]
+top_level = true
+
+[node name="Orb1" type="Sprite2D" parent="."]
+z_index = 3
+texture = ExtResource("2_uv210")
+hframes = 4
+
+[node name="Orb2" type="Sprite2D" parent="."]
+z_index = 2
+y_sort_enabled = true
+position = Vector2(2.5, 6)
+texture = ExtResource("2_uv210")
+hframes = 4
+frame = 1
+
+[node name="Orb3" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(5, 10)
+texture = ExtResource("2_uv210")
+hframes = 4
+frame = 2
+
+[node name="Orb4" type="Sprite2D" parent="."]
+position = Vector2(8.5, 13)
+texture = ExtResource("2_uv210")
+hframes = 4
+frame = 3

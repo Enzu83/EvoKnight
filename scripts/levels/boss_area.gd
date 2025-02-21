@@ -8,4 +8,6 @@ extends Node2D
 func _ready() -> void:
 	Global.current_level = 3
 	Global.player = player
+	player.state = player.State.Stop
+	
 	Global.boss = boss_mirror

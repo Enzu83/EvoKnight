@@ -226,18 +226,6 @@ sprite_frames = SubResource("SpriteFrames_wdmb5")
 autoplay = "default"
 frame_progress = 0.803466
 
-[node name="MenuControlsInfo" type="Label" parent="."]
-top_level = true
-offset_left = 4.0
-offset_top = 160.0
-offset_right = 108.0
-offset_bottom = 182.0
-theme_override_constants/line_spacing = 0
-theme_override_fonts/font = ExtResource("6_bnf46")
-theme_override_font_sizes/font_size = 9
-text = "
-RETURN: Confirm"
-
 [node name="PlayerControlsInfo" type="Label" parent="."]
 top_level = true
 offset_left = 194.0

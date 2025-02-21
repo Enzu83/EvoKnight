@@ -25,9 +25,11 @@ var player: CharacterBody2D = null
 var respawn_position: Vector2 = Vector2.INF
 var boss: CharacterBody2D = null
 
-# pause menu
-var pause_menu : CanvasLayer = load("res://scenes/other/pause.tscn").instantiate()
+# events that pauses the game
 var paused := false
+
+var pause_menu: CanvasLayer = load("res://scenes/other/pause.tscn").instantiate()
+var level_up: CanvasLayer = load("res://scenes/other/level_up.tscn").instantiate()
 
 # player info
 var player_max_health := 10
@@ -53,6 +55,7 @@ var player_defense := 0
 func _ready() -> void:
 	init_stars_score()
 	add_child(pause_menu)
+	add_child(level_up)
 
 func _process(_delta: float) -> void:
 	# debug inputs
@@ -64,6 +67,12 @@ func _process(_delta: float) -> void:
 		next_level()
 	elif Input.is_action_pressed("exp") and player != null:
 		player.gain_exp(1)
+	
+	# pause tree
+	if pause_menu.visible or level_up.visible:
+		get_tree().paused = true
+	else:
+		get_tree().paused = false
 
 func init_stars_score() -> void:
 	stars = 0
