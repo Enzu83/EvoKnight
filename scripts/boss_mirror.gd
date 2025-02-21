@@ -33,10 +33,10 @@ const SPEED = 130.0
 const JUMP_VELOCITY = -280.0
 const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
-const STRENGTH = 2
+const STRENGTH = 3
 
-const MAX_HEALTH = 100
-const EXP_GIVEN = 50
+const MAX_HEALTH = 120
+const EXP_GIVEN = 40
 
 enum State {Default, Fainted, Attacking, Dashing}
 enum Anim {idle, run, dash, jump, fall, faint}
@@ -196,7 +196,6 @@ func _physics_process(delta: float) -> void:
 	if active:
 		if can_change_action:
 			find_action()
-		#print(Action.find_key(action))
 
 		# handle player's actions if they are not defeated
 		if state != State.Fainted:

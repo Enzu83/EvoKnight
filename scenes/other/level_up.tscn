@@ -1,9 +1,11 @@
-[gd_scene load_steps=23 format=3 uid="uid://dwwuc2ouc4sd0"]
+[gd_scene load_steps=28 format=3 uid="uid://dwwuc2ouc4sd0"]
 
 [ext_resource type="Script" path="res://scripts/level_up.gd" id="1_le5cp"]
-[ext_resource type="Texture2D" uid="uid://fienp67072ln" path="res://assets/sprites/ui/level_up/level_up.png" id="2_nihxo"]
-[ext_resource type="Texture2D" uid="uid://b5qt201v1f4y5" path="res://assets/sprites/ui/level_up/spr_level_up_block.png" id="3_f5vhc"]
+[ext_resource type="Texture2D" uid="uid://fienp67072ln" path="res://assets/sprites/ui/level_up/spr_level_up.png" id="2_nihxo"]
+[ext_resource type="Texture2D" uid="uid://b5qt201v1f4y5" path="res://assets/sprites/ui/level_up/spr_stat_up_block.png" id="3_f5vhc"]
+[ext_resource type="AudioStream" uid="uid://dcu0m83e8gt6u" path="res://assets/sfx/snd_level_up.wav" id="3_tbuum"]
 [ext_resource type="FontFile" uid="uid://b1nohaspagshb" path="res://assets/fonts/mini.fnt" id="4_mpu5l"]
+[ext_resource type="AudioStream" uid="uid://djqciodguxm3s" path="res://assets/sfx/snd_stat_up.wav" id="4_w4xqs"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ad5af"]
 
@@ -127,62 +129,141 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="Animation" id="Animation_lucle"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StatIncreaseDisplay:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(60, 135)]
+}
+
+[sub_resource type="Animation" id="Animation_nlcm3"]
+resource_name = "move"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StatIncreaseDisplay:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(60, 135), Vector2(60, 80)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StatUpTimer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"start"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pixvq"]
+_data = {
+"RESET": SubResource("Animation_lucle"),
+"move": SubResource("Animation_nlcm3")
+}
+
 [node name="LevelUp" type="CanvasLayer"]
 process_mode = 3
 layer = 2
 visible = false
+scale = Vector2(1.333, 1.333)
+transform = Transform2D(1.333, 0, 0, 1.333, 0, 0)
 script = ExtResource("1_le5cp")
 
 [node name="Background" type="TextureRect" parent="."]
 modulate = Color(0, 0, 0, 0.428)
 offset_right = 320.0
 offset_bottom = 180.0
+scale = Vector2(0.75, 0.75)
 texture = SubResource("PlaceholderTexture2D_ad5af")
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(157, 56)
+position = Vector2(120, 36.9963)
 sprite_frames = SubResource("SpriteFrames_7j4x8")
 frame = 15
 frame_progress = 1.0
 
 [node name="AnimationTimer" type="Timer" parent="."]
+wait_time = 3.0
 one_shot = true
 
+[node name="StatUpTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="LevelUpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_tbuum")
+bus = &"SFX"
+
+[node name="StatUpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_w4xqs")
+bus = &"SFX"
+
+[node name="StatDisplayPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pixvq")
+}
+autoplay = "RESET"
+
 [node name="StatIncreaseDisplay" type="TextureRect" parent="."]
-offset_left = 94.0
-offset_top = 93.0
-offset_right = 215.0
-offset_bottom = 133.0
+offset_left = 60.0
+offset_top = 135.0
+offset_right = 181.0
+offset_bottom = 164.0
 texture = ExtResource("3_f5vhc")
 
 [node name="HealthIncrease" type="Label" parent="StatIncreaseDisplay"]
+visible = false
+modulate = Color(0.87451, 0, 0, 1)
 layout_mode = 0
-offset_left = 18.0
-offset_top = 10.0
-offset_right = 35.0
-offset_bottom = 33.0
+offset_left = 18.7479
+offset_top = 16.0
+offset_right = 29.7479
+offset_bottom = 26.0
 theme_override_fonts/font = ExtResource("4_mpu5l")
-text = "0"
-horizontal_alignment = 1
+theme_override_font_sizes/font_size = 8
+text = "+0"
 
 [node name="StrengthIncrease" type="Label" parent="StatIncreaseDisplay"]
+visible = false
+modulate = Color(0.780392, 0.945098, 0.945098, 1)
 layout_mode = 0
-offset_left = 53.0
-offset_top = 10.0
-offset_right = 71.0
-offset_bottom = 33.0
+offset_left = 53.2476
+offset_top = 16.0
+offset_right = 64.2476
+offset_bottom = 26.0
 theme_override_fonts/font = ExtResource("4_mpu5l")
-text = "0"
-horizontal_alignment = 1
+theme_override_font_sizes/font_size = 8
+text = "+0"
 
 [node name="DefenseIncrease" type="Label" parent="StatIncreaseDisplay"]
+visible = false
+modulate = Color(0.239216, 0.552941, 0.74902, 1)
 layout_mode = 0
-offset_left = 90.0
-offset_top = 10.0
-offset_right = 104.0
-offset_bottom = 28.0
+offset_left = 89.2483
+offset_top = 16.0
+offset_right = 100.248
+offset_bottom = 26.0
 theme_override_fonts/font = ExtResource("4_mpu5l")
-text = "0"
-horizontal_alignment = 1
+theme_override_font_sizes/font_size = 8
+text = "+0"
 
 [connection signal="timeout" from="AnimationTimer" to="." method="_on_animation_timer_timeout"]
+[connection signal="timeout" from="StatUpTimer" to="." method="_on_stat_up_timer_timeout"]

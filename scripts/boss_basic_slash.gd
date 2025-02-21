@@ -1,6 +1,6 @@
 extends Area2D
 
-const STRENGTH = 3
+const STRENGTH = 4
 
 @onready var sprite: Sprite2D = $Sprite
 

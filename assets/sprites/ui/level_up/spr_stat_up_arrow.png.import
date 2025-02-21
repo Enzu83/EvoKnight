@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b5qt201v1f4y5"
-path="res://.godot/imported/spr_level_up_block.png-57069d6cfe8ecfea1cadeaaec22b737a.ctex"
+uid="uid://dnuab0ckkm00c"
+path="res://.godot/imported/spr_stat_up_arrow.png-977bb3aeb909b40129f475718eff5102.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/level_up/spr_level_up_block.png"
-dest_files=["res://.godot/imported/spr_level_up_block.png-57069d6cfe8ecfea1cadeaaec22b737a.ctex"]
+source_file="res://assets/sprites/ui/level_up/spr_stat_up_arrow.png"
+dest_files=["res://.godot/imported/spr_stat_up_arrow.png-977bb3aeb909b40129f475718eff5102.ctex"]
 
 [params]
 
