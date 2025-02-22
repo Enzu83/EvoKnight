@@ -11,3 +11,6 @@ func _ready() -> void:
 	player.state = player.State.Stop
 	
 	Global.boss = boss_mirror
+	
+	hud.display_collectable = false
+	hud.display_boss = false

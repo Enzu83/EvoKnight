@@ -255,10 +255,7 @@ func play_animation(anim_name: String) -> void:
 		anim = Anim.get(anim_name)
 
 func animate() -> void:
-	if state == State.Stop:
-		play_animation("idle")
-	
-	elif state == State.Dashing or state == State.DashingAndAttacking:
+	if state == State.Dashing or state == State.DashingAndAttacking:
 		play_animation("dash")
 
 	elif state == State.Fainted:
@@ -322,7 +319,7 @@ func _physics_process(delta: float) -> void:
 		
 		if state != State.Dashing and state != State.DashingAndAttacking:
 			handle_velocity(delta) # velocity update based on the above modification
-		
+			
 	animate() # update the sprite animation if necessary
 	move_and_slide()
 

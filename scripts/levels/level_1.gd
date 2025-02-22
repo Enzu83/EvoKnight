@@ -6,7 +6,8 @@ extends Node2D
 func _ready() -> void:
 	Global.current_level = 1
 	Global.player = player
-	hud.mode = hud.DisplayMode.Collectable
+	hud.display_collectable = true
+	hud.display_boss = false
 
 	if Global.respawn_position != Vector2.INF:
 		player.position = Global.respawn_position

@@ -176,7 +176,7 @@ func animate() -> void:
 		play_animation("faint")
 
 func draw_health_bar() -> void:
-	hud.mode = hud.DisplayMode.Boss
+	hud.display_boss = true
 	hud.boss_name.text = "Dark Cherry"
 
 func activate() -> void:

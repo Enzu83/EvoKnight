@@ -23,7 +23,7 @@ var total_stars: int
 # entities
 var player: CharacterBody2D = null
 var respawn_position: Vector2 = Vector2.INF
-var boss: CharacterBody2D = null
+var boss: Node2D = null
 
 # events that pauses the game
 var paused := false
@@ -36,14 +36,14 @@ var player_max_health := 10
 var player_health := player_max_health
 
 var player_level := 1
-var player_level_experience := [0, 0, 50, 70]
+var player_level_experience := [0, 0, 50, 70, 85, 100]
 var player_experience := 0
 
 # [max_health_increase, max_mana_increase, strength_increase]
 var player_level_stats_increase := {
-	"max_health": [0, 0, 3, 2],
-	"strength": [0, 0, 1, 1],
-	"defense": [0, 0, 0, 1]
+	"max_health": [0, 0, 3, 2, 2, 3],
+	"strength": [0, 0, 1, 1, 0, 1],
+	"defense": [0, 0, 0, 1, 1, 0]
 }
 
 var player_max_mana := 400

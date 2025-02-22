@@ -21,11 +21,11 @@ extends CanvasLayer
 @onready var boss_health_bar: TextureProgressBar = $BossBar/HealthBar
 @onready var boss_name: Label = $BossBar/BossName
 
-enum DisplayMode {None, Collectable, Boss}
-var mode := DisplayMode.None
+var display_collectable := false
+var display_boss := false
 
 var player: CharacterBody2D = null
-var boss: CharacterBody2D = null
+var boss: Node2D = null
 
 var dash_threshold_initial_position: Vector2
 var magic_slash_threshold_initial_position: Vector2
@@ -81,10 +81,11 @@ func _process(_delta: float) -> void:
 	mana_bar.value = int((player.mana / float(player.max_mana)) * mana_bar.max_value)
 	
 	hide_all() # hide all specific ui before make some of them visible
-	
-	if mode == DisplayMode.Collectable:
+
+	if display_collectable:
 		draw_collectable_ui()
-	elif mode == DisplayMode.Boss:
+	
+	if display_boss:
 		draw_boss_ui()
 	
 	# make visible the main and mana UI after the bars update
