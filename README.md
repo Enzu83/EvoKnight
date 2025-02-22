@@ -29,15 +29,19 @@
 ### Keyboard (QWERTY)
 
 - `WASD`: Movement
-- `SPACE`: Jump
+- `SPACE`: Jump/Confirm
+- `I`: Confirm
+- `P`: Pause
 - `J`: Basic Slash
-- `I`: Dash
+- `K`: Dash
 - `L`: Magic Slash
 
 ### Controller (XBOX)
 
 - `Left Joystick`: Movement
-- `Button A`: Jump
+- `Button A`: Jump/Confirm
+- `Button B`: Confirm
+- `Start`: Pause
 - `Button X`: Basic Slash
 - `Right Trigger`: Dash
 - `Left Trigger`: Magic Slash

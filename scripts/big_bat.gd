@@ -2,7 +2,7 @@ extends Area2D
 
 const SPEED = 150
 const STRENGTH = 4 # damage caused by the enemy
-const MAX_HEALTH = 80
+const MAX_HEALTH = 140
 const EXP_GIVEN = 20
 
 @onready var boss_music: AudioStreamPlayer = %BossMusic

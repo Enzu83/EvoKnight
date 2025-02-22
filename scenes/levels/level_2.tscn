@@ -284,7 +284,7 @@ scale = Vector2(6, 1)
 
 [node name="Player" parent="." instance=ExtResource("13_xt3i8")]
 unique_name_in_owner = true
-position = Vector2(2780, -467)
+position = Vector2(45, -96)
 
 [node name="PlayerCameraPoint" parent="Player" instance=ExtResource("14_0vafh")]
 top_level = true
@@ -307,7 +307,7 @@ unique_name_in_owner = true
 position = Vector2(1291, -90)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EndOfLevel"]
-position = Vector2(2457, 147)
+position = Vector2(2381, -1)
 shape = SubResource("RectangleShape2D_hsmr0")
 
 [node name="BigBatBoss" type="Area2D" parent="."]

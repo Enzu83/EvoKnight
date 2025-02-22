@@ -33,9 +33,7 @@ func handle_menu() -> void:
 		cursor.position.y = quit_button.position.y + 10
 	
 	# select an option
-	if (Input.is_action_just_pressed("basic_slash") \
-	or Input.is_action_just_pressed("dash") \
-	or Input.is_action_just_pressed("magic_slash")):
+	if Input.is_action_just_pressed("confirm"):
 		if state == State.Resume:
 			toggle_pause()
 		elif state == State.Quit:
