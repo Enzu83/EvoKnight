@@ -386,7 +386,6 @@ func end_dash() -> void:
 		hurtbox.set_deferred("disabled", false)
 		blue_dash = false
 		blue_dash_hit = false
-		
 
 func heal(amount: int) -> void:
 	if health + amount > max_health:

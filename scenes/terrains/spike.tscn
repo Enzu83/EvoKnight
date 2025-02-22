@@ -1,16 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://beq88lmemfiik"]
+[gd_scene load_steps=7 format=3 uid="uid://beq88lmemfiik"]
 
 [ext_resource type="Script" path="res://scripts/spike.gd" id="1_6tf5u"]
 [ext_resource type="Texture2D" uid="uid://2yflvrgoj60p" path="res://assets/sprites/terrains/spike.png" id="1_gcw33"]
-[ext_resource type="Script" path="res://scripts/body_hurtbox.gd" id="3_r57wl"]
+[ext_resource type="Script" path="res://scripts/static_body_hitbox.gd" id="3_7jh0h"]
+[ext_resource type="AudioStream" uid="uid://8aur0ki6cwrp" path="res://assets/sfx/snd_clang.wav" id="4_7ml02"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qi5hn"]
-size = Vector2(6.5, 3.75)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y7xcq"]
+size = Vector2(8, 4)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_44ihx"]
-size = Vector2(7, 4)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ree5b"]
+size = Vector2(8, 4)
 
-[node name="Spike" type="CharacterBody2D"]
+[node name="Spike" type="StaticBody2D"]
 collision_mask = 0
 script = ExtResource("1_6tf5u")
 
@@ -23,15 +24,19 @@ region_rect = Rect2(0, 0, 8, 8)
 
 [node name="WallCollider" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)
-shape = SubResource("RectangleShape2D_qi5hn")
+shape = SubResource("RectangleShape2D_y7xcq")
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 4
 collision_mask = 2
-script = ExtResource("3_r57wl")
+script = ExtResource("3_7jh0h")
 
 [node name="Hitbox" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0, -2)
-shape = SubResource("RectangleShape2D_44ihx")
+shape = SubResource("RectangleShape2D_ree5b")
+
+[node name="ClangSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_7ml02")
+bus = &"SFX"
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

@@ -213,11 +213,11 @@ shape = SubResource("CapsuleShape2D_6ngan")
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 position = Vector2(0, 9)
-target_position = Vector2(-12, 0)
+target_position = Vector2(-11.5, 0)
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
 position = Vector2(0, 9)
-target_position = Vector2(12, 0)
+target_position = Vector2(11.5, 0)
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 4
