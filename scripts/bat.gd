@@ -14,8 +14,7 @@ const EXP_GIVEN = 3
 
 @onready var death_sound: AudioStreamPlayer = $DeathSound
 
-@onready var player: CharacterBody2D = %Player
-
+var player: CharacterBody2D
 
 var chase := false # enable chasing the player
 var target: CharacterBody2D = null # chase target
@@ -23,9 +22,12 @@ var health := MAX_HEALTH
 var hit := false # enemy stun if hit by an attack, can't chase during this period
 
 func _ready() -> void:
-	add_to_group("enemies") 
+	add_to_group("enemies")
 
 func _physics_process(delta: float) -> void:
+	if Global.player != null:
+		player = Global.player
+	
 	# flip the sprite to match the direction
 	if position.x < player.position.x:
 		animated_sprite.flip_h = false

@@ -58,6 +58,7 @@ func _ready() -> void:
 	add_child(level_up)
 
 func _process(_delta: float) -> void:
+	
 	# debug inputs
 	if Input.is_action_just_pressed("reset"):
 		reset_level()

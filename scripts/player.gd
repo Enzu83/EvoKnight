@@ -335,7 +335,8 @@ func is_hurtable() -> bool:
 	# can't be hurt if:
 	#	- the sprite blinks
 	#	- the player faints
-	return not effects_player.current_animation == "blink" and state != State.Fainted
+	#	- in Stop state
+	return not effects_player.current_animation == "blink" and state != State.Fainted and state != State.Stop
 
 func hurt(damage: int) -> void:
 	# hit during blue dash: animation and mana cost
