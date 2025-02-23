@@ -117,16 +117,34 @@ func store_player_info() -> void:
 	player_strength = player.strength
 	player_defense = player.defense
 
+func create_heart_drop(heal_value: int,initial_position: Vector2, initial_velocity: Vector2) -> void:
+	var heart_drop: CharacterBody2D = heart_drop_scene.instantiate().init(heal_value, initial_position, initial_velocity)
+	get_tree().root.call_deferred("add_child", heart_drop)
+
+func create_exp_drop(exp_value: int,initial_position: Vector2, initial_velocity: Vector2) -> void:
+	var exp_drop: CharacterBody2D = exp_drop_scene.instantiate().init(exp_value, initial_position, initial_velocity)
+	get_tree().root.call_deferred("add_child", exp_drop)
+
 func create_drop(drop_rate: float, heal_value: int, exp_value: int, initial_position: Vector2, initial_velocity: Vector2) -> void:
 	# chance to drop something
 	if (randi() % 100) / 100.0 <= drop_rate:
 
 		# more chance to drop a heart if the player's health is low
-		if (randi() % 100) / 100.0 <= 1 - (player.health / float(player.max_health)) ** 2:
-			var heart_drop: CharacterBody2D = heart_drop_scene.instantiate().init(heal_value, initial_position, initial_velocity)
-			get_tree().root.call_deferred("add_child", heart_drop)
+		if (randi() % 100) / 100.0 <= 1 - player.health / float(player.max_health):
+			create_heart_drop(heal_value, initial_position, initial_velocity)
 
 		# exp drop
 		else:
-			var exp_drop: CharacterBody2D = exp_drop_scene.instantiate().init(exp_value, initial_position, initial_velocity)
-			get_tree().root.call_deferred("add_child", exp_drop)
+			create_exp_drop(exp_value, initial_position, initial_velocity)
+
+func create_multiple_exp_drop(exp_value: int, initial_position: Vector2, speed: float) -> void:
+	# 8-direction exp drop
+	create_exp_drop(exp_value, initial_position, speed * Vector2(-1, -1)) # up left
+	create_exp_drop(exp_value, initial_position, speed * Vector2( 0, -1)) # up
+	create_exp_drop(exp_value, initial_position, speed * Vector2( 1, -1)) # up right
+	create_exp_drop(exp_value, initial_position, speed * Vector2( 1,  0)) # right
+	create_exp_drop(exp_value, initial_position, speed * Vector2( 1,  1)) # down right
+	create_exp_drop(exp_value, initial_position, speed * Vector2( 0,  1)) # down
+	create_exp_drop(exp_value, initial_position, speed * Vector2(-1,  1)) # down left
+	create_exp_drop(exp_value, initial_position, speed * Vector2(-1,  0)) # left
+	

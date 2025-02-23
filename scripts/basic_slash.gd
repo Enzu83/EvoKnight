@@ -1,7 +1,7 @@
 extends Area2D
 
 const STRENGTH = 4
-const MANA_RECOVERY_FACTOR = 12
+const MANA_RECOVERY_FACTOR = 10
 
 @onready var sprite: Sprite2D = $Sprite
 

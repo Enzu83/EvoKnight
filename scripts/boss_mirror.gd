@@ -36,7 +36,7 @@ const MAX_JUMPS = 2 # Multiple jumps
 const STRENGTH = 3
 
 const MAX_HEALTH = 120
-const EXP_GIVEN = 40
+const EXP_DROP_VALUE = 5
 
 enum State {Default, Fainted, Attacking, Dashing}
 enum Anim {idle, run, dash, jump, fall, faint}
@@ -338,11 +338,14 @@ func hurt(damage: int, _attack: Area2D) -> bool:
 func fainted() -> void:
 	if state != State.Fainted:
 		health = 0
-		player.gain_exp(EXP_GIVEN)
 		play_animation("faint")
 		state = State.Fainted
 		velocity.y = 0
 		death_sound.play()
+		
+		# exp drops
+		Global.create_multiple_exp_drop(EXP_DROP_VALUE, position, 250)
+
 		#death_timer.start()
 
 func _on_jump_cooldown_timeout() -> void:

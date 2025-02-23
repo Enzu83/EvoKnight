@@ -3,7 +3,8 @@ extends Area2D
 const SPEED = 150
 const STRENGTH = 4 # damage caused by the enemy
 const MAX_HEALTH = 140
-const EXP_GIVEN = 20
+
+const EXP_DROP_VALUE = 3
 
 @onready var boss_music: AudioStreamPlayer = %BossMusic
 
@@ -102,11 +103,13 @@ func hurt(damage: int, _attack: Area2D) -> bool:
 func fainted() -> void:
 	if animation_player.current_animation != "death":
 		health = 0
-		player.gain_exp(EXP_GIVEN)
-		animation_player.stop()
+		animation_player.pause()
 		effects_player.play("death")
 		death_sound.play()
 		hud.display_boss = false
+		
+		# exp drops
+		Global.create_multiple_exp_drop(EXP_DROP_VALUE, position, 250)
 
 func move_to_attack_spot() -> void:
 	attack_move = true

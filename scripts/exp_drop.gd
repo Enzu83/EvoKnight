@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-const SPEED = 100.0
+const SPEED = 10.0
 const MAX_FALLING_VELOCITY = 450
 
 var player: CharacterBody2D
