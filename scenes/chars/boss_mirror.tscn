@@ -600,10 +600,11 @@ bus = &"SFX"
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="Hurtbox"]
 stream = ExtResource("7_waurh")
+volume_db = 3.0
 bus = &"SFX"
 
 [node name="DeathTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 2.3
 one_shot = true
 
 [node name="BossBasicSlash" parent="." instance=ExtResource("8_rxfvs")]

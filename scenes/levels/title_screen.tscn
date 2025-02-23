@@ -1,14 +1,15 @@
-[gd_scene load_steps=23 format=3 uid="uid://dt10hsybag1bs"]
+[gd_scene load_steps=34 format=3 uid="uid://dt10hsybag1bs"]
 
 [ext_resource type="Texture2D" uid="uid://c3ruqeec58wyr" path="res://assets/sprites/terrains/bg_mushroom_back.png" id="1_vvf2q"]
 [ext_resource type="Texture2D" uid="uid://21swlqu61mh1" path="res://assets/sprites/other/spr_title.png" id="1_x6j3q"]
 [ext_resource type="Texture2D" uid="uid://dqq0un7sgshcb" path="res://assets/sprites/terrains/bg_mushroom_front.png" id="2_tjndk"]
 [ext_resource type="Texture2D" uid="uid://bh0aix7o5fojc" path="res://assets/sprites/ui/spr_cursor.png" id="2_v5b3i"]
-[ext_resource type="Script" path="res://scripts/title_menu.gd" id="4_ob0g2"]
+[ext_resource type="Script" path="res://scripts/title_screen.gd" id="4_ob0g2"]
 [ext_resource type="AudioStream" uid="uid://b4a8b5pdfafa4" path="res://assets/music/mus_title.mp3" id="5_o03bw"]
 [ext_resource type="AudioStream" uid="uid://0o3xl6dywkn8" path="res://assets/sfx/snd_cursor.wav" id="5_psxkj"]
 [ext_resource type="FontFile" uid="uid://camhtmnphwiu5" path="res://assets/fonts/8bit.fnt" id="6_bnf46"]
 [ext_resource type="Texture2D" uid="uid://cwf4o71h6yy2x" path="res://assets/sprites/chars/player/spr_player_skin.png" id="8_oq45q"]
+[ext_resource type="Texture2D" uid="uid://d0iyx0ggjm4dv" path="res://assets/sprites/items/winged_golden_strawberry.png" id="10_wikbu"]
 
 [sub_resource type="Animation" id="Animation_apgp8"]
 length = 0.001
@@ -114,7 +115,79 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwgok"]
+atlas = ExtResource("10_wikbu")
+region = Rect2(0, 0, 40, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mb3uh"]
+atlas = ExtResource("10_wikbu")
+region = Rect2(40, 0, 40, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kgamv"]
+atlas = ExtResource("10_wikbu")
+region = Rect2(80, 0, 40, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o22ks"]
+atlas = ExtResource("10_wikbu")
+region = Rect2(120, 0, 40, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o0eoc"]
+atlas = ExtResource("10_wikbu")
+region = Rect2(160, 0, 40, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s70gs"]
+atlas = ExtResource("10_wikbu")
+region = Rect2(200, 0, 40, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4bxlj"]
+atlas = ExtResource("10_wikbu")
+region = Rect2(240, 0, 40, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o1bfp"]
+atlas = ExtResource("10_wikbu")
+region = Rect2(280, 0, 40, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6ufe"]
+atlas = ExtResource("10_wikbu")
+region = Rect2(320, 0, 40, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pebm5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwgok")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mb3uh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kgamv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o22ks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o0eoc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s70gs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4bxlj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o1bfp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6ufe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
 [node name="TitleScreen" type="Node2D"]
+script = ExtResource("4_ob0g2")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_o03bw")
@@ -164,25 +237,19 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_x6j3q")
 stretch_mode = 3
 
-[node name="Menu" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-script = ExtResource("4_ob0g2")
-
-[node name="Cursor" type="AnimatedSprite2D" parent="Menu"]
+[node name="Cursor" type="AnimatedSprite2D" parent="."]
 top_level = true
 position = Vector2(121, 131)
 sprite_frames = SubResource("SpriteFrames_wdmb5")
 autoplay = "default"
 frame_progress = 0.803466
 
-[node name="SelectSound" type="AudioStreamPlayer" parent="Menu"]
+[node name="SelectSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_psxkj")
 bus = &"SFX"
 
-[node name="PlayButton" type="Label" parent="Menu"]
+[node name="PlayButton" type="Label" parent="."]
 top_level = true
-layout_mode = 0
 offset_left = 134.0
 offset_top = 121.0
 offset_right = 186.0
@@ -191,9 +258,8 @@ theme_override_fonts/font = ExtResource("6_bnf46")
 theme_override_font_sizes/font_size = 24
 text = "Play"
 
-[node name="SkinButton" type="Label" parent="Menu"]
+[node name="SkinButton" type="Label" parent="."]
 top_level = true
-layout_mode = 0
 offset_left = 135.0
 offset_top = 149.0
 offset_right = 187.0
@@ -202,14 +268,14 @@ theme_override_fonts/font = ExtResource("6_bnf46")
 theme_override_font_sizes/font_size = 24
 text = "Skin"
 
-[node name="PlayerSkin" type="Sprite2D" parent="Menu"]
+[node name="PlayerSkin" type="Sprite2D" parent="."]
 visible = false
 top_level = true
 position = Vector2(159, 143)
 texture = ExtResource("8_oq45q")
 hframes = 4
 
-[node name="LeftCursor" type="AnimatedSprite2D" parent="Menu/PlayerSkin"]
+[node name="LeftCursor" type="AnimatedSprite2D" parent="PlayerSkin"]
 visible = false
 top_level = true
 position = Vector2(135, 146)
@@ -218,13 +284,19 @@ sprite_frames = SubResource("SpriteFrames_wdmb5")
 autoplay = "default"
 frame_progress = 0.803466
 
-[node name="RightCursor" type="AnimatedSprite2D" parent="Menu/PlayerSkin"]
+[node name="RightCursor" type="AnimatedSprite2D" parent="PlayerSkin"]
 visible = false
 top_level = true
 position = Vector2(183, 146)
 sprite_frames = SubResource("SpriteFrames_wdmb5")
 autoplay = "default"
 frame_progress = 0.803466
+
+[node name="ClearSprite" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(26, 100)
+sprite_frames = SubResource("SpriteFrames_pebm5")
+autoplay = "default"
 
 [node name="PlayerControlsInfo" type="Label" parent="."]
 top_level = true

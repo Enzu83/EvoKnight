@@ -1,0 +1,102 @@
+[gd_scene load_steps=6 format=3 uid="uid://dg3dp2lk2wiv0"]
+
+[ext_resource type="Script" path="res://scripts/end_recap.gd" id="1_0cjj1"]
+[ext_resource type="FontFile" uid="uid://camhtmnphwiu5" path="res://assets/fonts/8bit.fnt" id="2_w6ogw"]
+[ext_resource type="AudioStream" uid="uid://ct42y1ml6vx85" path="res://assets/sfx/snd_clear.wav" id="3_upda8"]
+[ext_resource type="AudioStream" uid="uid://djqciodguxm3s" path="res://assets/sfx/snd_stat_up.wav" id="4_c4k47"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_i27vc"]
+
+[node name="EndRecap" type="CanvasLayer"]
+process_mode = 3
+layer = 3
+visible = false
+script = ExtResource("1_0cjj1")
+
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(0, 0, 0, 0.705882)
+offset_right = 320.0
+offset_bottom = 180.0
+texture = SubResource("PlaceholderTexture2D_i27vc")
+
+[node name="ClearLabel" type="Label" parent="."]
+top_level = true
+offset_left = 105.0
+offset_top = 29.0
+offset_right = 210.0
+offset_bottom = 71.0
+theme_override_fonts/font = ExtResource("2_w6ogw")
+theme_override_font_sizes/font_size = 36
+text = "CLEAR"
+horizontal_alignment = 1
+
+[node name="Time" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+
+[node name="TimeLabel" type="Label" parent="Time"]
+top_level = true
+layout_mode = 0
+offset_left = -6.0
+offset_top = 88.0
+offset_right = 154.0
+offset_bottom = 116.0
+theme_override_fonts/font = ExtResource("2_w6ogw")
+theme_override_font_sizes/font_size = 18
+text = "Time played: "
+horizontal_alignment = 2
+
+[node name="TimeElapsed" type="Label" parent="Time"]
+top_level = true
+layout_mode = 0
+offset_left = 153.0
+offset_top = 88.0
+offset_right = 313.0
+offset_bottom = 116.0
+theme_override_fonts/font = ExtResource("2_w6ogw")
+theme_override_font_sizes/font_size = 18
+text = "00min00s000ms"
+
+[node name="Stars" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+
+[node name="StarsLabel" type="Label" parent="Stars"]
+top_level = true
+offset_left = 32.0
+offset_top = 125.0
+offset_right = 192.0
+offset_bottom = 153.0
+theme_override_fonts/font = ExtResource("2_w6ogw")
+theme_override_font_sizes/font_size = 18
+text = "Stars collected: "
+horizontal_alignment = 2
+
+[node name="StarsCollected" type="Label" parent="Stars"]
+top_level = true
+offset_left = 192.0
+offset_top = 125.0
+offset_right = 352.0
+offset_bottom = 153.0
+theme_override_fonts/font = ExtResource("2_w6ogw")
+theme_override_font_sizes/font_size = 18
+text = "0/0"
+
+[node name="IntroTimer" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+
+[node name="IntroSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_upda8")
+bus = &"SFX"
+
+[node name="StateTimer" type="Timer" parent="."]
+
+[node name="DisplaySound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_c4k47")
+bus = &"SFX"
+
+[connection signal="timeout" from="IntroTimer" to="." method="_on_intro_timer_timeout"]
+[connection signal="timeout" from="StateTimer" to="." method="_on_state_timer_timeout"]

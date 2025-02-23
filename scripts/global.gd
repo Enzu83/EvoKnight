@@ -17,8 +17,10 @@ var magic_slash_icon: Resource = load("res://assets/sprites/ui/icons/spr_magic_s
 var dash_icon: Resource = load("res://assets/sprites/ui/icons/spr_dash_icon_red.png")
 
 var player_color: Color
-var stars: int
-var total_stars: int
+
+# stars
+var collected_stars: Array
+var total_stars: Array
 
 # entities
 var player: CharacterBody2D = null
@@ -30,11 +32,14 @@ var paused := false
 
 var pause_menu: CanvasLayer = load("res://scenes/other/pause.tscn").instantiate()
 var level_up: CanvasLayer = load("res://scenes/other/level_up.tscn").instantiate()
+var end_recap: CanvasLayer = load("res://scenes/other/end_recap.tscn").instantiate()
 
 # drops
 var heart_drop_scene: Resource = preload("res://scenes/items/heart_drop.tscn")
 var exp_drop_scene: Resource = preload("res://scenes/items/exp_drop.tscn")
 
+# display sprite if the game is cleared
+var cleared := false
 
 # player info
 var player_max_health := 10
@@ -57,10 +62,13 @@ var player_mana := 0
 var player_strength := 1
 var player_defense := 0
 
+# elapsed time (ms)
+var elapsed_time_reference := 0
+
 func _ready() -> void:
-	init_stars_score()
 	add_child(pause_menu)
 	add_child(level_up)
+	add_child(end_recap)
 
 func _process(_delta: float) -> void:
 	# debug inputs
@@ -74,17 +82,72 @@ func _process(_delta: float) -> void:
 		player.gain_exp(1)
 	
 	# pause tree
-	if pause_menu.visible or level_up.visible:
+	if pause_menu.visible or level_up.visible or end_recap.visible:
 		get_tree().paused = true
 	else:
 		get_tree().paused = false
 
-func init_stars_score() -> void:
-	stars = 0
-	total_stars = 0
+func init_stars() -> void:
+	collected_stars = []
+	total_stars = []
+
+	for _i in range(level_paths.size()):
+		collected_stars.append([])
+		total_stars.append([])
+
+func init_player_stats() -> void:
+	player_max_health = 10
+	player_health = player_max_health
+
+	player_level = 1
+	player_experience = 0
+
+	player_max_mana = 400
+	player_mana = 0
+
+	player_strength = 1
+	player_defense = 0
+
+func set_elapsed_time_reference() -> void:
+	elapsed_time_reference = Time.get_ticks_msec()
+
+func get_elapsed_time() -> int:
+	return Time.get_ticks_msec() - elapsed_time_reference
+
+func add_star_to_total(star: Area2D) -> void:
+	if not total_stars[current_level].has(star.position):
+		total_stars[current_level].append(star.position)
+
+func add_star_to_collected(star: Area2D) -> void:
+	if not collected_stars[current_level].has(star.position):
+		collected_stars[current_level].append(star.position)
+
+func is_star_collected(star: Area2D) -> bool:
+	return collected_stars[current_level].has(star.position)
+
+func get_total_stars() -> int:
+	var stars := 0
+	
+	for i in range(total_stars.size()):
+		stars += total_stars[i].size()
+	
+	return stars
+
+func get_collected_stars() -> int:
+	var stars := 0
+	
+	for i in range(collected_stars.size()):
+		stars += collected_stars[i].size()
+	
+	return stars
+
+func get_level_stars() -> int:
+	return collected_stars[current_level].size()
+
+func get_level_total_stars() -> int:
+	return total_stars[current_level].size()
 
 func reset_level() -> void:
-	init_stars_score()
 	get_tree().call_deferred("reload_current_scene")
 	
 	if player != null:

@@ -346,7 +346,7 @@ func fainted() -> void:
 		# exp drops
 		Global.create_multiple_exp_drop(EXP_DROP_VALUE, position, 250)
 
-		#death_timer.start()
+		death_timer.start()
 
 func _on_jump_cooldown_timeout() -> void:
 	can_jump = true
@@ -359,7 +359,7 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 	effects_player.stop()
 
 func _on_death_timer_timeout() -> void:
-	visible = false
+	Global.end_recap.start()
 
 func _on_basic_slash_cooldown_timeout() -> void:
 	can_attack = true

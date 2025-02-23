@@ -1,4 +1,6 @@
-extends Control
+extends Node2D
+
+@onready var title: TextureRect = $Title
 
 @onready var cursor: AnimatedSprite2D = $Cursor
 @onready var select_sound: AudioStreamPlayer = $SelectSound
@@ -9,6 +11,11 @@ extends Control
 @onready var player_skin: Sprite2D = $PlayerSkin
 @onready var skin_left_cursor: AnimatedSprite2D = $PlayerSkin/LeftCursor
 @onready var skin_right_cursor: AnimatedSprite2D = $PlayerSkin/RightCursor
+
+@onready var clear_sprite: AnimatedSprite2D = $ClearSprite
+
+@onready var player_controls_info: Label = $PlayerControlsInfo
+@onready var extra_controls_info: Label = $ExtraControlsInfo
 
 enum Menu {Main, Skin}
 var menu := Menu.Main
@@ -32,6 +39,11 @@ var colors := {
 	"purple": Color(67, 245, 208, 1),
 }
 
+# clear screen
+var yellow_title := preload("res://assets/sprites/other/spr_title_yellow.png")
+var yellow_color := Color(1, 1, 0)
+
+# skins color
 var player_sprite_path := "res://assets/sprites/chars/player/"
 var slash_sprite_path := "res://assets/sprites/fx/slash/"
 var ui_icon_path := "res://assets/sprites/ui/icons/"
@@ -69,6 +81,11 @@ func handle_click_button() -> void:
 
 			Global.player_color = colors[color]
 			
+			# init game info
+			Global.init_stars()
+			Global.init_player_stats()
+			Global.set_elapsed_time_reference()
+			
 			# go to the next scene
 			Global.next_level()
 		
@@ -100,8 +117,18 @@ func handle_skin_selection() -> void:
 func _ready() -> void:
 	player_skin.visible = false
 	selected_button = play_button
+	
+	# changed title screen if the game is cleared
+	if Global.cleared:
+		title.texture = yellow_title
+		clear_sprite.visible = true
+		play_button.set("theme_override_colors/font_color", yellow_color)
+		skin_button.set("theme_override_colors/font_color", yellow_color)
+		player_controls_info.set("theme_override_colors/font_color", yellow_color)
+		extra_controls_info.set("theme_override_colors/font_color", yellow_color)
 
 func _process(_delta: float) -> void:
+	# navigate the menu
 	if menu == Menu.Main:
 		handle_button_selection()
 		handle_click_button()

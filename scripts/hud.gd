@@ -98,7 +98,7 @@ func hide_all() -> void:
 
 func draw_collectable_ui() -> void:
 	score.visible = true
-	score_label.text = str(Global.stars) + "/" + str(Global.total_stars)
+	score_label.text = str(Global.get_level_stars()) + "/" + str(Global.get_level_total_stars())
 
 func draw_boss_ui() -> void:
 	boss_bar.visible = true

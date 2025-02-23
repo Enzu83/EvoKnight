@@ -26,7 +26,7 @@ var health_value: int
 var strength_value: int
 var defense_value: int
 
-func start(health, strength, defense) -> void:
+func start(health: int, strength: int, defense: int) -> void:
 	visible = true
 	state = 0
 	animated_sprite.play("default")
