@@ -69,17 +69,19 @@ func _ready() -> void:
 	add_child(pause_menu)
 	add_child(level_up)
 	add_child(end_recap)
+	init_stars()
+	init_player_stats()
 
 func _process(_delta: float) -> void:
 	# debug inputs
-	if Input.is_action_just_pressed("reset"):
-		reset_level()
-	elif Input.is_action_just_pressed("previous_level"):
-		previous_level()
-	elif Input.is_action_just_pressed("next_level"):
-		next_level()
-	elif Input.is_action_pressed("exp") and player != null:
-		player.gain_exp(1)
+	#if Input.is_action_just_pressed("reset"):
+		#reset_level()
+	#elif Input.is_action_just_pressed("previous_level"):
+		#previous_level()
+	#elif Input.is_action_just_pressed("next_level"):
+		#next_level()
+	#elif Input.is_action_pressed("exp") and player != null:
+		#player.gain_exp(1)
 	
 	# pause tree
 	if pause_menu.visible or level_up.visible or end_recap.visible:
@@ -193,7 +195,7 @@ func create_drop(drop_rate: float, heal_value: int, exp_value: int, initial_posi
 	if (randi() % 100) / 100.0 <= drop_rate:
 
 		# more chance to drop a heart if the player's health is low
-		if (randi() % 100) / 100.0 <= 1 - player.health / float(player.max_health):
+		if (randi() % 100) / 100.0 < 1 - player.health / float(player.max_health):
 			create_heart_drop(heal_value, initial_position, initial_velocity)
 
 		# exp drop

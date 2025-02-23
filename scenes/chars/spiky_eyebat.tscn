@@ -181,6 +181,7 @@ radius = 9.0
 
 [node name="SpikyEyebat" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 4
+collision_mask = 0
 script = ExtResource("1_8m8ut")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
