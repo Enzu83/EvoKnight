@@ -54,9 +54,7 @@ func stop() -> void:
 
 func _process(_delta: float) -> void:
 	# check for input
-	if state == 4 and (Input.is_action_just_pressed("basic_slash") \
-	or Input.is_action_just_pressed("dash") \
-	or Input.is_action_just_pressed("magic_slash")):
+	if state == 4 and Input.is_action_just_pressed("confirm"):
 		stop()
 
 func _on_animation_timer_timeout() -> void:

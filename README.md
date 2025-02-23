@@ -7,22 +7,25 @@
 ## Game features
 
 - Stats
-	- [x] HP
-	- [x] Strength
-	- [x] EXP
-	- [x] Mana
+	- HP
+	- Strength
+	- Defense
+	- EXP
+	- Mana
 
 - Abilities
-	- [x] Double Jump
-	- [x] Basic Slash (4-directions)
-	- [x] Magic Slash (Left/Right)
-	- [x] Dash (8-directions)
+	- Double Jump
+	- Basic Slash (4-directions)
+	- Magic Slash (Left/Right)
+	- Dash (8-directions)
 
 - Enemies
-	- [x] Bat
-	- [x] Flying mage
-	- [x] Grounded spiky enemy
-	- [x] Boss with similar abilities
+	- Bat
+	- Grounded spiky enemy
+	- Flying spirit
+	- Flying spiky enemy
+	- Bigger bat with minions
+	- Boss with similar abilities
 
 ## Controls
 
@@ -46,7 +49,9 @@
 - `Right Trigger`: Dash
 - `Left Trigger`: Magic Slash
 
-## Resources
+## Inspirations
 
-- https://www.spriters-resource.com/pc_computer/evolandii/
-- https://berrycamp.github.io/
+- Celeste: Platform mechanics and tilesets
+- Hollow Knight: Combat system
+- Evoland II: Sprites, UI and SFX
+- Pokémon Mystery Dungeon Explorers of Sky: Musics
