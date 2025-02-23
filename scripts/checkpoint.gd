@@ -15,5 +15,4 @@ func _process(_delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body == Global.player and Global.respawn_position != position:
 		Global.respawn_position = position
-		Global.player.heal(Global.player.max_health) # full heal
 		get_sound.play()

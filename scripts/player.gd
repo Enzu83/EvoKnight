@@ -239,7 +239,7 @@ func handle_velocity(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 		
-		# prevent player to go too fast
+		# prevent wrong falling too fast
 		if velocity.y > MAX_FALLING_VELOCITY:
 			velocity.y = MAX_FALLING_VELOCITY
 

@@ -25,8 +25,10 @@ func _ready() -> void:
 	scale.x = sign(scale.x)
 
 # spike don't get hurt
-func hurt(_damage: int, _attack: Area2D) -> bool:
-	clang_sound.play()
+func hurt(_damage: int, attack: Area2D) -> bool:
+	# play clang sound only for the basic slash
+	if attack == player.basic_slash:
+		clang_sound.play()
 	return false
 
 func _on_hitbox_area_entered(area: Area2D) -> void:

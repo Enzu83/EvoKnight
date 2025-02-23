@@ -31,6 +31,11 @@ var paused := false
 var pause_menu: CanvasLayer = load("res://scenes/other/pause.tscn").instantiate()
 var level_up: CanvasLayer = load("res://scenes/other/level_up.tscn").instantiate()
 
+# drops
+var heart_drop_scene: Resource = preload("res://scenes/items/heart_drop.tscn")
+var exp_drop_scene: Resource = preload("res://scenes/items/exp_drop.tscn")
+
+
 # player info
 var player_max_health := 10
 var player_health := player_max_health
@@ -58,7 +63,6 @@ func _ready() -> void:
 	add_child(level_up)
 
 func _process(_delta: float) -> void:
-	
 	# debug inputs
 	if Input.is_action_just_pressed("reset"):
 		reset_level()
@@ -112,3 +116,17 @@ func store_player_info() -> void:
 
 	player_strength = player.strength
 	player_defense = player.defense
+
+func create_drop(drop_rate: float, heal_value: int, exp_value: int, initial_position: Vector2, initial_velocity: Vector2) -> void:
+	# chance to drop something
+	if (randi() % 100) / 100.0 <= drop_rate:
+
+		# more chance to drop a heart if the player's health is low
+		if (randi() % 100) / 100.0 <= 1 - (player.health / float(player.max_health)) ** 2:
+			var heart_drop: CharacterBody2D = heart_drop_scene.instantiate().init(heal_value, initial_position, initial_velocity)
+			get_tree().root.call_deferred("add_child", heart_drop)
+
+		# exp drop
+		else:
+			var exp_drop: CharacterBody2D = exp_drop_scene.instantiate().init(exp_value, initial_position, initial_velocity)
+			get_tree().root.call_deferred("add_child", exp_drop)

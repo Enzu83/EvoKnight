@@ -19,6 +19,7 @@ extends Area2D
 func _process(_delta: float) -> void:
 	# remove the node if big bat is killed
 	if not is_instance_valid(big_bat):
+		camera.limit_bottom = -32
 		boss_music.stop()
 		music.play()
 		queue_free()

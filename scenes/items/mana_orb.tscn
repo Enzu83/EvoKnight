@@ -162,7 +162,7 @@ _data = {
 
 [node name="ManaOrb" type="Area2D"]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 10
 script = ExtResource("1_n8p2f")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

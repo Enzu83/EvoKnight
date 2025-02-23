@@ -3,7 +3,10 @@ extends Area2D
 const SPEED = 80
 const STRENGTH = 3 # damage caused by the enemy
 const MAX_HEALTH = 12
-const EXP_GIVEN = 3
+
+const DROP_RATE = 1
+const HEAL_DROP_VALUE = 4
+const EXP_DROP_VALUE = 3
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -64,9 +67,11 @@ func hurt(damage: int, _attack: Area2D) -> bool:
 func fainted() -> void:
 	if animation_player.current_animation != "death":
 		health = 0
-		player.gain_exp(EXP_GIVEN)
 		animation_player.play("death")
 		death_sound.play()
+		
+		# chance to drop heart/exp
+		Global.create_drop(DROP_RATE, HEAL_DROP_VALUE, EXP_DROP_VALUE, position, Vector2.ZERO)
 
 func _on_detector_body_entered(body: Node2D) -> void:
 	if body == player:

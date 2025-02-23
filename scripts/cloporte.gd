@@ -4,7 +4,10 @@ const SPEED = 35
 const MAX_FALLING_VELOCITY = 450
 const STRENGTH = 4
 const MAX_HEALTH = 10
-const EXP_GIVEN = 6
+
+const DROP_RATE = 1
+const HEAL_DROP_VALUE = 4
+const EXP_DROP_VALUE = 6
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var ray_cast_left: RayCast2D = $RayCastLeft
@@ -91,10 +94,11 @@ func hurt(damage: int, attack: Area2D) -> bool:
 func fainted() -> void:
 	if animation_player.current_animation != "death":
 		health = 0
-		player.gain_exp(EXP_GIVEN)
 		animation_player.play("death")
 		death_sound.play()
-
+		
+		# chance to drop heart/exp
+		Global.create_drop(DROP_RATE, HEAL_DROP_VALUE, EXP_DROP_VALUE, position, Vector2.ZERO)
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	var body := area.get_parent() # get the player

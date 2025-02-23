@@ -51,7 +51,7 @@
 
 ## Inspirations
 
-- Celeste: Platform mechanics and tilesets
+- Celeste: Platformer mechanics and tilesets
 - Hollow Knight: Combat system
 - Evoland II: Sprites, UI and SFX
 - Pokémon Mystery Dungeon Explorers of Sky: Musics

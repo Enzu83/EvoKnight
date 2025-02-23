@@ -4,7 +4,10 @@ const SPEED = 70
 const STRENGTH = 2 # on collision
 const MAGIC_STRENGTH = 5 # with magic attack
 const MAX_HEALTH = 8
-const EXP_GIVEN = 8
+
+const DROP_RATE = 1
+const HEAL_DROP_VALUE = 4
+const EXP_DROP_VALUE = 8
 
 const GAP_DISTANCE = 96 # from which distance from the target will the enemy cast the magic attack
 
@@ -88,10 +91,12 @@ func hurt(damage: int, _attack: Area2D) -> bool:
 func fainted() -> void:
 	if animation_player.current_animation != "death":
 		health = 0
-		player.gain_exp(EXP_GIVEN)
 		animation_player.play("death")
 		death_sound.play()
 		tornado.queue_free()
+		
+		# chance to drop heart/exp
+		Global.create_drop(DROP_RATE, HEAL_DROP_VALUE, EXP_DROP_VALUE, position, Vector2.ZERO)
 
 func get_middle_position() -> Vector2:
 	return position - Vector2(0, hurtbox.shape.get_rect().size.y)
