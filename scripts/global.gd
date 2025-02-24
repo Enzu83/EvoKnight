@@ -7,6 +7,7 @@ var level_paths = [
 	"res://scenes/levels/level_1.tscn",
 	"res://scenes/levels/level_2.tscn",
 	"res://scenes/levels/boss_area.tscn",
+	"res://scenes/levels/level_3.tscn",
 ]
 
 # player skin
@@ -74,14 +75,14 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	# debug inputs
-	#if Input.is_action_just_pressed("reset"):
-		#reset_level()
-	#elif Input.is_action_just_pressed("previous_level"):
-		#previous_level()
-	#elif Input.is_action_just_pressed("next_level"):
-		#next_level()
-	#elif Input.is_action_pressed("exp") and player != null:
-		#player.gain_exp(1)
+	if Input.is_action_just_pressed("reset"):
+		reset_level()
+	elif Input.is_action_just_pressed("previous_level"):
+		previous_level()
+	elif Input.is_action_just_pressed("next_level"):
+		next_level()
+	elif Input.is_action_pressed("exp") and player != null:
+		player.gain_exp(1)
 	
 	# pause tree
 	if pause_menu.visible or level_up.visible or end_recap.visible:
@@ -204,12 +205,12 @@ func create_drop(drop_rate: float, heal_value: int, exp_value: int, initial_posi
 
 func create_multiple_exp_drop(exp_value: int, initial_position: Vector2, speed: float) -> void:
 	# 8-direction exp drop
-	create_exp_drop(exp_value, initial_position, speed * Vector2(-1, -1)) # up left
+	create_exp_drop(exp_value, initial_position, speed * Vector2(-1, -1).normalized()) # up left
 	create_exp_drop(exp_value, initial_position, speed * Vector2( 0, -1)) # up
-	create_exp_drop(exp_value, initial_position, speed * Vector2( 1, -1)) # up right
+	create_exp_drop(exp_value, initial_position, speed * Vector2( 1, -1).normalized()) # up right
 	create_exp_drop(exp_value, initial_position, speed * Vector2( 1,  0)) # right
-	create_exp_drop(exp_value, initial_position, speed * Vector2( 1,  1)) # down right
+	create_exp_drop(exp_value, initial_position, speed * Vector2( 1,  1).normalized()) # down right
 	create_exp_drop(exp_value, initial_position, speed * Vector2( 0,  1)) # down
-	create_exp_drop(exp_value, initial_position, speed * Vector2(-1,  1)) # down left
+	create_exp_drop(exp_value, initial_position, speed * Vector2(-1,  1).normalized()) # down left
 	create_exp_drop(exp_value, initial_position, speed * Vector2(-1,  0)) # left
 	

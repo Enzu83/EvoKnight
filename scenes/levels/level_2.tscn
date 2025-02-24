@@ -24,6 +24,21 @@
 [ext_resource type="PackedScene" uid="uid://b1wqo2tp6tr0x" path="res://scenes/chars/big_bat.tscn" id="19_e782t"]
 [ext_resource type="PackedScene" uid="uid://caoykk5g0hmxj" path="res://scenes/chars/bat_spawner.tscn" id="21_mhdyk"]
 
+[sub_resource type="Animation" id="Animation_74l74"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3836, -174)]
+}
+
 [sub_resource type="Animation" id="Animation_02a7o"]
 resource_name = "up_down"
 length = 6.0
@@ -39,21 +54,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(3566, -174), Vector2(3566, -174), Vector2(3566, -362), Vector2(3566, -362)]
-}
-
-[sub_resource type="Animation" id="Animation_74l74"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(3836, -174)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xou08"]

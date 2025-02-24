@@ -495,9 +495,6 @@ _data = {
 "spawn": SubResource("Animation_0igvc")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1yr01"]
-size = Vector2(6, 16)
-
 [sub_resource type="Animation" id="Animation_pcmlm"]
 length = 0.001
 tracks/0/type = "value"
@@ -535,6 +532,9 @@ _data = {
 "blink": SubResource("Animation_2d7n7")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1yr01"]
+size = Vector2(6, 16)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ythmr"]
 radius = 3.0
 height = 16.0
@@ -556,16 +556,16 @@ libraries = {
 }
 autoplay = "spawn"
 
-[node name="WallCollider" type="CollisionShape2D" parent="."]
-z_index = 1
-position = Vector2(0, -8)
-shape = SubResource("RectangleShape2D_1yr01")
-
 [node name="EffectsPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_xsgyl")
 }
 autoplay = "RESET"
+
+[node name="WallCollider" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_1yr01")
 
 [node name="Jump" type="Sprite2D" parent="."]
 visible = false

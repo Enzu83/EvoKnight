@@ -41,8 +41,8 @@ const EXP_DROP_VALUE = 5
 enum State {Default, Fainted, Attacking, Dashing}
 enum Anim {idle, run, dash, jump, fall, faint}
 
-# player state and actions
-var state := State.Default # handle all states of the player
+# boss state and actions
+var state := State.Default # handle all states of the boos
 var anim := Anim.idle # handle the current animation to be played
 
 var direction: float # direction input
@@ -320,7 +320,7 @@ func hurt(damage: int, _attack: Area2D) -> bool:
 	if is_hurtable():
 		end_dash()
 		
-		# player is still alive
+		# boss is still alive
 		if health > damage:
 			health -= damage
 			velocity.x *= 0.5
@@ -329,7 +329,7 @@ func hurt(damage: int, _attack: Area2D) -> bool:
 			hurt_invicibility_timer.start()
 			effects_player.play("blink")
 		
-		# player is dead
+		# boss is dead
 		else:
 			fainted()
 
