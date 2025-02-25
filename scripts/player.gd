@@ -36,6 +36,7 @@ extends CharacterBody2D
 @onready var blue_dash_sound: AudioStreamPlayer = $Dash/BlueDashSound
 
 @onready var phantom_cooldown: Timer = $PhantomCooldown
+@onready var permanent_phantom_cooldown: Timer = $PermanentPhantomCooldown
 
 @onready var bumped_timer: Timer = $BumpedTimer
 
@@ -309,6 +310,7 @@ func _ready() -> void:
 	add_to_group("players")
 	init_info()
 	state = State.Default
+	permanent_phantom_cooldown.start()
 
 func _physics_process(delta: float) -> void:
 	if state != State.Stop:
@@ -455,6 +457,9 @@ func _on_mana_recovery_timer_timeout() -> void:
 		restore_mana(MANA_RECOVERY_RATE)
 
 func _on_phantom_cooldown_timeout() -> void:
+	create_phantom()
+
+func _on_permanent_phantom_cooldown_timeout() -> void:
 	create_phantom()
 
 func _on_dash_duration_timeout() -> void:

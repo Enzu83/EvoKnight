@@ -854,6 +854,9 @@ autostart = true
 [node name="PhantomCooldown" type="Timer" parent="."]
 wait_time = 0.09
 
+[node name="PermanentPhantomCooldown" type="Timer" parent="."]
+wait_time = 0.12
+
 [node name="LevelUp" type="Node2D" parent="."]
 visible = false
 
@@ -882,4 +885,5 @@ one_shot = true
 [connection signal="timeout" from="Dash/DashDuration" to="." method="_on_dash_duration_timeout"]
 [connection signal="timeout" from="ManaRecoveryTimer" to="." method="_on_mana_recovery_timer_timeout"]
 [connection signal="timeout" from="PhantomCooldown" to="." method="_on_phantom_cooldown_timeout"]
+[connection signal="timeout" from="PermanentPhantomCooldown" to="." method="_on_permanent_phantom_cooldown_timeout"]
 [connection signal="timeout" from="BumpedTimer" to="." method="_on_bumped_timer_timeout"]

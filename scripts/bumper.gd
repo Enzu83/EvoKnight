@@ -1,4 +1,4 @@
-extends Area2D
+extends CharacterBody2D
 
 @onready var player: Player = %Player
 
@@ -21,16 +21,13 @@ func _process(_delta: float) -> void:
 		else:
 			animation_player.play("idle")
 
-func _on_area_entered(area: Area2D) -> void:
+func _on_hitbox_area_entered(area: Area2D) -> void:
 	var body := area.get_parent()
 	
 	if body == player:
 		# bump
 		if not fire:
 			# get the direction vector
-			print(body.position + area.position)
-			print(position)
-			print()
 			var direction: Vector2 = (body.position + area.position - position).normalized()
 
 			body.bumped(BUMP_FORCE, direction)

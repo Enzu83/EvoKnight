@@ -332,7 +332,7 @@ func hurt(damage: int, _attack: Area2D) -> bool:
 		# boss is dead
 		else:
 			fainted()
-
+		
 	return not is_hurtable()
 
 func fainted() -> void:

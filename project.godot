@@ -26,6 +26,7 @@ window/size/viewport_width=960
 window/size/viewport_height=540
 window/size/resizable=false
 window/stretch/scale=3.0
+window/stretch/scale_mode="integer"
 
 [global_group]
 
