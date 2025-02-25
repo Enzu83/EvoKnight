@@ -68,6 +68,8 @@ var blue_dash := false # dash that will consume mana instead of taking damage
 var blue_dash_hit := false # indicate if the blue dash absorbed an hit
 var phantom = preload("res://scenes/chars/phantom.tscn")
 
+var super_speed := false # increase speed and always create phantoms
+
 # stats
 var max_health: int
 var health: int
@@ -240,23 +242,43 @@ func handle_velocity(delta: float) -> void:
 		# move slower if the player is attacking
 		if state == State.Attacking:
 			speed_force *= 0.7
+		
+		# move faster in super speed state
+		elif super_speed:
+			speed_force *= 1.5
 
 		if direction:
 			velocity.x = direction * speed_force
 		else:
 			velocity.x = move_toward(velocity.x, 0, speed_force)
 		
-		if not is_on_floor():
-			velocity += get_gravity() * delta
-			
-			# prevent wrong falling too fast
-			if velocity.y > MAX_FALLING_VELOCITY:
-				velocity.y = MAX_FALLING_VELOCITY
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+		
+		# prevent wrong falling too fast
+		if velocity.y > MAX_FALLING_VELOCITY:
+			velocity.y = MAX_FALLING_VELOCITY
 
 func handle_bounce() -> void:
 	if not is_on_floor() and state != State.DashingAndAttacking:
 		velocity.y = JUMP_VELOCITY * 0.8
 		jumps = MAX_JUMPS - 1
+
+func handle_super_speed() -> void:
+	if super_speed:
+		if permanent_phantom_cooldown.is_stopped():
+			permanent_phantom_cooldown.start()
+	else:
+		permanent_phantom_cooldown.stop()
+
+func handle_bumped() -> void:
+	# reset bumped state to default if a movement key is pressed
+	if state == State.Bumped \
+	and (Input.is_action_pressed("up") \
+	or Input.is_action_pressed("down") \
+	or Input.is_action_pressed("left") \
+	or Input.is_action_pressed("right")):
+		state = State.Default
 
 func play_animation(anim_name: String) -> void:
 	# play the animation if it's not the current one
@@ -310,7 +332,6 @@ func _ready() -> void:
 	add_to_group("players")
 	init_info()
 	state = State.Default
-	permanent_phantom_cooldown.start()
 
 func _physics_process(delta: float) -> void:
 	if state != State.Stop:
@@ -325,6 +346,8 @@ func _physics_process(delta: float) -> void:
 				handle_flip_h() # flip sprite horizontally if the player is not attacking
 			
 			handle_dash() # can't dash while attacking
+			handle_super_speed()
+			handle_bumped()
 		else:
 			direction = 0
 		
@@ -457,7 +480,9 @@ func _on_mana_recovery_timer_timeout() -> void:
 		restore_mana(MANA_RECOVERY_RATE)
 
 func _on_phantom_cooldown_timeout() -> void:
-	create_phantom()
+	# don't create more phantoms if the super speed already creates ones
+	if not super_speed:
+		create_phantom()
 
 func _on_permanent_phantom_cooldown_timeout() -> void:
 	create_phantom()

@@ -83,4 +83,5 @@ func _on_teleport_timer_timeout() -> void:
 	if anim == Anim.idle:
 		play_animation("teleport")
 	elif anim == Anim.teleport:
+		hurtbox.set_deferred("disabled", false)
 		play_animation("idle")

@@ -14,8 +14,11 @@ func _ready() -> void:
 	# phantom is blue if the player's dash is invicible
 	if player.blue_dash:
 		frame = 45
+		
 	# regular dash sprite
-	else:
+	elif not player.super_speed:
 		frame = 11
+	else:
+		frame = player.sprite.frame
 		
 	flip_h = player.sprite.flip_h  # match player's orientation
