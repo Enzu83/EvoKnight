@@ -37,6 +37,8 @@ extends CharacterBody2D
 
 @onready var phantom_cooldown: Timer = $PhantomCooldown
 
+@onready var bumped_timer: Timer = $BumpedTimer
+
 # Parameters
 const SPEED = 150.0
 const JUMP_VELOCITY = -300.0
@@ -48,7 +50,7 @@ const MAGIC_SLASH_MANA = 250 # mana required for magic slash
 const BLUE_DASH_MANA = 100 # mana required for dashing without taking damage
 const DASH_SPEED = 2 * SPEED
 
-enum State {Default, Fainted, Attacking, Dashing, DashingAndAttacking, Stop}
+enum State {Default, Fainted, Attacking, Dashing, DashingAndAttacking, Bumped, Stop}
 enum Anim {idle, run, dash, jump, fall, faint}
 
 # player state and actions
@@ -136,7 +138,7 @@ func handle_slash() -> void:
 
 	# basic slash
 	if Input.is_action_just_pressed("basic_slash") \
-	and (state == State.Default or state == State.Dashing):
+	and (state == State.Default or state == State.Dashing or state == State.Bumped):
 		# attacking while dashing
 		if state == State.Dashing:
 			state = State.DashingAndAttacking
@@ -167,7 +169,7 @@ func handle_slash() -> void:
 func handle_dash() -> void:
 	if Input.is_action_just_pressed("dash") \
 	and can_dash \
-	and (state == State.Default or state == State.Attacking):
+	and (state == State.Default or state == State.Attacking or state == State.Bumped):
 		# dashing while attacking
 		if state == State.Attacking:
 			state = State.DashingAndAttacking
@@ -225,23 +227,30 @@ func handle_flip_h() -> void:
 		sprite.flip_h = true
 
 func handle_velocity(delta: float) -> void:
-	var speed_force := SPEED # usual speed
+	# end bump when landing
+	if state == State.Bumped and is_on_floor():
+		state = State.Default
 	
-	# move slower if the player is attacking
-	if state == State.Attacking:
-		speed_force *= 0.7
-
-	if direction:
-		velocity.x = direction * speed_force
-	else:
-		velocity.x = move_toward(velocity.x, 0, speed_force)
-	
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+	# gravity + direction controls
+	elif state != State.Bumped:
 		
-		# prevent wrong falling too fast
-		if velocity.y > MAX_FALLING_VELOCITY:
-			velocity.y = MAX_FALLING_VELOCITY
+		var speed_force := SPEED # usual speed
+		
+		# move slower if the player is attacking
+		if state == State.Attacking:
+			speed_force *= 0.7
+
+		if direction:
+			velocity.x = direction * speed_force
+		else:
+			velocity.x = move_toward(velocity.x, 0, speed_force)
+		
+		if not is_on_floor():
+			velocity += get_gravity() * delta
+			
+			# prevent wrong falling too fast
+			if velocity.y > MAX_FALLING_VELOCITY:
+				velocity.y = MAX_FALLING_VELOCITY
 
 func handle_bounce() -> void:
 	if not is_on_floor() and state != State.DashingAndAttacking:
@@ -317,7 +326,8 @@ func _physics_process(delta: float) -> void:
 		else:
 			direction = 0
 		
-		if state != State.Dashing and state != State.DashingAndAttacking:
+		if state != State.Dashing \
+		and state != State.DashingAndAttacking:
 			handle_velocity(delta) # velocity update based on the above modification
 			
 	animate() # update the sprite animation if necessary
@@ -375,11 +385,14 @@ func create_phantom() -> void:
 	if velocity != Vector2.ZERO or state == State.Dashing:
 		add_child(phantom.instantiate())
 
-func end_dash() -> void:
-	# end player dash animation and stop its velocity if not sliding
+func end_dash(cancel_velocity: bool) -> void:
+	# end player dash animation and stop its velocity
 	if state == State.Dashing or state == State.DashingAndAttacking:
 		state = State.Default
-		velocity = Vector2.ZERO
+		
+		if cancel_velocity:
+			velocity = Vector2.ZERO
+		
 		phantom_cooldown.stop() # stop phantom display
 		hurtbox.set_deferred("disabled", false)
 		blue_dash = false
@@ -423,6 +436,12 @@ func level_up() -> void:
 		level_stats_increase["defense"][level]
 		)
 
+func bumped(bump_force: float, bump_direction: Vector2) -> void:
+	end_dash(false)
+	state = State.Bumped
+	bumped_timer.start()
+	velocity = bump_force * bump_direction
+
 func _on_death_timer_timeout() -> void:
 	Global.store_player_info()
 	Global.reset_level()
@@ -439,7 +458,12 @@ func _on_phantom_cooldown_timeout() -> void:
 	create_phantom()
 
 func _on_dash_duration_timeout() -> void:
-	end_dash()
+	if state == State.Dashing or state == State.DashingAndAttacking:
+		end_dash(true)
 
 func _on_dash_cooldown_timeout() -> void:
 	can_dash = true
+
+func _on_bumped_timer_timeout() -> void:
+	if state == State.Bumped:
+		state = State.Default

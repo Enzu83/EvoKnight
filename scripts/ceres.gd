@@ -80,4 +80,7 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 	effects_player.stop()
 
 func _on_teleport_timer_timeout() -> void:
-	play_animation("teleport")
+	if anim == Anim.idle:
+		play_animation("teleport")
+	elif anim == Anim.teleport:
+		play_animation("idle")

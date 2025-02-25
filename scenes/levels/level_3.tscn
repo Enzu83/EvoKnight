@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=4 uid="uid://doqatuh36ah4u"]
+[gd_scene load_steps=13 format=4 uid="uid://doqatuh36ah4u"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_3.gd" id="1_7ykpr"]
 [ext_resource type="AudioStream" uid="uid://b1qtb8fncq3iv" path="res://assets/music/mus_chasm_cave.mp3" id="2_l85tu"]
 [ext_resource type="Texture2D" uid="uid://sj70c5rskkfa" path="res://assets/sprites/terrains/bg_core_back.png" id="3_1h1db"]
 [ext_resource type="PackedScene" uid="uid://bggby2h6prvx3" path="res://scenes/terrains/ground.tscn" id="5_4jamu"]
+[ext_resource type="PackedScene" uid="uid://b3axt6qmku55d" path="res://scenes/items/bumper.tscn" id="5_k27vs"]
 [ext_resource type="PackedScene" uid="uid://i0uejwv47jnl" path="res://scenes/chars/ceres.tscn" id="10_6ouag"]
 [ext_resource type="PackedScene" uid="uid://dwitea1wpbdjp" path="res://scenes/chars/player.tscn" id="13_gcqkt"]
 [ext_resource type="PackedScene" uid="uid://c0q4ajyur6afq" path="res://scenes/other/player_camera_point.tscn" id="14_wu1ns"]
@@ -46,6 +47,9 @@ tile_map_data = PackedByteArray("AAAbAAUAAAACAAkAAAAbAAQAAAACAAkAAAAbAAMAAAACAAk
 
 [node name="Items" type="Node2D" parent="."]
 
+[node name="Bumper" parent="Items" instance=ExtResource("5_k27vs")]
+position = Vector2(210, -87)
+
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("13_gcqkt")]
@@ -76,4 +80,4 @@ position = Vector2(2457, 147)
 shape = SubResource("RectangleShape2D_hsmr0")
 
 [node name="Ceres" parent="." instance=ExtResource("10_6ouag")]
-position = Vector2(182, 8)
+position = Vector2(16, 8)
