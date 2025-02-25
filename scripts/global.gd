@@ -185,18 +185,18 @@ func store_player_info() -> void:
 
 func create_heart_drop(heal_value: int,initial_position: Vector2, initial_velocity: Vector2) -> void:
 	var heart_drop: CharacterBody2D = heart_drop_scene.instantiate().init(heal_value, initial_position, initial_velocity)
-	get_tree().root.call_deferred("add_child", heart_drop)
+	get_tree().current_scene.call_deferred("add_child", heart_drop)
 
 func create_exp_drop(exp_value: int,initial_position: Vector2, initial_velocity: Vector2) -> void:
 	var exp_drop: CharacterBody2D = exp_drop_scene.instantiate().init(exp_value, initial_position, initial_velocity)
-	get_tree().root.call_deferred("add_child", exp_drop)
+	get_tree().current_scene.call_deferred("add_child", exp_drop)
 
 func create_drop(drop_rate: float, heal_value: int, exp_value: int, initial_position: Vector2, initial_velocity: Vector2) -> void:
 	# chance to drop something
-	if (randi() % 100) / 100.0 <= drop_rate:
+	if randf() <= drop_rate:
 
 		# more chance to drop a heart if the player's health is low
-		if (randi() % 100) / 100.0 < 1 - player.health / float(player.max_health):
+		if randf() < 1 - player.health / float(player.max_health):
 			create_heart_drop(heal_value, initial_position, initial_velocity)
 
 		# exp drop

@@ -73,7 +73,10 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 		player.hurt(STRENGTH)
 
 func _on_hurt_invicibility_timer_timeout() -> void:
-	hurtbox.set_deferred("disabled", false)
+	# don't reactivate hitbox if teleporting
+	if anim != Anim.teleport:
+		hurtbox.set_deferred("disabled", false)
+
 	effects_player.stop()
 
 func _on_teleport_timer_timeout() -> void:
