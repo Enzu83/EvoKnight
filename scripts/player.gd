@@ -38,8 +38,6 @@ extends CharacterBody2D
 @onready var phantom_cooldown: Timer = $PhantomCooldown
 @onready var permanent_phantom_cooldown: Timer = $PermanentPhantomCooldown
 
-@onready var bumped_timer: Timer = $BumpedTimer
-
 # Parameters
 const SPEED = 150.0
 const JUMP_VELOCITY = -300.0
@@ -67,6 +65,8 @@ var dash_direction := Vector2.ZERO
 var blue_dash := false # dash that will consume mana instead of taking damage
 var blue_dash_hit := false # indicate if the blue dash absorbed an hit
 var phantom = preload("res://scenes/chars/phantom.tscn")
+
+var bump_direction := Vector2.ZERO
 
 var super_speed := false # increase speed and always create phantoms
 
@@ -129,9 +129,6 @@ func handle_movement() -> void:
 		# draw circle below player if they jump in the air
 		if not jump_is_on_floor():
 			jump_circle.play("default")
-
-	# Handle movements.
-	direction = sign(Input.get_axis("left", "right"))
 
 func handle_slash() -> void:
 	# reset attack state
@@ -230,27 +227,28 @@ func handle_flip_h() -> void:
 		sprite.flip_h = true
 
 func handle_velocity(delta: float) -> void:
-	# end bump when landing
-	if state == State.Bumped and is_on_floor():
-		state = State.Default
+	direction = sign(Input.get_axis("left", "right"))
 	
-	# gravity + direction controls
-	elif state != State.Bumped:
-		
-		var speed_force := SPEED # usual speed
-		
-		# move slower if the player is attacking
-		if state == State.Attacking:
-			speed_force *= 0.7
-		
-		# move faster in super speed state
-		elif super_speed:
-			speed_force *= 1.5
+	var speed_force := SPEED # usual speed
+	
+	# move slower if the player is attacking
+	if state == State.Attacking:
+		speed_force *= 0.7
+	# move faster in super speed state
+	elif super_speed:
+		speed_force *= 1.5
 
+	# regular horizontal velocity handle
+	if not (state == State.Bumped and bump_direction.x != 0):
 		if direction:
 			velocity.x = direction * speed_force
 		else:
 			velocity.x = move_toward(velocity.x, 0, speed_force)
+	
+	# when player is bumped horizontally
+	elif direction * velocity.x < 0:
+		velocity.x = move_toward(velocity.x, 0, 15)
+			
 		
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -272,13 +270,14 @@ func handle_super_speed() -> void:
 		permanent_phantom_cooldown.stop()
 
 func handle_bumped() -> void:
-	# reset bumped state to default if a movement key is pressed
-	if state == State.Bumped \
-	and (Input.is_action_pressed("up") \
-	or Input.is_action_pressed("down") \
-	or Input.is_action_pressed("left") \
-	or Input.is_action_pressed("right")):
-		state = State.Default
+	if state == State.Bumped:
+		# end bump when landing
+		if is_on_floor():
+			state = State.Default
+		
+		elif bump_direction.x != 0 and velocity.x == 0:
+			state = State.Default
+		
 
 func play_animation(anim_name: String) -> void:
 	# play the animation if it's not the current one
@@ -461,11 +460,16 @@ func level_up() -> void:
 		level_stats_increase["defense"][level]
 		)
 
-func bumped(bump_force: float, bump_direction: Vector2) -> void:
+func bumped(bump_force: float, direction_of_bump: Vector2) -> void:
 	end_dash(false)
 	state = State.Bumped
-	bumped_timer.start()
-	velocity = bump_force * bump_direction
+	
+	velocity = bump_force * direction_of_bump
+	bump_direction = direction_of_bump
+	
+	# restore a jump if player has none
+	if jumps == 0:
+		jumps = 1
 
 func _on_death_timer_timeout() -> void:
 	Global.store_player_info()
@@ -493,7 +497,3 @@ func _on_dash_duration_timeout() -> void:
 
 func _on_dash_cooldown_timeout() -> void:
 	can_dash = true
-
-func _on_bumped_timer_timeout() -> void:
-	if state == State.Bumped:
-		state = State.Default

@@ -4,12 +4,18 @@ extends Area2D
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-const SPRING_FORCE = -450.0
+const SPRING_FORCE = 450.0
+
+var direction: Vector2
 
 func spring(body: Node2D) -> void:
 	animation_player.stop()
 	animation_player.play("spring")
-	body.bumped(SPRING_FORCE, Vector2.DOWN)
+	body.bumped(SPRING_FORCE, direction)
+
+func _ready() -> void:
+	direction.x = sin(rotation)
+	direction.y = -cos(rotation)
 
 func _on_area_entered(area: Area2D) -> void:
 	var body := area.get_parent()

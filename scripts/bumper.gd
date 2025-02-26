@@ -4,7 +4,7 @@ extends CharacterBody2D
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-const BUMP_FORCE = 500.0
+const BUMP_FORCE = 350.0
 const STRENGTH = 3
 
 var fire: bool # fire: damage, no fire: bump

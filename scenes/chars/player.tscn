@@ -875,10 +875,6 @@ visible = false
 position = Vector2(-1, 11)
 rotation = 5.06145
 
-[node name="BumpedTimer" type="Timer" parent="."]
-wait_time = 0.2
-one_shot = true
-
 [connection signal="timeout" from="Hurtbox/HurtInvicibilityTimer" to="." method="_on_hurt_invicibility_timer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="timeout" from="Dash/DashCooldown" to="." method="_on_dash_cooldown_timeout"]
@@ -886,4 +882,3 @@ one_shot = true
 [connection signal="timeout" from="ManaRecoveryTimer" to="." method="_on_mana_recovery_timer_timeout"]
 [connection signal="timeout" from="PhantomCooldown" to="." method="_on_phantom_cooldown_timeout"]
 [connection signal="timeout" from="PermanentPhantomCooldown" to="." method="_on_permanent_phantom_cooldown_timeout"]
-[connection signal="timeout" from="BumpedTimer" to="." method="_on_bumped_timer_timeout"]
