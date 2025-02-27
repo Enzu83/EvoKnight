@@ -262,10 +262,10 @@ func handle_velocity(delta: float) -> void:
 		# air momentum
 		elif not is_on_floor():
 			velocity.x = move_toward(velocity.x, 0, 15)
-		# stop directly on the floor
+		# stop directly when on the floor
 		else:
 			velocity.x = 0
-	
+
 	# when player is bumped horizontally and moves the opposite way
 	elif direction * velocity.x < 0:
 		velocity.x = move_toward(velocity.x, 0, 15)
@@ -275,10 +275,9 @@ func handle_velocity(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, 8)
 
 	# when player is bumped horizontally and moves the same way
-	else:
+	elif direction * velocity.x > 0:
 		velocity.x = move_toward(velocity.x, 0, 3)
-		
-			
+	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 		
@@ -322,7 +321,7 @@ func animate() -> void:
 		play_animation("faint")
 	else:
 		if is_on_floor():
-			if direction == 0:
+			if velocity.x == 0:
 				play_animation("idle")
 			else:
 				play_animation("run")
