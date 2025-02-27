@@ -17,7 +17,7 @@ const MAX_HEALTH = 120
 const EXP_DROP_VALUE = 6
 
 enum State {Default, Fainted, Attacking, Dashing}
-enum Anim {idle, attack, teleport}
+enum Anim {idle, attack, teleport_start, teleport_end}
 
 # boss state and actions
 var state := State.Default # handle all states of the boos
@@ -74,14 +74,14 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 func _on_hurt_invicibility_timer_timeout() -> void:
 	# don't reactivate hitbox if teleporting
-	if anim != Anim.teleport:
+	if anim != Anim.teleport_start:
 		hurtbox.set_deferred("disabled", false)
 
 	effects_player.stop()
 
 func _on_teleport_timer_timeout() -> void:
 	if anim == Anim.idle:
-		play_animation("teleport")
-	elif anim == Anim.teleport:
+		play_animation("teleport_start")
+	elif anim == Anim.teleport_start:
 		hurtbox.set_deferred("disabled", false)
-		play_animation("idle")
+		play_animation("teleport_end")

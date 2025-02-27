@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://beq88lmemfiik"]
 
 [ext_resource type="Script" path="res://scripts/spike.gd" id="1_6tf5u"]
-[ext_resource type="Texture2D" uid="uid://2yflvrgoj60p" path="res://assets/sprites/terrains/spike.png" id="1_gcw33"]
+[ext_resource type="Texture2D" uid="uid://2yflvrgoj60p" path="res://assets/sprites/terrains/spr_spike.png" id="1_gcw33"]
 [ext_resource type="Script" path="res://scripts/static_body_hitbox.gd" id="3_7jh0h"]
 [ext_resource type="AudioStream" uid="uid://8aur0ki6cwrp" path="res://assets/sfx/snd_clang.wav" id="4_7ml02"]
 

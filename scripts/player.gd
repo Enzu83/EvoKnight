@@ -221,13 +221,18 @@ func handle_dash() -> void:
 		velocity = DASH_SPEED * dash_direction.normalized()
 
 func handle_flip_h() -> void:
-	if direction > 0:
+	if velocity.x > 0:
 		sprite.flip_h = false
-	elif direction < 0:
+	elif velocity.x < 0:
 		sprite.flip_h = true
 
 func handle_velocity(delta: float) -> void:
-	direction = sign(Input.get_axis("left", "right"))
+	# get horizontal input
+	if state != State.Fainted:
+		direction = sign(Input.get_axis("left", "right"))
+	# don't move if the player faints
+	else:
+		direction = 0
 	
 	var speed_force := SPEED # usual speed
 	
@@ -245,11 +250,14 @@ func handle_velocity(delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, speed_force)
 	
-	# when player is bumped horizontally
+	# when player is bumped horizontally and moves the opposite way
 	elif direction * velocity.x < 0:
 		velocity.x = move_toward(velocity.x, 0, 15)
+	
+	# when player is bumped horizontally
+	elif velocity.x != 0:
+		velocity.x = move_toward(velocity.x, 0, 8)
 			
-		
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 		
@@ -347,8 +355,6 @@ func _physics_process(delta: float) -> void:
 			handle_dash() # can't dash while attacking
 			handle_super_speed()
 			handle_bumped()
-		else:
-			direction = 0
 		
 		if state != State.Dashing \
 		and state != State.DashingAndAttacking:
@@ -399,7 +405,7 @@ func fainted() -> void:
 		health = 0
 		play_animation("faint")
 		state = State.Fainted
-		velocity.y = 0
+		velocity = Vector2.ZERO
 		phantom_cooldown.stop()
 		death_sound.play()
 		death_timer.start()
@@ -461,7 +467,11 @@ func level_up() -> void:
 		)
 
 func bumped(bump_force: float, direction_of_bump: Vector2) -> void:
+	# reset dash
 	end_dash(false)
+	dash_cooldown.stop()
+	can_dash = true
+	
 	state = State.Bumped
 	
 	velocity = bump_force * direction_of_bump

@@ -24,7 +24,7 @@ func _process(_delta: float) -> void:
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	var body := area.get_parent()
 	
-	if body == player:
+	if body == player and body.state != body.State.Fainted:
 		# bump
 		if not fire:
 			# get the direction vector

@@ -284,5 +284,5 @@ unique_name_in_owner = true
 position = Vector2(1291, -90)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EndOfLevel"]
-position = Vector2(2457, 147)
+position = Vector2(2457, 161)
 shape = SubResource("RectangleShape2D_hsmr0")
