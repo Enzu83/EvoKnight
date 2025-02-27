@@ -16,6 +16,8 @@ extends CanvasLayer
 
 @onready var score: TextureRect = $Score
 @onready var score_label: Label = $Score/ScoreLabel
+@onready var pending_score: TextureRect = $Score/PendingScore
+@onready var pending_score_label: Label = $Score/PendingScore/ScoreLabel
 
 @onready var boss_bar: TextureRect = $BossBar
 @onready var boss_health_bar: TextureProgressBar = $BossBar/HealthBar
@@ -94,18 +96,18 @@ func _process(_delta: float) -> void:
 	
 func hide_all() -> void:
 	score.visible = false
+	pending_score.visible = false
 	boss_bar.visible = false
 
 func draw_collectable_ui() -> void:
 	score.visible = true
+	
 	score_label.text = str(Global.get_level_stars()) + "/" + str(Global.get_level_total_stars())
 
-	# if there are pending stars, draw the score white
-	if Global.pending_stars.size() > 0:
-		score_label.set("theme_override_colors/font_color", Color.WHITE)
-	# else, draw the score yellow
-	else:
-		score_label.set("theme_override_colors/font_color", Color(1.0, 184/255.0, 58/255.0))
+	# if there are pending stars, display their number
+	if Global.get_pending_stars() > 0:
+		pending_score.visible = true
+		pending_score_label.text = "+" + str(Global.get_pending_stars())
 
 func draw_boss_ui() -> void:
 	boss_bar.visible = true

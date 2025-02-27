@@ -32,6 +32,13 @@ func _ready() -> void:
 	sprite.texture = Global.basic_slash_sprite
 
 func _process(_delta: float) -> void:
+	# check if the attack needs to be flipped too
+	if (player.sprite.flip_h and direction == "right") \
+	or (not player.sprite.flip_h and direction == "left"):
+		scale.x = -1
+	else:
+		scale.x = 1
+	
 	if player.state == player.State.Fainted:
 		hide()
 

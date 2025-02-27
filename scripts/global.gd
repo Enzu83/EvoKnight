@@ -155,8 +155,11 @@ func get_collected_stars() -> int:
 	
 	return stars
 
+func get_pending_stars() -> int:
+	return pending_stars.size()
+
 func get_level_stars() -> int:
-	return collected_stars[current_level].size() + pending_stars.size()
+	return collected_stars[current_level].size()
 
 func get_level_total_stars() -> int:
 	return total_stars[current_level].size()

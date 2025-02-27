@@ -107,7 +107,7 @@ func jump_is_on_floor() -> bool:
 	else:
 		return false
 
-func handle_movement() -> void:
+func handle_jump() -> void:
 	# Restore jumps if grounded (slight margin for jumping few frames after leaving the floor).
 	if is_on_floor():
 		jumps = MAX_JUMPS
@@ -116,7 +116,14 @@ func handle_movement() -> void:
 		jumps = MAX_JUMPS-1
 	
 	# Jump if there are jumps left
-	if Input.is_action_just_pressed("jump") and jumps > 0:
+	# if the player is dashing, player can jump if on the floor
+	if Input.is_action_just_pressed("jump") \
+	and jumps > 0 \
+	and ((state != State.Dashing and state != State.DashingAndAttacking) \
+	or jump_is_on_floor()):
+		if state == State.Dashing or state == State.DashingAndAttacking:
+			end_dash(false)
+		
 		velocity.y = JUMP_VELOCITY
 		jumps -= 1
 		jump_sound.play()
@@ -176,8 +183,11 @@ func handle_dash() -> void:
 		else:
 			state = State.Dashing
 		
-		can_dash = false
-		dash_cooldown.start()
+		# prevent for re-dashing instantly only if the player is in the air
+		if not is_on_floor():
+			can_dash = false
+			dash_cooldown.start()
+		
 		dash_duration.start()
 		phantom_cooldown.start()
 		dash_sound.play()
@@ -244,19 +254,30 @@ func handle_velocity(delta: float) -> void:
 		speed_force *= 1.5
 
 	# regular horizontal velocity handle
-	if not (state == State.Bumped and bump_direction.x != 0):
+	if abs(velocity.x) <= SPEED and \
+	not (state == State.Bumped and bump_direction.x != 0):
 		if direction:
 			velocity.x = direction * speed_force
+		
+		# air momentum
+		elif not is_on_floor():
+			velocity.x = move_toward(velocity.x, 0, 15)
+		# stop directly on the floor
 		else:
-			velocity.x = move_toward(velocity.x, 0, speed_force)
+			velocity.x = 0
 	
 	# when player is bumped horizontally and moves the opposite way
 	elif direction * velocity.x < 0:
 		velocity.x = move_toward(velocity.x, 0, 15)
 	
-	# when player is bumped horizontally
-	elif velocity.x != 0:
+	# when player is bumped horizontally and don't move
+	elif direction == 0 and velocity.x != 0:
 		velocity.x = move_toward(velocity.x, 0, 8)
+
+	# when player is bumped horizontally and moves the same way
+	else:
+		velocity.x = move_toward(velocity.x, 0, 3)
+		
 			
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -345,9 +366,7 @@ func _physics_process(delta: float) -> void:
 		# handle player's actions if they are not defeated
 		if state != State.Fainted:
 			handle_slash() # attacks
-			
-			if state != State.Dashing and state != State.DashingAndAttacking:
-				handle_movement() # left, right and jump
+			handle_jump() # left, right and jump
 			
 			if state != State.Attacking and state != State.DashingAndAttacking:
 				handle_flip_h() # flip sprite horizontally if the player is not attacking

@@ -205,6 +205,25 @@ theme_override_font_sizes/font_size = 7
 text = "0/0"
 horizontal_alignment = 2
 
+[node name="PendingScore" type="TextureRect" parent="Score"]
+visible = false
+show_behind_parent = true
+offset_left = 18.7547
+offset_top = 12.003
+offset_right = 66.7547
+offset_bottom = 44.003
+texture = ExtResource("10_aj2gh")
+
+[node name="ScoreLabel" type="Label" parent="Score/PendingScore"]
+layout_mode = 0
+offset_left = 9.66323
+offset_top = 12.7502
+offset_right = 21.6632
+offset_bottom = 19.7502
+theme_override_fonts/font = ExtResource("4_b31nm")
+theme_override_font_sizes/font_size = 7
+text = "+0"
+
 [node name="BossBar" type="TextureRect" parent="."]
 visible = false
 offset_left = 64.0
