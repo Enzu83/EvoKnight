@@ -9,5 +9,5 @@ func _ready() -> void:
 		queue_free()
 
 func _on_body_entered(_body: Node2D) -> void:
-	Global.add_star_to_collected(self)
+	Global.add_star_to_pending(self)
 	animation_player.play("pickup")

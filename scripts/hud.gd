@@ -100,6 +100,13 @@ func draw_collectable_ui() -> void:
 	score.visible = true
 	score_label.text = str(Global.get_level_stars()) + "/" + str(Global.get_level_total_stars())
 
+	# if there are pending stars, draw the score white
+	if Global.pending_stars.size() > 0:
+		score_label.set("theme_override_colors/font_color", Color.WHITE)
+	# else, draw the score yellow
+	else:
+		score_label.set("theme_override_colors/font_color", Color(1.0, 184/255.0, 58/255.0))
+
 func draw_boss_ui() -> void:
 	boss_bar.visible = true
 	boss_health_bar.value = int((boss.health / float(boss.MAX_HEALTH)) * boss_health_bar.max_value)

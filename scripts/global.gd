@@ -20,6 +20,7 @@ var dash_icon: Resource = load("res://assets/sprites/ui/icons/spr_dash_icon_red.
 var player_color: Color
 
 # stars
+var pending_stars: Array # stars are not really collected until a checkpoint is gotten
 var collected_stars: Array
 var total_stars: Array
 
@@ -91,6 +92,7 @@ func _process(_delta: float) -> void:
 		get_tree().paused = false
 
 func init_stars() -> void:
+	pending_stars = []
 	collected_stars = []
 	total_stars = []
 
@@ -125,6 +127,15 @@ func add_star_to_collected(star: Area2D) -> void:
 	if not collected_stars[current_level].has(star.position):
 		collected_stars[current_level].append(star.position)
 
+func add_star_to_pending(star: Area2D) -> void:
+	pending_stars.append(star.position)
+
+func collect_pending_stars() -> void:
+	for star_position in pending_stars:
+		collected_stars[current_level].append(star_position)
+	
+	pending_stars = []
+
 func is_star_collected(star: Area2D) -> bool:
 	return collected_stars[current_level].has(star.position)
 
@@ -145,18 +156,24 @@ func get_collected_stars() -> int:
 	return stars
 
 func get_level_stars() -> int:
-	return collected_stars[current_level].size()
+	return collected_stars[current_level].size() + pending_stars.size()
 
 func get_level_total_stars() -> int:
 	return total_stars[current_level].size()
 
 func reset_level() -> void:
+	# loose collected stars without checkpoint
+	pending_stars = []
+	
 	get_tree().call_deferred("reload_current_scene")
 	
 	if player != null:
 		player.init_info()
 
 func goto_level(level_id: int) -> void:
+	# add pending stars to collected ones
+	collect_pending_stars()
+	
 	current_level = level_id
 	reset_level()
 	respawn_position = Vector2.INF # reset checkpoint position

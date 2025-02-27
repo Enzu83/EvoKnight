@@ -41,7 +41,6 @@ var colors := {
 
 # clear screen
 var yellow_title := preload("res://assets/sprites/other/spr_title_yellow.png")
-var yellow_color := Color(1, 1, 0)
 
 # skins color
 var player_sprite_path := "res://assets/sprites/chars/player/"
@@ -122,10 +121,10 @@ func _ready() -> void:
 	if Global.cleared:
 		title.texture = yellow_title
 		clear_sprite.visible = true
-		play_button.set("theme_override_colors/font_color", yellow_color)
-		skin_button.set("theme_override_colors/font_color", yellow_color)
-		player_controls_info.set("theme_override_colors/font_color", yellow_color)
-		extra_controls_info.set("theme_override_colors/font_color", yellow_color)
+		play_button.set("theme_override_colors/font_color", Color.YELLOW)
+		skin_button.set("theme_override_colors/font_color", Color.YELLOW)
+		player_controls_info.set("theme_override_colors/font_color", Color.YELLOW)
+		extra_controls_info.set("theme_override_colors/font_color", Color.YELLOW)
 
 func _process(_delta: float) -> void:
 	# navigate the menu
