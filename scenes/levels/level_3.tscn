@@ -194,7 +194,7 @@ position = Vector2(1777, -292)
 
 [node name="Player" parent="." instance=ExtResource("13_gcqkt")]
 unique_name_in_owner = true
-position = Vector2(56, 8)
+position = Vector2(48, 8)
 
 [node name="PlayerCameraPoint" parent="Player" instance=ExtResource("14_wu1ns")]
 top_level = true
@@ -219,4 +219,4 @@ position = Vector2(2027, -82)
 shape = SubResource("RectangleShape2D_hsmr0")
 
 [node name="Ceres" parent="." instance=ExtResource("10_6ouag")]
-position = Vector2(16, 8)
+position = Vector2(-19, 8)

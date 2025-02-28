@@ -364,23 +364,21 @@ func _physics_process(delta: float) -> void:
 	if state != State.Stop:
 		# handle player's actions if they are not defeated
 		if state != State.Fainted:
-			handle_slash() # attacks
-			handle_jump() # left, right and jump
-			
 			if state != State.Attacking and state != State.DashingAndAttacking:
 				handle_flip_h() # flip sprite horizontally if the player is not attacking
 			
 			handle_dash() # can't dash while attacking
-			handle_super_speed()
-			handle_bumped()
-		
+			handle_jump() # left, right and jump
+			handle_slash() # attacks
+			handle_super_speed() # permanent 1.5x multiplier
+			handle_bumped() # launched by another object
+			
 		if state != State.Dashing \
 		and state != State.DashingAndAttacking:
 			handle_velocity(delta) # velocity update based on the above modification
 			
 	animate() # update the sprite animation if necessary
 	move_and_slide()
-
 func _process(_delta: float) -> void:
 	# store the info after each frame
 	Global.store_player_info()
