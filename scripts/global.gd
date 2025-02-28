@@ -169,7 +169,7 @@ func get_level_total_stars() -> int:
 
 func reset_level() -> void:
 	# reset specific level variables
-	electric_arc_enabled = false
+	electric_arc_enabled = true
 	
 	# loose collected stars without checkpoint
 	pending_stars = []

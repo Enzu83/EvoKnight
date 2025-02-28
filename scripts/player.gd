@@ -121,8 +121,16 @@ func handle_jump() -> void:
 	and jumps > 0 \
 	and ((state != State.Dashing and state != State.DashingAndAttacking) \
 	or jump_is_on_floor()):
+		
+		# end dash if the player was dashing
 		if state == State.Dashing or state == State.DashingAndAttacking:
 			end_dash(false)
+			
+			# allow to reverse the direction of the wavedash
+			if (Input.is_action_pressed("left") and not Input.is_action_pressed("right") and velocity.x > 0) \
+			or (Input.is_action_pressed("right") and not Input.is_action_pressed("left") and velocity.x < 0):
+				velocity.x *= -1
+				print("reverse")
 		
 		velocity.y = JUMP_VELOCITY
 		jumps -= 1

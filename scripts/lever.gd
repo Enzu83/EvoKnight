@@ -5,6 +5,21 @@ extends Area2D
 @onready var activation_sound: AudioStreamPlayer = $ActivationSound
 
 var can_change_state := true # slight cooldown before changing the state of the lever
+var direction: String # direction from which the level can't be activated
+
+func _ready() -> void:
+	# up
+	if posmod(round(rotation_degrees), 360) == 0:
+		direction = "up"
+	# right
+	elif posmod(round(rotation_degrees), 360) == 90:
+		direction = "right"
+	# down
+	elif posmod(round(rotation_degrees), 360) == 180:
+		direction = "down"
+	# left
+	elif posmod(round(rotation_degrees), 360) == 270:
+		direction = "left"
 
 func _process(_delta: float) -> void:
 	# lever state corresponds to the electric arcs state
@@ -13,8 +28,10 @@ func _process(_delta: float) -> void:
 	else:
 		sprite.frame = 1
 
-func _on_hitbox_area_entered(_area: Area2D) -> void:
-	if can_change_state:
+func _on_hitbox_area_entered(basic_slash: Area2D) -> void:
+	# check if the slash is oriented toward the lever
+	if can_change_state \
+	and basic_slash.direction != direction:
 		Global.electric_arc_enabled = !Global.electric_arc_enabled
 		can_change_state = false
 		activation_cooldown.start()
