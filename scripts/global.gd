@@ -67,6 +67,9 @@ var player_defense := 0
 # elapsed time (ms)
 var elapsed_time_reference := 0
 
+# electric arc state
+var electric_arc_enabled := true
+
 func _ready() -> void:
 	add_child(pause_menu)
 	add_child(level_up)
