@@ -14,10 +14,11 @@ func _process(_delta: float) -> void:
 		sprite.frame = 1
 
 func _on_hitbox_area_entered(_area: Area2D) -> void:
-	Global.electric_arc_enabled = !Global.electric_arc_enabled
-	can_change_state = false
-	activation_cooldown.start()
-	activation_sound.play()
+	if can_change_state:
+		Global.electric_arc_enabled = !Global.electric_arc_enabled
+		can_change_state = false
+		activation_cooldown.start()
+		activation_sound.play()
 
 func _on_activation_cooldown_timeout() -> void:
 	can_change_state = true
