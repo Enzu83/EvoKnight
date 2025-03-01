@@ -114,15 +114,15 @@ func _on_spawn_wait_timer_timeout() -> void:
 	sprite.visible = true
 	play_animation("teleport_end")
 	spawn_timer.start()
+
+func _on_spawn_timer_timeout() -> void:
+	play_animation("idle")
+	spawn_end_timer.start()
 	
 	# hud
 	Global.boss = self
 	hud.display_boss = true
 	hud.boss_name.text = "Ceres"
-
-func _on_spawn_timer_timeout() -> void:
-	play_animation("idle")
-	spawn_end_timer.start()
 
 func _on_spawn_end_timer_timeout() -> void:
 	state = State.Default

@@ -48,6 +48,47 @@ tracks/2/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_23p5c"]
+resource_name = "float"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(0, -16), Vector2(0, -15), Vector2(0, -14), Vector2(0, -15), Vector2(0, -16), Vector2(0, -17), Vector2(0, -18), Vector2(0, -17), Vector2(0, -16)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hitbox:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_3qo44"]
 resource_name = "pickup"
 length = 1.15
@@ -102,23 +143,6 @@ tracks/3/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_23p5c"]
-resource_name = "float"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [Vector2(0, -50), Vector2(0, -49), Vector2(0, -48), Vector2(0, -49), Vector2(0, -50), Vector2(0, -51), Vector2(0, -52), Vector2(0, -51), Vector2(0, -50)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2wxrp"]
 _data = {
 "default": SubResource("Animation_jslwv"),
@@ -127,6 +151,7 @@ _data = {
 }
 
 [node name="SpeedOrb" type="Area2D"]
+z_index = 1
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_ai3w5")
@@ -147,13 +172,7 @@ bus = &"SFX"
 libraries = {
 "": SubResource("AnimationLibrary_2wxrp")
 }
-autoplay = "default"
-
-[node name="LaunchTimer" type="Timer" parent="."]
-wait_time = 0.4
-one_shot = true
-autostart = true
+autoplay = "float"
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="timeout" from="LaunchTimer" to="." method="_on_launch_timer_timeout"]
