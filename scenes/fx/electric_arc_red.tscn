@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://dww0l1c4gas4b"]
+[gd_scene load_steps=19 format=3 uid="uid://dww0l1c4gas4b"]
 
 [ext_resource type="Script" path="res://scripts/electric_arc_red.gd" id="1_7rxmk"]
 [ext_resource type="Texture2D" uid="uid://bg2r4bvxdo16u" path="res://assets/sprites/fx/spr_electric_arc_red.png" id="2_psugk"]
 [ext_resource type="Script" path="res://scripts/static_body_hitbox.gd" id="3_xqykr"]
+[ext_resource type="AudioStream" uid="uid://dch38lv7y4owm" path="res://assets/sfx/snd_electric_arc.wav" id="4_4bfcp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hyxsp"]
 atlas = ExtResource("2_psugk")
@@ -115,5 +116,9 @@ script = ExtResource("3_xqykr")
 
 [node name="Hitbox" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("RectangleShape2D_7ahvi")
+
+[node name="ElectricSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_4bfcp")
+bus = &"SFX"
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

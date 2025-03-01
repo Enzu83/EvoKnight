@@ -130,9 +130,13 @@ func handle_jump() -> void:
 			if (Input.is_action_pressed("left") and not Input.is_action_pressed("right") and velocity.x > 0) \
 			or (Input.is_action_pressed("right") and not Input.is_action_pressed("left") and velocity.x < 0):
 				velocity.x *= -1
-				print("reverse")
 		
 		velocity.y = JUMP_VELOCITY
+		
+		# increase jump force if super speed is enabled
+		if super_speed:
+			velocity.y *= 1.2
+		
 		jumps -= 1
 		jump_sound.play()
 		
@@ -246,7 +250,7 @@ func handle_flip_h() -> void:
 
 func handle_velocity(delta: float) -> void:
 	# get horizontal input
-	if state != State.Fainted:
+	if state != State.Fainted and state != State.Stop:
 		direction = sign(Input.get_axis("left", "right"))
 	# don't move if the player faints
 	else:
@@ -262,7 +266,7 @@ func handle_velocity(delta: float) -> void:
 		speed_force *= 1.5
 
 	# regular horizontal velocity handle
-	if abs(velocity.x) <= SPEED and \
+	if abs(velocity.x) <= speed_force and \
 	not (state == State.Bumped and bump_direction.x != 0):
 		if direction:
 			velocity.x = direction * speed_force
@@ -381,9 +385,9 @@ func _physics_process(delta: float) -> void:
 			handle_super_speed() # permanent 1.5x multiplier
 			handle_bumped() # launched by another object
 			
-		if state != State.Dashing \
-		and state != State.DashingAndAttacking:
-			handle_velocity(delta) # velocity update based on the above modification
+	if state != State.Dashing \
+	and state != State.DashingAndAttacking:
+		handle_velocity(delta) # velocity update based on the above modification
 			
 	animate() # update the sprite animation if necessary
 	move_and_slide()

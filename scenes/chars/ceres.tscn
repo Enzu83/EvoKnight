@@ -1,9 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://i0uejwv47jnl"]
+[gd_scene load_steps=18 format=3 uid="uid://i0uejwv47jnl"]
 
 [ext_resource type="Script" path="res://scripts/ceres.gd" id="1_2wiyj"]
 [ext_resource type="Texture2D" uid="uid://c27jgnpkvfd3u" path="res://assets/sprites/chars/enemies/spr_ceres.png" id="2_evu6g"]
 [ext_resource type="Script" path="res://scripts/body_hurtbox.gd" id="3_dndkg"]
 [ext_resource type="AudioStream" uid="uid://ddtibw10i6qus" path="res://assets/sfx/snd_ceres_hurt.wav" id="4_ivx64"]
+[ext_resource type="AudioStream" uid="uid://8qw2745bfbro" path="res://assets/sfx/snd_ceres_death.wav" id="5_apb60"]
+[ext_resource type="AudioStream" uid="uid://kpryh7dxxy2y" path="res://assets/sfx/snd_teleport.wav" id="5_bc331"]
 
 [sub_resource type="Animation" id="Animation_yxfbx"]
 length = 0.001
@@ -186,6 +188,30 @@ tracks/2/keys = {
 "method": &"play_animation"
 }]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TeleportSound:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Hurtbox/Hurtbox:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_abg16"]
 resource_name = "teleport"
@@ -221,15 +247,108 @@ tracks/2/path = NodePath("Hurtbox/Hurtbox:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.5),
+"times": PackedFloat32Array(0.4),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TeleportSound:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Hurtbox/HurtInvicibilityTimer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"stop"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_ci6rv"]
+resource_name = "teleport"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7, 9, 8]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hurtbox/Hurtbox:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TeleportSound:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Hurtbox/HurtInvicibilityTimer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"stop"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dif70"]
 _data = {
 "RESET": SubResource("Animation_yxfbx"),
+"defeated": SubResource("Animation_ci6rv"),
 "idle": SubResource("Animation_q7lty"),
 "teleport_end": SubResource("Animation_5vbcg"),
 "teleport_start": SubResource("Animation_abg16")
@@ -260,10 +379,10 @@ tracks/0/path = NodePath("Sprite:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.166667, 0.266667, 0.3, 0.4, 0.466667, 0.566667, 0.6, 0.7, 0.733333, 0.8167, 0.8467, 0.933333, 0.966667, 1.03333, 1.06667, 1.13333, 1.16667, 1.23333, 1.26667, 1.33333, 1.36667, 1.43333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.166667, 0.266667, 0.3, 0.4, 0.466667, 0.566667, 0.6, 0.7, 0.733333, 0.8167, 0.8467, 0.933333, 0.966667, 1.03333, 1.06667, 1.13333, 1.16667, 1.23333, 1.26667, 1.33333, 1.36667, 1.43333, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c8gq3"]
@@ -294,7 +413,7 @@ frame = 1
 libraries = {
 "": SubResource("AnimationLibrary_dif70")
 }
-autoplay = "idle"
+autoplay = "RESET"
 
 [node name="EffectsPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -325,13 +444,39 @@ stream = ExtResource("4_ivx64")
 bus = &"SFX"
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="Hurtbox"]
+stream = ExtResource("5_apb60")
 volume_db = 3.0
 bus = &"SFX"
 
 [node name="TeleportTimer" type="Timer" parent="."]
 wait_time = 4.0
-autostart = true
+
+[node name="TeleportSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_bc331")
+bus = &"SFX"
+
+[node name="SpawnWaitTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="SpawnTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="SpawnEndTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="DefeatedTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="DefeatedEndTimer" type="Timer" parent="."]
+one_shot = true
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
 [connection signal="timeout" from="Hurtbox/HurtInvicibilityTimer" to="." method="_on_hurt_invicibility_timer_timeout"]
 [connection signal="timeout" from="TeleportTimer" to="." method="_on_teleport_timer_timeout"]
+[connection signal="timeout" from="SpawnWaitTimer" to="." method="_on_spawn_wait_timer_timeout"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="timeout" from="SpawnEndTimer" to="." method="_on_spawn_end_timer_timeout"]
+[connection signal="timeout" from="DefeatedTimer" to="." method="_on_defeated_timer_timeout"]
+[connection signal="timeout" from="DefeatedEndTimer" to="." method="_on_defeated_end_timer_timeout"]

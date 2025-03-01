@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://kpryh7dxxy2y"
-path="res://.godot/imported/snd_cherry_teleport.wav-30a8d0a55f597dead7470c154c96935e.sample"
+path="res://.godot/imported/snd_teleport.wav-0dc850a6884dd8e89a58939f88f5b9af.sample"
 
 [deps]
 
-source_file="res://assets/sfx/snd_cherry_teleport.wav"
-dest_files=["res://.godot/imported/snd_cherry_teleport.wav-30a8d0a55f597dead7470c154c96935e.sample"]
+source_file="res://assets/sfx/snd_teleport.wav"
+dest_files=["res://.godot/imported/snd_teleport.wav-0dc850a6884dd8e89a58939f88f5b9af.sample"]
 
 [params]
 

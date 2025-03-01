@@ -6,6 +6,7 @@ extends StaticBody2D
 @onready var wall_collider: CollisionShape2D = $WallCollider
 @onready var hitbox: CollisionShape2D = $Hitbox/Hitbox
 
+@onready var electric_sound: AudioStreamPlayer = $ElectricSound
 
 var active := false
 
@@ -37,3 +38,4 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	# hurt the player
 	if body == player and player.is_hurtable():
 		body.hurt(int(Global.player_max_health / 3.0))
+		electric_sound.play()

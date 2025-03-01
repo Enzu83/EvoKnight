@@ -35,6 +35,7 @@ func pick_up(area: Area2D) -> void:
 func pick_up_body(body: CharacterBody2D) -> void:
 	if body == player \
 	and not body.health == body.max_health \
-	and player.state != player.State.Fainted:
+	and player.state != player.State.Fainted \
+	and player.state != player.State.Stop:
 		animation_player.play("pickup")
 		player.heal(heal_value)
