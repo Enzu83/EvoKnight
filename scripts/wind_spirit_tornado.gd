@@ -7,7 +7,7 @@ const STRENGTH = 4
 @onready var effects_player: AnimationPlayer = $EffectsPlayer
 
 @onready var wind_spirit: Area2D = $".."
-@onready var tornado_sound: AudioStreamPlayer2D = $TornadoSound
+@onready var tornado_sound: AudioStreamPlayer = $TornadoSound
 @onready var duration: Timer = $Duration
 
 var active: bool = false
@@ -42,13 +42,16 @@ func _process(delta: float) -> void:
 	else:
 		position = wind_spirit.get_middle_position()
 
-func _on_body_entered(body: Node2D) -> void:
-	if body == wind_spirit.player and wind_spirit.player.is_hurtable():
-		wind_spirit.player.hurt(STRENGTH)
-
 func _on_duration_timeout() -> void:
 	effects_player.play("fade_out")
 
 func _on_effects_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "fade_out":
 		effects_player.play("RESET")
+
+
+func _on_area_entered(area: Area2D) -> void:
+	var body := area.get_parent() # get the player
+	
+	if body == wind_spirit.player and wind_spirit.player.is_hurtable():
+		wind_spirit.player.hurt(STRENGTH)

@@ -456,7 +456,7 @@ func end_dash(cancel_velocity: bool) -> void:
 			velocity = Vector2.ZERO
 		
 		phantom_cooldown.stop() # stop phantom display
-		hurtbox.set_deferred("disabled", false)
+		
 		blue_dash = false
 		blue_dash_hit = false
 

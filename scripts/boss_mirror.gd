@@ -364,7 +364,9 @@ func _on_death_timer_timeout() -> void:
 func _on_basic_slash_cooldown_timeout() -> void:
 	can_attack = true
 
-# when the player collide with the boss hurtbox
-func _on_hurtbox_body_entered(body: Node2D) -> void:
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	var body := area.get_parent() # get the player
+
+	# hurt the player
 	if body == player and player.is_hurtable():
-		player.hurt(STRENGTH)
+		body.hurt(STRENGTH)
