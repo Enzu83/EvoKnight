@@ -133,9 +133,9 @@ func handle_jump() -> void:
 		
 		velocity.y = JUMP_VELOCITY
 		
-		# increase jump force if super speed is enabled
+		# increase jump force if super speed is active
 		if super_speed:
-			velocity.y *= 1.2
+			velocity.y *= 1.3
 		
 		jumps -= 1
 		jump_sound.play()
@@ -241,6 +241,10 @@ func handle_dash() -> void:
 		
 		# normalize the dash direction vector to keep the same velocity for each direction
 		velocity = DASH_SPEED * dash_direction.normalized()
+		
+		# increase dash force if super speed is active
+		if super_speed:
+			velocity *= 1.2
 
 func handle_flip_h() -> void:
 	if velocity.x > 0:
