@@ -446,7 +446,6 @@ bus = &"SFX"
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="Hurtbox"]
 stream = ExtResource("5_apb60")
-volume_db = 3.0
 bus = &"SFX"
 
 [node name="TeleportTimer" type="Timer" parent="."]

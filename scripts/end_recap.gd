@@ -23,6 +23,9 @@ var collected_stars: int
 var total_stars: int
 
 func start() -> void:
+	# add pending stars to collected ones
+	Global.collect_pending_stars()
+	
 	visible = true
 	state = 0
 	intro_timer.start()

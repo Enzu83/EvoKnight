@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=4 uid="uid://doe73oqnq40n3"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_git5u"]
-[ext_resource type="AudioStream" uid="uid://dhxu30whe2x6i" path="res://assets/music/mus_quicksand_cave.mp3" id="2_vpxja"]
+[ext_resource type="AudioStream" uid="uid://dhxu30whe2x6i" path="res://assets/musics/mus_quicksand_cave.mp3" id="2_vpxja"]
 [ext_resource type="Texture2D" uid="uid://c4qbiwlj3sncw" path="res://assets/sprites/terrains/bg_trees_back.png" id="3_3n1av"]
 [ext_resource type="Texture2D" uid="uid://ci6ljojlkose4" path="res://assets/sprites/terrains/bg_trees_front.png" id="4_3ollv"]
 [ext_resource type="PackedScene" uid="uid://bggby2h6prvx3" path="res://scenes/terrains/ground.tscn" id="4_f2vt5"]

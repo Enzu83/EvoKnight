@@ -1,9 +1,9 @@
 [gd_scene load_steps=36 format=4 uid="uid://bxrur8c6y3ntc"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_2.gd" id="1_ev3sv"]
-[ext_resource type="AudioStream" uid="uid://cer7bmtanymj3" path="res://assets/music/mus_amp_plains.mp3" id="2_aptwx"]
+[ext_resource type="AudioStream" uid="uid://cer7bmtanymj3" path="res://assets/musics/mus_amp_plains.mp3" id="2_aptwx"]
 [ext_resource type="Texture2D" uid="uid://c3ruqeec58wyr" path="res://assets/sprites/terrains/bg_mushroom_back.png" id="3_fewrx"]
-[ext_resource type="AudioStream" uid="uid://dfnlx8wvputuy" path="res://assets/music/mus_boss.mp3" id="3_lfu8o"]
+[ext_resource type="AudioStream" uid="uid://dfnlx8wvputuy" path="res://assets/musics/mus_boss.mp3" id="3_lfu8o"]
 [ext_resource type="Texture2D" uid="uid://dqq0un7sgshcb" path="res://assets/sprites/terrains/bg_mushroom_front.png" id="4_dhh7a"]
 [ext_resource type="PackedScene" uid="uid://bggby2h6prvx3" path="res://scenes/terrains/ground.tscn" id="5_b2b3r"]
 [ext_resource type="PackedScene" uid="uid://ixnghv7tms0i" path="res://scenes/platforms/small_platform.tscn" id="6_5owk0"]

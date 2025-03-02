@@ -359,7 +359,7 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 	effects_player.stop()
 
 func _on_death_timer_timeout() -> void:
-	Global.end_recap.start()
+	Global.next_level()
 
 func _on_basic_slash_cooldown_timeout() -> void:
 	can_attack = true

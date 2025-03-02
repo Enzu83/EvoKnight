@@ -169,4 +169,4 @@ func _on_defeated_timer_timeout() -> void:
 
 func _on_defeated_end_timer_timeout() -> void:
 	state = State.Fainted
-	add_child(speed_orb_scene.instantiate())
+	#add_child(speed_orb_scene.instantiate())

@@ -5,11 +5,11 @@
 [ext_resource type="Texture2D" uid="uid://dqq0un7sgshcb" path="res://assets/sprites/terrains/bg_mushroom_front.png" id="2_tjndk"]
 [ext_resource type="Texture2D" uid="uid://bh0aix7o5fojc" path="res://assets/sprites/ui/spr_cursor.png" id="2_v5b3i"]
 [ext_resource type="Script" path="res://scripts/title_screen.gd" id="4_ob0g2"]
-[ext_resource type="AudioStream" uid="uid://b4a8b5pdfafa4" path="res://assets/music/mus_title.mp3" id="5_o03bw"]
+[ext_resource type="AudioStream" uid="uid://b4a8b5pdfafa4" path="res://assets/musics/mus_title.mp3" id="5_o03bw"]
 [ext_resource type="AudioStream" uid="uid://0o3xl6dywkn8" path="res://assets/sfx/snd_cursor.wav" id="5_psxkj"]
 [ext_resource type="FontFile" uid="uid://camhtmnphwiu5" path="res://assets/fonts/8bit.fnt" id="6_bnf46"]
 [ext_resource type="Texture2D" uid="uid://cwf4o71h6yy2x" path="res://assets/sprites/chars/player/spr_player_skin.png" id="8_oq45q"]
-[ext_resource type="Texture2D" uid="uid://d0iyx0ggjm4dv" path="res://assets/sprites/items/winged_golden_strawberry.png" id="10_wikbu"]
+[ext_resource type="Texture2D" uid="uid://d0iyx0ggjm4dv" path="res://assets/sprites/items/spr_winged_golden_strawberry.png" id="10_wikbu"]
 
 [sub_resource type="Animation" id="Animation_apgp8"]
 length = 0.001

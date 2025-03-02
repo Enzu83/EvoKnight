@@ -401,7 +401,7 @@ func _process(_delta: float) -> void:
 
 # get the position of the player with a vertical offset depending on the hurtbox's size
 func get_middle_position() -> Vector2:
-	return position - Vector2(0, wall_collider.shape.get_rect().size.y)
+	return position - Vector2(0, 16)
 
 func is_hurtable() -> bool:
 	# can't be hurt if:

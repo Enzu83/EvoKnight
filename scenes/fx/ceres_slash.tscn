@@ -399,6 +399,7 @@ one_shot = true
 
 [node name="SlashSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_c2esc")
+volume_db = 3.0
 bus = &"SFX"
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

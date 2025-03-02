@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d0iyx0ggjm4dv"
-path="res://.godot/imported/winged_golden_strawberry.png-6a7c7235e6c955a3572c3c738dd86e83.ctex"
+path="res://.godot/imported/spr_winged_golden_strawberry.png-271d52fb65799de06cbe8573ee8dafd0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/items/winged_golden_strawberry.png"
-dest_files=["res://.godot/imported/winged_golden_strawberry.png-6a7c7235e6c955a3572c3c738dd86e83.ctex"]
+source_file="res://assets/sprites/items/spr_winged_golden_strawberry.png"
+dest_files=["res://.godot/imported/spr_winged_golden_strawberry.png-271d52fb65799de06cbe8573ee8dafd0.ctex"]
 
 [params]
 

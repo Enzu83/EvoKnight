@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=4 uid="uid://d3cpr3qecdtqv"]
 
 [ext_resource type="Script" path="res://scripts/levels/boss_area.gd" id="1_lbe6e"]
-[ext_resource type="AudioStream" uid="uid://dfnlx8wvputuy" path="res://assets/music/mus_boss.mp3" id="2_c21o5"]
+[ext_resource type="AudioStream" uid="uid://dfnlx8wvputuy" path="res://assets/musics/mus_boss.mp3" id="2_c21o5"]
 [ext_resource type="Texture2D" uid="uid://c3ruqeec58wyr" path="res://assets/sprites/terrains/bg_mushroom_back.png" id="3_ojk4e"]
 [ext_resource type="Texture2D" uid="uid://dqq0un7sgshcb" path="res://assets/sprites/terrains/bg_mushroom_front.png" id="4_kpy0s"]
 [ext_resource type="PackedScene" uid="uid://bggby2h6prvx3" path="res://scenes/terrains/ground.tscn" id="5_qek81"]
