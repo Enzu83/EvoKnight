@@ -44,7 +44,8 @@ func _process(_delta: float) -> void:
 
 func _on_area_entered(_area: Area2D) -> void:
 	# start the fight
-	if state == State.None:
+	if state == State.None \
+	and not Global.ceres_defeated:
 		state = State.Wait
 		Global.electric_arc_enabled = true
 		electric_sound.play()
@@ -78,6 +79,7 @@ func _on_wait_before_camera_timer_timeout() -> void:
 	ceres.spawn()
 
 func _on_end_fight_timer_timeout() -> void:
+	Global.ceres_defeated = true
 	music.play()
 	Global.electric_arc_enabled = false
 	electric_sound.play()

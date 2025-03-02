@@ -639,7 +639,7 @@ volume_db = 3.0
 bus = &"SFX"
 
 [node name="DeathTimer" type="Timer" parent="."]
-wait_time = 2.3
+wait_time = 3.0
 one_shot = true
 
 [node name="BossBasicSlash" parent="." instance=ExtResource("8_rxfvs")]

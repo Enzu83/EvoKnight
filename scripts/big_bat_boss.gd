@@ -22,12 +22,16 @@ func _process(_delta: float) -> void:
 		camera.limit_bottom = -32
 		boss_music.stop()
 		music.play()
+		Global.big_bat_defeated = true
+	
+	if Global.big_bat_defeated:
 		queue_free()
 
 func _on_body_entered(body: Node2D) -> void:
 	# start fight
 	if body == player \
-	and big_bat.state == big_bat.State.Sleep:
+	and big_bat.state == big_bat.State.Sleep \
+	and not Global.big_bat_defeated:
 		camera.limit_bottom = -216
 		start_timer.start()
 		player.state = player.State.Stop

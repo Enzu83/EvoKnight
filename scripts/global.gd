@@ -70,6 +70,10 @@ var elapsed_time_reference := 0
 # electric arc state
 var electric_arc_enabled := true
 
+# boss defeated
+var big_bat_defeated := false
+var ceres_defeated := false
+
 func _ready() -> void:
 	add_child(pause_menu)
 	add_child(level_up)
@@ -231,12 +235,12 @@ func create_drop(drop_rate: float, heal_value: int, exp_value: int, initial_posi
 
 func create_multiple_exp_drop(exp_value: int, initial_position: Vector2, speed: float) -> void:
 	# 8-direction exp drop
-	create_exp_drop(exp_value, initial_position, speed * Vector2(-1, -1).normalized()) # up left
+	create_exp_drop(exp_value, initial_position, speed * Vector2(-1, -1) * 0.8) # up left
 	create_exp_drop(exp_value, initial_position, speed * Vector2( 0, -1)) # up
-	create_exp_drop(exp_value, initial_position, speed * Vector2( 1, -1).normalized()) # up right
+	create_exp_drop(exp_value, initial_position, speed * Vector2( 1, -1) * 0.8) # up right
 	create_exp_drop(exp_value, initial_position, speed * Vector2( 1,  0)) # right
-	create_exp_drop(exp_value, initial_position, speed * Vector2( 1,  1).normalized()) # down right
+	create_exp_drop(exp_value, initial_position, speed * Vector2( 1,  1) * 0.8) # down right
 	create_exp_drop(exp_value, initial_position, speed * Vector2( 0,  1)) # down
-	create_exp_drop(exp_value, initial_position, speed * Vector2(-1,  1).normalized()) # down left
+	create_exp_drop(exp_value, initial_position, speed * Vector2(-1,  1) * 0.8) # down left
 	create_exp_drop(exp_value, initial_position, speed * Vector2(-1,  0)) # left
 	
