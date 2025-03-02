@@ -19,6 +19,7 @@ var state: State
 
 var camera_limit_left: int
 var camera_limit_right: int
+var camera_limit_top: int
 var camera_limit_bottom: int
 
 func _ready() -> void:
@@ -65,11 +66,13 @@ func _on_wait_before_camera_timer_timeout() -> void:
 	# store current camera limit
 	camera_limit_left = camera.limit_left
 	camera_limit_right = camera.limit_right
+	camera_limit_top = camera.limit_top
 	camera_limit_bottom = camera.limit_bottom
 	
 	# fix camera limit
 	camera.limit_left = 4128
 	camera.limit_right = 4448
+	camera.limit_top = -416
 	camera.limit_bottom = -136
 	
 	ceres.spawn()
@@ -84,4 +87,5 @@ func _on_end_fight_timer_timeout() -> void:
 	# previous camera view
 	camera.limit_left = camera_limit_left
 	camera.limit_right = camera_limit_right
+	camera.limit_top = camera_limit_top
 	camera.limit_bottom = camera_limit_bottom

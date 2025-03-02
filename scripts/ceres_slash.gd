@@ -40,9 +40,11 @@ func _process(delta: float) -> void:
 	else:
 		position = ceres.get_middle_position()
 	
+	# stop attacking if ceres is defeated
 	if ceres.state == ceres.State.Fainted \
 	or ceres.state == ceres.State.Defeated:
 		hide()
+
 
 func _on_area_entered(area: Area2D) -> void:
 	var body := area.get_parent() # get the player

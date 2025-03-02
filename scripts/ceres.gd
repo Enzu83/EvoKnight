@@ -24,10 +24,11 @@ extends CharacterBody2D
 @onready var defeated_end_timer: Timer = $DefeatedEndTimer
 
 var target_orb_scene: Resource = preload("res://scenes/fx/ceres_target_orb.tscn")
+var impact_orb_scene: Resource = preload("res://scenes/fx/ceres_impact_orb.tscn")
 var speed_orb_scene: Resource = preload("res://scenes/items/speed_orb.tscn")
 
 const SPEED = 300.0
-const STRENGTH = 5
+const STRENGTH = 4
 
 const MAX_HEALTH = 150
 const EXP_DROP_VALUE = 7
@@ -64,8 +65,12 @@ func _process(_delta: float) -> void:
 				ceres_slash.start("left")
 			else:
 				ceres_slash.start("right")
+				
 			var target_orb: Area2D = target_orb_scene.instantiate().init(get_middle_position(), player)
 			add_child(target_orb)
+			
+			var impact_orb: Area2D = impact_orb_scene.instantiate().init(Vector2(4348, -248))
+			add_child(impact_orb)
 	
 func handle_flip_h() -> void:
 	# flip the sprite to match the direction
@@ -164,5 +169,4 @@ func _on_defeated_timer_timeout() -> void:
 
 func _on_defeated_end_timer_timeout() -> void:
 	state = State.Fainted
-	
 	add_child(speed_orb_scene.instantiate())

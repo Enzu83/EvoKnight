@@ -9,7 +9,6 @@ const STRENGTH = 5
 
 @onready var ceres: CharacterBody2D = $".."
 
-@onready var wait_timer: Timer = $WaitTimer
 @onready var target_icon: AnimatedSprite2D = $TargetIcon
 
 var direction: Vector2
@@ -24,19 +23,21 @@ func init(initial_position: Vector2, targeted_node: Node2D) -> Node2D:
 	
 	return self
 
-func _ready() -> void:
-	wait_timer.start()
-
 func _process(delta: float) -> void:
 	# aim the target with the icon
 	target_icon.position = target.get_middle_position()
 	
 	# move toward the target
 	if active:
-		current_speed.x = move_toward(current_speed.x, direction.x * SPEED, 15)
-		current_speed.y = move_toward(current_speed.y, direction.y * SPEED, 15)
+		current_speed.x = move_toward(current_speed.x, direction.x * SPEED, abs(direction.x) * 20)
+		current_speed.y = move_toward(current_speed.y, direction.y * SPEED, abs(direction.y) * 20)
 		
 		position += current_speed * delta
+	
+	# stop attacking if ceres is defeated
+	if ceres.state == ceres.State.Defeated \
+	or ceres.state == ceres.State.Fainted:
+		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
 	var body := area.get_parent() # get the player

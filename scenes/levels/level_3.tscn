@@ -494,10 +494,10 @@ position = Vector2(2240, -424)
 rotation = -1.5708
 
 [node name="Spring21" parent="Items" instance=ExtResource("5_oqwlh")]
-position = Vector2(4188, -168)
+position = Vector2(4196, -168)
 
 [node name="Spring22" parent="Items" instance=ExtResource("5_oqwlh")]
-position = Vector2(4388, -168)
+position = Vector2(4380, -168)
 
 [node name="Star4" parent="Items" instance=ExtResource("7_2ie4o")]
 position = Vector2(2192, -478)
