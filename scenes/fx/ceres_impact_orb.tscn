@@ -429,9 +429,8 @@ volume_db = 3.0
 bus = &"SFX"
 
 [node name="WaitTimer" type="Timer" parent="."]
-wait_time = 2.5
+wait_time = 2.2
 one_shot = true
-autostart = true
 
 [node name="TargetIcon" type="AnimatedSprite2D" parent="."]
 top_level = true

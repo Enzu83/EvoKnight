@@ -469,14 +469,13 @@ one_shot = true
 one_shot = true
 
 [node name="TeleportTimer" type="Timer" parent="."]
-wait_time = 6.0
+wait_time = 3.5
 one_shot = true
 
 [node name="TeleportWaitTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="AttackTimer" type="Timer" parent="."]
-wait_time = 2.0
 one_shot = true
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

@@ -1,18 +1,25 @@
 extends CharacterBody2D
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var despawn_timer: Timer = $DespawnTimer
 
 const SPEED = 100.0
 const MAX_FALLING_VELOCITY = 450
 
 var player: CharacterBody2D
 var heal_value: int
+var despawn: bool
 
-func init(value: int, initial_position: Vector2, initial_velocity: Vector2) -> CharacterBody2D:
+func init(value: int, initial_position: Vector2, initial_velocity: Vector2, will_despawn: bool = false) -> CharacterBody2D:
 	heal_value = value
 	position = initial_position
 	velocity = initial_velocity
+	despawn = will_despawn
 	return self
+
+func _ready() -> void:
+	if despawn:
+		despawn_timer.start()
 
 func _physics_process(delta: float) -> void:
 	player = Global.player
@@ -39,3 +46,6 @@ func pick_up_body(body: CharacterBody2D) -> void:
 	and player.state != player.State.Stop:
 		animation_player.play("pickup")
 		player.heal(heal_value)
+
+func _on_despawn_timer_timeout() -> void:
+	queue_free()

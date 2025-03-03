@@ -1,7 +1,7 @@
 extends Area2D
 
 const SPEED = 250
-const STRENGTH = 6
+const STRENGTH = 7
 
 @onready var sprite: Sprite2D = $Sprite
 
@@ -13,7 +13,7 @@ const STRENGTH = 6
 @onready var ceres: CharacterBody2D = $".."
 
 var heart_drop_scene: Resource = preload("res://scenes/items/heart_drop.tscn")
-var dropped_heart := false
+var dropped_heart := true
 
 var active: bool = false
 var direction := 0
@@ -43,11 +43,11 @@ func _process(delta: float) -> void:
 			direction = 1
 	
 	if not dropped_heart \
-	and ((position.x <= 4152 and direction == -1) \
-	or (position.x >= 4424 and direction == 1)):
+	and ((position.x <= 4150 and direction == -1) \
+	or (position.x >= 4426 and direction == 1)):
 		dropped_heart = true
 		
-		var heart_drop: CharacterBody2D = heart_drop_scene.instantiate().init(3, Vector2(position.x, position.y - 16), Vector2.ZERO)
+		var heart_drop: CharacterBody2D = heart_drop_scene.instantiate().init(3, Vector2(position.x, position.y - 16), Vector2.ZERO, true)
 		get_tree().current_scene.add_child(heart_drop)
 	
 	# stop attacking if ceres is defeated

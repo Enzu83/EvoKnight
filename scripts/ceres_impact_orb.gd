@@ -9,6 +9,7 @@ const STRENGTH = 5
 @onready var ceres: CharacterBody2D = $".."
 
 @onready var target_icon: AnimatedSprite2D = $TargetIcon
+@onready var wait_timer: Timer = $WaitTimer
 
 var current_speed: Vector2
 
@@ -16,9 +17,16 @@ var target_position: Vector2
 var active := false
 var impact := false
 
-func init(targeted_position: Vector2) -> Node2D:
+var initial_skipped_time: int # (ms) skipped for the wait timer
+
+func init(targeted_position: Vector2, skipped_time: int) -> Node2D:
 	target_position = targeted_position
+	initial_skipped_time = skipped_time
 	return self
+
+func _ready() -> void:
+	# reduce the time before falling
+	wait_timer.start(wait_timer.wait_time - initial_skipped_time / 1000.0)
 
 func _process(delta: float) -> void:
 	target_icon.position = target_position
@@ -50,6 +58,6 @@ func _on_area_entered(area: Area2D) -> void:
 
 func _on_wait_timer_timeout() -> void:
 	active = true
-	position.x = target_position.x # laign with the target
+	position.x = target_position.x # align with the target
 	position.y = -432 # start at the top of the room
 	animation_player.play("shoot")

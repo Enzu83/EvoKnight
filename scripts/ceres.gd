@@ -34,7 +34,7 @@ var speed_orb_scene: Resource = preload("res://scenes/items/speed_orb.tscn")
 const SPEED = 300.0
 const STRENGTH = 4
 
-const MAX_HEALTH = 150
+const MAX_HEALTH = 220
 const EXP_DROP_VALUE = 7
 
 enum State {Default, Defeated, Fainted, Attacking}
@@ -202,27 +202,27 @@ func _on_teleport_wait_timer_timeout() -> void:
 func _on_attack_timer_timeout() -> void:
 	# attack some time after teleporting
 	if position == teleport_position[0]:
-		for i in range(6):
-			var impact_orb: Area2D = impact_orb_scene.instantiate().init(Vector2(4354 + 16*i, -168))
+		for i in range(3):
+			var impact_orb: Area2D = impact_orb_scene.instantiate().init(Vector2(4362 + 32 * i, -168), 50 * i)
 			add_child(impact_orb)
 			
-			var impact_orb_2: Area2D = impact_orb_scene.instantiate().init(Vector2(4222 - 16*i, -168))
+			var impact_orb_2: Area2D = impact_orb_scene.instantiate().init(Vector2(4214 - 32 * i, -168), 50 * i)
 			add_child(impact_orb_2)
 
 	elif position == teleport_position[1]:
-		for i in range(7):
-			var impact_orb: Area2D = impact_orb_scene.instantiate().init(Vector2(4338 + 16*i, -248))
+		for i in range(4):
+			var impact_orb: Area2D = impact_orb_scene.instantiate().init(Vector2(4338 + 32 * i, -248), 50 * i)
 			add_child(impact_orb)
 			
-			var impact_orb_2: Area2D = impact_orb_scene.instantiate().init(Vector2(4238 - 16*i, -248))
+			var impact_orb_2: Area2D = impact_orb_scene.instantiate().init(Vector2(4238 - 32 * i, -248), 50 * i)
 			add_child(impact_orb_2)
 	
 	else:
-		for i in range(3):
-			var impact_orb: Area2D = impact_orb_scene.instantiate().init(Vector2(4272 + 16*i, -284))
+		for i in range(2):
+			var impact_orb: Area2D = impact_orb_scene.instantiate().init(Vector2(4280 + 16 * i, -284), 0)
 			add_child(impact_orb)
 			
-			var impact_orb_2: Area2D = impact_orb_scene.instantiate().init(Vector2(4272 + 16*i, -214))
+			var impact_orb_2: Area2D = impact_orb_scene.instantiate().init(Vector2(4280 + 16 * i, -214), 0)
 			add_child(impact_orb_2)
 	
 	# attack some time after teleporting
@@ -233,7 +233,7 @@ func _on_attack_timer_timeout() -> void:
 	cycles_before_slash -= 1
 	
 	if cycles_before_slash == 0:
-		cycles_before_slash = 3
+		cycles_before_slash = 4
 		
 		var magic_slash: Area2D = magic_slash_scene.instantiate()
 		add_child(magic_slash)
