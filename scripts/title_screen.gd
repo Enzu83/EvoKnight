@@ -17,6 +17,8 @@ extends Node2D
 @onready var player_controls_info: Label = $PlayerControlsInfo
 @onready var extra_controls_info: Label = $ExtraControlsInfo
 
+@onready var version_label: Label = $VersionLabel
+
 enum Menu {Main, Skin}
 var menu := Menu.Main
 
@@ -129,6 +131,7 @@ func _ready() -> void:
 		skin_button.set("theme_override_colors/font_color", Color.YELLOW)
 		player_controls_info.set("theme_override_colors/font_color", Color.YELLOW)
 		extra_controls_info.set("theme_override_colors/font_color", Color.YELLOW)
+		version_label.set("theme_override_colors/font_color", Color.YELLOW)
 
 func _process(_delta: float) -> void:
 	# navigate the menu

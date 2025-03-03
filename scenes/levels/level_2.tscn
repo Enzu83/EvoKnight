@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=4 uid="uid://bxrur8c6y3ntc"]
+[gd_scene load_steps=37 format=4 uid="uid://bxrur8c6y3ntc"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_2.gd" id="1_ev3sv"]
 [ext_resource type="AudioStream" uid="uid://cer7bmtanymj3" path="res://assets/musics/mus_amp_plains.mp3" id="2_aptwx"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://beq88lmemfiik" path="res://scenes/terrains/spike.tscn" id="11_tyx1r"]
 [ext_resource type="PackedScene" uid="uid://c27tot3rib7r5" path="res://scenes/chars/cloporte.tscn" id="11_ugrj7"]
 [ext_resource type="PackedScene" uid="uid://cf8j7ywt5hk2k" path="res://scenes/chars/bat.tscn" id="12_c1aet"]
+[ext_resource type="PackedScene" uid="uid://dc0vyw5sccqr7" path="res://scenes/items/big_heart.tscn" id="12_kjekj"]
 [ext_resource type="PackedScene" uid="uid://dwitea1wpbdjp" path="res://scenes/chars/player.tscn" id="13_xt3i8"]
 [ext_resource type="PackedScene" uid="uid://c0q4ajyur6afq" path="res://scenes/other/player_camera_point.tscn" id="14_0vafh"]
 [ext_resource type="PackedScene" uid="uid://cvx745hhmp0k6" path="res://scenes/other/kill_zone.tscn" id="15_dl75w"]
@@ -561,6 +562,9 @@ position = Vector2(3093, -187)
 
 [node name="Star5" parent="Items" instance=ExtResource("8_34nl6")]
 position = Vector2(3705, -830)
+
+[node name="BigHeart" parent="Items" instance=ExtResource("12_kjekj")]
+position = Vector2(2812, -505)
 
 [node name="Enemies" type="Node2D" parent="."]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=4 uid="uid://doqatuh36ah4u"]
+[gd_scene load_steps=40 format=4 uid="uid://doqatuh36ah4u"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_3.gd" id="1_7ykpr"]
 [ext_resource type="AudioStream" uid="uid://b1qtb8fncq3iv" path="res://assets/musics/mus_chasm_cave.mp3" id="2_l85tu"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://cvvewevudo2kf" path="res://scenes/other/hud.tscn" id="16_yluep"]
 [ext_resource type="PackedScene" uid="uid://cvmw3fdnu5d7w" path="res://scenes/other/end_of_level.tscn" id="17_0d8ml"]
 [ext_resource type="PackedScene" uid="uid://ci5kax7l6j67m" path="res://scenes/items/winged_golden_strawberry.tscn" id="18_eudrs"]
+[ext_resource type="PackedScene" uid="uid://dc0vyw5sccqr7" path="res://scenes/items/big_heart.tscn" id="19_5nanb"]
 [ext_resource type="PackedScene" uid="uid://b1qsksiagp7rj" path="res://scenes/fx/electric_arc.tscn" id="19_a7tjk"]
 [ext_resource type="Script" path="res://scripts/ceres_boss.gd" id="25_3j23q"]
 [ext_resource type="AudioStream" uid="uid://dch38lv7y4owm" path="res://assets/sfx/snd_electric_arc.wav" id="27_diuai"]
@@ -650,6 +651,9 @@ position = Vector2(4724, -1008)
 [node name="WingedGoldenStrawberry" parent="Items" instance=ExtResource("18_eudrs")]
 position = Vector2(4724, -1148)
 
+[node name="BigHeart" parent="Items" instance=ExtResource("19_5nanb")]
+position = Vector2(3988, -210)
+
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Cloporte" parent="Enemies" instance=ExtResource("7_oqim5")]
@@ -681,7 +685,7 @@ position = Vector2(1777, -292)
 
 [node name="Player" parent="." instance=ExtResource("13_gcqkt")]
 unique_name_in_owner = true
-position = Vector2(4020, -168)
+position = Vector2(46, 8)
 
 [node name="PlayerCameraPoint" parent="Player" instance=ExtResource("14_wu1ns")]
 top_level = true

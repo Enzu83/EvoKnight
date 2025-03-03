@@ -190,6 +190,7 @@ func goto_level(level_id: int) -> void:
 	current_level = level_id
 	reset_level()
 	respawn_position = Vector2.INF # reset checkpoint position
+	player.health = player.max_health
 	get_tree().call_deferred("change_scene_to_file", level_paths[current_level])
 
 func next_level() -> void:

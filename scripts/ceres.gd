@@ -71,7 +71,9 @@ func _ready() -> void:
 	hurtbox.set_deferred("disabled", true)
 
 func _process(_delta: float) -> void:
-	handle_flip_h()
+	if player.position.x >= 4152 \
+	and player.position.x <= 4424:
+		handle_flip_h()
 
 func handle_flip_h() -> void:
 	# flip the sprite to match the direction
