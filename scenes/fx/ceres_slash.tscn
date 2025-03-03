@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bd1dhrll0vhoc"]
+[gd_scene load_steps=16 format=3 uid="uid://bd1dhrll0vhoc"]
 
 [ext_resource type="Script" path="res://scripts/ceres_slash.gd" id="1_hv7qp"]
 [ext_resource type="Texture2D" uid="uid://bcqn2m0333rdn" path="res://assets/sprites/fx/spr_ceres_slash.png" id="2_k2cpv"]
 [ext_resource type="AudioStream" uid="uid://dqxu5pv7k6tdc" path="res://assets/sfx/snd_magic_slash.wav" id="3_c2esc"]
+[ext_resource type="Texture2D" uid="uid://cv02b1a8sn5in" path="res://assets/sprites/fx/spr_cross_aim.png" id="4_mp2i8"]
 
 [sub_resource type="Animation" id="Animation_bck2b"]
 length = 0.001
@@ -114,6 +115,30 @@ tracks/8/keys = {
 "update": 0,
 "values": [1.0]
 }
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("TargetIcon:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("TargetIcon2:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_ao6w2"]
 resource_name = "fade_out"
@@ -129,7 +154,7 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
-"method": &"reset"
+"method": &"queue_free"
 }]
 }
 tracks/1/type = "value"
@@ -257,6 +282,30 @@ tracks/7/keys = {
 "update": 0,
 "values": [24.0]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("TargetIcon:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("TargetIcon2:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_vfucf"]
 resource_name = "right"
@@ -358,6 +407,30 @@ tracks/7/keys = {
 "update": 0,
 "values": [7.0]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("TargetIcon:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("TargetIcon2:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xsgut"]
 _data = {
@@ -370,6 +443,42 @@ _data = {
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qncmu"]
 radius = 0.5
 height = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2tjex"]
+atlas = ExtResource("4_mp2i8")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o0hhf"]
+atlas = ExtResource("4_mp2i8")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxfqf"]
+atlas = ExtResource("4_mp2i8")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ilav"]
+atlas = ExtResource("4_mp2i8")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kjr11"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2tjex")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o0hhf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oxfqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ilav")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [node name="CeresSlash" type="Area2D"]
 top_level = true
@@ -389,6 +498,7 @@ frame = 1
 libraries = {
 "": SubResource("AnimationLibrary_xsgut")
 }
+autoplay = "RESET"
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_qncmu")
@@ -402,6 +512,22 @@ stream = ExtResource("3_c2esc")
 volume_db = 3.0
 bus = &"SFX"
 
+[node name="WaitTimer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
+[node name="TargetIcon" type="AnimatedSprite2D" parent="."]
+z_index = 2
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_kjr11")
+autoplay = "default"
+
+[node name="TargetIcon2" type="AnimatedSprite2D" parent="."]
+z_index = 2
+position = Vector2(0, -22)
+sprite_frames = SubResource("SpriteFrames_kjr11")
+autoplay = "default"
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="Duration" to="." method="_on_duration_timeout"]
+[connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]

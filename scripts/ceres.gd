@@ -15,8 +15,6 @@ extends CharacterBody2D
 @onready var hurt_sound: AudioStreamPlayer = $Hurtbox/HurtSound
 @onready var death_sound: AudioStreamPlayer = $Hurtbox/DeathSound
 
-@onready var ceres_slash: Area2D = $CeresSlash
-
 @onready var spawn_wait_timer: Timer = $SpawnWaitTimer
 @onready var spawn_timer: Timer = $SpawnTimer
 @onready var spawn_end_timer: Timer = $SpawnEndTimer
@@ -26,8 +24,11 @@ extends CharacterBody2D
 @onready var teleport_timer: Timer = $TeleportTimer
 @onready var teleport_wait_timer: Timer = $TeleportWaitTimer
 
+@onready var attack_timer: Timer = $AttackTimer
+
 var target_orb_scene: Resource = preload("res://scenes/fx/ceres_target_orb.tscn")
 var impact_orb_scene: Resource = preload("res://scenes/fx/ceres_impact_orb.tscn")
+var magic_slash_scene: Resource = preload("res://scenes/fx/ceres_slash.tscn")
 var speed_orb_scene: Resource = preload("res://scenes/items/speed_orb.tscn")
 
 const SPEED = 300.0
@@ -58,6 +59,9 @@ var teleport_position := [
 	Vector2(4424, -248),
 ]
 
+# cycles before launching a slash
+var cycles_before_slash := 2
+
 func spawn() -> void:
 	spawn_wait_timer.start()
 
@@ -68,22 +72,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	handle_flip_h()
-	
-	# debug
-	if active:
-		if Input.is_action_just_pressed("magic_slash") \
-		and ceres_slash.animation_player.current_animation == "":
-			if sprite.flip_h:
-				ceres_slash.start("left")
-			else:
-				ceres_slash.start("right")
-				
-			var target_orb: Area2D = target_orb_scene.instantiate().init(get_middle_position(), player)
-			add_child(target_orb)
-			
-			var impact_orb: Area2D = impact_orb_scene.instantiate().init(Vector2(4348, -248))
-			add_child(impact_orb)
-	
+
 func handle_flip_h() -> void:
 	# flip the sprite to match the direction
 	if position.x < player.position.x:
@@ -172,7 +161,9 @@ func _on_spawn_end_timer_timeout() -> void:
 	state = State.Default
 	active = true
 	hurtbox.set_deferred("disabled", false)
+	
 	teleport_timer.start() # time before ceres teleports to another spot
+	attack_timer.start()
 
 func _on_defeated_timer_timeout() -> void:
 	play_animation("defeated")
@@ -206,3 +197,44 @@ func _on_teleport_wait_timer_timeout() -> void:
 
 	play_animation("teleport_end")
 	teleport_timer.start()
+	attack_timer.start()
+
+func _on_attack_timer_timeout() -> void:
+	# attack some time after teleporting
+	if position == teleport_position[0]:
+		for i in range(6):
+			var impact_orb: Area2D = impact_orb_scene.instantiate().init(Vector2(4354 + 16*i, -168))
+			add_child(impact_orb)
+			
+			var impact_orb_2: Area2D = impact_orb_scene.instantiate().init(Vector2(4222 - 16*i, -168))
+			add_child(impact_orb_2)
+
+	elif position == teleport_position[1]:
+		for i in range(7):
+			var impact_orb: Area2D = impact_orb_scene.instantiate().init(Vector2(4338 + 16*i, -248))
+			add_child(impact_orb)
+			
+			var impact_orb_2: Area2D = impact_orb_scene.instantiate().init(Vector2(4238 - 16*i, -248))
+			add_child(impact_orb_2)
+	
+	else:
+		for i in range(3):
+			var impact_orb: Area2D = impact_orb_scene.instantiate().init(Vector2(4272 + 16*i, -284))
+			add_child(impact_orb)
+			
+			var impact_orb_2: Area2D = impact_orb_scene.instantiate().init(Vector2(4272 + 16*i, -214))
+			add_child(impact_orb_2)
+	
+	# attack some time after teleporting
+	var target_orb: Area2D = target_orb_scene.instantiate().init(self, player)
+	add_child(target_orb)
+	
+	# magic slash
+	cycles_before_slash -= 1
+	
+	if cycles_before_slash == 0:
+		cycles_before_slash = 3
+		
+		var magic_slash: Area2D = magic_slash_scene.instantiate()
+		add_child(magic_slash)
+		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://i0uejwv47jnl"]
+[gd_scene load_steps=18 format=3 uid="uid://i0uejwv47jnl"]
 
 [ext_resource type="Script" path="res://scripts/ceres.gd" id="1_2wiyj"]
 [ext_resource type="Texture2D" uid="uid://c27jgnpkvfd3u" path="res://assets/sprites/chars/enemies/spr_ceres.png" id="2_evu6g"]
@@ -6,7 +6,6 @@
 [ext_resource type="AudioStream" uid="uid://ddtibw10i6qus" path="res://assets/sfx/snd_ceres_hurt.wav" id="4_ivx64"]
 [ext_resource type="AudioStream" uid="uid://8qw2745bfbro" path="res://assets/sfx/snd_ceres_death.wav" id="5_apb60"]
 [ext_resource type="AudioStream" uid="uid://kpryh7dxxy2y" path="res://assets/sfx/snd_teleport.wav" id="5_bc331"]
-[ext_resource type="PackedScene" uid="uid://bd1dhrll0vhoc" path="res://scenes/fx/ceres_slash.tscn" id="7_olav2"]
 
 [sub_resource type="Animation" id="Animation_yxfbx"]
 length = 0.001
@@ -452,8 +451,6 @@ bus = &"SFX"
 stream = ExtResource("5_bc331")
 bus = &"SFX"
 
-[node name="CeresSlash" parent="." instance=ExtResource("7_olav2")]
-
 [node name="SpawnWaitTimer" type="Timer" parent="."]
 wait_time = 0.3
 one_shot = true
@@ -472,10 +469,14 @@ one_shot = true
 one_shot = true
 
 [node name="TeleportTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 6.0
 one_shot = true
 
 [node name="TeleportWaitTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 2.0
 one_shot = true
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
@@ -487,3 +488,4 @@ one_shot = true
 [connection signal="timeout" from="DefeatedEndTimer" to="." method="_on_defeated_end_timer_timeout"]
 [connection signal="timeout" from="TeleportTimer" to="." method="_on_teleport_timer_timeout"]
 [connection signal="timeout" from="TeleportWaitTimer" to="." method="_on_teleport_wait_timer_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
