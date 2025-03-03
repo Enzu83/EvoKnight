@@ -1,8 +1,11 @@
 extends Area2D
 
+@onready var music: AudioStreamPlayer = %Music
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func end_level() -> void:
+	music.stop()
 	Global.end_recap.start()
 	queue_free()
 

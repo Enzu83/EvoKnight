@@ -32,9 +32,9 @@ var magic_slash_scene: Resource = preload("res://scenes/fx/ceres_slash.tscn")
 var speed_orb_scene: Resource = preload("res://scenes/items/speed_orb.tscn")
 
 const SPEED = 300.0
-const STRENGTH = 4
+const STRENGTH = 5
 
-const MAX_HEALTH = 220
+const MAX_HEALTH = 230
 const EXP_DROP_VALUE = 7
 
 enum State {Default, Defeated, Fainted, Attacking}
