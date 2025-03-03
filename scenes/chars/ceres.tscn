@@ -448,9 +448,6 @@ bus = &"SFX"
 stream = ExtResource("5_apb60")
 bus = &"SFX"
 
-[node name="TeleportTimer" type="Timer" parent="."]
-wait_time = 4.0
-
 [node name="TeleportSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_bc331")
 bus = &"SFX"
@@ -474,11 +471,19 @@ one_shot = true
 [node name="DefeatedEndTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="TeleportTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="TeleportWaitTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="timeout" from="Hurtbox/HurtInvicibilityTimer" to="." method="_on_hurt_invicibility_timer_timeout"]
-[connection signal="timeout" from="TeleportTimer" to="." method="_on_teleport_timer_timeout"]
 [connection signal="timeout" from="SpawnWaitTimer" to="." method="_on_spawn_wait_timer_timeout"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="SpawnEndTimer" to="." method="_on_spawn_end_timer_timeout"]
 [connection signal="timeout" from="DefeatedTimer" to="." method="_on_defeated_timer_timeout"]
 [connection signal="timeout" from="DefeatedEndTimer" to="." method="_on_defeated_end_timer_timeout"]
+[connection signal="timeout" from="TeleportTimer" to="." method="_on_teleport_timer_timeout"]
+[connection signal="timeout" from="TeleportWaitTimer" to="." method="_on_teleport_wait_timer_timeout"]

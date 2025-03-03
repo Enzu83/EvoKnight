@@ -23,6 +23,9 @@ extends CharacterBody2D
 @onready var defeated_timer: Timer = $DefeatedTimer
 @onready var defeated_end_timer: Timer = $DefeatedEndTimer
 
+@onready var teleport_timer: Timer = $TeleportTimer
+@onready var teleport_wait_timer: Timer = $TeleportWaitTimer
+
 var target_orb_scene: Resource = preload("res://scenes/fx/ceres_target_orb.tscn")
 var impact_orb_scene: Resource = preload("res://scenes/fx/ceres_impact_orb.tscn")
 var speed_orb_scene: Resource = preload("res://scenes/items/speed_orb.tscn")
@@ -45,6 +48,15 @@ var health := MAX_HEALTH
 
 # variables
 var active := false
+
+var teleport_position := [
+	Vector2(4288, -168),
+	Vector2(4288, -214),
+	Vector2(4152, -168),
+	Vector2(4152, -248),
+	Vector2(4424, -168),
+	Vector2(4424, -248),
+]
 
 func spawn() -> void:
 	spawn_wait_timer.start()
@@ -112,6 +124,10 @@ func fainted() -> void:
 		velocity.y = 0
 		death_sound.play()
 		
+		# stop teleportation
+		teleport_timer.stop()
+		teleport_wait_timer.stop()
+		
 		# exp drops
 		Global.create_multiple_exp_drop(EXP_DROP_VALUE, position, 250)
 		
@@ -139,12 +155,6 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 	hurtbox.set_deferred("disabled", false)
 	effects_player.stop()
 
-func _on_teleport_timer_timeout() -> void:
-	if anim == Anim.idle:
-		play_animation("teleport_start")
-	elif anim == Anim.teleport_start:
-		play_animation("teleport_end")
-
 func _on_spawn_wait_timer_timeout() -> void:
 	play_animation("teleport_end")
 	spawn_timer.start()
@@ -162,6 +172,7 @@ func _on_spawn_end_timer_timeout() -> void:
 	state = State.Default
 	active = true
 	hurtbox.set_deferred("disabled", false)
+	teleport_timer.start() # time before ceres teleports to another spot
 
 func _on_defeated_timer_timeout() -> void:
 	play_animation("defeated")
@@ -170,3 +181,28 @@ func _on_defeated_timer_timeout() -> void:
 func _on_defeated_end_timer_timeout() -> void:
 	state = State.Fainted
 	#add_child(speed_orb_scene.instantiate())
+
+func _on_teleport_timer_timeout() -> void:
+	# stop blink animation
+	effects_player.stop()
+	effects_player.clear_queue()
+	effects_player.play("RESET")
+	
+	play_animation("teleport_start")
+	teleport_wait_timer.start()
+
+func _on_teleport_wait_timer_timeout() -> void:
+	# teleport to another available location
+	var available_teleport_position: Array
+	
+	for possible_position in teleport_position:
+		# another location than the current one and not too close to the player's position
+		if not possible_position == position \
+		and (possible_position - player.position).length() >= 64:
+			available_teleport_position.append(possible_position)
+	
+	var index := randi_range(0, len(available_teleport_position)-1)
+	position = available_teleport_position[index]
+
+	play_animation("teleport_end")
+	teleport_timer.start()

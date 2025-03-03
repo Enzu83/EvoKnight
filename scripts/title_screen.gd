@@ -85,6 +85,10 @@ func handle_click_button() -> void:
 			Global.init_player_stats()
 			Global.set_elapsed_time_reference()
 			
+			# init boss defeated state
+			Global.big_bat_defeated = false
+			Global.ceres_defeated = false
+			
 			# go to the next scene
 			Global.next_level()
 		
