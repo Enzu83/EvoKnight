@@ -454,10 +454,6 @@ rotation = 1.5708
 position = Vector2(4324, -163)
 rotation = 1.5708
 
-[node name="Lever10" parent="ElectricArcs" instance=ExtResource("7_7wf14")]
-position = Vector2(4500, -208)
-rotation = 3.14159
-
 [node name="Checkpoints" type="Node2D" parent="."]
 
 [node name="Checkpoint" parent="Checkpoints" instance=ExtResource("6_keu3f")]
@@ -471,9 +467,6 @@ position = Vector2(3454, -464)
 
 [node name="Checkpoint4" parent="Checkpoints" instance=ExtResource("6_keu3f")]
 position = Vector2(3988, -168)
-
-[node name="Checkpoint5" parent="Checkpoints" instance=ExtResource("6_keu3f")]
-position = Vector2(4672, -168)
 
 [node name="Items" type="Node2D" parent="."]
 
