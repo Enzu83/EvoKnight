@@ -121,21 +121,25 @@ func handle_jump() -> void:
 	and jumps > 0 \
 	and ((state != State.Dashing and state != State.DashingAndAttacking) \
 	or jump_is_on_floor()):
-		
-		# end dash if the player was dashing
-		if state == State.Dashing or state == State.DashingAndAttacking:
-			end_dash(false)
-			
-			# allow to reverse the direction of the wavedash
-			if (Input.is_action_pressed("left") and not Input.is_action_pressed("right") and velocity.x > 0) \
-			or (Input.is_action_pressed("right") and not Input.is_action_pressed("left") and velocity.x < 0):
-				velocity.x *= -1
-		
 		velocity.y = JUMP_VELOCITY
 		
 		# increase jump force if super speed is active
 		if super_speed:
 			velocity.y *= 1.3
+		
+		# end dash if the player was dashing
+		if state == State.Dashing or state == State.DashingAndAttacking:
+			end_dash(false)
+			
+			# hyperdash if the dash direction is diagonal
+			if dash_direction.length() > 1:
+				velocity.x *= dash_direction.length()
+				velocity.y *= 0.8
+			
+			# allow to reverse the direction of the wavedash
+			if (Input.is_action_pressed("left") and not Input.is_action_pressed("right") and velocity.x > 0) \
+			or (Input.is_action_pressed("right") and not Input.is_action_pressed("left") and velocity.x < 0):
+				velocity.x *= -1
 		
 		jumps -= 1
 		jump_sound.play()
@@ -229,7 +233,7 @@ func handle_dash() -> void:
 			dash_direction.y = 1
 		
 		# downward dash direction while on floor is irrelevant
-		if dash_direction.y == 1 and is_on_floor():
+		if dash_direction == Vector2.DOWN and is_on_floor():
 			dash_direction.y = 0
 		
 		# if the dash has no direction, find one with the orientation
@@ -239,9 +243,8 @@ func handle_dash() -> void:
 			else:
 				dash_direction.x = 1
 		
-		# normalize the dash direction vector to keep the same velocity for each direction
-		velocity = DASH_SPEED * dash_direction.normalized()
-		
+		velocity = DASH_SPEED * dash_direction
+
 		# increase dash force if super speed is active
 		if super_speed:
 			velocity *= 1.2
