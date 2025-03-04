@@ -425,7 +425,7 @@ disabled = true
 
 [node name="ImpactSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_rwbgy")
-volume_db = 3.0
+volume_db = 6.0
 bus = &"SFX"
 
 [node name="WaitTimer" type="Timer" parent="."]

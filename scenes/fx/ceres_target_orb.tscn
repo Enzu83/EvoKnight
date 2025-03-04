@@ -226,7 +226,7 @@ one_shot = true
 
 [node name="SlashSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_oi88c")
-volume_db = 3.0
+volume_db = 6.0
 bus = &"SFX"
 
 [node name="WaitTimer" type="Timer" parent="."]

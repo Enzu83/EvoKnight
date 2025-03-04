@@ -8,6 +8,7 @@ var level_paths = [
 	"res://scenes/levels/level_2.tscn",
 	"res://scenes/levels/boss_area.tscn",
 	"res://scenes/levels/level_3.tscn",
+	"res://scenes/levels/level_4.tscn",
 ]
 
 # player skin
@@ -190,9 +191,7 @@ func goto_level(level_id: int) -> void:
 	current_level = level_id
 	reset_level()
 	respawn_position = Vector2.INF # reset checkpoint position
-	
-	if player != null:
-		player.health = player.max_health
+
 	get_tree().call_deferred("change_scene_to_file", level_paths[current_level])
 
 func next_level() -> void:
