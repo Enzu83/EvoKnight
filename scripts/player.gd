@@ -130,11 +130,12 @@ func handle_jump() -> void:
 		# end dash if the player was dashing
 		if state == State.Dashing or state == State.DashingAndAttacking:
 			end_dash(false)
+			can_dash = true
 			
 			# hyperdash if the dash direction is diagonal
-			if dash_direction.length() > 1:
-				velocity.x *= dash_direction.length()
-				velocity.y *= 0.8
+			if dash_direction.x != 0 and dash_direction.y != 0:
+				velocity.x *= 1.7
+				velocity.y *= 0.75
 			
 			# allow to reverse the direction of the wavedash
 			if (Input.is_action_pressed("left") and not Input.is_action_pressed("right") and velocity.x > 0) \
@@ -231,17 +232,17 @@ func handle_dash() -> void:
 			dash_direction.y = -1
 		elif Input.is_action_pressed("down"):
 			dash_direction.y = 1
-		
-		# downward dash direction while on floor is irrelevant
-		if dash_direction == Vector2.DOWN and is_on_floor():
-			dash_direction.y = 0
-		
+
 		# if the dash has no direction, find one with the orientation
 		if dash_direction == Vector2.ZERO:
 			if sprite.flip_h:
 				dash_direction.x = -1
 			else:
 				dash_direction.x = 1
+		
+		# reduce diagonal dash force
+		if dash_direction.length() > 1:
+			dash_direction *= 0.8
 		
 		velocity = DASH_SPEED * dash_direction
 
@@ -275,15 +276,16 @@ func handle_velocity(delta: float) -> void:
 	# regular horizontal velocity handle
 	if abs(velocity.x) <= speed_force and \
 	not (state == State.Bumped and bump_direction.x != 0):
+		# acceleration toward speed cap
 		if direction:
-			velocity.x = direction * speed_force
+			velocity.x = move_toward(velocity.x, direction * speed_force, 25)
 		
 		# air momentum
 		elif not is_on_floor():
 			velocity.x = move_toward(velocity.x, 0, 15)
-		# stop directly when on the floor
+		# decelerate quickly when on floor
 		else:
-			velocity.x = 0
+			velocity.x = move_toward(velocity.x, 0, 30)
 
 	# when player is bumped horizontally and moves the opposite way
 	elif direction * velocity.x < 0:
@@ -324,7 +326,6 @@ func handle_bumped() -> void:
 		
 		elif bump_direction.x != 0 and velocity.x == 0:
 			state = State.Default
-		
 
 func play_animation(anim_name: String) -> void:
 	# play the animation if it's not the current one
