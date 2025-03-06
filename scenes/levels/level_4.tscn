@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bggby2h6prvx3" path="res://scenes/terrains/ground.tscn" id="5_070dw"]
 [ext_resource type="Texture2D" uid="uid://dlton58j0qbx7" path="res://assets/sprites/terrains/bg_big_star2.png" id="5_u3vci"]
 [ext_resource type="Texture2D" uid="uid://clabsfas843hd" path="res://assets/sprites/terrains/bg_small_star1.png" id="6_b4nkh"]
-[ext_resource type="PackedScene" uid="uid://ixnghv7tms0i" path="res://scenes/platforms/small_platform.tscn" id="6_mwmpa"]
+[ext_resource type="PackedScene" path="res://scenes/platforms/small_platform.tscn" id="6_mwmpa"]
 [ext_resource type="PackedScene" uid="uid://cojlgfhlxmwfs" path="res://scenes/items/checkpoint.tscn" id="7_5xe5p"]
 [ext_resource type="Texture2D" uid="uid://w8k515bfygcu" path="res://assets/sprites/terrains/bg_small_star2.png" id="7_jr7i0"]
 [ext_resource type="Texture2D" uid="uid://ctsqdl8c8putj" path="res://assets/sprites/terrains/bg_planet.png" id="8_s6llu"]
@@ -167,6 +167,8 @@ bus = &"Music"
 scroll_scale = Vector2(0, 0)
 
 [node name="Background" type="TextureRect" parent="Parallax2D"]
+offset_right = 320.0
+offset_bottom = 180.0
 texture = ExtResource("3_2bygq")
 
 [node name="BigStar" type="TextureRect" parent="Parallax2D"]
@@ -473,7 +475,7 @@ position = Vector2(1517, -519)
 
 [node name="Player" parent="." instance=ExtResource("13_u6tl7")]
 unique_name_in_owner = true
-position = Vector2(220, 8)
+position = Vector2(1438, -161)
 
 [node name="PlayerCameraPoint" parent="Player" instance=ExtResource("14_0cuxu")]
 top_level = true

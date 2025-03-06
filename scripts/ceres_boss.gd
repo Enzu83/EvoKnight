@@ -71,8 +71,8 @@ func _on_wait_before_camera_timer_timeout() -> void:
 	camera_limit_bottom = camera.limit_bottom
 	
 	# fix camera limit
-	camera.limit_left = 4128
-	camera.limit_right = 4448
+	camera.limit_left = 4181
+	camera.limit_right = 4501
 	camera.limit_top = -416
 	camera.limit_bottom = -136
 	

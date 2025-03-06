@@ -228,6 +228,7 @@ autoplay = "loop"
 visible = false
 offset_right = 320.0
 offset_bottom = 180.0
+scale = Vector2(1.333, 1.333)
 texture = SubResource("PlaceholderTexture2D_1p1qc")
 
 [node name="Title" type="TextureRect" parent="."]
@@ -336,6 +337,6 @@ offset_right = 315.0
 offset_bottom = 83.0
 theme_override_fonts/font = ExtResource("6_bnf46")
 theme_override_font_sizes/font_size = 12
-text = "v0.2"
+text = "v0.3"
 horizontal_alignment = 1
 vertical_alignment = 1
