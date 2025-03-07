@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c3ruqeec58wyr" path="res://assets/sprites/terrains/bg_mushroom_back.png" id="3_ojk4e"]
 [ext_resource type="Texture2D" uid="uid://dqq0un7sgshcb" path="res://assets/sprites/terrains/bg_mushroom_front.png" id="4_kpy0s"]
 [ext_resource type="PackedScene" uid="uid://bggby2h6prvx3" path="res://scenes/terrains/ground.tscn" id="5_qek81"]
-[ext_resource type="PackedScene" path="res://scenes/platforms/small_platform.tscn" id="6_h1fn3"]
+[ext_resource type="PackedScene" uid="uid://ixnghv7tms0i" path="res://scenes/platforms/small_platform.tscn" id="6_h1fn3"]
 [ext_resource type="PackedScene" uid="uid://dwitea1wpbdjp" path="res://scenes/chars/player.tscn" id="7_cms48"]
 [ext_resource type="PackedScene" uid="uid://d2mxuksvqj1kw" path="res://scenes/items/heart.tscn" id="7_pjsma"]
 [ext_resource type="PackedScene" uid="uid://csup4pwrdhqok" path="res://scenes/platforms/large_platform.tscn" id="7_vt7rg"]
@@ -63,12 +63,12 @@ position = Vector2(104, -64)
 
 [node name="BossMirror" parent="." instance=ExtResource("8_gf3ln")]
 z_index = 1
-position = Vector2(56, 16)
+position = Vector2(134, 16)
 
 [node name="Player" parent="." instance=ExtResource("7_cms48")]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(-144, 16)
+position = Vector2(-134, 16)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 limit_left = -213

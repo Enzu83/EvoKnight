@@ -278,7 +278,7 @@ func handle_velocity(delta: float) -> void:
 	not (state == State.Bumped and bump_direction.x != 0):
 		# acceleration toward speed cap
 		if direction:
-			velocity.x = move_toward(velocity.x, direction * speed_force, 25)
+			velocity.x = move_toward(velocity.x, direction * speed_force, 22)
 		
 		# air momentum
 		elif not is_on_floor():

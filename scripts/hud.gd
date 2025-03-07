@@ -33,6 +33,9 @@ var dash_threshold_initial_position: Vector2
 var magic_slash_threshold_initial_position: Vector2
 
 func _ready() -> void:
+	# for resolution 1280x720 => window scale is x3.0 and hud scale is 1.333
+	scale = 1.5 * Vector2.ONE
+	
 	dash_threshold_initial_position = dash_threshold.position
 	magic_slash_threshold_initial_position = magic_slash_threshold.position
 	
