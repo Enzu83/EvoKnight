@@ -476,7 +476,7 @@ position = Vector2(1517, -519)
 
 [node name="Player" parent="." instance=ExtResource("13_u6tl7")]
 unique_name_in_owner = true
-position = Vector2(1438, -161)
+position = Vector2(220, 8)
 
 [node name="PlayerCameraPoint" parent="Player" instance=ExtResource("14_0cuxu")]
 top_level = true
