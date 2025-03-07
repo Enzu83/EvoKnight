@@ -40,9 +40,11 @@ extends CharacterBody2D
 
 # Parameters
 const SPEED = 150.0
-const JUMP_VELOCITY = -300.0
+const HIGHEST_JUMP_VELOCITY = -300.0 # velocity corresponding to a jump with the same height as the maximum jump height 
+const JUMP_VELOCITY = -200.0
 const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
+const JUMP_FRAME_WINDOW = 9 # range of frames for jump heights
 
 const MANA_RECOVERY_RATE = 0 #20 # mana recovered per frame
 const MAGIC_SLASH_MANA = 250 # mana required for magic slash
@@ -59,6 +61,7 @@ var anim := Anim.idle # handle the current animation to be played
 var direction: float # direction input
 
 var jumps := MAX_JUMPS # jumps left
+var higher_jump_height := 0 # range 0~5 of jump height when the jump key is still pressed 
 
 var can_dash := true
 var dash_direction := Vector2.ZERO
@@ -111,9 +114,10 @@ func handle_jump() -> void:
 	# Restore jumps if grounded (slight margin for jumping few frames after leaving the floor).
 	if is_on_floor():
 		jumps = MAX_JUMPS
+		higher_jump_height = 0
 	# If the player leaves the ground without jumping, it should be counted as a jump
 	elif jumps == MAX_JUMPS and not jump_is_on_floor():
-		jumps = MAX_JUMPS-1
+		jumps = MAX_JUMPS - 1
 	
 	# Jump if there are jumps left
 	# if the player is dashing, player can jump if on the floor
@@ -121,14 +125,11 @@ func handle_jump() -> void:
 	and jumps > 0 \
 	and ((state != State.Dashing and state != State.DashingAndAttacking) \
 	or jump_is_on_floor()):
-		velocity.y = JUMP_VELOCITY
-		
-		# increase jump force if super speed is active
-		if super_speed:
-			velocity.y *= 1.3
-		
 		# end dash if the player was dashing
 		if state == State.Dashing or state == State.DashingAndAttacking:
+			# set jump velocity to the highest one
+			velocity.y = HIGHEST_JUMP_VELOCITY
+			
 			end_dash(false)
 			can_dash = true
 			
@@ -142,6 +143,15 @@ func handle_jump() -> void:
 			or (Input.is_action_pressed("right") and not Input.is_action_pressed("left") and velocity.x < 0):
 				velocity.x *= -1
 		
+		# multiple heights possible
+		else:
+			higher_jump_height = 1
+			velocity.y = JUMP_VELOCITY
+		
+		# increase jump force if super speed is active
+		if super_speed:
+			velocity.y *= 1.3
+		
 		jumps -= 1
 		jump_sound.play()
 		
@@ -153,6 +163,15 @@ func handle_jump() -> void:
 		# draw circle below player if they jump in the air
 		if not jump_is_on_floor():
 			jump_circle.play("default")
+
+func handle_jump_height() -> void:
+	if not is_on_floor() and higher_jump_height > 0:
+		# increase the time where gravity is disabled
+		if Input.is_action_pressed("jump") and higher_jump_height < JUMP_FRAME_WINDOW:
+			higher_jump_height += 1
+		# player stops jumping, gravity is enabled
+		else:
+			higher_jump_height = 0
 
 func handle_slash() -> void:
 	# reset attack state
@@ -260,7 +279,7 @@ func handle_velocity(delta: float) -> void:
 	# get horizontal input
 	if state != State.Fainted and state != State.Stop:
 		direction = sign(Input.get_axis("left", "right"))
-	# don't move if the player faints
+	# stop movement if the player faints
 	else:
 		direction = 0
 	
@@ -299,16 +318,18 @@ func handle_velocity(delta: float) -> void:
 	elif direction * velocity.x > 0:
 		velocity.x = move_toward(velocity.x, 0, 3)
 	
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-		
-		# prevent wrong falling too fast
-		if velocity.y > MAX_FALLING_VELOCITY:
-			velocity.y = MAX_FALLING_VELOCITY
+	# handling gravity
+	# disable it when the jump key is still pressed while jumping (up to 5 frames)
+	if not is_on_floor() and higher_jump_height == 0:
+			velocity += get_gravity() * delta
+			
+			# prevent wrong falling too fast
+			if velocity.y > MAX_FALLING_VELOCITY:
+				velocity.y = MAX_FALLING_VELOCITY
 
 func handle_bounce() -> void:
 	if not is_on_floor() and state != State.DashingAndAttacking:
-		velocity.y = JUMP_VELOCITY * 0.8
+		velocity.y = HIGHEST_JUMP_VELOCITY * 0.8
 		jumps = MAX_JUMPS - 1
 
 func handle_super_speed() -> void:
@@ -400,6 +421,9 @@ func _physics_process(delta: float) -> void:
 	animate() # update the sprite animation if necessary
 	move_and_slide()
 func _process(_delta: float) -> void:
+	# different jump heights (in process to be sync with player)
+	handle_jump_height()
+	
 	# store the info after each frame
 	Global.store_player_info()
 
