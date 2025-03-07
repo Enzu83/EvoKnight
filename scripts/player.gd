@@ -41,18 +41,18 @@ extends CharacterBody2D
 # Parameters
 const SPEED = 150.0
 const HIGHEST_JUMP_VELOCITY = -300.0 # velocity corresponding to a jump with the same height as the maximum jump height 
-const JUMP_VELOCITY = -200.0
+const JUMP_VELOCITY = -190.0
 const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
-const JUMP_FRAME_WINDOW = 9 # range of frames for jump heights
+const JUMP_FRAME_WINDOW = 10 # range of frames for jump heights
 
 const MANA_RECOVERY_RATE = 0 #20 # mana recovered per frame
 const MAGIC_SLASH_MANA = 250 # mana required for magic slash
 const BLUE_DASH_MANA = 100 # mana required for dashing without taking damage
 const DASH_SPEED = 2 * SPEED
 
-enum State {Default, Fainted, Attacking, Dashing, DashingAndAttacking, Bumped, Stop}
-enum Anim {idle, run, dash, jump, fall, faint}
+enum State {Default, Fainted, Crouching, Attacking, Dashing, DashingAndAttacking, Bumped, Stop}
+enum Anim {idle, run, dash, jump, fall, faint, crouch}
 
 # player state and actions
 var state: State # handle all states of the player
@@ -109,6 +109,25 @@ func jump_is_on_floor() -> bool:
 	
 	else:
 		return false
+
+func handle_crouch() -> void:
+	# handle transitions: default <=> crouching while on floor
+	if is_on_floor():
+		
+		# default -> crouching
+		if state == State.Default \
+		and Input.is_action_pressed("down"):
+			state = State.Crouching
+		
+		# crouching -> default
+		elif state == State.Crouching \
+		and not Input.is_action_pressed("down"):
+			state = State.Default
+	
+	# if state is still crouching after leaving the floor, reset back to default
+	elif state == State.Crouching:
+		state = State.Default
+	
 
 func handle_jump() -> void:
 	# Restore jumps if grounded (slight margin for jumping few frames after leaving the floor).
@@ -181,7 +200,7 @@ func handle_slash() -> void:
 
 	# basic slash
 	if Input.is_action_just_pressed("basic_slash") \
-	and (state == State.Default or state == State.Dashing or state == State.Bumped):
+	and (state == State.Default or state == State.Crouching or state == State.Dashing or state == State.Bumped):
 		# attacking while dashing
 		if state == State.Dashing:
 			state = State.DashingAndAttacking
@@ -212,7 +231,7 @@ func handle_slash() -> void:
 func handle_dash() -> void:
 	if Input.is_action_just_pressed("dash") \
 	and can_dash \
-	and (state == State.Default or state == State.Attacking or state == State.Bumped):
+	and (state == State.Default or state == State.Crouching or state == State.Crouching or state == State.Attacking or state == State.Bumped):
 		# dashing while attacking
 		if state == State.Attacking:
 			state = State.DashingAndAttacking
@@ -276,8 +295,9 @@ func handle_flip_h() -> void:
 		sprite.flip_h = true
 
 func handle_velocity(delta: float) -> void:
-	# get horizontal input
-	if state != State.Fainted and state != State.Stop:
+	# get horizontal input if player can move
+	if state != State.Fainted \
+	and state != State.Stop:
 		direction = sign(Input.get_axis("left", "right"))
 	# stop movement if the player faints
 	else:
@@ -285,11 +305,15 @@ func handle_velocity(delta: float) -> void:
 	
 	var speed_force := SPEED # usual speed
 	
+	# don't move if crouching
+	if state == State.Crouching:
+		speed_force = 0
 	# move slower if the player is attacking
-	if state == State.Attacking:
+	elif state == State.Attacking:
 		speed_force *= 0.7
+	
 	# move faster in super speed state
-	elif super_speed:
+	if super_speed:
 		speed_force *= 1.5
 
 	# regular horizontal velocity handle
@@ -305,6 +329,10 @@ func handle_velocity(delta: float) -> void:
 		# decelerate quickly when on floor
 		else:
 			velocity.x = move_toward(velocity.x, 0, 30)
+
+	# strongly reduce velocity if crouching
+	elif state == State.Crouching:
+		velocity.x = move_toward(velocity.x, 0, 16)
 
 	# when player is bumped horizontally and moves the opposite way
 	elif direction * velocity.x < 0:
@@ -362,7 +390,10 @@ func animate() -> void:
 		play_animation("faint")
 	else:
 		if is_on_floor():
-			if velocity.x == 0:
+			if Input.is_action_pressed("down") \
+			and state != State.Attacking:
+				play_animation("crouch")
+			elif velocity.x == 0:
 				play_animation("idle")
 			else:
 				play_animation("run")
@@ -408,6 +439,7 @@ func _physics_process(delta: float) -> void:
 			if state != State.Attacking and state != State.DashingAndAttacking:
 				handle_flip_h() # flip sprite horizontally if the player is not attacking
 			
+			handle_crouch()
 			handle_dash() # can't dash while attacking
 			handle_jump() # left, right and jump
 			handle_slash() # attacks

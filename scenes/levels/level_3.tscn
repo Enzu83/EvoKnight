@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dcojm0y3rl3r" path="res://assets/sprites/terrains/bg_small_rock.png" id="6_hehm3"]
 [ext_resource type="PackedScene" uid="uid://cojlgfhlxmwfs" path="res://scenes/items/checkpoint.tscn" id="6_keu3f"]
 [ext_resource type="PackedScene" uid="uid://7g8lw8o3aenr" path="res://scenes/items/star.tscn" id="7_2ie4o"]
-[ext_resource type="PackedScene" path="res://scenes/platforms/small_platform.tscn" id="7_6gpwm"]
+[ext_resource type="PackedScene" uid="uid://ixnghv7tms0i" path="res://scenes/platforms/small_platform.tscn" id="7_6gpwm"]
 [ext_resource type="PackedScene" uid="uid://b4y3g0saf3aye" path="res://scenes/items/lever.tscn" id="7_7wf14"]
 [ext_resource type="PackedScene" uid="uid://c27tot3rib7r5" path="res://scenes/chars/cloporte.tscn" id="7_oqim5"]
 [ext_resource type="Script" path="res://scripts/electric_arc_reverse.gd" id="8_fcjlw"]
@@ -206,9 +206,9 @@ texture = ExtResource("3_1h1db")
 
 [node name="SmallRock" type="TextureRect" parent="Parallax2D"]
 offset_left = -100.0
-offset_top = -18.0
+offset_top = -15.0
 offset_right = 467.0
-offset_bottom = 252.0
+offset_bottom = 255.0
 texture = ExtResource("6_hehm3")
 stretch_mode = 1
 
@@ -769,7 +769,7 @@ position = Vector2(1777, -292)
 
 [node name="Player" parent="." instance=ExtResource("13_gcqkt")]
 unique_name_in_owner = true
-position = Vector2(49, 8)
+position = Vector2(4754, -1252)
 
 [node name="PlayerCameraPoint" parent="Player" instance=ExtResource("14_wu1ns")]
 top_level = true
