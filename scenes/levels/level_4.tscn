@@ -164,6 +164,7 @@ autoplay = true
 bus = &"Music"
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
+scale = Vector2(1.333, 1.333)
 scroll_scale = Vector2(0, 0)
 
 [node name="Background" type="TextureRect" parent="Parallax2D"]

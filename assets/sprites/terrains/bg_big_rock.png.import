@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjjqavxlnqxpo"
-path="res://.godot/imported/bg_core_back.png-c404abc4d7bda07fad1ec89dd3894d76.ctex"
+uid="uid://bg0mi5eebdato"
+path="res://.godot/imported/bg_big_rock.png-63b5d385c3d4ff00e6f430eacf2f76e6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/terrains/bg_core_back.png"
-dest_files=["res://.godot/imported/bg_core_back.png-c404abc4d7bda07fad1ec89dd3894d76.ctex"]
+source_file="res://assets/sprites/terrains/bg_big_rock.png"
+dest_files=["res://.godot/imported/bg_big_rock.png-63b5d385c3d4ff00e6f430eacf2f76e6.ctex"]
 
 [params]
 

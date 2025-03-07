@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjjqavxlnqxpo"
-path="res://.godot/imported/bg_rock_back.png-308c549b324f1613d3e5f86643263864.ctex"
+uid="uid://dcojm0y3rl3r"
+path="res://.godot/imported/bg_small_rock.png-fed3627dedf6be5e40f633e859aed517.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/terrains/bg_rock_back.png"
-dest_files=["res://.godot/imported/bg_rock_back.png-308c549b324f1613d3e5f86643263864.ctex"]
+source_file="res://assets/sprites/terrains/bg_small_rock.png"
+dest_files=["res://.godot/imported/bg_small_rock.png-fed3627dedf6be5e40f633e859aed517.ctex"]
 
 [params]
 

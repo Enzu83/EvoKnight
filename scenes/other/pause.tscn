@@ -74,13 +74,13 @@ animations = [{
 [node name="Pause" type="CanvasLayer"]
 process_mode = 3
 layer = 3
-visible = false
 script = ExtResource("1_4eu81")
 
 [node name="Background" type="TextureRect" parent="."]
 modulate = Color(0, 0, 0, 0.6)
 offset_right = 320.0
 offset_bottom = 180.0
+scale = Vector2(1.333, 1.333)
 texture = SubResource("PlaceholderTexture2D_i27vc")
 
 [node name="Menu" type="Control" parent="."]
@@ -90,10 +90,10 @@ anchors_preset = 0
 [node name="PauseLabel" type="Label" parent="Menu"]
 top_level = true
 layout_mode = 0
-offset_left = 105.0
-offset_top = 41.0
-offset_right = 210.0
-offset_bottom = 83.0
+offset_left = 160.0
+offset_top = 52.0
+offset_right = 265.0
+offset_bottom = 94.0
 theme_override_fonts/font = ExtResource("1_8ou7k")
 theme_override_font_sizes/font_size = 36
 text = "PAUSE"
@@ -101,21 +101,17 @@ horizontal_alignment = 1
 
 [node name="Cursor" type="AnimatedSprite2D" parent="Menu"]
 top_level = true
-position = Vector2(103, 106)
+position = Vector2(154, 136)
 sprite_frames = SubResource("SpriteFrames_uc11w")
 autoplay = "default"
-
-[node name="SelectSound" type="AudioStreamPlayer" parent="Menu"]
-stream = ExtResource("3_lccxy")
-bus = &"SFX"
 
 [node name="ResumeButton" type="Label" parent="Menu"]
 top_level = true
 layout_mode = 0
-offset_left = 116.0
-offset_top = 96.0
-offset_right = 204.0
-offset_bottom = 124.0
+offset_left = 168.0
+offset_top = 126.0
+offset_right = 256.0
+offset_bottom = 154.0
 theme_override_fonts/font = ExtResource("1_8ou7k")
 theme_override_font_sizes/font_size = 24
 text = "Resume"
@@ -124,10 +120,14 @@ horizontal_alignment = 1
 [node name="QuitButton" type="Label" parent="Menu"]
 top_level = true
 layout_mode = 0
-offset_left = 134.0
-offset_top = 121.0
-offset_right = 186.0
-offset_bottom = 149.0
+offset_left = 186.0
+offset_top = 161.0
+offset_right = 238.0
+offset_bottom = 189.0
 theme_override_fonts/font = ExtResource("1_8ou7k")
 theme_override_font_sizes/font_size = 24
 text = "Quit"
+
+[node name="SelectSound" type="AudioStreamPlayer" parent="Menu"]
+stream = ExtResource("3_lccxy")
+bus = &"SFX"

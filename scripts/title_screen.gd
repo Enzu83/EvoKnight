@@ -7,6 +7,7 @@ extends Node2D
 
 @onready var play_button: Label = $PlayButton
 @onready var skin_button: Label = $SkinButton
+@onready var quit_button: Label = $QuitButton
 
 @onready var player_skin: Sprite2D = $PlayerSkin
 @onready var skin_left_cursor: AnimatedSprite2D = $PlayerSkin/LeftCursor
@@ -19,12 +20,20 @@ extends Node2D
 
 @onready var version_label: Label = $VersionLabel
 
-enum Menu {Main, Skin}
-var menu := Menu.Main
+# state of the menu
+enum State {Main, Skin}
+var state: State
 
-var cursor_main_position := Vector2(120, 134)
-var selected_button: Label
+# cursor navigation
+var cursor_position := [
+	Vector2(173, 162),
+	Vector2(173, 193),
+	Vector2(173, 224),
+]
 
+var cursor_index: int
+
+# skins
 var player_skin_list := [
 	"res://assets/sprites/chars/player/spr_cherry_red.png",
 	"res://assets/sprites/chars/player/spr_cherry_blue.png",
@@ -44,33 +53,31 @@ var colors := {
 # clear screen
 var yellow_title := preload("res://assets/sprites/other/spr_title_yellow.png")
 
-# skins color
+# skins sprite path
 var player_sprite_path := "res://assets/sprites/chars/player/"
 var slash_sprite_path := "res://assets/sprites/fx/slash/"
 var ui_icon_path := "res://assets/sprites/ui/icons/"
 
 var selected_skin: int = 0
 
-func handle_button_selection() -> void:
+func handle_cursor_navigation() -> void:
 	cursor.visible = true
 	play_button.visible = true
 	skin_button.visible = true
+	quit_button.visible = true
 	
-	player_skin.visible = false
-	skin_left_cursor.visible = false
-	skin_right_cursor.visible = false
-	
-	if Input.is_action_just_pressed("up") and selected_button != play_button:
-		selected_button = play_button
+	if Input.is_action_just_pressed("up") and cursor_index > 0:
+		cursor_index -= 1
 		select_sound.play()
 	
-	elif Input.is_action_just_pressed("down") and selected_button != skin_button:
-		selected_button = skin_button
+	elif Input.is_action_just_pressed("down") and cursor_index < cursor_position.size()-1:
+		cursor_index += 1
 		select_sound.play()
 
-func handle_click_button() -> void:
+func handle_click_button() -> void:	
 	if Input.is_action_just_pressed("confirm"):
-		if selected_button == play_button:
+		# play the game
+		if cursor_index == 0:
 			# apply skin
 			var color: String = color_list[selected_skin]
 			
@@ -94,15 +101,17 @@ func handle_click_button() -> void:
 			# go to the next scene
 			Global.next_level()
 		
-		elif selected_button == skin_button:
-			menu = Menu.Skin
+		# access to the skin selection menu
+		elif cursor_index == 1:
 			select_sound.play()
+			state = State.Skin
+		
+		# quit the game
+		elif cursor_index == 2:
+			select_sound.play()
+			get_tree().quit()
 
 func handle_skin_selection() -> void:
-	cursor.visible = false
-	play_button.visible = false
-	skin_button.visible = false
-	
 	player_skin.visible = true
 	skin_left_cursor.visible = true
 	skin_right_cursor.visible = true
@@ -116,12 +125,13 @@ func handle_skin_selection() -> void:
 		select_sound.play()
 	
 	elif Input.is_action_just_pressed("confirm"):
-		menu = Menu.Main
+		state = State.Main
 		select_sound.play()
 
 func _ready() -> void:
-	player_skin.visible = false
-	selected_button = play_button
+	# cursor initialization
+	cursor_index = 0
+	state = State.Main
 	
 	# changed title screen if the game is cleared
 	if Global.cleared:
@@ -129,20 +139,32 @@ func _ready() -> void:
 		clear_sprite.visible = true
 		play_button.set("theme_override_colors/font_color", Color.YELLOW)
 		skin_button.set("theme_override_colors/font_color", Color.YELLOW)
+		quit_button.set("theme_override_colors/font_color", Color.YELLOW)
 		player_controls_info.set("theme_override_colors/font_color", Color.YELLOW)
 		extra_controls_info.set("theme_override_colors/font_color", Color.YELLOW)
 		version_label.set("theme_override_colors/font_color", Color.YELLOW)
 
+func hide_all() -> void:
+	cursor.visible = false
+	play_button.visible = false
+	skin_button.visible = false
+	quit_button.visible = false
+	player_skin.visible = false
+	skin_left_cursor.visible = false
+	skin_right_cursor.visible = false
+
 func _process(_delta: float) -> void:
-	# navigate the menu
-	if menu == Menu.Main:
-		handle_button_selection()
+	# hide all title screen nodes
+	hide_all()
+	
+	# navigate the main menu
+	if state == State.Main:
+		handle_cursor_navigation()
 		handle_click_button()
 		
-		cursor.position = cursor_main_position
-		cursor.position.y = selected_button.position.y + 10 # update cursor position
+		cursor.position = cursor_position[cursor_index]
 
-	elif menu == Menu.Skin:
+	elif state == State.Skin:
 		handle_skin_selection()
 
 		player_skin.frame = selected_skin
