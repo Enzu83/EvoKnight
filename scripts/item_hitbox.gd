@@ -1,6 +1,6 @@
 extends Area2D
 
-@onready var item: CharacterBody2D = $".."
+@onready var item: Node2D = $".."
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	item.pick_up(area)

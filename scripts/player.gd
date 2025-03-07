@@ -41,10 +41,10 @@ extends CharacterBody2D
 # Parameters
 const SPEED = 150.0
 const HIGHEST_JUMP_VELOCITY = -300.0 # velocity corresponding to a jump with the same height as the maximum jump height 
-const JUMP_VELOCITY = -190.0
+const JUMP_VELOCITY = -180.0
 const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
-const JUMP_FRAME_WINDOW = 10 # range of frames for jump heights
+const JUMP_FRAME_WINDOW = 12 # range of frames for jump heights
 
 const MANA_RECOVERY_RATE = 0 #20 # mana recovered per frame
 const MAGIC_SLASH_MANA = 250 # mana required for magic slash
@@ -289,10 +289,17 @@ func handle_dash() -> void:
 			velocity *= 1.2
 
 func handle_flip_h() -> void:
-	if velocity.x > 0:
-		sprite.flip_h = false
-	elif velocity.x < 0:
-		sprite.flip_h = true
+	if state != State.Crouching:
+		if velocity.x > 0:
+			sprite.flip_h = false
+		elif velocity.x < 0:
+			sprite.flip_h = true
+	
+	else:
+		if Input.is_action_just_pressed("right"):
+			sprite.flip_h = false
+		elif Input.is_action_just_pressed("left"):
+			sprite.flip_h = true
 
 func handle_velocity(delta: float) -> void:
 	# get horizontal input if player can move
@@ -391,7 +398,7 @@ func animate() -> void:
 	else:
 		if is_on_floor():
 			if Input.is_action_pressed("down") \
-			and state != State.Attacking:
+			and not (state == State.Attacking and direction != 0):
 				play_animation("crouch")
 			elif velocity.x == 0:
 				play_animation("idle")

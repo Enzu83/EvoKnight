@@ -32,18 +32,6 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(1.19209e-07, -5)]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Hurtbox:shape:radius")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [5.0]
-}
 
 [sub_resource type="Animation" id="Animation_k6wb1"]
 resource_name = "attack_end"
@@ -72,25 +60,13 @@ tracks/1/keys = {
 "update": 1,
 "values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(1, 0.5), Vector2(1, 0.5), Vector2(0, 3)]
 }
-tracks/2/type = "value"
+tracks/2/type = "method"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Hurtbox:shape:radius")
+tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [5.0, 4.5]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0.5),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -126,25 +102,13 @@ tracks/1/keys = {
 "update": 1,
 "values": [Vector2(-3, -3), Vector2(0, -1), Vector2(4, 4.5)]
 }
-tracks/2/type = "value"
+tracks/2/type = "method"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Hurtbox:shape:radius")
+tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.133333),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [5.0, 5.0]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -152,13 +116,13 @@ tracks/3/keys = {
 "method": &"move_to_attack_spot"
 }]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("AttackSound:playing")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackSound:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -193,18 +157,6 @@ tracks/1/keys = {
 "update": 1,
 "values": [Vector2(1.19209e-07, 4), Vector2(1.19209e-07, 3)]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Hurtbox:shape:radius")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [5.0]
-}
 
 [sub_resource type="Animation" id="Animation_yfevn"]
 resource_name = "sleep"
@@ -232,18 +184,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1.19209e-07, -5)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Hurtbox:shape:radius")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [5.0]
 }
 
 [sub_resource type="Animation" id="Animation_kx1om"]
@@ -273,36 +213,24 @@ tracks/1/keys = {
 "update": 1,
 "values": [Vector2(1.19209e-07, -3), Vector2(1.19209e-07, 1.5), Vector2(1.19209e-07, 4), Vector2(1.19209e-07, 5.5), Vector2(1.19209e-07, 5.5), Vector2(1.19209e-07, 4), Vector2(1.19209e-07, 3)]
 }
-tracks/2/type = "value"
+tracks/2/type = "method"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Hurtbox:shape:radius")
+tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [5.0]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(),
 "transitions": PackedFloat32Array(),
 "values": []
 }
-tracks/4/type = "method"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("AnimationPlayer")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimationPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0.8),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -310,13 +238,13 @@ tracks/4/keys = {
 "method": &"play"
 }]
 }
-tracks/5/type = "method"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("StartFightTimer")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("StartFightTimer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0.8),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -441,7 +369,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a3rgj"]
-radius = 5.0
+radius = 7.5
 
 [node name="BigBat" type="Area2D" groups=["enemies"]]
 scale = Vector2(2, 2)

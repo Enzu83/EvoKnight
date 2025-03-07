@@ -11,33 +11,75 @@ const MANA_RECOVERY_FACTOR = 10
 
 var active: bool = false
 var direction: String
+var reference_position: Vector2
 
 func reset() -> void:
 	active = false
-	sprite.scale = Vector2.ONE
+	scale = Vector2.ONE
+	position = reference_position
+	animation_player.call_deferred("play", "RESET")
 
 func start(orientation: String) -> void:
 	direction = orientation
+	
 	active = true
-	animation_player.play(orientation)
+	animation_player.play("active")
+
+func handle_slash_direction() -> void:
+	rotation_degrees = 0
+	scale = Vector2.ONE
+	var offset := Vector2.ZERO
 	
 	# flip horizontally the attack to match the player's direction
-	if (orientation == "up" and player.sprite.flip_h) \
-	or (orientation == "down" and not player.sprite.flip_h):
-		scale.x = -1
-	else:
-		scale.x = 1
+	if direction == "up":
+		rotation_degrees = -90
+		offset.y = -12
+		
+		if player.sprite.flip_h:
+			scale.y = -1
+			offset.x = -2
+		else:
+			scale.y = 1
+			offset.x = 2
+	
+	elif direction == "down":
+		rotation_degrees = 90
+		offset.y = 7
+		
+		if player.sprite.flip_h:
+			scale.y = -1
+			offset.x = 2
+		else:
+			scale.y = 1
+			offset.x = -2
+		
+	elif direction == "left":
+		rotation_degrees = 0
+		offset.x = -4
+		
+		if player.sprite.flip_h:
+			scale.x = -1
+		else:
+			scale.x = 1
+
+	elif direction == "right":
+		rotation_degrees = 0
+		offset.x = 4
+		
+		if player.sprite.flip_h:
+			scale.x = -1
+		else:
+			scale.x = 1
+	
+	position = reference_position + offset
 
 func _ready() -> void:
+	reference_position = position
 	sprite.texture = Global.basic_slash_sprite
 
 func _process(_delta: float) -> void:
-	# check if the attack needs to be flipped too
-	if (player.sprite.flip_h and direction == "right") \
-	or (not player.sprite.flip_h and direction == "left"):
-		scale.x = -1
-	else:
-		scale.x = 1
+	if active:
+		handle_slash_direction()
 	
 	if player.state == player.State.Fainted:
 		hide()
@@ -49,7 +91,7 @@ func _on_area_entered(area: Area2D) -> void:
 			player.restore_mana(MANA_RECOVERY_FACTOR * STRENGTH + player.strength)
 		
 		# make player bounce on the enemy
-		if animation_player.current_animation == "down":
+		if direction == "down":
 			player.handle_bounce()
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

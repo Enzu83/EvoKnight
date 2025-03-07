@@ -37,7 +37,7 @@ func _physics_process(delta: float) -> void:
 
 func pick_up(area: Area2D) -> void:
 	var body := area.get_parent() # get the player
-	pick_up_body(body)	
+	pick_up_body(body)
 
 func pick_up_body(body: CharacterBody2D) -> void:
 	if body == player \

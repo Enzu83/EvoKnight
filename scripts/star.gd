@@ -1,5 +1,7 @@
 extends Area2D
 
+@onready var player: Player = %Player
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
@@ -11,3 +13,14 @@ func _ready() -> void:
 func _on_body_entered(_body: Node2D) -> void:
 	Global.add_star_to_pending(self)
 	animation_player.play("pickup")
+
+func pick_up(area: Area2D) -> void:
+	var body := area.get_parent() # get the player
+	pick_up_body(body)
+
+func pick_up_body(body: Node2D) -> void:
+	if body == player \
+	and player.state != player.State.Fainted \
+	and player.state != player.State.Stop:
+		Global.add_star_to_pending(self)
+		animation_player.play("pickup")

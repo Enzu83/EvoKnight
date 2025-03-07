@@ -218,7 +218,7 @@ _data = {
 radius = 121.004
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a3rgj"]
-radius = 6.32456
+radius = 8.0
 
 [node name="Bat" type="Area2D" groups=["enemies", "players"]]
 collision_layer = 4
