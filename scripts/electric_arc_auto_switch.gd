@@ -10,8 +10,8 @@ extends StaticBody2D
 
 var active := false
 
-# normal: enabled <=> active
-# opposite: disabled <=> active
+# blue: opposite = false
+# orange: opposite = true
 var opposite := false
 
 func _ready() -> void:
@@ -29,7 +29,7 @@ func _ready() -> void:
 	scale.y = 1
 
 func _process(_delta: float) -> void:
-	if Global.electric_arc_enabled:
+	if Global.electric_arc_auto_enabled:
 		active = not opposite
 	else:
 		active = opposite

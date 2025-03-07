@@ -15,11 +15,11 @@ func _ready() -> void:
 	sprite.region_rect.size = 8 * Vector2(abs(scale.x), 1)
 	
 	var wall_collider_rect = RectangleShape2D.new()
-	wall_collider_rect.size = Vector2(8 * abs(scale.x), 4)
+	wall_collider_rect.size = Vector2(8 * abs(scale.x) - 2.5, 2.5)
 	wall_collider.set_shape(wall_collider_rect)
 	
 	var hitbox_rect = RectangleShape2D.new()
-	hitbox_rect.size = Vector2(8 * abs(scale.x) + 0.1, 4.1)
+	hitbox_rect.size = Vector2(8 * abs(scale.x) - 1, 3)
 	hitbox.set_shape(hitbox_rect)
 	
 	scale.x = sign(scale.x)

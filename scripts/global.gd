@@ -71,6 +71,12 @@ var elapsed_time_reference := 0
 # electric arc state
 var electric_arc_enabled := true
 
+var electric_arc_auto_enabled := false
+var electric_arc_auto_timer := Timer.new()
+
+var electric_arc_stream: Resource = load("res://assets/sfx/snd_electric_arc.wav")
+var electric_arc_sound := AudioStreamPlayer.new()
+
 # boss defeated
 var big_bat_defeated := false
 var ceres_defeated := false
@@ -81,6 +87,8 @@ func _ready() -> void:
 	add_child(end_recap)
 	init_stars()
 	init_player_stats()
+	
+	init_auto_switch_electric_arc()
 
 func _process(_delta: float) -> void:
 	# debug inputs
@@ -120,6 +128,26 @@ func init_player_stats() -> void:
 
 	player_strength = 1
 	player_defense = 0
+
+func init_auto_switch_electric_arc() -> void:
+	# electric arc auto switch timer & sound
+	electric_arc_auto_timer.wait_time = 2.0
+	electric_arc_auto_timer.one_shot = false
+	electric_arc_auto_timer.autostart = true
+	electric_arc_auto_timer.paused = true
+	electric_arc_auto_timer.connect("timeout", _on_electric_arc_auto_timer_timeout)
+	
+	electric_arc_sound.stream = electric_arc_stream
+	
+	add_child(electric_arc_auto_timer)
+	add_child(electric_arc_sound)
+
+func toggle_electric_arc_auto_switch() -> void:
+	electric_arc_auto_timer.paused = !electric_arc_auto_timer.paused
+
+func _on_electric_arc_auto_timer_timeout() -> void:
+	electric_arc_sound.play()
+	electric_arc_auto_enabled = !electric_arc_auto_enabled
 
 func set_elapsed_time_reference() -> void:
 	elapsed_time_reference = Time.get_ticks_msec()
@@ -245,4 +273,3 @@ func create_multiple_exp_drop(exp_value: int, initial_position: Vector2, speed: 
 	create_exp_drop(exp_value, initial_position, speed * Vector2( 0,  1)) # down
 	create_exp_drop(exp_value, initial_position, speed * Vector2(-1,  1) * 0.8) # down left
 	create_exp_drop(exp_value, initial_position, speed * Vector2(-1,  0)) # left
-	

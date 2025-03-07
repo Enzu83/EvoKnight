@@ -13,6 +13,21 @@ var active := false
 # opposite: disabled <=> active
 var opposite := false
 
+
+func _ready() -> void:
+	# resize electric bar depending on its size
+	animated_sprite.play(str(round(scale.y * 5)))
+	
+	var wall_collider_rect = RectangleShape2D.new()
+	wall_collider_rect.size = Vector2(6, 40 * scale.y - 2)
+	wall_collider.set_shape(wall_collider_rect)
+	
+	var hitbox_rect = RectangleShape2D.new()
+	hitbox_rect.size = Vector2(8, 40 * scale.y)
+	hitbox.set_shape(hitbox_rect)
+	
+	scale.y = 1
+
 func _process(_delta: float) -> void:
 	if Global.electric_arc_enabled:
 		active = not opposite

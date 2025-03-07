@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://cssdhev2qvdcb"]
+
+[ext_resource type="Script" path="res://scripts/lever_auto_switch.gd" id="1_u50bs"]
+[ext_resource type="Texture2D" uid="uid://co0e67gkvvu4i" path="res://assets/sprites/items/spr_lever_blue.png" id="2_srevh"]
+[ext_resource type="AudioStream" uid="uid://dya2n54kadsdk" path="res://assets/sfx/snd_lever.wav" id="3_e4d5m"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vl2ty"]
+radius = 5.0
+height = 16.0
+
+[node name="LeverAutoSwitch" type="Area2D"]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_u50bs")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("2_srevh")
+hframes = 2
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_vl2ty")
+
+[node name="ActivationCooldown" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="ActivationSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_e4d5m")
+volume_db = -2.0
+bus = &"SFX"
+
+[connection signal="area_entered" from="." to="." method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="ActivationCooldown" to="." method="_on_activation_cooldown_timeout"]
