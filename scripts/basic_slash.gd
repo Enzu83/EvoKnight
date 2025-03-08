@@ -33,7 +33,7 @@ func handle_slash_direction() -> void:
 	# flip horizontally the attack to match the player's direction
 	if direction == "up":
 		rotation_degrees = -90
-		offset.y = -12
+		offset.y = -10
 		
 		if player.sprite.flip_h:
 			scale.y = -1
@@ -44,7 +44,7 @@ func handle_slash_direction() -> void:
 	
 	elif direction == "down":
 		rotation_degrees = 90
-		offset.y = 7
+		offset.y = 6
 		
 		if player.sprite.flip_h:
 			scale.y = -1
