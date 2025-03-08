@@ -215,9 +215,9 @@ layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.65
 anchor_bottom = 1.65
-offset_top = -66.0
+offset_top = -132.0
 offset_right = 1200.0
-offset_bottom = 212.0
+offset_bottom = 146.0
 texture = ExtResource("2_tjndk")
 stretch_mode = 1
 metadata/_edit_use_anchors_ = true
@@ -237,76 +237,147 @@ scale = Vector2(1.333, 1.333)
 texture = SubResource("PlaceholderTexture2D_1p1qc")
 
 [node name="Title" type="TextureRect" parent="."]
-offset_top = -14.0
-offset_right = 1280.0
-offset_bottom = 534.0
-scale = Vector2(0.333, 0.333)
+offset_left = 53.0
+offset_top = 8.0
+offset_right = 1333.0
+offset_bottom = 556.0
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_x6j3q")
 stretch_mode = 3
 
-[node name="Cursor" type="AnimatedSprite2D" parent="."]
+[node name="Menu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LeftCursor" type="AnimatedSprite2D" parent="Menu"]
 top_level = true
-position = Vector2(173, 161)
+position = Vector2(166, 153)
 sprite_frames = SubResource("SpriteFrames_wdmb5")
 autoplay = "default"
 frame_progress = 0.803466
 
-[node name="SelectSound" type="AudioStreamPlayer" parent="."]
+[node name="RightCursor" type="AnimatedSprite2D" parent="Menu"]
+top_level = true
+position = Vector2(260, 153)
+rotation = -3.14159
+scale = Vector2(1, -1)
+sprite_frames = SubResource("SpriteFrames_wdmb5")
+autoplay = "default"
+frame_progress = 0.803466
+
+[node name="SelectSound" type="AudioStreamPlayer" parent="Menu"]
 stream = ExtResource("5_psxkj")
 bus = &"SFX"
 
-[node name="PlayButton" type="Label" parent="."]
+[node name="Main" type="Control" parent="Menu"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="StartButton" type="Label" parent="Menu/Main"]
+visible = false
+top_level = true
+offset_left = 180.0
+offset_top = 143.0
+offset_right = 246.0
+offset_bottom = 171.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
+text = "Start"
+horizontal_alignment = 1
+
+[node name="OptionsButton" type="Label" parent="Menu/Main"]
+visible = false
+top_level = true
+offset_left = 167.0
+offset_top = 174.0
+offset_right = 259.0
+offset_bottom = 202.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
+text = "Options"
+horizontal_alignment = 1
+
+[node name="QuitButton" type="Label" parent="Menu/Main"]
+visible = false
 top_level = true
 offset_left = 187.0
-offset_top = 151.0
+offset_top = 204.0
 offset_right = 239.0
-offset_bottom = 179.0
-theme_override_fonts/font = ExtResource("6_bnf46")
-theme_override_font_sizes/font_size = 24
-text = "Play"
-
-[node name="SkinButton" type="Label" parent="."]
-top_level = true
-offset_left = 188.0
-offset_top = 182.0
-offset_right = 240.0
-offset_bottom = 210.0
-theme_override_fonts/font = ExtResource("6_bnf46")
-theme_override_font_sizes/font_size = 24
-text = "Skin"
-
-[node name="QuitButton" type="Label" parent="."]
-top_level = true
-offset_left = 188.0
-offset_top = 210.0
-offset_right = 240.0
-offset_bottom = 238.0
+offset_bottom = 232.0
 theme_override_fonts/font = ExtResource("6_bnf46")
 theme_override_font_sizes/font_size = 24
 text = "Quit
 "
+horizontal_alignment = 1
 
-[node name="PlayerSkin" type="Sprite2D" parent="."]
+[node name="Options" type="Control" parent="Menu"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SkinButton" type="Label" parent="Menu/Options"]
 visible = false
 top_level = true
-position = Vector2(213, 192)
+offset_left = 187.0
+offset_top = 143.0
+offset_right = 239.0
+offset_bottom = 171.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
+text = "Skin"
+horizontal_alignment = 1
+
+[node name="ScreenSizeButton" type="Label" parent="Menu/Options"]
+visible = false
+top_level = true
+offset_left = 141.0
+offset_top = 174.0
+offset_right = 285.0
+offset_bottom = 202.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
+text = "Screen Size"
+horizontal_alignment = 1
+
+[node name="ControlsButton" type="Label" parent="Menu/Options"]
+visible = false
+top_level = true
+offset_left = 160.0
+offset_top = 204.0
+offset_right = 266.0
+offset_bottom = 232.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
+text = "Controls"
+horizontal_alignment = 1
+
+[node name="PlayerSkin" type="Sprite2D" parent="Menu/Options"]
+visible = false
+top_level = true
+position = Vector2(213, 178)
 texture = ExtResource("8_oq45q")
 hframes = 4
 
-[node name="LeftCursor" type="AnimatedSprite2D" parent="PlayerSkin"]
+[node name="LeftCursor" type="AnimatedSprite2D" parent="Menu/Options/PlayerSkin"]
+visible = false
 position = Vector2(-24, 0)
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_wdmb5")
 autoplay = "default"
 frame_progress = 0.803466
 
-[node name="RightCursor" type="AnimatedSprite2D" parent="PlayerSkin"]
+[node name="RightCursor" type="AnimatedSprite2D" parent="Menu/Options/PlayerSkin"]
+visible = false
 position = Vector2(24, 0)
 sprite_frames = SubResource("SpriteFrames_wdmb5")
 autoplay = "default"
 frame_progress = 0.803466
 
 [node name="PlayerControlsInfo" type="Label" parent="."]
+visible = false
 top_level = true
 offset_left = 300.0
 offset_top = 185.0
@@ -323,6 +394,7 @@ L: Magic Slash"
 horizontal_alignment = 2
 
 [node name="ExtraControlsInfo" type="Label" parent="."]
+visible = false
 top_level = true
 offset_left = 4.0
 offset_top = 185.0
@@ -339,15 +411,15 @@ P: Pause"
 
 [node name="ClearSprite" type="AnimatedSprite2D" parent="."]
 visible = false
-position = Vector2(29, 123)
+position = Vector2(67, 110)
 sprite_frames = SubResource("SpriteFrames_pebm5")
 autoplay = "default"
 
 [node name="VersionLabel" type="Label" parent="."]
-offset_left = 392.0
-offset_top = 105.0
-offset_right = 417.0
-offset_bottom = 119.0
+offset_left = 350.0
+offset_top = 102.0
+offset_right = 375.0
+offset_bottom = 116.0
 theme_override_fonts/font = ExtResource("6_bnf46")
 theme_override_font_sizes/font_size = 12
 text = "v0.3"
