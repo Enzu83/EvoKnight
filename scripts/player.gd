@@ -477,17 +477,21 @@ func is_hurtable() -> bool:
 	#	- in Stop state
 	return not effects_player.current_animation == "blink" and state != State.Fainted and state != State.Stop
 
-func hurt(damage: int) -> void:
+func hurt(damage: int, ignore_defense: bool = false) -> void:
+	if not ignore_defense:
+		damage -= defense
+	
 	# hit during blue dash: animation and mana cost
 	if blue_dash:
 		if not blue_dash_hit:
 			blue_dash_hit = true
 			mana -= BLUE_DASH_MANA
 			blue_dash_sound.play()
+			hurtbox.set_deferred("disabled", true)
 	
 	# player is still alive
-	elif health > max(1, damage - defense):
-		health -= max(1, damage - defense)
+	elif health > max(1, damage):
+		health -= max(1, damage)
 		velocity.x *= 0.5
 		hurt_sound.play()
 		hurtbox.set_deferred("disabled", true)
@@ -506,6 +510,7 @@ func fainted() -> void:
 		state = State.Fainted
 		velocity = Vector2.ZERO
 		phantom_cooldown.stop()
+		hurtbox.set_deferred("disabled", true)
 		death_sound.play()
 		death_timer.start()
 
@@ -523,6 +528,10 @@ func end_dash(cancel_velocity: bool) -> void:
 			velocity = Vector2.ZERO
 		
 		phantom_cooldown.stop() # stop phantom display
+		
+		# reset hurtbox collision if player was hit during blue dash
+		if blue_dash_hit:
+			hurtbox.set_deferred("disabled", false)
 		
 		blue_dash = false
 		blue_dash_hit = false

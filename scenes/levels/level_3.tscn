@@ -769,14 +769,13 @@ position = Vector2(1777, -292)
 
 [node name="Player" parent="." instance=ExtResource("13_gcqkt")]
 unique_name_in_owner = true
-position = Vector2(4754, -1252)
+position = Vector2(3959, -194)
 
 [node name="PlayerCameraPoint" parent="Player" instance=ExtResource("14_wu1ns")]
 top_level = true
 
 [node name="Camera" type="Camera2D" parent="Player/PlayerCameraPoint"]
 unique_name_in_owner = true
-position = Vector2(49, 8)
 limit_left = 0
 limit_top = -1384
 limit_right = 5200

@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://dfnlx8wvputuy" path="res://assets/musics/mus_boss.mp3" id="3_lfu8o"]
 [ext_resource type="Texture2D" uid="uid://dqq0un7sgshcb" path="res://assets/sprites/terrains/bg_mushroom_front.png" id="4_dhh7a"]
 [ext_resource type="PackedScene" uid="uid://bggby2h6prvx3" path="res://scenes/terrains/ground.tscn" id="5_b2b3r"]
-[ext_resource type="PackedScene" path="res://scenes/platforms/small_platform.tscn" id="6_5owk0"]
+[ext_resource type="PackedScene" uid="uid://ixnghv7tms0i" path="res://scenes/platforms/small_platform.tscn" id="6_5owk0"]
 [ext_resource type="PackedScene" uid="uid://csup4pwrdhqok" path="res://scenes/platforms/large_platform.tscn" id="7_2hpn8"]
 [ext_resource type="PackedScene" uid="uid://cojlgfhlxmwfs" path="res://scenes/items/checkpoint.tscn" id="7_f3c0a"]
 [ext_resource type="PackedScene" uid="uid://7g8lw8o3aenr" path="res://scenes/items/star.tscn" id="8_34nl6"]
@@ -631,7 +631,6 @@ top_level = true
 
 [node name="Camera" type="Camera2D" parent="Player/PlayerCameraPoint"]
 unique_name_in_owner = true
-position = Vector2(49, 8)
 limit_left = 0
 limit_top = -1200
 limit_right = 4800

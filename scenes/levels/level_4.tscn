@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bggby2h6prvx3" path="res://scenes/terrains/ground.tscn" id="5_070dw"]
 [ext_resource type="Texture2D" uid="uid://dlton58j0qbx7" path="res://assets/sprites/terrains/bg_big_star2.png" id="5_u3vci"]
 [ext_resource type="Texture2D" uid="uid://clabsfas843hd" path="res://assets/sprites/terrains/bg_small_star1.png" id="6_b4nkh"]
-[ext_resource type="PackedScene" path="res://scenes/platforms/small_platform.tscn" id="6_mwmpa"]
+[ext_resource type="PackedScene" uid="uid://ixnghv7tms0i" path="res://scenes/platforms/small_platform.tscn" id="6_mwmpa"]
 [ext_resource type="PackedScene" uid="uid://cojlgfhlxmwfs" path="res://scenes/items/checkpoint.tscn" id="7_5xe5p"]
 [ext_resource type="Texture2D" uid="uid://w8k515bfygcu" path="res://assets/sprites/terrains/bg_small_star2.png" id="7_jr7i0"]
 [ext_resource type="Texture2D" uid="uid://ctsqdl8c8putj" path="res://assets/sprites/terrains/bg_planet.png" id="8_s6llu"]
@@ -528,7 +528,6 @@ position = Vector2(2240, -526)
 top_level = true
 
 [node name="Camera" type="Camera2D" parent="Player/PlayerCameraPoint"]
-position = Vector2(49, 8)
 limit_left = 0
 limit_top = -8000
 limit_right = 3840

@@ -279,6 +279,7 @@ offset_bottom = 40.0
 [node name="StartButton" type="Label" parent="Menu/Main"]
 visible = false
 top_level = true
+layout_mode = 0
 offset_left = 180.0
 offset_top = 143.0
 offset_right = 246.0
@@ -291,6 +292,7 @@ horizontal_alignment = 1
 [node name="OptionsButton" type="Label" parent="Menu/Main"]
 visible = false
 top_level = true
+layout_mode = 0
 offset_left = 167.0
 offset_top = 174.0
 offset_right = 259.0
@@ -303,6 +305,7 @@ horizontal_alignment = 1
 [node name="QuitButton" type="Label" parent="Menu/Main"]
 visible = false
 top_level = true
+layout_mode = 0
 offset_left = 187.0
 offset_top = 204.0
 offset_right = 239.0
@@ -321,6 +324,7 @@ offset_bottom = 40.0
 [node name="SkinButton" type="Label" parent="Menu/Options"]
 visible = false
 top_level = true
+layout_mode = 0
 offset_left = 187.0
 offset_top = 143.0
 offset_right = 239.0
@@ -333,6 +337,7 @@ horizontal_alignment = 1
 [node name="ScreenSizeButton" type="Label" parent="Menu/Options"]
 visible = false
 top_level = true
+layout_mode = 0
 offset_left = 141.0
 offset_top = 174.0
 offset_right = 285.0
@@ -345,6 +350,7 @@ horizontal_alignment = 1
 [node name="ControlsButton" type="Label" parent="Menu/Options"]
 visible = false
 top_level = true
+layout_mode = 0
 offset_left = 160.0
 offset_top = 204.0
 offset_right = 266.0
