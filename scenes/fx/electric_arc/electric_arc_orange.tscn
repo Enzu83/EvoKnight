@@ -1,6 +1,6 @@
-[gd_scene load_steps=63 format=3 uid="uid://igsk4ovccae5"]
+[gd_scene load_steps=63 format=3 uid="uid://bbi8ar32p5awd"]
 
-[ext_resource type="Script" path="res://scripts/electric_arc_auto_switch_reverse.gd" id="1_esae0"]
+[ext_resource type="Script" path="res://scripts/electric_arc_auto_switch.gd" id="1_l6dbc"]
 [ext_resource type="Texture2D" uid="uid://b48fv6bqxqlps" path="res://assets/sprites/fx/spr_electric_arc.png" id="2_nvmt0"]
 [ext_resource type="Script" path="res://scripts/static_body_hitbox.gd" id="3_3knxk"]
 [ext_resource type="AudioStream" uid="uid://dch38lv7y4owm" path="res://assets/sfx/snd_electric_arc.wav" id="4_ihl00"]
@@ -427,10 +427,11 @@ size = Vector2(8, 40)
 [node name="ElectricArcOrange" type="StaticBody2D"]
 collision_layer = 0
 collision_mask = 0
-script = ExtResource("1_esae0")
+script = ExtResource("1_l6dbc")
+reversed = true
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-modulate = Color(1, 0.219608, 0, 1)
+modulate = Color(1, 0.360784, 0, 1)
 sprite_frames = SubResource("SpriteFrames_4bec0")
 animation = &"5"
 autoplay = "5"

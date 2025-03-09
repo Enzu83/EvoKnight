@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=4 uid="uid://doqatuh36ah4u"]
+[gd_scene load_steps=46 format=4 uid="uid://doqatuh36ah4u"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_3.gd" id="1_7ykpr"]
 [ext_resource type="AudioStream" uid="uid://b1qtb8fncq3iv" path="res://assets/musics/mus_chasm_cave.mp3" id="2_l85tu"]
@@ -15,10 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://ixnghv7tms0i" path="res://scenes/platforms/small_platform.tscn" id="7_6gpwm"]
 [ext_resource type="PackedScene" uid="uid://b4y3g0saf3aye" path="res://scenes/items/lever.tscn" id="7_7wf14"]
 [ext_resource type="PackedScene" uid="uid://c27tot3rib7r5" path="res://scenes/chars/cloporte.tscn" id="7_oqim5"]
-[ext_resource type="Script" path="res://scripts/electric_arc_reverse.gd" id="8_fcjlw"]
 [ext_resource type="PackedScene" uid="uid://dww0l1c4gas4b" path="res://scenes/fx/electric_arc/electric_arc_red.tscn" id="9_fctvx"]
 [ext_resource type="PackedScene" uid="uid://bus5n18gsp1ad" path="res://scenes/chars/wind_spirit.tscn" id="9_ic2d8"]
-[ext_resource type="Script" path="res://scripts/electric_arc_red_reverse.gd" id="10_2fsbm"]
 [ext_resource type="PackedScene" uid="uid://i0uejwv47jnl" path="res://scenes/chars/ceres.tscn" id="10_6ouag"]
 [ext_resource type="PackedScene" uid="uid://bt1apvt6ojk46" path="res://scenes/chars/ceiling_cloporte.tscn" id="11_6b5f4"]
 [ext_resource type="PackedScene" uid="uid://f5padrph2ypl" path="res://scenes/chars/spiky_eyebat.tscn" id="12_q8jgo"]
@@ -410,7 +408,7 @@ rotation = -1.5708
 
 [node name="ReverseElectricArc" parent="ElectricArcs" instance=ExtResource("19_a7tjk")]
 position = Vector2(2636, -412)
-script = ExtResource("8_fcjlw")
+reversed = true
 
 [node name="Lever3" parent="ElectricArcs" instance=ExtResource("7_7wf14")]
 position = Vector2(2648, -452)
@@ -426,12 +424,12 @@ position = Vector2(2996, -324)
 [node name="ReverseElectricArcRed" parent="ElectricArcs" instance=ExtResource("9_fctvx")]
 position = Vector2(2956, -435)
 rotation = 1.5708
-script = ExtResource("10_2fsbm")
+reversed = true
 
 [node name="ReverseElectricArcRed2" parent="ElectricArcs" instance=ExtResource("9_fctvx")]
 position = Vector2(2916, -435)
 rotation = 1.5708
-script = ExtResource("10_2fsbm")
+reversed = true
 
 [node name="Lever4" parent="ElectricArcs" instance=ExtResource("7_7wf14")]
 position = Vector2(2896, -200)
@@ -443,17 +441,18 @@ position = Vector2(2996, -204)
 [node name="ReverseElectricArc2" parent="ElectricArcs" instance=ExtResource("19_a7tjk")]
 position = Vector2(3036, -229)
 rotation = 1.5708
-script = ExtResource("8_fcjlw")
+reversed = true
 
 [node name="ReverseElectricArc3" parent="ElectricArcs" instance=ExtResource("19_a7tjk")]
 position = Vector2(3036, -179)
 rotation = 1.5708
-script = ExtResource("8_fcjlw")
+reversed = true
 
 [node name="ReverseElectricArcNoHitbox" parent="ElectricArcs" instance=ExtResource("12_w6wah")]
 position = Vector2(3324, -540)
 rotation = 1.5708
-script = ExtResource("8_fcjlw")
+reversed = true
+solid = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ElectricArcs/ReverseElectricArcNoHitbox"]
 libraries = {
@@ -464,7 +463,8 @@ autoplay = "move"
 [node name="ReverseElectricArcNoHitbox2" parent="ElectricArcs" instance=ExtResource("12_w6wah")]
 position = Vector2(3364, -180)
 rotation = 1.5708
-script = ExtResource("8_fcjlw")
+reversed = true
+solid = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ElectricArcs/ReverseElectricArcNoHitbox2"]
 libraries = {
@@ -479,7 +479,7 @@ rotation = -1.5708
 [node name="ReverseElectricArc4" parent="ElectricArcs" instance=ExtResource("19_a7tjk")]
 position = Vector2(3660, -444)
 rotation = 1.5708
-script = ExtResource("8_fcjlw")
+reversed = true
 
 [node name="Lever6" parent="ElectricArcs" instance=ExtResource("7_7wf14")]
 position = Vector2(3688, -324)
@@ -508,21 +508,21 @@ rotation = 1.5708
 
 [node name="ReverseElectricArc5" parent="ElectricArcs" instance=ExtResource("19_a7tjk")]
 position = Vector2(3780, -404)
-script = ExtResource("8_fcjlw")
+reversed = true
 
 [node name="ReverseElectricArc6" parent="ElectricArcs" instance=ExtResource("19_a7tjk")]
 position = Vector2(3740, -364)
 rotation = 1.5708
-script = ExtResource("8_fcjlw")
+reversed = true
 
 [node name="ReverseElectricArc7" parent="ElectricArcs" instance=ExtResource("19_a7tjk")]
 position = Vector2(3820, -524)
 rotation = 1.5708
-script = ExtResource("8_fcjlw")
+reversed = true
 
 [node name="ReverseElectricArc8" parent="ElectricArcs" instance=ExtResource("19_a7tjk")]
 position = Vector2(3590, -484)
-script = ExtResource("8_fcjlw")
+reversed = true
 
 [node name="Lever9" parent="ElectricArcs" instance=ExtResource("7_7wf14")]
 position = Vector2(4000, -232)
@@ -769,7 +769,7 @@ position = Vector2(1777, -292)
 
 [node name="Player" parent="." instance=ExtResource("13_gcqkt")]
 unique_name_in_owner = true
-position = Vector2(3959, -194)
+position = Vector2(44, 8)
 
 [node name="PlayerCameraPoint" parent="Player" instance=ExtResource("14_wu1ns")]
 top_level = true

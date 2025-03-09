@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://npva5mv5cam3"]
+[gd_scene load_steps=40 format=4 uid="uid://npva5mv5cam3"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_4.gd" id="1_u23an"]
 [ext_resource type="AudioStream" uid="uid://cjcn1gqvr8ywi" path="res://assets/musics/mus_barren_valley.mp3" id="2_hxhsr"]
@@ -22,10 +22,9 @@
 [ext_resource type="PackedScene" uid="uid://cvx745hhmp0k6" path="res://scenes/other/kill_zone.tscn" id="15_yvadw"]
 [ext_resource type="PackedScene" uid="uid://dww0l1c4gas4b" path="res://scenes/fx/electric_arc/electric_arc_red.tscn" id="16_e0nu1"]
 [ext_resource type="PackedScene" uid="uid://cvvewevudo2kf" path="res://scenes/other/hud.tscn" id="16_m2mdw"]
-[ext_resource type="Script" path="res://scripts/electric_arc_red_reverse.gd" id="17_1lxmc"]
 [ext_resource type="PackedScene" uid="uid://cvmw3fdnu5d7w" path="res://scenes/other/end_of_level.tscn" id="17_234dl"]
 [ext_resource type="PackedScene" uid="uid://q1aarwp3gug1" path="res://scenes/fx/electric_arc/electric_arc_block.tscn" id="18_5u65o"]
-[ext_resource type="PackedScene" uid="uid://igsk4ovccae5" path="res://scenes/fx/electric_arc/electric_arc_orange.tscn" id="19_s2wyu"]
+[ext_resource type="PackedScene" uid="uid://bbi8ar32p5awd" path="res://scenes/fx/electric_arc/electric_arc_orange.tscn" id="19_s2wyu"]
 [ext_resource type="PackedScene" uid="uid://b0l5hqvx6pxlg" path="res://scenes/fx/electric_arc/electric_arc_blue.tscn" id="20_ll5q6"]
 [ext_resource type="PackedScene" uid="uid://cssdhev2qvdcb" path="res://scenes/items/lever_auto_switch.tscn" id="21_ud5ar"]
 
@@ -260,7 +259,7 @@ position = Vector2(2076, -328)
 position = Vector2(2076, -416)
 
 [node name="LargePlatform4" parent="Platforms" instance=ExtResource("11_44qdl")]
-position = Vector2(1516, -544)
+position = Vector2(1516, -548)
 
 [node name="SmallPlatform2" parent="Platforms" instance=ExtResource("6_mwmpa")]
 position = Vector2(2076, -506)
@@ -439,7 +438,12 @@ rotation = 1.5708
 [node name="ReverseElectricArcRed" parent="ElectricArcs" instance=ExtResource("16_e0nu1")]
 position = Vector2(1580, -524)
 rotation = 1.5708
-script = ExtResource("17_1lxmc")
+reversed = true
+
+[node name="ReverseElectricArcRed2" parent="ElectricArcs" instance=ExtResource("16_e0nu1")]
+position = Vector2(1516, -534)
+rotation = 1.5708
+reversed = true
 
 [node name="ElectricArcRed" parent="ElectricArcs" instance=ExtResource("16_e0nu1")]
 position = Vector2(1580, -563)
@@ -494,7 +498,7 @@ scale = Vector2(1, 0.6)
 position = Vector2(2329, -512)
 
 [node name="ElectricArcOrange" parent="ElectricArcs" instance=ExtResource("19_s2wyu")]
-position = Vector2(2261, -588)
+position = Vector2(2263, -588)
 
 [node name="ElectricArcBlue" parent="ElectricArcs" instance=ExtResource("20_ll5q6")]
 position = Vector2(2232, -588)
@@ -516,7 +520,7 @@ position = Vector2(2184, -513)
 position = Vector2(1581, -133)
 
 [node name="Star2" parent="Items" instance=ExtResource("9_db2bn")]
-position = Vector2(1517, -519)
+position = Vector2(1517, -510)
 
 [node name="Enemies" type="Node2D" parent="."]
 

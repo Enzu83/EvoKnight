@@ -52,8 +52,9 @@ func handle_slash_direction() -> void:
 		else:
 			scale.y = 1
 			offset.x = -2
-		
-	elif direction == "left":
+	
+	# horizontal slash only based on player's sprite
+	elif player.sprite.flip_h:
 		rotation_degrees = 0
 		offset.x = -4
 		
@@ -62,7 +63,7 @@ func handle_slash_direction() -> void:
 		else:
 			scale.x = 1
 
-	elif direction == "right":
+	else:
 		rotation_degrees = 0
 		offset.x = 4
 		

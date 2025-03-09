@@ -12,7 +12,8 @@ var active := false
 
 # blue: opposite = false
 # orange: opposite = true
-var opposite := false
+@export var reversed := false
+@export var solid := true
 
 func _ready() -> void:
 	# resize electric bar depending on its size
@@ -27,12 +28,16 @@ func _ready() -> void:
 	hitbox.set_shape(hitbox_rect)
 	
 	scale.y = 1
+	
+	# solid hitbox or not
+	if not solid:
+		wall_collider.disabled = true
 
 func _process(_delta: float) -> void:
 	if Global.electric_arc_auto_enabled:
-		active = not opposite
+		active = not reversed
 	else:
-		active = opposite
+		active = reversed
 	
 	update_active_state()
 

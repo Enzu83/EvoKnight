@@ -206,11 +206,18 @@ func handle_slash() -> void:
 			state = State.DashingAndAttacking
 		else:
 			state = State.Attacking
-		
+		handle_flip_h()
+		# direction based slash
 		if Input.is_action_pressed("up"):
 			basic_slash.start("up")
 		elif Input.is_action_pressed("down"):
 			basic_slash.start("down")
+		elif Input.is_action_pressed("left"):
+			basic_slash.start("left")
+		elif Input.is_action_pressed("right"):
+			basic_slash.start("right")
+		
+		# default direction based on orientation
 		elif sprite.flip_h:
 			basic_slash.start("left")
 		else:
@@ -223,7 +230,14 @@ func handle_slash() -> void:
 	and mana >= MAGIC_SLASH_MANA:
 		mana -= MAGIC_SLASH_MANA
 		
-		if sprite.flip_h:
+		# direction based magic slash
+		if Input.is_action_pressed("left"):
+			magic_slash.start("left")
+		elif Input.is_action_pressed("right"):
+			magic_slash.start("right")
+		
+		# default direction based on orientation
+		elif sprite.flip_h:
 			magic_slash.start("left")
 		else:
 			magic_slash.start("right")
@@ -395,9 +409,11 @@ func animate() -> void:
 
 	elif state == State.Fainted:
 		play_animation("faint")
+
 	else:
 		if is_on_floor():
 			if Input.is_action_pressed("down") \
+			and state != State.Stop \
 			and not (state == State.Attacking and direction != 0):
 				play_animation("crouch")
 			elif velocity.x == 0:
