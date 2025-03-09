@@ -17,6 +17,7 @@ extends Node2D
 @onready var player_skin: Sprite2D = $Menu/Options/PlayerSkin
 @onready var skin_left_cursor: AnimatedSprite2D = $Menu/Options/PlayerSkin/LeftCursor
 @onready var skin_right_cursor: AnimatedSprite2D = $Menu/Options/PlayerSkin/RightCursor
+@onready var skin_color_label: Label = $Menu/Options/PlayerSkin/ColorLabel
 
 @onready var clear_sprite: AnimatedSprite2D = $ClearSprite
 
@@ -45,10 +46,10 @@ var player_skin_list := [
 var color_list := ["red", "blue", "green", "purple"]
 
 var colors := {
-	"red": Color(67, 163, 245, 1),
-	"blue": Color(245, 72, 67, 1),
-	"green": Color(245, 67, 104, 1),
-	"purple": Color(67, 245, 208, 1),
+	"red": Color(67 / 255.0, 163 / 255.0, 245 / 255.0, 1.0),
+	"blue": Color(245 / 255.0, 72 / 255.0, 67 / 255.0, 1.0),
+	"green": Color(245 / 255.0, 67 / 255.0, 104 / 255.0, 1.0),
+	"purple": Color(67 / 255.0, 245 / 255.0, 208 / 255.0, 1.0),
 }
 
 # clear screen
@@ -130,7 +131,10 @@ func handle_skin_selection() -> void:
 		state = 1
 		select_sound.play()
 	
+	# update sprite and label
 	player_skin.frame = selected_skin
+	skin_color_label.text = color_list[selected_skin][0].to_upper() + color_list[selected_skin].right(-1)
+	skin_color_label.set("theme_override_colors/font_color", colors[color_list[selected_skin]])
 
 func handle_cursors() -> void:
 	# cursors position
@@ -239,3 +243,8 @@ func _process(_delta: float) -> void:
 	
 	elif state == 2:
 		handle_skin_selection()
+	
+	# debug
+	if Input.is_action_just_pressed("exp"):
+		get_viewport().size = Vector2(1920, 1080)
+		get_window().move_to_center()

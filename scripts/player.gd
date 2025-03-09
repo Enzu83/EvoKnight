@@ -206,7 +206,7 @@ func handle_slash() -> void:
 			state = State.DashingAndAttacking
 		else:
 			state = State.Attacking
-		handle_flip_h()
+
 		# direction based slash
 		if Input.is_action_pressed("up"):
 			basic_slash.start("up")

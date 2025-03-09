@@ -203,9 +203,9 @@ offset_bottom = 40.0
 [node name="Background" type="TextureRect" parent="Background"]
 layout_mode = 1
 anchors_preset = -1
-anchor_bottom = 0.9
-offset_right = 600.0
-offset_bottom = 204.0
+offset_right = 320.0
+offset_bottom = 180.0
+scale = Vector2(1.333, 1.333)
 texture = ExtResource("1_vvf2q")
 stretch_mode = 1
 metadata/_edit_use_anchors_ = true
@@ -277,7 +277,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="StartButton" type="Label" parent="Menu/Main"]
-visible = false
 top_level = true
 layout_mode = 0
 offset_left = 180.0
@@ -290,7 +289,6 @@ text = "Start"
 horizontal_alignment = 1
 
 [node name="OptionsButton" type="Label" parent="Menu/Main"]
-visible = false
 top_level = true
 layout_mode = 0
 offset_left = 167.0
@@ -303,7 +301,6 @@ text = "Options"
 horizontal_alignment = 1
 
 [node name="QuitButton" type="Label" parent="Menu/Main"]
-visible = false
 top_level = true
 layout_mode = 0
 offset_left = 187.0
@@ -361,14 +358,12 @@ text = "Controls"
 horizontal_alignment = 1
 
 [node name="PlayerSkin" type="Sprite2D" parent="Menu/Options"]
-visible = false
 top_level = true
-position = Vector2(213, 178)
+position = Vector2(213, 163)
 texture = ExtResource("8_oq45q")
 hframes = 4
 
 [node name="LeftCursor" type="AnimatedSprite2D" parent="Menu/Options/PlayerSkin"]
-visible = false
 position = Vector2(-24, 0)
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_wdmb5")
@@ -376,11 +371,20 @@ autoplay = "default"
 frame_progress = 0.803466
 
 [node name="RightCursor" type="AnimatedSprite2D" parent="Menu/Options/PlayerSkin"]
-visible = false
 position = Vector2(24, 0)
 sprite_frames = SubResource("SpriteFrames_wdmb5")
 autoplay = "default"
 frame_progress = 0.803466
+
+[node name="ColorLabel" type="Label" parent="Menu/Options/PlayerSkin"]
+offset_left = -50.0
+offset_top = 25.0
+offset_right = 49.0
+offset_bottom = 48.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
+text = "Red"
+horizontal_alignment = 1
 
 [node name="PlayerControlsInfo" type="Label" parent="."]
 visible = false
