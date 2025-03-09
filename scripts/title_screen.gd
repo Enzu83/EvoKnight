@@ -1,6 +1,8 @@
 extends Node2D
 
-@onready var title: TextureRect = $Title
+@onready var title: TextureRect = $Title/Title
+@onready var version_label: Label = $Title/VersionLabel
+@onready var clear_sprite: AnimatedSprite2D = $Title/ClearSprite
 
 @onready var left_cursor: AnimatedSprite2D = $Menu/LeftCursor
 @onready var right_cursor: AnimatedSprite2D = $Menu/RightCursor
@@ -19,12 +21,8 @@ extends Node2D
 @onready var skin_right_cursor: AnimatedSprite2D = $Menu/Options/PlayerSkin/RightCursor
 @onready var skin_color_label: Label = $Menu/Options/PlayerSkin/ColorLabel
 
-@onready var clear_sprite: AnimatedSprite2D = $ClearSprite
-
 @onready var player_controls_info: Label = $PlayerControlsInfo
 @onready var extra_controls_info: Label = $ExtraControlsInfo
-
-@onready var version_label: Label = $VersionLabel
 
 # states of the menu
 var state := 0
@@ -52,9 +50,6 @@ var colors := {
 	"purple": Color(67 / 255.0, 245 / 255.0, 208 / 255.0, 1.0),
 }
 
-# clear screen
-var yellow_title := preload("res://assets/sprites/other/spr_title_yellow.png")
-
 # skins sprite path
 var player_sprite_path := "res://assets/sprites/chars/player/"
 var slash_sprite_path := "res://assets/sprites/fx/slash/"
@@ -63,6 +58,9 @@ var ui_icon_path := "res://assets/sprites/ui/icons/"
 var selected_skin: int = 0
 
 func handle_main_menu() -> void:
+	title.visible = true
+	version_label.visible = true
+	
 	left_cursor.visible = true
 	right_cursor.visible = true
 	
@@ -86,6 +84,9 @@ func handle_main_menu() -> void:
 			quit_game()
 
 func handle_options_menu() -> void:
+	title.visible = true
+	version_label.visible = true
+	
 	left_cursor.visible = true
 	right_cursor.visible = true
 	
@@ -115,9 +116,10 @@ func handle_options_menu() -> void:
 		select_sound.play()
 
 func handle_skin_selection() -> void:
+	title.visible = true
+	version_label.visible = true
+	
 	player_skin.visible = true
-	skin_left_cursor.visible = true
-	skin_right_cursor.visible = true
 	
 	if Input.is_action_just_pressed("left"):
 		selected_skin = posmod(selected_skin - 1, player_skin_list.size())
@@ -196,7 +198,7 @@ func _ready() -> void:
 	
 	# changed title screen if the game is cleared
 	if Global.cleared:
-		title.texture = yellow_title
+		title.modulate = Color.YELLOW
 		clear_sprite.visible = true
 		
 		start_button.set("theme_override_colors/font_color", Color.YELLOW)
@@ -212,6 +214,9 @@ func _ready() -> void:
 		version_label.set("theme_override_colors/font_color", Color.YELLOW)
 
 func hide_all() -> void:
+	title.visible = false
+	version_label.visible = false
+	
 	left_cursor.visible = false
 	right_cursor.visible = false
 	
@@ -224,8 +229,6 @@ func hide_all() -> void:
 	controls_button.visible = false
 	
 	player_skin.visible = false
-	skin_left_cursor.visible = false
-	skin_right_cursor.visible = false
 
 func _process(_delta: float) -> void:
 	# hide all labels

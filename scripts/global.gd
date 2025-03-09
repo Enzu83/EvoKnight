@@ -89,6 +89,9 @@ func _ready() -> void:
 	init_player_stats()
 	
 	init_auto_switch_electric_arc()
+	
+	# game rendering
+	init_screen_size()
 
 func _process(_delta: float) -> void:
 	# debug inputs
@@ -106,7 +109,7 @@ func _process(_delta: float) -> void:
 		get_tree().paused = true
 	else:
 		get_tree().paused = false
-
+	
 func init_stars() -> void:
 	pending_stars = []
 	collected_stars = []
@@ -148,6 +151,10 @@ func toggle_electric_arc_auto_switch() -> void:
 func _on_electric_arc_auto_timer_timeout() -> void:
 	electric_arc_sound.play()
 	electric_arc_auto_enabled = !electric_arc_auto_enabled
+
+func init_screen_size() -> void:
+	get_viewport().size = DisplayServer.screen_get_size()
+	get_window().move_to_center()
 
 func set_elapsed_time_reference() -> void:
 	elapsed_time_reference = Time.get_ticks_msec()

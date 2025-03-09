@@ -381,6 +381,11 @@ func handle_bounce() -> void:
 		velocity.y = HIGHEST_JUMP_VELOCITY * 0.8
 		jumps = MAX_JUMPS - 1
 
+		# restart animation
+		anim = Anim.jump
+		animation_player.stop()
+		animation_player.play("jump")
+
 func handle_super_speed() -> void:
 	if super_speed:
 		if permanent_phantom_cooldown.is_stopped():
