@@ -211,9 +211,11 @@ metadata/_edit_use_anchors_ = true
 [node name="Midground" type="TextureRect" parent="Background"]
 layout_mode = 1
 anchors_preset = -1
-offset_top = -66.0
+anchor_top = 0.7
+anchor_bottom = 0.7
+offset_top = -94.0
 offset_right = 1200.0
-offset_bottom = 212.0
+offset_bottom = 184.0
 texture = ExtResource("2_tjndk")
 stretch_mode = 1
 metadata/_edit_use_anchors_ = true
@@ -234,28 +236,27 @@ offset_bottom = 40.0
 [node name="Title" type="TextureRect" parent="Title"]
 layout_mode = 0
 offset_left = 53.0
-offset_top = 8.0
 offset_right = 1333.0
-offset_bottom = 556.0
+offset_bottom = 484.0
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_x6j3q")
 stretch_mode = 3
 
 [node name="VersionLabel" type="Label" parent="Title"]
 layout_mode = 0
-offset_left = 351.0
-offset_top = 102.0
-offset_right = 383.0
-offset_bottom = 121.0
+offset_left = 337.0
+offset_top = 91.0
+offset_right = 369.0
+offset_bottom = 110.0
 theme_override_fonts/font = ExtResource("6_bnf46")
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 14
 text = "v0.3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ClearSprite" type="AnimatedSprite2D" parent="Title"]
 visible = false
-position = Vector2(67, 110)
+position = Vector2(71, 99)
 sprite_frames = SubResource("SpriteFrames_pebm5")
 autoplay = "default"
 
@@ -266,6 +267,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="LeftCursor" type="AnimatedSprite2D" parent="Menu"]
+visible = false
 top_level = true
 position = Vector2(166, 153)
 sprite_frames = SubResource("SpriteFrames_wdmb5")
@@ -273,6 +275,7 @@ autoplay = "default"
 frame_progress = 0.803466
 
 [node name="RightCursor" type="AnimatedSprite2D" parent="Menu"]
+visible = false
 top_level = true
 position = Vector2(260, 153)
 rotation = -3.14159
@@ -291,36 +294,36 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="StartButton" type="Label" parent="Menu/Main"]
-top_level = true
+visible = false
 layout_mode = 0
 offset_left = 180.0
-offset_top = 143.0
+offset_top = 132.0
 offset_right = 246.0
-offset_bottom = 171.0
+offset_bottom = 160.0
 theme_override_fonts/font = ExtResource("6_bnf46")
 theme_override_font_sizes/font_size = 24
 text = "Start"
 horizontal_alignment = 1
 
 [node name="OptionsButton" type="Label" parent="Menu/Main"]
-top_level = true
+visible = false
 layout_mode = 0
 offset_left = 167.0
-offset_top = 174.0
+offset_top = 164.0
 offset_right = 259.0
-offset_bottom = 202.0
+offset_bottom = 192.0
 theme_override_fonts/font = ExtResource("6_bnf46")
 theme_override_font_sizes/font_size = 24
 text = "Options"
 horizontal_alignment = 1
 
 [node name="QuitButton" type="Label" parent="Menu/Main"]
-top_level = true
+visible = false
 layout_mode = 0
 offset_left = 187.0
-offset_top = 204.0
+offset_top = 196.0
 offset_right = 239.0
-offset_bottom = 232.0
+offset_bottom = 224.0
 theme_override_fonts/font = ExtResource("6_bnf46")
 theme_override_font_sizes/font_size = 24
 text = "Quit
@@ -334,71 +337,145 @@ offset_bottom = 40.0
 
 [node name="SkinButton" type="Label" parent="Menu/Options"]
 visible = false
-top_level = true
 layout_mode = 0
 offset_left = 187.0
-offset_top = 143.0
+offset_top = 124.0
 offset_right = 239.0
-offset_bottom = 171.0
+offset_bottom = 152.0
 theme_override_fonts/font = ExtResource("6_bnf46")
 theme_override_font_sizes/font_size = 24
 text = "Skin"
 horizontal_alignment = 1
 
-[node name="ScreenSizeButton" type="Label" parent="Menu/Options"]
+[node name="ResolutionButton" type="Label" parent="Menu/Options"]
 visible = false
-top_level = true
 layout_mode = 0
-offset_left = 141.0
-offset_top = 174.0
-offset_right = 285.0
-offset_bottom = 202.0
+offset_left = 148.0
+offset_top = 152.0
+offset_right = 278.0
+offset_bottom = 180.0
 theme_override_fonts/font = ExtResource("6_bnf46")
 theme_override_font_sizes/font_size = 24
-text = "Screen Size"
+text = "Resolution"
 horizontal_alignment = 1
 
 [node name="ControlsButton" type="Label" parent="Menu/Options"]
 visible = false
-top_level = true
 layout_mode = 0
 offset_left = 160.0
-offset_top = 204.0
+offset_top = 180.0
 offset_right = 266.0
-offset_bottom = 232.0
+offset_bottom = 208.0
 theme_override_fonts/font = ExtResource("6_bnf46")
 theme_override_font_sizes/font_size = 24
 text = "Controls"
 horizontal_alignment = 1
 
-[node name="PlayerSkin" type="Sprite2D" parent="Menu/Options"]
+[node name="BackButton" type="Label" parent="Menu/Options"]
 visible = false
+layout_mode = 0
+offset_left = 185.0
+offset_top = 208.0
+offset_right = 241.0
+offset_bottom = 236.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
+text = "Back"
+horizontal_alignment = 1
+
+[node name="Skin" type="Control" parent="Menu"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PlayerSkin" type="Label" parent="Menu/Skin"]
+visible = false
+layout_mode = 0
+offset_left = 201.5
+offset_top = 142.0
+offset_right = 226.5
+offset_bottom = 167.0
+
+[node name="Sprite" type="Sprite2D" parent="Menu/Skin/PlayerSkin"]
 top_level = true
-position = Vector2(213, 163)
+position = Vector2(213, 152)
 texture = ExtResource("8_oq45q")
 hframes = 4
 
-[node name="LeftCursor" type="AnimatedSprite2D" parent="Menu/Options/PlayerSkin"]
-position = Vector2(-24, 0)
-scale = Vector2(-1, 1)
-sprite_frames = SubResource("SpriteFrames_wdmb5")
-autoplay = "default"
-frame_progress = 0.803466
+[node name="ColorLabel" type="Label" parent="Menu/Skin/PlayerSkin"]
+top_level = true
+layout_mode = 0
+offset_left = 162.0
+offset_top = 119.0
+offset_right = 266.0
+offset_bottom = 143.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "Red"
+horizontal_alignment = 1
 
-[node name="RightCursor" type="AnimatedSprite2D" parent="Menu/Options/PlayerSkin"]
-position = Vector2(24, 0)
-sprite_frames = SubResource("SpriteFrames_wdmb5")
-autoplay = "default"
-frame_progress = 0.803466
-
-[node name="ColorLabel" type="Label" parent="Menu/Options/PlayerSkin"]
-offset_left = -50.0
-offset_top = 25.0
-offset_right = 49.0
-offset_bottom = 48.0
+[node name="ConfirmButton" type="Label" parent="Menu/Skin"]
+visible = false
+layout_mode = 0
+offset_left = 165.0
+offset_top = 180.0
+offset_right = 261.0
+offset_bottom = 208.0
 theme_override_fonts/font = ExtResource("6_bnf46")
 theme_override_font_sizes/font_size = 24
-text = "Red"
+text = "Confirm"
+horizontal_alignment = 1
+
+[node name="BackButton" type="Label" parent="Menu/Skin"]
+visible = false
+layout_mode = 0
+offset_left = 185.0
+offset_top = 208.0
+offset_right = 241.0
+offset_bottom = 236.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
+text = "Back"
+horizontal_alignment = 1
+
+[node name="Resolution" type="Control" parent="Menu"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ResolutionLabel" type="Label" parent="Menu/Resolution"]
+layout_mode = 0
+offset_left = 147.0
+offset_top = 133.0
+offset_right = 279.0
+offset_bottom = 161.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
+text = "Fullscreen"
+horizontal_alignment = 1
+
+[node name="ConfirmButton" type="Label" parent="Menu/Resolution"]
+layout_mode = 0
+offset_left = 165.0
+offset_top = 180.0
+offset_right = 261.0
+offset_bottom = 208.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
+text = "Confirm"
+horizontal_alignment = 1
+
+[node name="BackButton" type="Label" parent="Menu/Resolution"]
+layout_mode = 0
+offset_left = 185.0
+offset_top = 208.0
+offset_right = 241.0
+offset_bottom = 236.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
+text = "Back"
 horizontal_alignment = 1
 
 [node name="PlayerControlsInfo" type="Label" parent="."]
