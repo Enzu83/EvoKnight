@@ -1,26 +1,26 @@
 extends CanvasLayer
 
-@onready var cursor: AnimatedSprite2D = $Menu/Cursor
+@onready var left_cursor: AnimatedSprite2D = $Menu/LeftCursor
+@onready var right_cursor: AnimatedSprite2D = $Menu/RightCursor
+
 @onready var select_sound: AudioStreamPlayer = $Menu/SelectSound
+
 @onready var resume_button: Label = $Menu/ResumeButton
 @onready var quit_button: Label = $Menu/QuitButton
 
-enum State {Resume, Quit}
-var state: State
-
 # cursor navigation
-var cursor_position := [
-	Vector2(154, 136),
-	Vector2(154, 170),
-]
+var pause_options: Array
 
 var cursor_index: int
 
-
 func _ready() -> void:
 	visible = false
-	state = State.Resume
 	cursor_index = 0
+	
+	pause_options = [
+		resume_button,
+		quit_button,
+	]
 
 func _process(_delta: float) -> void:
 	# can't pause on the title screen
@@ -32,30 +32,40 @@ func _process(_delta: float) -> void:
 	
 	# pause menu is active
 	elif visible:
-		handle_cursor_navigation()
+		handle_cursors()
 		handle_click()
-		
-		cursor.position = cursor_position[cursor_index]
 
-func handle_cursor_navigation() -> void:
-	if Input.is_action_just_pressed("up") and cursor_index > 0:
-		cursor_index -= 1
+func handle_cursors() -> void:
+	var selected_button: Node = pause_options[cursor_index]
+
+	# cursors position
+	left_cursor.position.x = selected_button.position.x - 14
+	left_cursor.position.y = selected_button.position.y + 10
+	
+	right_cursor.position.x = selected_button.position.x + selected_button.size.x + 14
+	right_cursor.position.y = selected_button.position.y + 10
+	
+	# up/down cursors navigation
+	if Input.is_action_just_pressed("up"):
+		cursor_index = posmod(cursor_index - 1, pause_options.size())
 		select_sound.play()
 	
-	elif Input.is_action_just_pressed("down") and cursor_index < cursor_position.size()-1:
-		cursor_index += 1
+	elif Input.is_action_just_pressed("down"):
+		cursor_index = posmod(cursor_index + 1, pause_options.size())
 		select_sound.play()
 
 func handle_click() -> void:
 	# select an option
 	if Input.is_action_just_pressed("confirm"):
+		# resume
 		if cursor_index == 0:
 			toggle_pause()
+		
+		# quit
 		elif cursor_index == 1:
 			get_tree().quit()
 
 func toggle_pause() -> void:
-	state = State.Resume
 	cursor_index = 0
 	
 	if not visible:
