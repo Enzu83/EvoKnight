@@ -446,6 +446,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="ResolutionLabel" type="Label" parent="Menu/Resolution"]
+visible = false
 layout_mode = 0
 offset_left = 147.0
 offset_top = 133.0
@@ -457,6 +458,7 @@ text = "Fullscreen"
 horizontal_alignment = 1
 
 [node name="ConfirmButton" type="Label" parent="Menu/Resolution"]
+visible = false
 layout_mode = 0
 offset_left = 165.0
 offset_top = 180.0
@@ -468,6 +470,7 @@ text = "Confirm"
 horizontal_alignment = 1
 
 [node name="BackButton" type="Label" parent="Menu/Resolution"]
+visible = false
 layout_mode = 0
 offset_left = 185.0
 offset_top = 208.0

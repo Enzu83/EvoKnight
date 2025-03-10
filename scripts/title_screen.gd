@@ -50,10 +50,10 @@ var player_skin_list := [
 var color_list := ["red", "blue", "green", "purple"]
 
 var colors := {
-	"red": Color(67 / 255.0, 163 / 255.0, 245 / 255.0, 1.0),
-	"blue": Color(245 / 255.0, 72 / 255.0, 67 / 255.0, 1.0),
-	"green": Color(245 / 255.0, 67 / 255.0, 104 / 255.0, 1.0),
-	"purple": Color(67 / 255.0, 245 / 255.0, 208 / 255.0, 1.0),
+	"red": Color(211 / 255.0, 47 / 255.0, 63 / 255.0, 1.0),
+	"blue": Color(91 / 255.0, 123 / 255.0, 227 / 255.0, 1.0),
+	"green": Color(47 / 255.0, 211 / 255.0, 66 / 255.0, 1.0),
+	"purple": Color(211 / 255.0, 47 / 255.0, 192 / 255.0, 1.0),
 }
 
 var player_sprite_path := "res://assets/sprites/chars/player/"
@@ -66,6 +66,9 @@ var pending_selected_skin := 0
 # resolution
 var resolution_sizes = [
 	Vector2(0, 0),
+	Vector2(3840, 2160),
+	Vector2(3200, 1800),
+	Vector2(2560, 1440),
 	Vector2(1920, 1080),
 	Vector2(1600, 900),
 	Vector2(1366, 768),
@@ -74,8 +77,11 @@ var resolution_sizes = [
 	Vector2(960, 540),
 	Vector2(854, 480),
 	Vector2(640, 360),
+	Vector2(480, 270),
+	Vector2(320, 180),
 ]
 
+var selected_resolution := 0
 var pending_selected_resolution := 0
 
 func handle_main_menu() -> void:
@@ -122,6 +128,8 @@ func handle_options_menu() -> void:
 		
 		# screen size options
 		elif cursor_indexes[state] == 1:
+			pending_selected_resolution = selected_resolution
+			
 			state = 3
 			select_sound.play()
 			
@@ -206,10 +214,12 @@ func handle_resolution() -> void:
 	if Input.is_action_just_pressed("confirm"):
 		# confirm resolution
 		if cursor_indexes[state] == 1:
-			if pending_selected_resolution == 0:
+			selected_resolution = pending_selected_resolution
+			
+			if selected_resolution == 0:
 				get_viewport().size = DisplayServer.screen_get_size()
 			else:
-				get_viewport().size = resolution_sizes[pending_selected_resolution]
+				get_viewport().size = resolution_sizes[selected_resolution]
 
 			get_window().move_to_center()
 			
@@ -363,4 +373,4 @@ func _process(_delta: float) -> void:
 	
 	# controls
 	elif state == 4:
-		pass
+		state = 1
