@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://q1aarwp3gug1"]
 
-[ext_resource type="Script" path="res://scripts/electric_arc.gd" id="1_6l2la"]
+[ext_resource type="Script" path="res://scripts/electric_arc_block.gd" id="1_rwv8t"]
 [ext_resource type="Texture2D" uid="uid://735r6bhs8jo0" path="res://assets/sprites/fx/spr_electric_arc_block.png" id="2_i5uqh"]
 [ext_resource type="Script" path="res://scripts/static_body_hitbox.gd" id="3_exu48"]
 [ext_resource type="AudioStream" uid="uid://dch38lv7y4owm" path="res://assets/sfx/snd_electric_arc.wav" id="4_fbbht"]
@@ -98,7 +98,7 @@ size = Vector2(8, 8)
 
 [node name="ElectricArcBlock" type="StaticBody2D"]
 collision_mask = 0
-script = ExtResource("1_6l2la")
+script = ExtResource("1_rwv8t")
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_4bec0")

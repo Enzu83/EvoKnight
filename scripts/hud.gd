@@ -68,7 +68,9 @@ func _process(_delta: float) -> void:
 	dash_threshold.position.x = dash_threshold_initial_position.x + (player.BLUE_DASH_MANA / float(player.max_mana)) * mana_bar.max_value
 	
 	# dash icon displayed if it can be perfomed
-	if player.can_dash and player.state == player.State.Default and player.mana >= player.BLUE_DASH_MANA:
+	if player.can_dash \
+	and (player.state == player.State.Default or player.state == player.State.Crouching) \
+	and player.mana >= player.BLUE_DASH_MANA:
 		dash_icon.visible = true
 	else:
 		dash_icon.visible = false
@@ -77,7 +79,9 @@ func _process(_delta: float) -> void:
 	magic_slash_threshold.position.x = magic_slash_threshold_initial_position.x + (player.MAGIC_SLASH_MANA / float(player.max_mana)) * mana_bar.max_value
 	
 	# magic slash icon displayed if it can be casted
-	if player.state == player.State.Default and not player.magic_slash.active and player.mana >= player.MAGIC_SLASH_MANA:
+	if player.state == player.State.Default \
+	and not player.magic_slash.active \
+	and player.mana >= player.MAGIC_SLASH_MANA:
 		magic_slash_icon.visible = true
 	else:
 		magic_slash_icon.visible = false

@@ -74,7 +74,7 @@ var electric_arc_enabled := true
 var electric_arc_auto_enabled := false
 var electric_arc_auto_timer := Timer.new()
 
-var electric_arc_stream: Resource = load("res://assets/sfx/snd_electric_arc.wav")
+var electric_arc_stream: Resource = load("res://assets/sfx/snd_lever.wav")
 var electric_arc_sound := AudioStreamPlayer.new()
 
 # boss defeated
