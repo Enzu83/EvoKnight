@@ -46,17 +46,17 @@ func handle_cursors() -> void:
 	right_cursor.position.y = selected_button.position.y + 10
 	
 	# up/down cursors navigation
-	if Input.is_action_just_pressed("up"):
+	if Input.is_action_just_pressed("up") or Input.is_action_just_pressed("ui_up"):
 		cursor_index = posmod(cursor_index - 1, pause_options.size())
 		select_sound.play()
 	
-	elif Input.is_action_just_pressed("down"):
+	elif Input.is_action_just_pressed("down") or Input.is_action_just_pressed("ui_down"):
 		cursor_index = posmod(cursor_index + 1, pause_options.size())
 		select_sound.play()
 
 func handle_click() -> void:
 	# select an option
-	if Input.is_action_just_pressed("confirm"):
+	if Input.is_action_just_pressed("confirm") or Input.is_action_just_pressed("ui_accept"):
 		# resume
 		if cursor_index == 0:
 			toggle_pause()

@@ -518,11 +518,14 @@ text = "Back"
 horizontal_alignment = 1
 
 [node name="Keyboard" type="Control" parent="Menu"]
-visible = false
 anchors_preset = 0
 offset_top = 16.0
 offset_right = 40.0
 offset_bottom = 56.0
+
+[node name="InputHandler" parent="Menu/Keyboard" instance=ExtResource("11_lxgxm")]
+top_level = true
+layout_mode = 1
 
 [node name="Confirm" type="Control" parent="Menu/Keyboard"]
 anchors_preset = 0
@@ -787,22 +790,17 @@ theme_override_font_sizes/font_size = 20
 text = "	[]"
 horizontal_alignment = 2
 
-[node name="SaveButton" type="Label" parent="Menu/Keyboard"]
+[node name="ConfirmButton" type="Label" parent="Menu/Keyboard"]
 top_level = true
 layout_mode = 0
-offset_left = 186.0
-offset_top = 214.0
-offset_right = 242.0
-offset_bottom = 242.0
+offset_left = 72.0
+offset_top = 216.0
+offset_right = 119.0
+offset_bottom = 240.0
 theme_override_fonts/font = ExtResource("6_bnf46")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 20
 text = "Save"
 horizontal_alignment = 1
-
-[node name="InputHandler" parent="Menu/Keyboard" instance=ExtResource("11_lxgxm")]
-visible = false
-top_level = true
-layout_mode = 1
 
 [node name="Controller" type="Control" parent="Menu"]
 anchors_preset = 0

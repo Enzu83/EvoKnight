@@ -32,6 +32,7 @@ extends Node2D
 @onready var controls_back_button: Label = $Menu/Controls/BackButton
 
 @onready var keyboard_menu: Control = $Menu/Keyboard
+@onready var input_handler: Control = $Menu/Keyboard/InputHandler
 @onready var confirm: Control = $Menu/Keyboard/Confirm
 @onready var left: Control = $Menu/Keyboard/Left
 @onready var right: Control = $Menu/Keyboard/Right
@@ -41,7 +42,7 @@ extends Node2D
 @onready var dash: Control = $Menu/Keyboard/Dash
 @onready var slash: Control = $Menu/Keyboard/Slash
 @onready var spell: Control = $Menu/Keyboard/Spell
-@onready var keyboard_confirm_button: Label = $Menu/Keyboard/ConfirmButton
+@onready var keyboard_save_button: Label = $Menu/Keyboard/SaveButton
 
 # states of the menu
 var state := 0
@@ -273,7 +274,7 @@ func handle_keyboard_mapping() -> void:
 	right_cursor.visible = false
 	
 	# navigate the controls
-	if state == 5:
+	if state == 5 and not input_handler.active:
 		if Input.is_action_just_pressed("confirm") or Input.is_action_just_pressed("ui_accept"):
 			# go back
 			if cursor_indexes[state] == menu_options[state].size()-1:
@@ -282,16 +283,18 @@ func handle_keyboard_mapping() -> void:
 				state = 4
 				select_sound.play()
 			
+			# awaiting for input
 			else:
-				state = 6 # awaiting for input
-				var selected_key: Node = menu_options[state][cursor_indexes[state]]
-				
-				#selected_key.new_input()
-	
-	# choose an input
-	elif state == 6:
-		pass
-
+				select_sound.play()
+				input_handler.start(menu_options[state][cursor_indexes[state]])
+		
+		# reset keys
+		elif (Input.is_action_just_pressed("back") or Input.is_action_just_pressed("ui_cancel")) \
+		and cursor_indexes[state] < menu_options[state].size()-1:
+			var key: Node = menu_options[state][cursor_indexes[state]]
+			key.reset_event_list()
+			
+		
 func handle_cursors() -> void:
 	left_cursor.visible = true
 	right_cursor.visible = true
@@ -299,7 +302,7 @@ func handle_cursors() -> void:
 	var selected_button: Node = menu_options[state][cursor_indexes[state]]
 
 	# keyboard keys cursor position
-	if state == 5 and cursor_indexes[state] < 8:
+	if state == 5 and cursor_indexes[state] < menu_options[state].size()-1:
 		left_cursor.position.x = selected_button.label.position.x - 14
 		left_cursor.position.y = selected_button.label.position.y + 8
 		
@@ -367,7 +370,7 @@ func _ready() -> void:
 		2: [player_skin, skin_confirm_button, skin_back_button],
 		3: [resolution_label, resolution_confirm_button, resolution_back_button],
 		4: [controls_keyboard_button, controls_controller_button, controls_back_button],
-		5: [confirm, left, right, up, down, jump, dash, slash, spell, keyboard_confirm_button],
+		5: [confirm, left, right, up, down, jump, dash, slash, spell, keyboard_save_button],
 	}
 	
 	cursor_indexes = {
@@ -467,6 +470,7 @@ func _process(_delta: float) -> void:
 		handle_controls()
 	
 	# keyboard mapping
-	elif state == 5 or state == 6:
-		handle_cursors()
+	elif state == 5:
+		if not input_handler.active:
+			handle_cursors()
 		handle_keyboard_mapping()

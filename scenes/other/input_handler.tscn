@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://bi0veelo2gpwt"]
+
+[ext_resource type="Script" path="res://scripts/input_handler.gd" id="1_1hn7u"]
+[ext_resource type="FontFile" uid="uid://camhtmnphwiu5" path="res://assets/fonts/8bit.fnt" id="2_b83hd"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sffyb"]
+
+[node name="InputHandler" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1hn7u")
+
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(0, 0, 0, 0.705882)
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+scale = Vector2(1.333, 1.333)
+texture = SubResource("PlaceholderTexture2D_sffyb")
+
+[node name="AwaitLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 109.0
+offset_right = 335.0
+offset_bottom = 137.0
+theme_override_fonts/font = ExtResource("2_b83hd")
+theme_override_font_sizes/font_size = 24
+text = "	Awaiting for input..."
+
+[node name="DotLabelTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="AwaitTimer" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+
+[node name="StopWaitTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="DotLabelTimer" to="." method="_on_dot_label_timer_timeout"]
+[connection signal="timeout" from="AwaitTimer" to="." method="_on_await_timer_timeout"]
+[connection signal="timeout" from="StopWaitTimer" to="." method="_on_stop_wait_timer_timeout"]
