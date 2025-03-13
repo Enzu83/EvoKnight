@@ -1,8 +1,8 @@
 extends Node2D
 
-@onready var title: TextureRect = $Title/Title
-@onready var version_label: Label = $Title/VersionLabel
+@onready var title: TextureRect = $Title
 @onready var clear_sprite: AnimatedSprite2D = $Title/ClearSprite
+@onready var version_label: Label = $VersionLabel
 
 @onready var left_cursor: AnimatedSprite2D = $Menu/LeftCursor
 @onready var right_cursor: AnimatedSprite2D = $Menu/RightCursor
@@ -27,8 +27,21 @@ extends Node2D
 @onready var resolution_confirm_button: Label = $Menu/Resolution/ConfirmButton
 @onready var resolution_back_button: Label = $Menu/Resolution/BackButton
 
-@onready var player_controls_info: Label = $PlayerControlsInfo
-@onready var extra_controls_info: Label = $ExtraControlsInfo
+@onready var controls_keyboard_button: Label = $Menu/Controls/KeyboardButton
+@onready var controls_controller_button: Label = $Menu/Controls/ControllerButton
+@onready var controls_back_button: Label = $Menu/Controls/BackButton
+
+@onready var keyboard_menu: Control = $Menu/Keyboard
+@onready var confirm: Control = $Menu/Keyboard/Confirm
+@onready var left: Control = $Menu/Keyboard/Left
+@onready var right: Control = $Menu/Keyboard/Right
+@onready var up: Control = $Menu/Keyboard/Up
+@onready var down: Control = $Menu/Keyboard/Down
+@onready var jump: Control = $Menu/Keyboard/Jump
+@onready var dash: Control = $Menu/Keyboard/Dash
+@onready var slash: Control = $Menu/Keyboard/Slash
+@onready var spell: Control = $Menu/Keyboard/Spell
+@onready var keyboard_confirm_button: Label = $Menu/Keyboard/ConfirmButton
 
 # states of the menu
 var state := 0
@@ -93,7 +106,7 @@ func handle_main_menu() -> void:
 	quit_button.visible = true
 	
 	# click on a button
-	if Input.is_action_just_pressed("confirm"):
+	if Input.is_action_just_pressed("confirm") or Input.is_action_just_pressed("ui_accept"):
 		# start the game
 		if cursor_indexes[state] == 0:
 			start_game()
@@ -117,7 +130,7 @@ func handle_options_menu() -> void:
 	options_back_button.visible = true
 	
 	# click on a button
-	if Input.is_action_just_pressed("confirm"):
+	if Input.is_action_just_pressed("confirm") or Input.is_action_just_pressed("ui_accept"):
 		# skin selection
 		if cursor_indexes[state] == 0:
 			# pending skin (the one displayed but not confirmed yet)
@@ -170,7 +183,7 @@ func handle_skin_selection() -> void:
 	skin_color_label.set("theme_override_colors/font_color", colors[color_list[pending_selected_skin]])
 	
 	# click on a button
-	if Input.is_action_just_pressed("confirm"):
+	if Input.is_action_just_pressed("confirm") or Input.is_action_just_pressed("ui_accept"):
 		# confirm skin
 		if cursor_indexes[state] == 1:
 			selected_skin = pending_selected_skin
@@ -211,7 +224,7 @@ func handle_resolution() -> void:
 			resolution_label.text = str(resolution_sizes[pending_selected_resolution].x) + "x" + str(resolution_sizes[pending_selected_resolution].y)
 
 	# click on a button
-	if Input.is_action_just_pressed("confirm"):
+	if Input.is_action_just_pressed("confirm") or Input.is_action_just_pressed("ui_accept"):
 		# confirm resolution
 		if cursor_indexes[state] == 1:
 			selected_resolution = pending_selected_resolution
@@ -231,18 +244,75 @@ func handle_resolution() -> void:
 			state = 1
 			select_sound.play()
 
+func handle_controls() -> void:
+	title.visible = true
+	version_label.visible = true
+	
+	controls_keyboard_button.visible = true
+	controls_controller_button.visible = true
+	controls_back_button.visible = true
+	
+	# click on a button
+	if Input.is_action_just_pressed("confirm") or Input.is_action_just_pressed("ui_accept"):
+		# keyboard
+		if cursor_indexes[state] == 0:
+			state = 5
+			select_sound.play()
+		
+		# go back
+		if cursor_indexes[state] == 2:
+			cursor_indexes[state] = 0
+			
+			state = 1
+			select_sound.play()
+
+func handle_keyboard_mapping() -> void:
+	version_label.visible = true
+	
+	keyboard_menu.visible = true
+	right_cursor.visible = false
+	
+	# navigate the controls
+	if state == 5:
+		if Input.is_action_just_pressed("confirm") or Input.is_action_just_pressed("ui_accept"):
+			# go back
+			if cursor_indexes[state] == menu_options[state].size()-1:
+				cursor_indexes[state] = 0
+				
+				state = 4
+				select_sound.play()
+			
+			else:
+				state = 6 # awaiting for input
+				var selected_key: Node = menu_options[state][cursor_indexes[state]]
+				
+				#selected_key.new_input()
+	
+	# choose an input
+	elif state == 6:
+		pass
+
 func handle_cursors() -> void:
 	left_cursor.visible = true
 	right_cursor.visible = true
 	
 	var selected_button: Node = menu_options[state][cursor_indexes[state]]
 
-	# cursors position
-	left_cursor.position.x = selected_button.position.x - 14
-	left_cursor.position.y = selected_button.position.y + 10
+	# keyboard keys cursor position
+	if state == 5 and cursor_indexes[state] < 8:
+		left_cursor.position.x = selected_button.label.position.x - 14
+		left_cursor.position.y = selected_button.label.position.y + 8
+		
+		right_cursor.position.x = selected_button.label.position.x + selected_button.label.size.x + 14
+		right_cursor.position.y = selected_button.label.position.y + 8
 	
-	right_cursor.position.x = selected_button.position.x + selected_button.size.x + 14
-	right_cursor.position.y = selected_button.position.y + 10
+	# usual cursors position
+	else:
+		left_cursor.position.x = selected_button.position.x - 14
+		left_cursor.position.y = selected_button.position.y + 10
+		
+		right_cursor.position.x = selected_button.position.x + selected_button.size.x + 14
+		right_cursor.position.y = selected_button.position.y + 10
 	
 	# flip the sprite if the skin sprite or resolution label is selected
 	if selected_button == player_skin \
@@ -254,11 +324,11 @@ func handle_cursors() -> void:
 		right_cursor.flip_h = false
 	
 	# up/down cursors navigation
-	if Input.is_action_just_pressed("up"):
+	if Input.is_action_just_pressed("up") or Input.is_action_just_pressed("ui_up"):
 		cursor_indexes[state] = posmod(cursor_indexes[state] - 1, menu_options[state].size())
 		select_sound.play()
 	
-	elif Input.is_action_just_pressed("down"):
+	elif Input.is_action_just_pressed("down") or Input.is_action_just_pressed("ui_down"):
 		cursor_indexes[state] = posmod(cursor_indexes[state] + 1, menu_options[state].size())
 		select_sound.play()
 
@@ -296,13 +366,17 @@ func _ready() -> void:
 		1: [skin_button, resolution_button, controls_button, options_back_button],
 		2: [player_skin, skin_confirm_button, skin_back_button],
 		3: [resolution_label, resolution_confirm_button, resolution_back_button],
+		4: [controls_keyboard_button, controls_controller_button, controls_back_button],
+		5: [confirm, left, right, up, down, jump, dash, slash, spell, keyboard_confirm_button],
 	}
 	
 	cursor_indexes = {
 		0: 0,
 		1: 0,
 		2: 0,
-		3: 0
+		3: 0,
+		4: 0,
+		5: 0,
 	}
 	
 	# changed title screen if the game is cleared
@@ -317,9 +391,19 @@ func _ready() -> void:
 		skin_button.set("theme_override_colors/font_color", Color.YELLOW)
 		resolution_button.set("theme_override_colors/font_color", Color.YELLOW)
 		controls_button.set("theme_override_colors/font_color", Color.YELLOW)
+		options_back_button.set("theme_override_colors/font_color", Color.YELLOW)
 		
-		player_controls_info.set("theme_override_colors/font_color", Color.YELLOW)
-		extra_controls_info.set("theme_override_colors/font_color", Color.YELLOW)
+		skin_confirm_button.set("theme_override_colors/font_color", Color.YELLOW)
+		skin_back_button.set("theme_override_colors/font_color", Color.YELLOW)
+		
+		resolution_label.set("theme_override_colors/font_color", Color.YELLOW)
+		resolution_confirm_button.set("theme_override_colors/font_color", Color.YELLOW)
+		resolution_back_button.set("theme_override_colors/font_color", Color.YELLOW)
+		
+		controls_keyboard_button.set("theme_override_colors/font_color", Color.YELLOW)
+		controls_controller_button.set("theme_override_colors/font_color", Color.YELLOW)
+		controls_back_button.set("theme_override_colors/font_color", Color.YELLOW)
+		
 		version_label.set("theme_override_colors/font_color", Color.YELLOW)
 
 func hide_all() -> void:
@@ -346,6 +430,12 @@ func hide_all() -> void:
 	resolution_label.visible = false
 	resolution_confirm_button.visible = false
 	resolution_back_button.visible = false
+	
+	controls_keyboard_button.visible = false
+	controls_controller_button.visible = false
+	controls_back_button.visible = false
+	
+	keyboard_menu.visible = false
 
 func _process(_delta: float) -> void:
 	# hide all labels
@@ -373,4 +463,10 @@ func _process(_delta: float) -> void:
 	
 	# controls
 	elif state == 4:
-		state = 1
+		handle_cursors()
+		handle_controls()
+	
+	# keyboard mapping
+	elif state == 5 or state == 6:
+		handle_cursors()
+		handle_keyboard_mapping()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dt10hsybag1bs"]
+[gd_scene load_steps=34 format=3 uid="uid://dt10hsybag1bs"]
 
 [ext_resource type="Texture2D" uid="uid://c3ruqeec58wyr" path="res://assets/sprites/terrains/bg_mushroom_back.png" id="1_vvf2q"]
 [ext_resource type="Texture2D" uid="uid://21swlqu61mh1" path="res://assets/sprites/other/spr_title.png" id="1_x6j3q"]
@@ -10,6 +10,7 @@
 [ext_resource type="FontFile" uid="uid://camhtmnphwiu5" path="res://assets/fonts/8bit.fnt" id="6_bnf46"]
 [ext_resource type="Texture2D" uid="uid://cwf4o71h6yy2x" path="res://assets/sprites/chars/player/spr_player_skin.png" id="8_oq45q"]
 [ext_resource type="Texture2D" uid="uid://d0iyx0ggjm4dv" path="res://assets/sprites/items/spr_winged_golden_strawberry.png" id="10_wikbu"]
+[ext_resource type="Script" path="res://scripts/input_key_mapping.gd" id="11_73qt1"]
 
 [sub_resource type="Animation" id="Animation_apgp8"]
 length = 0.001
@@ -211,11 +212,11 @@ metadata/_edit_use_anchors_ = true
 [node name="Midground" type="TextureRect" parent="Background"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.7
-anchor_bottom = 0.7
-offset_top = -94.0
+anchor_top = 1.4
+anchor_bottom = 1.4
+offset_top = -122.0
 offset_right = 1200.0
-offset_bottom = 184.0
+offset_bottom = 156.0
 texture = ExtResource("2_tjndk")
 stretch_mode = 1
 metadata/_edit_use_anchors_ = true
@@ -227,14 +228,8 @@ libraries = {
 }
 autoplay = "loop"
 
-[node name="Title" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Title" type="TextureRect" parent="Title"]
-layout_mode = 0
+[node name="Title" type="TextureRect" parent="."]
+visible = false
 offset_left = 53.0
 offset_right = 1333.0
 offset_bottom = 484.0
@@ -242,23 +237,22 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_x6j3q")
 stretch_mode = 3
 
-[node name="VersionLabel" type="Label" parent="Title"]
-layout_mode = 0
-offset_left = 337.0
-offset_top = 91.0
-offset_right = 369.0
-offset_bottom = 110.0
-theme_override_fonts/font = ExtResource("6_bnf46")
-theme_override_font_sizes/font_size = 14
-text = "v0.3"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="ClearSprite" type="AnimatedSprite2D" parent="Title"]
 visible = false
+top_level = true
 position = Vector2(71, 99)
 sprite_frames = SubResource("SpriteFrames_pebm5")
 autoplay = "default"
+
+[node name="VersionLabel" type="Label" parent="."]
+offset_left = 387.0
+offset_top = 223.0
+offset_right = 419.0
+offset_bottom = 240.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 14
+text = "v0.3"
+horizontal_alignment = 2
 
 [node name="Menu" type="Control" parent="."]
 layout_mode = 3
@@ -350,13 +344,13 @@ horizontal_alignment = 1
 [node name="ResolutionButton" type="Label" parent="Menu/Options"]
 visible = false
 layout_mode = 0
-offset_left = 148.0
+offset_left = 168.0
 offset_top = 152.0
-offset_right = 278.0
+offset_right = 258.0
 offset_bottom = 180.0
 theme_override_fonts/font = ExtResource("6_bnf46")
 theme_override_font_sizes/font_size = 24
-text = "Resolution"
+text = "Display"
 horizontal_alignment = 1
 
 [node name="ControlsButton" type="Label" parent="Menu/Options"]
@@ -481,33 +475,329 @@ theme_override_font_sizes/font_size = 24
 text = "Back"
 horizontal_alignment = 1
 
-[node name="PlayerControlsInfo" type="Label" parent="."]
-top_level = true
-offset_left = 300.0
-offset_top = 185.0
-offset_right = 422.0
-offset_bottom = 240.0
-theme_override_constants/line_spacing = 0
+[node name="Controls" type="Control" parent="Menu"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="KeyboardButton" type="Label" parent="Menu/Controls"]
+visible = false
+layout_mode = 0
+offset_left = 157.0
+offset_top = 144.0
+offset_right = 269.0
+offset_bottom = 172.0
 theme_override_fonts/font = ExtResource("6_bnf46")
-theme_override_font_sizes/font_size = 9
-text = "WASD: Movement
-SPACE: Jump/Confirm
-J: Basic Slash
-K: Dash
-L: Magic Slash"
+theme_override_font_sizes/font_size = 24
+text = "	Keyboard"
+horizontal_alignment = 1
+
+[node name="ControllerButton" type="Label" parent="Menu/Controls"]
+visible = false
+layout_mode = 0
+offset_left = 148.0
+offset_top = 176.0
+offset_right = 278.0
+offset_bottom = 204.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
+text = "Controller"
+horizontal_alignment = 1
+
+[node name="BackButton" type="Label" parent="Menu/Controls"]
+visible = false
+layout_mode = 0
+offset_left = 185.0
+offset_top = 208.0
+offset_right = 241.0
+offset_bottom = 236.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
+text = "Back"
+horizontal_alignment = 1
+
+[node name="Keyboard" type="Control" parent="Menu"]
+anchors_preset = 0
+offset_top = 16.0
+offset_right = 40.0
+offset_bottom = 56.0
+
+[node name="Confirm" type="Control" parent="Menu/Keyboard"]
+anchors_preset = 0
+offset_top = 18.0
+offset_right = 40.0
+offset_bottom = 58.0
+script = ExtResource("11_73qt1")
+action = "confirm"
+
+[node name="Label" type="Label" parent="Menu/Keyboard/Confirm"]
+top_level = true
+layout_mode = 0
+offset_left = 72.0
+offset_top = 12.0
+offset_right = 184.0
+offset_bottom = 36.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "	Confirm
+"
+
+[node name="Key" type="Label" parent="Menu/Keyboard/Confirm"]
+layout_mode = 0
+offset_left = 182.0
+offset_top = -22.0
+offset_right = 356.0
+offset_bottom = 6.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "	[]"
 horizontal_alignment = 2
 
-[node name="ExtraControlsInfo" type="Label" parent="."]
+[node name="Left" type="Control" parent="Menu/Keyboard"]
+anchors_preset = 0
+offset_top = 18.0
+offset_right = 40.0
+offset_bottom = 58.0
+script = ExtResource("11_73qt1")
+action = "left"
+
+[node name="Label" type="Label" parent="Menu/Keyboard/Left"]
 top_level = true
-offset_left = 4.0
-offset_top = 185.0
-offset_right = 126.0
-offset_bottom = 240.0
-theme_override_constants/line_spacing = 0
+layout_mode = 0
+offset_left = 72.0
+offset_top = 34.0
+offset_right = 184.0
+offset_bottom = 58.0
 theme_override_fonts/font = ExtResource("6_bnf46")
-theme_override_font_sizes/font_size = 9
-text = "
+theme_override_font_sizes/font_size = 20
+text = "	Left"
 
+[node name="Key" type="Label" parent="Menu/Keyboard/Left"]
+layout_mode = 0
+offset_left = 182.0
+offset_right = 356.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "	[]"
+horizontal_alignment = 2
 
-I: Confirm
-P: Pause"
+[node name="Right" type="Control" parent="Menu/Keyboard"]
+anchors_preset = 0
+offset_top = 40.0
+offset_right = 40.0
+offset_bottom = 80.0
+script = ExtResource("11_73qt1")
+action = "right"
+
+[node name="Label" type="Label" parent="Menu/Keyboard/Right"]
+top_level = true
+layout_mode = 0
+offset_left = 72.0
+offset_top = 56.0
+offset_right = 184.0
+offset_bottom = 80.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "Right"
+
+[node name="Key" type="Label" parent="Menu/Keyboard/Right"]
+layout_mode = 0
+offset_left = 182.0
+offset_right = 356.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "	[]"
+horizontal_alignment = 2
+
+[node name="Up" type="Control" parent="Menu/Keyboard"]
+anchors_preset = 0
+offset_top = 62.0
+offset_right = 40.0
+offset_bottom = 102.0
+script = ExtResource("11_73qt1")
+action = "up"
+
+[node name="Label" type="Label" parent="Menu/Keyboard/Up"]
+top_level = true
+layout_mode = 0
+offset_left = 72.0
+offset_top = 78.0
+offset_right = 184.0
+offset_bottom = 102.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "Up"
+
+[node name="Key" type="Label" parent="Menu/Keyboard/Up"]
+layout_mode = 0
+offset_left = 182.0
+offset_right = 356.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "	[]"
+horizontal_alignment = 2
+
+[node name="Down" type="Control" parent="Menu/Keyboard"]
+anchors_preset = 0
+offset_top = 84.0
+offset_right = 40.0
+offset_bottom = 124.0
+script = ExtResource("11_73qt1")
+action = "down"
+
+[node name="Label" type="Label" parent="Menu/Keyboard/Down"]
+top_level = true
+layout_mode = 0
+offset_left = 72.0
+offset_top = 100.0
+offset_right = 184.0
+offset_bottom = 124.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "Down"
+
+[node name="Key" type="Label" parent="Menu/Keyboard/Down"]
+layout_mode = 0
+offset_left = 182.0
+offset_right = 356.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "	[]"
+horizontal_alignment = 2
+
+[node name="Jump" type="Control" parent="Menu/Keyboard"]
+anchors_preset = 0
+offset_top = 106.0
+offset_right = 40.0
+offset_bottom = 146.0
+script = ExtResource("11_73qt1")
+action = "jump"
+
+[node name="Label" type="Label" parent="Menu/Keyboard/Jump"]
+top_level = true
+layout_mode = 0
+offset_left = 72.0
+offset_top = 122.0
+offset_right = 184.0
+offset_bottom = 146.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "Jump"
+
+[node name="Key" type="Label" parent="Menu/Keyboard/Jump"]
+layout_mode = 0
+offset_left = 182.0
+offset_right = 356.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "	[]"
+horizontal_alignment = 2
+
+[node name="Dash" type="Control" parent="Menu/Keyboard"]
+anchors_preset = 0
+offset_top = 128.0
+offset_right = 40.0
+offset_bottom = 168.0
+script = ExtResource("11_73qt1")
+action = "dash"
+
+[node name="Label" type="Label" parent="Menu/Keyboard/Dash"]
+top_level = true
+layout_mode = 0
+offset_left = 72.0
+offset_top = 144.0
+offset_right = 184.0
+offset_bottom = 168.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "Dash"
+
+[node name="Key" type="Label" parent="Menu/Keyboard/Dash"]
+layout_mode = 0
+offset_left = 182.0
+offset_right = 356.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "	[]"
+horizontal_alignment = 2
+
+[node name="Slash" type="Control" parent="Menu/Keyboard"]
+anchors_preset = 0
+offset_top = 150.0
+offset_right = 40.0
+offset_bottom = 190.0
+script = ExtResource("11_73qt1")
+action = "basic_slash"
+
+[node name="Label" type="Label" parent="Menu/Keyboard/Slash"]
+top_level = true
+layout_mode = 0
+offset_left = 72.0
+offset_top = 166.0
+offset_right = 184.0
+offset_bottom = 190.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "Slash"
+
+[node name="Key" type="Label" parent="Menu/Keyboard/Slash"]
+layout_mode = 0
+offset_left = 182.0
+offset_right = 356.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "	[]"
+horizontal_alignment = 2
+
+[node name="Spell" type="Control" parent="Menu/Keyboard"]
+anchors_preset = 0
+offset_top = 172.0
+offset_right = 40.0
+offset_bottom = 212.0
+script = ExtResource("11_73qt1")
+action = "magic_slash"
+
+[node name="Label" type="Label" parent="Menu/Keyboard/Spell"]
+top_level = true
+layout_mode = 0
+offset_left = 72.0
+offset_top = 188.0
+offset_right = 184.0
+offset_bottom = 212.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "Spell"
+
+[node name="Key" type="Label" parent="Menu/Keyboard/Spell"]
+layout_mode = 0
+offset_left = 182.0
+offset_right = 356.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "	[]"
+horizontal_alignment = 2
+
+[node name="ConfirmButton" type="Label" parent="Menu/Keyboard"]
+top_level = true
+layout_mode = 0
+offset_left = 72.0
+offset_top = 216.0
+offset_right = 119.0
+offset_bottom = 240.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 20
+text = "Save"
+horizontal_alignment = 1
+
+[node name="Controller" type="Control" parent="Menu"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

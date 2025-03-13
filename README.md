@@ -49,9 +49,9 @@
 - `Right Trigger`: Dash
 - `Left Trigger`: Magic Slash
 
-## Inspirations
+## Resources & Inspirations
 
-- Celeste: Platformer mechanics and tilesets
+- Celeste: Platformer mechanics, tilesets, few sprites and SFX
 - Hollow Knight: Combat system
 - Evoland II: Sprites, UI and SFX
 - Pokémon Mystery Dungeon Explorers of Sky: Musics
