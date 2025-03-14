@@ -513,7 +513,6 @@ func hurt(damage: int, ignore_defense: bool = false) -> void:
 	# player is still alive
 	elif health > max(1, damage):
 		health -= max(1, damage)
-		velocity.x *= 0.5
 		hurt_sound.play()
 		hurtbox.set_deferred("disabled", true)
 		hurt_invicibility_timer.start()
