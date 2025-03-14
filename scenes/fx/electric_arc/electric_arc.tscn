@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://b1qsksiagp7rj"]
+[gd_scene load_steps=64 format=3 uid="uid://b1qsksiagp7rj"]
 
 [ext_resource type="Script" path="res://scripts/electric_arc.gd" id="1_hgmtn"]
 [ext_resource type="Texture2D" uid="uid://b48fv6bqxqlps" path="res://assets/sprites/fx/spr_electric_arc.png" id="2_b1qjw"]
@@ -418,6 +418,8 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_m8q8l"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jhxad"]
 size = Vector2(6, 38)
 
@@ -432,6 +434,13 @@ script = ExtResource("1_hgmtn")
 sprite_frames = SubResource("SpriteFrames_4bec0")
 animation = &"5"
 autoplay = "5"
+
+[node name="SolidHitboxSprite" type="Sprite2D" parent="AnimatedSprite"]
+self_modulate = Color(1, 1, 1, 0.482353)
+show_behind_parent = true
+position = Vector2(-2.38419e-07, 0)
+scale = Vector2(6, 40)
+texture = SubResource("CanvasTexture_m8q8l")
 
 [node name="WallCollider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_jhxad")

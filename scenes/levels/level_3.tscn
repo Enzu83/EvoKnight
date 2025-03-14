@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=4 uid="uid://doqatuh36ah4u"]
+[gd_scene load_steps=43 format=4 uid="uid://doqatuh36ah4u"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_3.gd" id="1_7ykpr"]
 [ext_resource type="AudioStream" uid="uid://b1qtb8fncq3iv" path="res://assets/musics/mus_chasm_cave.mp3" id="2_l85tu"]
@@ -20,7 +20,6 @@
 [ext_resource type="PackedScene" uid="uid://i0uejwv47jnl" path="res://scenes/chars/ceres.tscn" id="10_6ouag"]
 [ext_resource type="PackedScene" uid="uid://bt1apvt6ojk46" path="res://scenes/chars/ceiling_cloporte.tscn" id="11_6b5f4"]
 [ext_resource type="PackedScene" uid="uid://f5padrph2ypl" path="res://scenes/chars/spiky_eyebat.tscn" id="12_q8jgo"]
-[ext_resource type="PackedScene" uid="uid://b1qitrqlcp4p" path="res://scenes/fx/electric_arc/electric_arc_no_hitbox.tscn" id="12_w6wah"]
 [ext_resource type="PackedScene" uid="uid://dwitea1wpbdjp" path="res://scenes/chars/player.tscn" id="13_gcqkt"]
 [ext_resource type="PackedScene" uid="uid://c0q4ajyur6afq" path="res://scenes/other/player_camera_point.tscn" id="14_wu1ns"]
 [ext_resource type="PackedScene" uid="uid://cvx745hhmp0k6" path="res://scenes/other/kill_zone.tscn" id="15_2ddn1"]
@@ -96,22 +95,7 @@ _data = {
 "float": SubResource("Animation_7ufga")
 }
 
-[sub_resource type="Animation" id="Animation_pryin"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(3324, -540)]
-}
-
-[sub_resource type="Animation" id="Animation_ocvip"]
+[sub_resource type="Animation" id="Animation_al86a"]
 resource_name = "move"
 length = 5.0
 loop_mode = 2
@@ -128,28 +112,12 @@ tracks/0/keys = {
 "values": [Vector2(3324, -180), Vector2(3324, -540)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_oonke"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3yg4t"]
 _data = {
-"RESET": SubResource("Animation_pryin"),
-"move": SubResource("Animation_ocvip")
+"move": SubResource("Animation_al86a")
 }
 
-[sub_resource type="Animation" id="Animation_xrj1h"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(3364, -180)]
-}
-
-[sub_resource type="Animation" id="Animation_io7hq"]
+[sub_resource type="Animation" id="Animation_j7u2l"]
 resource_name = "move"
 length = 5.0
 loop_mode = 2
@@ -166,10 +134,9 @@ tracks/0/keys = {
 "values": [Vector2(3364, -540), Vector2(3364, -180)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_txyfl"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_umbys"]
 _data = {
-"RESET": SubResource("Animation_xrj1h"),
-"move": SubResource("Animation_io7hq")
+"move": SubResource("Animation_j7u2l")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hsmr0"]
@@ -448,27 +415,27 @@ position = Vector2(3036, -179)
 rotation = 1.5708
 reversed = true
 
-[node name="ReverseElectricArcNoHitbox" parent="ElectricArcs" instance=ExtResource("12_w6wah")]
-position = Vector2(3324, -540)
+[node name="ReverseElectricArcNoHitbox" parent="ElectricArcs" instance=ExtResource("19_a7tjk")]
+position = Vector2(3324, -180)
 rotation = 1.5708
 reversed = true
 solid = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ElectricArcs/ReverseElectricArcNoHitbox"]
 libraries = {
-"": SubResource("AnimationLibrary_oonke")
+"": SubResource("AnimationLibrary_3yg4t")
 }
 autoplay = "move"
 
-[node name="ReverseElectricArcNoHitbox2" parent="ElectricArcs" instance=ExtResource("12_w6wah")]
-position = Vector2(3364, -180)
+[node name="ReverseElectricArcNoHitbox2" parent="ElectricArcs" instance=ExtResource("19_a7tjk")]
+position = Vector2(3364, -540)
 rotation = 1.5708
 reversed = true
 solid = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ElectricArcs/ReverseElectricArcNoHitbox2"]
 libraries = {
-"": SubResource("AnimationLibrary_txyfl")
+"": SubResource("AnimationLibrary_umbys")
 }
 autoplay = "move"
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://q1aarwp3gug1"]
+[gd_scene load_steps=20 format=3 uid="uid://q1aarwp3gug1"]
 
 [ext_resource type="Script" path="res://scripts/electric_arc_block.gd" id="1_rwv8t"]
 [ext_resource type="Texture2D" uid="uid://735r6bhs8jo0" path="res://assets/sprites/fx/spr_electric_arc_block.png" id="2_i5uqh"]
@@ -90,6 +90,8 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_c8kmv"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jhxad"]
 size = Vector2(6, 6)
 
@@ -105,6 +107,43 @@ sprite_frames = SubResource("SpriteFrames_4bec0")
 animation = &"5"
 autoplay = "5"
 frame_progress = 0.974735
+
+[node name="SolidHitboxSprite" type="Sprite2D" parent="AnimatedSprite"]
+self_modulate = Color(1, 1, 1, 0.482353)
+show_behind_parent = true
+position = Vector2(-2.38419e-07, 2.38419e-07)
+scale = Vector2(6, 6)
+texture = SubResource("CanvasTexture_c8kmv")
+
+[node name="SubSpriteUp" type="Sprite2D" parent="AnimatedSprite/SolidHitboxSprite"]
+self_modulate = Color(1, 1, 1, 0.482353)
+show_behind_parent = true
+position = Vector2(0, -0.583)
+rotation = 1.5708
+scale = Vector2(0.167, 1)
+texture = SubResource("CanvasTexture_c8kmv")
+
+[node name="SubSpriteDown" type="Sprite2D" parent="AnimatedSprite/SolidHitboxSprite"]
+self_modulate = Color(1, 1, 1, 0.482353)
+show_behind_parent = true
+position = Vector2(0, 0.583)
+rotation = 1.5708
+scale = Vector2(0.167, 1)
+texture = SubResource("CanvasTexture_c8kmv")
+
+[node name="SubSpriteLeft" type="Sprite2D" parent="AnimatedSprite/SolidHitboxSprite"]
+self_modulate = Color(1, 1, 1, 0.482353)
+show_behind_parent = true
+position = Vector2(-0.583, 0)
+scale = Vector2(0.167, 1)
+texture = SubResource("CanvasTexture_c8kmv")
+
+[node name="SubSpriteRight" type="Sprite2D" parent="AnimatedSprite/SolidHitboxSprite"]
+self_modulate = Color(1, 1, 1, 0.482353)
+show_behind_parent = true
+position = Vector2(0.583, 0)
+scale = Vector2(0.167, 1)
+texture = SubResource("CanvasTexture_c8kmv")
 
 [node name="WallCollider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_jhxad")

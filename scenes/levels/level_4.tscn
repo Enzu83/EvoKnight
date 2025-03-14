@@ -499,9 +499,11 @@ position = Vector2(2329, -512)
 
 [node name="ElectricArcOrange" parent="ElectricArcs" instance=ExtResource("19_s2wyu")]
 position = Vector2(2263, -588)
+solid = false
 
 [node name="ElectricArcBlue" parent="ElectricArcs" instance=ExtResource("20_ll5q6")]
 position = Vector2(2232, -588)
+solid = false
 
 [node name="LeverAutoSwitch" parent="ElectricArcs" instance=ExtResource("21_ud5ar")]
 position = Vector2(2254, -512)

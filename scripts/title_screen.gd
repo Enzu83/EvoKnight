@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var title: TextureRect = $Title
 @onready var clear_sprite: AnimatedSprite2D = $Title/ClearSprite
-@onready var version_label: Label = $VersionLabel
+@onready var version_label: Label = $Title/VersionLabel
 
 @onready var left_cursor: AnimatedSprite2D = $Menu/LeftCursor
 @onready var right_cursor: AnimatedSprite2D = $Menu/RightCursor

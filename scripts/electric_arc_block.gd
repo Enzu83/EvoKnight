@@ -3,6 +3,7 @@ extends StaticBody2D
 @onready var player: CharacterBody2D = %Player
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite
+@onready var solid_hitbox_sprite: Sprite2D = $AnimatedSprite/SolidHitboxSprite
 @onready var wall_collider: CollisionShape2D = $WallCollider
 @onready var hitbox: CollisionShape2D = $Hitbox/Hitbox
 
@@ -19,6 +20,7 @@ func _ready() -> void:
 	# solid hitbox or not
 	if not solid:
 		wall_collider.disabled = true
+		solid_hitbox_sprite.visible = false
 
 func _process(_delta: float) -> void:
 	if Global.electric_arc_enabled:
@@ -31,12 +33,18 @@ func _process(_delta: float) -> void:
 func update_active_state() -> void:
 	if active:
 		animated_sprite.visible = true
-		wall_collider.disabled = false
 		hitbox.disabled = false
+		
+		if solid:
+			wall_collider.disabled = false
+			solid_hitbox_sprite.visible = true
 	else:
 		animated_sprite.visible = false
-		wall_collider.disabled = true
 		hitbox.disabled = true
+		
+		if solid:
+			wall_collider.disabled = true
+			solid_hitbox_sprite.visible = false
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	var body := area.get_parent() # get the player
