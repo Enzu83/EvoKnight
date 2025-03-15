@@ -470,6 +470,7 @@ func _physics_process(delta: float) -> void:
 			handle_crouch()
 			handle_dash() # can't dash while attacking
 			handle_jump() # left, right and jump
+			handle_jump_height() # different jump heights (in process to be sync with player)
 			handle_slash() # attacks
 			handle_super_speed() # permanent 1.5x multiplier
 			handle_bumped() # launched by another object
@@ -481,9 +482,6 @@ func _physics_process(delta: float) -> void:
 	animate() # update the sprite animation if necessary
 	move_and_slide()
 func _process(_delta: float) -> void:
-	# different jump heights (in process to be sync with player)
-	handle_jump_height()
-	
 	# store the info after each frame
 	Global.store_player_info()
 

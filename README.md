@@ -1,4 +1,8 @@
-# Godot Game Jam
+# EvoKnight
+
+EvoKnight is an action-platformer game mainly inspired by Celeste and Hollow Knight.
+
+
 
 ## Context
 
