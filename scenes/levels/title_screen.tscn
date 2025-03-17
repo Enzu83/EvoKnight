@@ -230,7 +230,6 @@ libraries = {
 autoplay = "loop"
 
 [node name="Title" type="TextureRect" parent="."]
-visible = false
 offset_left = 53.0
 offset_right = 1333.0
 offset_bottom = 484.0
@@ -247,6 +246,7 @@ autoplay = "default"
 
 [node name="VersionLabel" type="Label" parent="Title"]
 top_level = true
+layout_mode = 0
 offset_left = 387.0
 offset_top = 223.0
 offset_right = 419.0

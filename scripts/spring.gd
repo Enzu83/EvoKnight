@@ -33,16 +33,6 @@ func _ready() -> void:
 		orientation = "left"
 		launch_direction = Vector2(-1, -0.4)
 
-func _physics_process(_delta: float) -> void:
-	# deactivate hitbox if player is behind the spring
-	if (orientation == "up" and player.position.y - position.y > 8) \
-	or (orientation == "right" and player.position.x - position.x < -8) \
-	or (orientation == "down" and player.position.y - position.y < -8) \
-	or (orientation == "left" and player.position.x - position.x > 8):
-		hitbox.disabled = true
-	else:
-		hitbox.disabled = false
-
 func check_spring(body: Node2D) -> void:
 	if body == player and body.state != body.State.Fainted:
 		spring(body)

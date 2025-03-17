@@ -441,7 +441,7 @@ rotation = 1.5708
 reversed = true
 
 [node name="ReverseElectricArcRed2" parent="ElectricArcs" instance=ExtResource("16_e0nu1")]
-position = Vector2(1516, -534)
+position = Vector2(1516, -548)
 rotation = 1.5708
 reversed = true
 

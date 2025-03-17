@@ -141,6 +141,7 @@ func init_auto_switch_electric_arc() -> void:
 	electric_arc_auto_timer.connect("timeout", _on_electric_arc_auto_timer_timeout)
 	
 	electric_arc_sound.stream = electric_arc_stream
+	electric_arc_sound.bus = "SFX"
 	
 	add_child(electric_arc_auto_timer)
 	add_child(electric_arc_sound)

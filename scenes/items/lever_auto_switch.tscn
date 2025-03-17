@@ -5,8 +5,8 @@
 [ext_resource type="AudioStream" uid="uid://dya2n54kadsdk" path="res://assets/sfx/snd_lever.wav" id="3_e4d5m"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vl2ty"]
-radius = 5.0
-height = 16.0
+radius = 4.0
+height = 12.0
 
 [node name="LeverAutoSwitch" type="Area2D"]
 collision_layer = 0
@@ -19,7 +19,7 @@ texture = ExtResource("2_srevh")
 hframes = 2
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-position = Vector2(0, -5)
+position = Vector2(0, -4)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_vl2ty")
 

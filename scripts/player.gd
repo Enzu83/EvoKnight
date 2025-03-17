@@ -428,7 +428,7 @@ func animate() -> void:
 
 		elif velocity.y > 0:
 			play_animation("fall")
-		else:
+		elif velocity.y < 0:
 			play_animation("jump")
 
 func init_info() -> void:
@@ -470,17 +470,18 @@ func _physics_process(delta: float) -> void:
 			handle_crouch()
 			handle_dash() # can't dash while attacking
 			handle_jump() # left, right and jump
-			handle_jump_height() # different jump heights (in process to be sync with player)
+			handle_jump_height() # different jump heights
 			handle_slash() # attacks
 			handle_super_speed() # permanent 1.5x multiplier
 			handle_bumped() # launched by another object
-			
+
 	if state != State.Dashing \
 	and state != State.DashingAndAttacking:
 		handle_velocity(delta) # velocity update based on the above modification
 			
 	animate() # update the sprite animation if necessary
 	move_and_slide()
+
 func _process(_delta: float) -> void:
 	# store the info after each frame
 	Global.store_player_info()
