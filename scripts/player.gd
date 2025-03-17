@@ -41,10 +41,10 @@ extends CharacterBody2D
 # Parameters
 const SPEED = 150.0
 const HIGHEST_JUMP_VELOCITY = -300.0 # velocity corresponding to a jump with the same height as the maximum jump height 
-const JUMP_VELOCITY = -180.0
+const JUMP_VELOCITY = -160.0
 const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
-const JUMP_FRAME_WINDOW = 12 # range of frames for jump heights
+const JUMP_FRAME_WINDOW = 16 # range of frames for jump heights
 
 const MANA_RECOVERY_RATE = 0 #20 # mana recovered per frame
 const MAGIC_SLASH_MANA = 250 # mana required for magic slash
@@ -528,6 +528,7 @@ func fainted() -> void:
 		play_animation("faint")
 		state = State.Fainted
 		velocity = Vector2.ZERO
+		higher_jump_height = 0
 		phantom_cooldown.stop()
 		hurtbox.set_deferred("disabled", true)
 		death_sound.play()
