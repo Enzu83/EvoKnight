@@ -502,13 +502,13 @@ position = Vector2(1581, -133)
 position = Vector2(1517, -510)
 
 [node name="Star3" parent="Items" instance=ExtResource("9_db2bn")]
-position = Vector2(2077, -978)
+position = Vector2(2077, -982)
 
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("13_u6tl7")]
 unique_name_in_owner = true
-position = Vector2(2240, -526)
+position = Vector2(220, 8)
 
 [node name="PlayerCameraPoint" parent="Player" instance=ExtResource("14_0cuxu")]
 top_level = true
