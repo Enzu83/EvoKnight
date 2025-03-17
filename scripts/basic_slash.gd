@@ -17,7 +17,6 @@ func reset() -> void:
 	active = false
 	scale = Vector2.ONE
 	position = reference_position
-	animation_player.call_deferred("play", "RESET")
 
 func start(orientation: String) -> void:
 	direction = orientation
@@ -94,7 +93,3 @@ func _on_area_entered(area: Area2D) -> void:
 		# make player bounce on the enemy
 		if direction == "down":
 			player.handle_bounce()
-
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name != "RESET":
-		animation_player.play("RESET")

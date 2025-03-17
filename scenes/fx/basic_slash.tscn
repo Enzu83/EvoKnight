@@ -498,7 +498,6 @@ visible = false
 position = Vector2(9, -5)
 texture = ExtResource("2_v8r85")
 hframes = 6
-frame = 5
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ahk0r")
