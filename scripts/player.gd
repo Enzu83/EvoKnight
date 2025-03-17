@@ -252,6 +252,9 @@ func handle_dash() -> void:
 		else:
 			state = State.Dashing
 		
+		# toggle dash blocks
+		Global.toggle_dash_block()
+		
 		# prevent for re-dashing instantly only if the player is in the air
 		if not is_on_floor():
 			can_dash = false

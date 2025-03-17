@@ -77,6 +77,9 @@ var electric_arc_auto_timer := Timer.new()
 var electric_arc_stream: Resource = load("res://assets/sfx/snd_lever.wav")
 var electric_arc_sound := AudioStreamPlayer.new()
 
+# dash block
+var dash_block_activated := false
+
 # boss defeated
 var big_bat_defeated := false
 var ceres_defeated := false
@@ -89,6 +92,7 @@ func _ready() -> void:
 	init_player_stats()
 	
 	init_auto_switch_electric_arc()
+	init_dash_block()
 	
 	# game rendering
 	init_screen_size()
@@ -153,6 +157,12 @@ func _on_electric_arc_auto_timer_timeout() -> void:
 	electric_arc_sound.play()
 	electric_arc_auto_enabled = !electric_arc_auto_enabled
 
+func init_dash_block() -> void:
+	dash_block_activated = false
+
+func toggle_dash_block() -> void:
+	dash_block_activated = !dash_block_activated
+
 func init_screen_size() -> void:
 	get_viewport().size = DisplayServer.screen_get_size()
 	get_window().move_to_center()
@@ -213,6 +223,8 @@ func reset_level() -> void:
 	electric_arc_enabled = true
 	electric_arc_auto_timer.start()
 	electric_arc_auto_timer.paused = true
+	
+	dash_block_activated = false
 	
 	# loose collected stars without checkpoint
 	pending_stars = []

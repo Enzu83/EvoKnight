@@ -22,7 +22,7 @@ func _ready() -> void:
 		quit_button,
 	]
 
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# can't pause on the title screen
 	# and can't pause while leveling up
 	if Input.is_action_just_pressed("pause") \
