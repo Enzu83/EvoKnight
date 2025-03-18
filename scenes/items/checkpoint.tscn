@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://cojlgfhlxmwfs"]
+[gd_scene load_steps=10 format=3 uid="uid://cojlgfhlxmwfs"]
 
 [ext_resource type="Script" path="res://scripts/checkpoint.gd" id="1_my0m4"]
-[ext_resource type="Texture2D" uid="uid://dwnj0w1kxmfdq" path="res://assets/sprites/items/spr_flag_red.png" id="3_qji4f"]
+[ext_resource type="Texture2D" uid="uid://d4kps132lmjm1" path="res://assets/sprites/items/spr_flag.png" id="2_1w0xh"]
 [ext_resource type="AudioStream" uid="uid://cds38wnjtrt2l" path="res://assets/sfx/snd_flag.wav" id="4_mwme4"]
 
 [sub_resource type="Animation" id="Animation_l2r66"]
@@ -36,10 +36,46 @@ tracks/0/keys = {
 "values": [0, 1, 2]
 }
 
+[sub_resource type="Animation" id="Animation_3g3ex"]
+resource_name = "default"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_xmred"]
+resource_name = "default"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [6, 7, 8]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e8hjc"]
 _data = {
 "RESET": SubResource("Animation_l2r66"),
-"default": SubResource("Animation_5pt5x")
+"green": SubResource("Animation_3g3ex"),
+"red": SubResource("Animation_5pt5x"),
+"yellow": SubResource("Animation_xmred")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q6vby"]
@@ -47,20 +83,21 @@ size = Vector2(18, 17)
 
 [node name="Checkpoint" type="Area2D"]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 10
 script = ExtResource("1_my0m4")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(0, -12)
-texture = ExtResource("3_qji4f")
+texture = ExtResource("2_1w0xh")
 hframes = 3
+vframes = 3
 frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_e8hjc")
 }
-autoplay = "default"
+autoplay = "red"
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(0, -8.5)
@@ -70,4 +107,5 @@ shape = SubResource("RectangleShape2D_q6vby")
 stream = ExtResource("4_mwme4")
 bus = &"SFX"
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
