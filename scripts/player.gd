@@ -40,9 +40,12 @@ extends CharacterBody2D
 
 # Parameters
 const SPEED = 150.0
+const MAX_HORIZONTAL_VELOCITY = 600.0
+
 const HIGHEST_JUMP_VELOCITY = -300.0 # velocity corresponding to a jump with the same height as the maximum jump height 
 const JUMP_VELOCITY = -160.0
-const MAX_FALLING_VELOCITY = 450
+const MAX_JUMPING_VELOCITY = -700.0
+const MAX_FALLING_VELOCITY = 450.0
 const MAX_JUMPS = 2 # Multiple jumps
 const JUMP_FRAME_WINDOW = 16 # range of frames for jump heights
 
@@ -375,9 +378,21 @@ func handle_velocity(delta: float) -> void:
 	if not is_on_floor() and higher_jump_height == 0:
 			velocity += get_gravity() * delta
 			
-			# prevent wrong falling too fast
-			if velocity.y > MAX_FALLING_VELOCITY:
-				velocity.y = MAX_FALLING_VELOCITY
+			# prevent wrong falling too fast (larger value if pressed down)
+			var falling_speed_cap := MAX_FALLING_VELOCITY
+			
+			if Input.is_action_pressed("down"):
+				falling_speed_cap *= 1.25
+			
+			if velocity.y > falling_speed_cap:
+				velocity.y = move_toward(velocity.y, falling_speed_cap, get_gravity().y * delta)
+
+	# cap velocity
+	if abs(velocity.x) > MAX_HORIZONTAL_VELOCITY:
+		velocity.x = sign(velocity.x) * MAX_HORIZONTAL_VELOCITY
+	
+	if velocity.y < MAX_JUMPING_VELOCITY:
+		velocity.y = MAX_JUMPING_VELOCITY
 
 func handle_bounce() -> void:
 	if not is_on_floor() and state != State.DashingAndAttacking:
@@ -404,6 +419,7 @@ func handle_bumped() -> void:
 		
 		elif bump_direction.x != 0 and velocity.x == 0:
 			state = State.Default
+
 
 func play_animation(anim_name: String) -> void:
 	# play the animation if it's not the current one
@@ -484,6 +500,7 @@ func _physics_process(delta: float) -> void:
 			
 	animate() # update the sprite animation if necessary
 	move_and_slide()
+	print(velocity)
 
 func _process(_delta: float) -> void:
 	# store the info after each frame

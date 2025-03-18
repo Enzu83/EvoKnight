@@ -57,7 +57,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u57jw"]
 size = Vector2(24, 24)
 
-[node name="DashPlatform" type="CharacterBody2D"]
+[node name="DashBlock" type="CharacterBody2D"]
 script = ExtResource("1_p5agp")
 
 [node name="Line" type="Line2D" parent="."]
@@ -66,6 +66,10 @@ top_level = true
 z_index = -1
 width = 1.0
 default_color = Color(0.247059, 0.580392, 0.482353, 1)
+
+[node name="Sprite" type="Sprite2D" parent="."]
+top_level = true
+texture = ExtResource("2_3bxod")
 
 [node name="StartLightPoint" type="AnimatedSprite2D" parent="."]
 top_level = true
@@ -76,9 +80,6 @@ autoplay = "default"
 top_level = true
 sprite_frames = SubResource("SpriteFrames_ogdb4")
 autoplay = "default"
-
-[node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_3bxod")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_u57jw")

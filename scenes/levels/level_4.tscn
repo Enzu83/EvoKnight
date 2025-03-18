@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://7g8lw8o3aenr" path="res://scenes/items/star.tscn" id="9_db2bn"]
 [ext_resource type="PackedScene" uid="uid://csup4pwrdhqok" path="res://scenes/platforms/large_platform.tscn" id="11_44qdl"]
 [ext_resource type="PackedScene" uid="uid://beq88lmemfiik" path="res://scenes/terrains/spike.tscn" id="11_b205r"]
-[ext_resource type="PackedScene" uid="uid://ogfos60ysegm" path="res://scenes/platforms/dash_platform.tscn" id="12_5l1rx"]
+[ext_resource type="PackedScene" uid="uid://ogfos60ysegm" path="res://scenes/platforms/dash_block.tscn" id="12_5l1rx"]
 [ext_resource type="PackedScene" uid="uid://b1qsksiagp7rj" path="res://scenes/fx/electric_arc/electric_arc.tscn" id="12_vnnxe"]
 [ext_resource type="PackedScene" uid="uid://dm38pf5yqffa4" path="res://scenes/items/spring.tscn" id="13_t4an1"]
 [ext_resource type="PackedScene" uid="uid://dwitea1wpbdjp" path="res://scenes/chars/player.tscn" id="13_u6tl7"]
@@ -264,26 +264,39 @@ position = Vector2(1516, -548)
 [node name="SmallPlatform2" parent="Platforms" instance=ExtResource("6_mwmpa")]
 position = Vector2(2076, -506)
 
-[node name="DashPlatform" parent="Platforms" instance=ExtResource("12_5l1rx")]
-position = Vector2(2400, -505)
-
-[node name="EndPoint" type="Node2D" parent="Platforms/DashPlatform"]
-position = Vector2(75, 0)
-
-[node name="DashPlatform3" parent="Platforms" instance=ExtResource("12_5l1rx")]
-position = Vector2(2590, -505)
-
-[node name="EndPoint" type="Node2D" parent="Platforms/DashPlatform3"]
-position = Vector2(-75, 0)
-
-[node name="DashPlatform2" parent="Platforms" instance=ExtResource("12_5l1rx")]
+[node name="DashBlock" parent="Platforms" instance=ExtResource("12_5l1rx")]
 position = Vector2(2076, -596)
 
-[node name="EndPoint" type="Node2D" parent="Platforms/DashPlatform2"]
+[node name="EndPoint" type="Node2D" parent="Platforms/DashBlock"]
 position = Vector2(0, -50)
 
 [node name="LargePlatform5" parent="Platforms" instance=ExtResource("11_44qdl")]
 position = Vector2(2076, -938)
+
+[node name="DashBlock2" parent="Platforms" instance=ExtResource("12_5l1rx")]
+position = Vector2(2400, -505)
+
+[node name="EndPoint" type="Node2D" parent="Platforms/DashBlock2"]
+position = Vector2(75, 0)
+
+[node name="DashBlock3" parent="Platforms" instance=ExtResource("12_5l1rx")]
+position = Vector2(2574, -505)
+
+[node name="EndPoint" type="Node2D" parent="Platforms/DashBlock3"]
+position = Vector2(-75, 0)
+
+[node name="DashBlock4" parent="Platforms" instance=ExtResource("12_5l1rx")]
+position = Vector2(2598, -505)
+
+[node name="EndPoint" type="Node2D" parent="Platforms/DashBlock4"]
+position = Vector2(75, 0)
+
+[node name="DashBlock5" parent="Platforms" instance=ExtResource("12_5l1rx")]
+position = Vector2(2697, -355)
+speed = 800.0
+
+[node name="EndPoint" type="Node2D" parent="Platforms/DashBlock5"]
+position = Vector2(0, -150)
 
 [node name="Spikes" type="Node2D" parent="."]
 
@@ -508,7 +521,7 @@ position = Vector2(2077, -982)
 
 [node name="Player" parent="." instance=ExtResource("13_u6tl7")]
 unique_name_in_owner = true
-position = Vector2(220, 8)
+position = Vector2(2249, -512)
 
 [node name="PlayerCameraPoint" parent="Player" instance=ExtResource("14_0cuxu")]
 top_level = true

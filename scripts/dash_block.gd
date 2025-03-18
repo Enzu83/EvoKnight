@@ -2,6 +2,9 @@ extends CharacterBody2D
 
 @onready var player: Player = %Player
 @onready var end_point: Node2D = $EndPoint
+
+@onready var sprite: Sprite2D = $Sprite
+
 @onready var start_light_point: AnimatedSprite2D = $StartLightPoint
 @onready var end_light_point: AnimatedSprite2D = $EndLightPoint
 @onready var line: Line2D = $Line
@@ -13,14 +16,24 @@ var activated := false
 var start_position: Vector2
 var end_position: Vector2
 
+var delta_position: Vector2
+
 func handle_state() -> void:
 	activated = Global.dash_block_activated
 
 func handle_movement(delta: float) -> void:
+	delta_position = position
+	
 	if not activated:
 		position = position.move_toward(start_position, delta * speed)
 	else:
 		position = position.move_toward(end_position, delta * speed)
+	
+	delta_position = position - delta_position
+
+func handle_sprite_offset() -> void:
+	# player is one frame late for collision : need to show the previous state of the block
+	sprite.position = position - delta_position
 
 func _ready() -> void:
 	start_position = position
@@ -42,4 +55,4 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	handle_state()
 	handle_movement(delta)
-	move_and_slide()
+	handle_sprite_offset()
