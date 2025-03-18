@@ -30,12 +30,15 @@ var player: CharacterBody2D = null
 var respawn_position: Vector2 = Vector2.INF
 var boss: Node2D = null
 
-# events that pauses the game
+# events that pause the game
 var paused := false
 
 var pause_menu: CanvasLayer = load("res://scenes/other/pause.tscn").instantiate()
 var level_up: CanvasLayer = load("res://scenes/other/level_up.tscn").instantiate()
 var end_recap: CanvasLayer = load("res://scenes/other/end_recap.tscn").instantiate()
+
+# screen fade out animation
+var fade_out_scene: Resource = preload("res://scenes/other/fade_out.tscn")
 
 # drops
 var heart_drop_scene: Resource = preload("res://scenes/items/heart_drop.tscn")
@@ -233,6 +236,8 @@ func reset_level() -> void:
 	
 	if player != null:
 		player.init_info()
+	
+	add_child(fade_out_scene.instantiate())
 
 func goto_level(level_id: int) -> void:
 	# add pending stars to collected ones

@@ -429,6 +429,7 @@ size = Vector2(8, 40)
 [node name="ElectricArcRed" type="StaticBody2D"]
 collision_mask = 0
 script = ExtResource("1_7rxmk")
+solid = false
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 modulate = Color(1, 0, 0, 1)

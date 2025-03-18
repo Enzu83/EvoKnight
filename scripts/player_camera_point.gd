@@ -23,6 +23,6 @@ func move_toward_aimed_position(_delta) -> void:
 func _ready() -> void:
 	position = player.position
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	find_aimed_position()
 	move_toward_aimed_position(delta)
