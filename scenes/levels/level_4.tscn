@@ -270,6 +270,12 @@ position = Vector2(2076, -596)
 [node name="EndPoint" type="Node2D" parent="Platforms/DashBlock"]
 position = Vector2(0, -50)
 
+[node name="DashBlock6" parent="Platforms" instance=ExtResource("12_5l1rx")]
+position = Vector2(2168, -547)
+
+[node name="EndPoint" type="Node2D" parent="Platforms/DashBlock6"]
+position = Vector2(0, 50)
+
 [node name="LargePlatform5" parent="Platforms" instance=ExtResource("11_44qdl")]
 position = Vector2(2076, -938)
 

@@ -8,6 +8,12 @@ extends CharacterBody2D
 
 @onready var wall_collider: CollisionShape2D = $WallCollider
 
+@onready var up_crush_ray_cast: RayCast2D = $WallColliderRayCast/UpCrushRayCast
+@onready var down_crush_ray_cast: RayCast2D = $WallColliderRayCast/DownCrushRayCast
+@onready var left_crush_ray_cast: RayCast2D = $WallColliderRayCast/LeftCrushRayCast
+@onready var right_crush_ray_cast: RayCast2D = $WallColliderRayCast/RightCrushRayCast
+
+
 @onready var jump: Sprite2D = $Jump
 @onready var jump_circle: AnimationPlayer = $Jump/JumpCircle
 @onready var jump_sound: AudioStreamPlayer = $Jump/JumpSound
@@ -420,6 +426,12 @@ func handle_bumped() -> void:
 		elif bump_direction.x != 0 and velocity.x == 0:
 			state = State.Default
 
+func handle_crushed() -> void:
+	if (up_crush_ray_cast.is_colliding() and not up_crush_ray_cast.get_collider().is_in_group("one-way platforms")) \
+	or (down_crush_ray_cast.is_colliding() and not down_crush_ray_cast.get_collider().is_in_group("one-way platforms")) \
+	or (left_crush_ray_cast.is_colliding() and not left_crush_ray_cast.get_collider().is_in_group("one-way platforms")) \
+	or (right_crush_ray_cast.is_colliding() and not right_crush_ray_cast.get_collider().is_in_group("one-way platforms")):
+		fainted()
 
 func play_animation(anim_name: String) -> void:
 	# play the animation if it's not the current one
@@ -486,13 +498,14 @@ func _physics_process(delta: float) -> void:
 			if state != State.Attacking and state != State.DashingAndAttacking:
 				handle_flip_h() # flip sprite horizontally if the player is not attacking
 			
-			handle_crouch()
+			handle_crouch() # crouch animation
 			handle_dash() # can't dash while attacking
 			handle_jump() # left, right and jump
 			handle_jump_height() # different jump heights
 			handle_slash() # attacks
 			handle_super_speed() # permanent 1.5x multiplier
 			handle_bumped() # launched by another object
+			handle_crushed() # check if player is between two walls
 
 	if state != State.Dashing \
 	and state != State.DashingAndAttacking:
@@ -500,7 +513,6 @@ func _physics_process(delta: float) -> void:
 			
 	animate() # update the sprite animation if necessary
 	move_and_slide()
-	print(velocity)
 
 func _process(_delta: float) -> void:
 	# store the info after each frame
