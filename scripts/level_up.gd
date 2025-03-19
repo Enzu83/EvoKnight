@@ -52,9 +52,13 @@ func stop() -> void:
 	visible = false
 	get_tree().paused = false
 
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# check for input
-	if state == 4 and Input.is_action_just_pressed("confirm"):
+	if state == 4 \
+	and (Input.is_action_just_pressed("confirm") \
+	or Input.is_action_just_pressed("basic_slash") \
+	or Input.is_action_just_pressed("dash") \
+	or Input.is_action_just_pressed("magic_slash")):
 		stop()
 
 func _on_animation_timer_timeout() -> void:

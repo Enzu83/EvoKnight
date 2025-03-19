@@ -12,6 +12,7 @@ extends CharacterBody2D
 @onready var down_crush_ray_cast: RayCast2D = $WallColliderRayCast/DownCrushRayCast
 @onready var left_crush_ray_cast: RayCast2D = $WallColliderRayCast/LeftCrushRayCast
 @onready var right_crush_ray_cast: RayCast2D = $WallColliderRayCast/RightCrushRayCast
+@onready var crushed_sound: AudioStreamPlayer = $WallColliderRayCast/CrushedSound
 
 
 @onready var jump: Sprite2D = $Jump
@@ -48,8 +49,7 @@ extends CharacterBody2D
 const SPEED = 150.0
 const MAX_HORIZONTAL_VELOCITY = 600.0
 
-const HIGHEST_JUMP_VELOCITY = -300.0 # velocity corresponding to a jump with the same height as the maximum jump height 
-const JUMP_VELOCITY = -160.0
+const JUMP_VELOCITY = -320.0
 const MAX_JUMPING_VELOCITY = -700.0
 const MAX_FALLING_VELOCITY = 450.0
 const MAX_JUMPS = 2 # Multiple jumps
@@ -153,11 +153,10 @@ func handle_jump() -> void:
 	and jumps > 0 \
 	and ((state != State.Dashing and state != State.DashingAndAttacking) \
 	or jump_is_on_floor()):
+		velocity.y = JUMP_VELOCITY
+		
 		# end dash if the player was dashing
 		if state == State.Dashing or state == State.DashingAndAttacking:
-			# set jump velocity to the highest one
-			velocity.y = HIGHEST_JUMP_VELOCITY
-			
 			end_dash(false)
 			can_dash = true
 			
@@ -174,7 +173,6 @@ func handle_jump() -> void:
 		# multiple heights possible
 		else:
 			higher_jump_height = 1
-			velocity.y = JUMP_VELOCITY
 		
 		# increase jump force if super speed is active
 		if super_speed:
@@ -199,6 +197,7 @@ func handle_jump_height() -> void:
 			higher_jump_height += 1
 		# player stops jumping, gravity is enabled
 		else:
+			velocity.y /= 2
 			higher_jump_height = 0
 
 func handle_slash() -> void:
@@ -307,12 +306,8 @@ func handle_dash() -> void:
 		# reduce diagonal dash force
 		if dash_direction.length() > 1:
 			dash_direction *= 0.8
-		
-		velocity = DASH_SPEED * dash_direction
 
-		# increase dash force if super speed is active
-		if super_speed:
-			velocity *= 1.2
+		velocity = DASH_SPEED * dash_direction
 
 func handle_flip_h() -> void:
 	if state != State.Crouching:
@@ -354,34 +349,34 @@ func handle_velocity(delta: float) -> void:
 	not (state == State.Bumped and bump_direction.x != 0):
 		# acceleration toward speed cap
 		if direction:
-			velocity.x = move_toward(velocity.x, direction * speed_force, 22)
+			velocity.x = move_toward(velocity.x, direction * speed_force, 1700 * delta)
 		
 		# air momentum
 		elif not is_on_floor():
-			velocity.x = move_toward(velocity.x, 0, 15)
+			velocity.x = move_toward(velocity.x, 0, 9000 * delta)
 		# decelerate quickly when on floor
 		else:
-			velocity.x = move_toward(velocity.x, 0, 30)
+			velocity.x = move_toward(velocity.x, 0, 3500 * delta)
 
-	# strongly reduce velocity if crouching
+	# reduce velocity if crouching
 	elif state == State.Crouching:
-		velocity.x = move_toward(velocity.x, 0, 16)
+		velocity.x = move_toward(velocity.x, 0, 1000 * delta)
 
 	# when player is bumped horizontally and moves the opposite way
 	elif direction * velocity.x < 0:
-		velocity.x = move_toward(velocity.x, 0, 15)
+		velocity.x = move_toward(velocity.x, 0, 900 * delta)
 	
 	# when player is bumped horizontally and don't move
 	elif direction == 0 and velocity.x != 0:
-		velocity.x = move_toward(velocity.x, 0, 8)
+		velocity.x = move_toward(velocity.x, 0, 420 * delta)
 
 	# when player is bumped horizontally and moves the same way
 	elif direction * velocity.x > 0:
-		velocity.x = move_toward(velocity.x, 0, 3)
+		velocity.x = move_toward(velocity.x, 0, 180 * delta)
 	
 	# handling gravity
 	# disable it when the jump key is still pressed while jumping (up to 5 frames)
-	if not is_on_floor() and higher_jump_height == 0:
+	if not is_on_floor():
 			velocity += get_gravity() * delta
 			
 			# prevent wrong falling too fast (larger value if pressed down)
@@ -402,7 +397,7 @@ func handle_velocity(delta: float) -> void:
 
 func handle_bounce() -> void:
 	if not is_on_floor() and state != State.DashingAndAttacking:
-		velocity.y = HIGHEST_JUMP_VELOCITY * 0.8
+		velocity.y = JUMP_VELOCITY * 0.8
 		jumps = MAX_JUMPS - 1
 
 		# restart animation
@@ -431,6 +426,7 @@ func handle_crushed() -> void:
 	or (down_crush_ray_cast.is_colliding() and not down_crush_ray_cast.get_collider().is_in_group("one-way platforms")) \
 	or (left_crush_ray_cast.is_colliding() and not left_crush_ray_cast.get_collider().is_in_group("one-way platforms")) \
 	or (right_crush_ray_cast.is_colliding() and not right_crush_ray_cast.get_collider().is_in_group("one-way platforms")):
+		#crushed_sound.play()
 		fainted()
 
 func play_animation(anim_name: String) -> void:
@@ -510,7 +506,7 @@ func _physics_process(delta: float) -> void:
 	if state != State.Dashing \
 	and state != State.DashingAndAttacking:
 		handle_velocity(delta) # velocity update based on the above modification
-			
+
 	animate() # update the sprite animation if necessary
 	move_and_slide()
 

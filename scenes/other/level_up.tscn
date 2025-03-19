@@ -222,10 +222,10 @@ libraries = {
 autoplay = "RESET"
 
 [node name="StatIncreaseDisplay" type="TextureRect" parent="."]
-offset_left = 60.0
-offset_top = 135.0
-offset_right = 181.0
-offset_bottom = 164.0
+offset_left = 100.0
+offset_top = 180.0
+offset_right = 221.0
+offset_bottom = 209.0
 texture = ExtResource("3_f5vhc")
 
 [node name="HealthIncrease" type="Label" parent="StatIncreaseDisplay"]

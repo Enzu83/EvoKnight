@@ -170,11 +170,11 @@ func handle_skin_selection() -> void:
 	
 	# change skin
 	if cursor_indexes[state] == 0:
-		if Input.is_action_just_pressed("left"):
+		if Input.is_action_just_pressed("left") or Input.is_action_just_pressed("ui_left"):
 			pending_selected_skin = posmod(pending_selected_skin - 1, player_skin_list.size())
 			select_sound.play()
 
-		elif Input.is_action_just_pressed("right"):
+		elif Input.is_action_just_pressed("right") or Input.is_action_just_pressed("ui_right"):
 			pending_selected_skin = posmod(pending_selected_skin + 1, player_skin_list.size())
 			select_sound.play()
 	

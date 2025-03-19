@@ -1,7 +1,8 @@
-[gd_scene load_steps=31 format=3 uid="uid://dwitea1wpbdjp"]
+[gd_scene load_steps=32 format=3 uid="uid://dwitea1wpbdjp"]
 
 [ext_resource type="Texture2D" uid="uid://yx6p3eyombnl" path="res://assets/sprites/chars/player/spr_cherry_red.png" id="1_0563r"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kiiks"]
+[ext_resource type="AudioStream" uid="uid://cqe6r3s4suwbl" path="res://assets/sfx/snd_crushed.wav" id="3_2ba87"]
 [ext_resource type="PackedScene" uid="uid://cx6s7ukd3uwci" path="res://scenes/fx/basic_slash.tscn" id="3_bjkct"]
 [ext_resource type="Texture2D" uid="uid://b6fexcfnjb43p" path="res://assets/sprites/fx/spr_jump_circle.png" id="3_es3b5"]
 [ext_resource type="AudioStream" uid="uid://4hbwekryavdg" path="res://assets/sfx/snd_cherry_hurt.wav" id="4_28bed"]
@@ -642,7 +643,7 @@ tracks/7/keys = {
 
 [sub_resource type="Animation" id="Animation_detkh"]
 resource_name = "jump"
-length = 0.2
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -650,10 +651,10 @@ tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [20, 19]
+"values": [21, 20, 19]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -1234,6 +1235,10 @@ z_index = 1
 position = Vector2(0, -9)
 target_position = Vector2(2, 0)
 hit_from_inside = true
+
+[node name="CrushedSound" type="AudioStreamPlayer" parent="WallColliderRayCast"]
+stream = ExtResource("3_2ba87")
+bus = &"SFX"
 
 [node name="Jump" type="Sprite2D" parent="."]
 visible = false
