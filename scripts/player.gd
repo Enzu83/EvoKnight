@@ -347,9 +347,14 @@ func handle_velocity(delta: float) -> void:
 	# regular horizontal velocity handle
 	if abs(velocity.x) <= speed_force and \
 	not (state == State.Bumped and bump_direction.x != 0):
-		# acceleration toward speed cap
+		
 		if direction:
-			velocity.x = move_toward(velocity.x, direction * speed_force, 1700 * delta)
+			# acceleration toward speed cap
+			if velocity.x == 0 or direction * velocity.x > 0:
+				velocity.x = move_toward(velocity.x, direction * speed_force, 1700 * delta)
+			# changing direction
+			else:
+				velocity.x = direction * speed_force
 		
 		# air momentum
 		elif not is_on_floor():
@@ -508,6 +513,10 @@ func _physics_process(delta: float) -> void:
 		handle_velocity(delta) # velocity update based on the above modification
 
 	animate() # update the sprite animation if necessary
+	
+	if direction == 0 and not Input.is_action_pressed("jump"):
+		pass
+		#move_and_collide(Vector2.ZERO)
 	move_and_slide()
 
 func _process(_delta: float) -> void:

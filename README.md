@@ -2,8 +2,6 @@
 
 EvoKnight is an action-platformer game mainly inspired by Celeste and Hollow Knight.
 
-
-
 ## Context
 
 Initially a 2-weeks challenge I did with friends to learn Godot.

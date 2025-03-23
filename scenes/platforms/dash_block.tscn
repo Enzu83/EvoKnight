@@ -58,6 +58,10 @@ animations = [{
 }]
 
 [node name="DashBlock" type="CharacterBody2D"]
+collision_mask = 0
+floor_stop_on_slope = false
+floor_block_on_wall = false
+platform_on_leave = 2
 script = ExtResource("1_p5agp")
 
 [node name="Line" type="Line2D" parent="."]
