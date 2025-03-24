@@ -195,9 +195,9 @@ func handle_jump_height() -> void:
 		# increase the time where gravity is disabled
 		if Input.is_action_pressed("jump") and higher_jump_height < JUMP_FRAME_WINDOW:
 			higher_jump_height += 1
-		# player stops jumping, gravity is enabled
-		else:
-			velocity.y /= 2
+		# player stops jumping
+		elif state != State.Dashing and state != State.DashingAndAttacking:
+			velocity.y *= 0.4
 			higher_jump_height = 0
 
 func handle_slash() -> void:
@@ -518,6 +518,7 @@ func _physics_process(delta: float) -> void:
 		pass
 		#move_and_collide(Vector2.ZERO)
 	move_and_slide()
+	print(velocity)
 
 func _process(_delta: float) -> void:
 	# store the info after each frame
