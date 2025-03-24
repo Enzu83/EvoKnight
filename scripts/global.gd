@@ -14,6 +14,7 @@ var level_paths = [
 # player skin
 var player_sprite: Resource = load("res://assets/sprites/chars/player/spr_cherry_red.png")
 var basic_slash_sprite: Resource = load("res://assets/sprites/fx/slash/spr_basic_slash_red.png")
+var charged_slash_effect_sprite: Resource = load("res://assets/sprites/fx/slash/spr_charged_slash_effect_red.png")
 var magic_slash_sprite: Resource = load("res://assets/sprites/fx/slash/spr_magic_slash_red.png")
 var magic_slash_icon: Resource = load("res://assets/sprites/ui/icons/spr_magic_slash_icon_red.png")
 var dash_icon: Resource = load("res://assets/sprites/ui/icons/spr_dash_icon_red.png")
@@ -64,6 +65,7 @@ var player_level_stats_increase := {
 
 var player_max_mana := 400
 var player_mana := 0
+var player_mana_recovery_rate := 0
 
 var player_strength := 1
 var player_defense := 0
@@ -140,6 +142,7 @@ func init_player_stats() -> void:
 
 	player_max_mana = 400
 	player_mana = 0
+	player_mana_recovery_rate = 0
 
 	player_strength = 1
 	player_defense = 0
@@ -281,6 +284,7 @@ func store_player_info() -> void:
 
 	player_max_mana = player.max_mana
 	player_mana = player.mana
+	player_mana_recovery_rate = player.mana_recovery_rate
 
 	player_strength = player.strength
 	player_defense = player.defense

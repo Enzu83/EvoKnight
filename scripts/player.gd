@@ -55,7 +55,6 @@ const MAX_FALLING_VELOCITY = 450.0
 const MAX_JUMPS = 2 # Multiple jumps
 const JUMP_FRAME_WINDOW = 16 # range of frames for jump heights
 
-const MANA_RECOVERY_RATE = 0 #20 # mana recovered per frame
 const MAGIC_SLASH_MANA = 250 # mana required for magic slash
 const BLUE_DASH_MANA = 100 # mana required for dashing without taking damage
 const DASH_SPEED = 2 * SPEED
@@ -82,6 +81,10 @@ var bump_direction := Vector2.ZERO
 
 var super_speed := false # increase speed and always create phantoms
 
+var bigger_slash := false # bigger slash ability flag
+var bigger_slash_count := 0 # count the number of frames where the slash button is pressed
+var bigger_slash_max := 90 # time needed for big slash activation
+
 # stats
 var max_health: int
 var health: int
@@ -94,6 +97,7 @@ var level_stats_increase := {}
 
 var max_mana: int
 var mana: int
+var mana_recovery_rate := 0
 
 var strength: int
 var defense: int
@@ -200,6 +204,17 @@ func handle_jump_height() -> void:
 			velocity.y *= 0.4
 			higher_jump_height = 0
 
+func handle_charged_slash() -> void:
+	if bigger_slash:
+		# count frames
+		if Input.is_action_pressed("basic_slash"):
+			if bigger_slash_count < bigger_slash_max:
+				bigger_slash_count += 1
+		
+		# reset bigger slash
+		else:
+			bigger_slash_count = 0
+
 func handle_slash() -> void:
 	# reset attack state
 	if not basic_slash.active \
@@ -207,13 +222,19 @@ func handle_slash() -> void:
 		state = State.Default
 
 	# basic slash
-	if Input.is_action_just_pressed("basic_slash") \
+	if (Input.is_action_just_pressed("basic_slash") \
+	or (Input.is_action_just_released("basic_slash") and bigger_slash and bigger_slash_count == bigger_slash_max)) \
 	and (state == State.Default or state == State.Crouching or state == State.Dashing or state == State.Bumped):
 		# attacking while dashing
 		if state == State.Dashing:
 			state = State.DashingAndAttacking
 		else:
 			state = State.Attacking
+
+		# check for bigger slash
+		if bigger_slash and bigger_slash_count == bigger_slash_max:
+			basic_slash.size = 2
+			basic_slash.multiplier = 1.5
 
 		# direction based slash
 		if Input.is_action_pressed("up"):
@@ -478,6 +499,7 @@ func init_info() -> void:
 	
 	max_mana = Global.player_max_mana
 	mana = Global.player_mana
+	mana_recovery_rate = Global.player_mana_recovery_rate
 	
 	strength = Global.player_strength
 	defense = Global.player_defense
@@ -503,7 +525,8 @@ func _physics_process(delta: float) -> void:
 			handle_dash() # can't dash while attacking
 			handle_jump() # left, right and jump
 			handle_jump_height() # different jump heights
-			handle_slash() # attacks
+			handle_slash() # regular slash
+			handle_charged_slash() # bigger slash attack (if upgrade is unlocked)
 			handle_super_speed() # permanent 1.5x multiplier
 			handle_bumped() # launched by another object
 			handle_crushed() # check if player is between two walls
@@ -518,7 +541,6 @@ func _physics_process(delta: float) -> void:
 		pass
 		#move_and_collide(Vector2.ZERO)
 	move_and_slide()
-	print(velocity)
 
 func _process(_delta: float) -> void:
 	# store the info after each frame
@@ -656,8 +678,8 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 	effects_player.stop()
 
 func _on_mana_recovery_timer_timeout() -> void:
-	if state != State.Fainted and velocity == Vector2.ZERO:
-		restore_mana(MANA_RECOVERY_RATE)
+	if state != State.Fainted:
+		restore_mana(mana_recovery_rate)
 
 func _on_phantom_cooldown_timeout() -> void:
 	# don't create more phantoms if the super speed already creates ones

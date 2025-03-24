@@ -341,6 +341,7 @@ func start_game() -> void:
 	
 	Global.player_sprite = load(player_sprite_path + "spr_cherry_" + color + ".png")
 	Global.basic_slash_sprite = load(slash_sprite_path + "spr_basic_slash_" + color + ".png")
+	Global.charged_slash_effect_sprite = load(slash_sprite_path + "spr_charged_slash_effect_" + color + ".png")
 	Global.magic_slash_sprite = load(slash_sprite_path + "spr_magic_slash_" + color + ".png")
 	Global.magic_slash_icon = load(ui_icon_path + "spr_magic_slash_icon_" + color + ".png")
 	Global.dash_icon = load(ui_icon_path + "spr_dash_icon_" + color + ".png")
