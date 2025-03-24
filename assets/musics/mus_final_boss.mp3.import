@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/mus_final_boss.mp3-c632b19d785db276a0fe92c703
 [params]
 
 loop=true
-loop_offset=3.15
+loop_offset=45.875
 bpm=0.0
 beat_count=0
 bar_beats=4

@@ -52,7 +52,7 @@ var active := false
 
 var teleport_position := [
 	Vector2(4288, -168),
-	Vector2(4288, -214),
+	Vector2(4288, -168),
 	Vector2(4144, -168),
 	Vector2(4144, -248),
 	Vector2(4432, -168),

@@ -91,3 +91,5 @@ func _on_end_fight_timer_timeout() -> void:
 	camera.limit_right = camera_limit_right
 	camera.limit_top = camera_limit_top
 	camera.limit_bottom = camera_limit_bottom
+	
+	queue_free()

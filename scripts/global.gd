@@ -68,6 +68,9 @@ var player_mana := 0
 var player_strength := 1
 var player_defense := 0
 
+# player upgrades per level - check for pick up
+var level_upgrade: Array
+
 # elapsed time (ms)
 var elapsed_time_reference := 0
 
@@ -93,6 +96,8 @@ func _ready() -> void:
 	add_child(end_recap)
 	init_stars()
 	init_player_stats()
+	
+	init_level_upgrade()
 	
 	init_auto_switch_electric_arc()
 	init_dash_block()
@@ -138,6 +143,10 @@ func init_player_stats() -> void:
 
 	player_strength = 1
 	player_defense = 0
+
+func init_level_upgrade() -> void:
+	level_upgrade.resize(level_paths.size())
+	level_upgrade.fill(false)
 
 func init_auto_switch_electric_arc() -> void:
 	# electric arc auto switch timer & sound
@@ -220,6 +229,12 @@ func get_level_stars() -> int:
 
 func get_level_total_stars() -> int:
 	return total_stars[current_level].size()
+
+func collect_level_upgrade() -> void:
+	level_upgrade[current_level] = true
+
+func get_level_upgrade_state() -> bool:
+	return level_upgrade[current_level]
 
 func reset_level() -> void:
 	# reset specific level variables
