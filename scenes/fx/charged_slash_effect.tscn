@@ -57,5 +57,5 @@ autoplay = "default"
 
 [node name="ChargeSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_sxrnx")
-volume_db = -3.0
+volume_db = -6.0
 bus = &"SFX"

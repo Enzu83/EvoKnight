@@ -70,6 +70,8 @@ var player_mana_recovery_rate := 0
 var player_strength := 1
 var player_defense := 0
 
+var player_bigger_slash := false
+
 # player upgrades per level - check for pick up
 var level_upgrade: Array
 
@@ -146,6 +148,8 @@ func init_player_stats() -> void:
 
 	player_strength = 1
 	player_defense = 0
+	
+	player_bigger_slash = false
 
 func init_level_upgrade() -> void:
 	level_upgrade.resize(level_paths.size())
@@ -288,6 +292,8 @@ func store_player_info() -> void:
 
 	player_strength = player.strength
 	player_defense = player.defense
+	
+	player_bigger_slash = player.bigger_slash
 
 func create_heart_drop(heal_value: int,initial_position: Vector2, initial_velocity: Vector2) -> void:
 	var heart_drop: CharacterBody2D = heart_drop_scene.instantiate().init(heal_value, initial_position, initial_velocity)

@@ -351,6 +351,8 @@ func start_game() -> void:
 	# init game info
 	Global.init_stars()
 	Global.init_player_stats()
+	Global.init_level_upgrade()
+	Global.init_dash_block()
 	Global.set_elapsed_time_reference()
 	
 	# init boss defeated state

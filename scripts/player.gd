@@ -504,6 +504,8 @@ func init_info() -> void:
 	strength = Global.player_strength
 	defense = Global.player_defense
 	
+	bigger_slash = Global.player_bigger_slash
+	
 	# restore health of the player if the player fainted
 	if health == 0:
 		health = max_health
@@ -557,12 +559,12 @@ func is_hurtable() -> bool:
 	#	- in Stop state
 	return not effects_player.current_animation == "blink" and state != State.Fainted and state != State.Stop
 
-func hurt(damage: int, ignore_defense: bool = false) -> void:
+func hurt(damage: int, ignore_defense: bool = false, through_blue_dash: bool = false) -> void:
 	if not ignore_defense:
 		damage -= defense
 	
 	# hit during blue dash: animation and mana cost
-	if blue_dash:
+	if blue_dash and not through_blue_dash:
 		if not blue_dash_hit:
 			blue_dash_hit = true
 			mana -= BLUE_DASH_MANA

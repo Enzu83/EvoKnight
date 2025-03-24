@@ -511,7 +511,7 @@ bus = &"SFX"
 
 [node name="BigSlashSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_u5mwf")
-volume_db = 3.0
+volume_db = -6.0
 bus = &"SFX"
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -138,7 +138,7 @@ position = Vector2(1127, -116)
 position = Vector2(1068, -176)
 
 [node name="platform6" parent="Platforms" instance=ExtResource("11_7xat0")]
-position = Vector2(1068, -390)
+position = Vector2(1068, -394)
 
 [node name="platform4" parent="Platforms" instance=ExtResource("11_7xat0")]
 position = Vector2(1474, -176)
@@ -211,7 +211,7 @@ position = Vector2(3397, -107)
 position = Vector2(2732, -24)
 
 [node name="ManaUpgrade" parent="Items" instance=ExtResource("9_8wgw8")]
-position = Vector2(344, -468)
+position = Vector2(344, -448)
 
 [node name="Enemies" type="Node2D" parent="."]
 
@@ -265,7 +265,7 @@ position = Vector2(3636, -372)
 
 [node name="Player" parent="." instance=ExtResource("5_rgud7")]
 unique_name_in_owner = true
-position = Vector2(49, 8)
+position = Vector2(48, 8)
 
 [node name="PlayerCameraPoint" parent="Player" instance=ExtResource("10_ew7k0")]
 top_level = true

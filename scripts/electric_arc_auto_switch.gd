@@ -67,5 +67,5 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 
 	# hurt the player
 	if body == player and player.is_hurtable():
-		body.hurt(ceil(Global.player_max_health / 4.0), true)
+		body.hurt(ceil(Global.player_max_health / 4.0), true, true)
 		electric_sound.play()
