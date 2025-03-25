@@ -259,6 +259,19 @@ func get_level_stars() -> int:
 func get_level_total_stars() -> int:
 	return total_stars[current_level].size()
 
+func get_collected_upgrades() -> int:
+	var collected_upgrades = 0
+	
+	for upgrade in level_upgrade:
+		if upgrade:
+			collected_upgrades += 1
+	
+	return collected_upgrades
+
+func get_total_upgrades() -> int:
+	# one per level - 4 levels in total
+	return 4
+
 func collect_level_upgrade() -> void:
 	level_upgrade[current_level] = true
 

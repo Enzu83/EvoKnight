@@ -23,9 +23,9 @@ texture = SubResource("PlaceholderTexture2D_i27vc")
 [node name="ClearLabel" type="Label" parent="."]
 top_level = true
 offset_left = 160.0
-offset_top = 54.0
+offset_top = 38.0
 offset_right = 265.0
-offset_bottom = 96.0
+offset_bottom = 80.0
 theme_override_fonts/font = ExtResource("2_w6ogw")
 theme_override_font_sizes/font_size = 36
 text = "CLEAR"
@@ -42,9 +42,9 @@ offset_bottom = 1.0
 top_level = true
 layout_mode = 0
 offset_left = 58.0
-offset_top = 133.0
+offset_top = 106.0
 offset_right = 218.0
-offset_bottom = 161.0
+offset_bottom = 134.0
 theme_override_fonts/font = ExtResource("2_w6ogw")
 theme_override_font_sizes/font_size = 18
 text = "Time played: "
@@ -54,9 +54,9 @@ horizontal_alignment = 2
 top_level = true
 layout_mode = 0
 offset_left = 217.0
-offset_top = 133.0
+offset_top = 106.0
 offset_right = 377.0
-offset_bottom = 161.0
+offset_bottom = 134.0
 theme_override_fonts/font = ExtResource("2_w6ogw")
 theme_override_font_sizes/font_size = 18
 text = "00min00s000ms"
@@ -71,10 +71,10 @@ offset_bottom = 1.0
 [node name="StarsLabel" type="Label" parent="Stars"]
 top_level = true
 layout_mode = 0
-offset_left = 96.0
-offset_top = 170.0
-offset_right = 256.0
-offset_bottom = 198.0
+offset_left = 95.0
+offset_top = 138.0
+offset_right = 255.0
+offset_bottom = 166.0
 theme_override_fonts/font = ExtResource("2_w6ogw")
 theme_override_font_sizes/font_size = 18
 text = "Stars collected: "
@@ -83,9 +83,39 @@ horizontal_alignment = 2
 [node name="StarsCollected" type="Label" parent="Stars"]
 top_level = true
 layout_mode = 0
-offset_left = 256.0
+offset_left = 255.0
+offset_top = 138.0
+offset_right = 415.0
+offset_bottom = 166.0
+theme_override_fonts/font = ExtResource("2_w6ogw")
+theme_override_font_sizes/font_size = 18
+text = "0/0"
+
+[node name="Upgrades" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_top = 1.0
+offset_bottom = 1.0
+
+[node name="UpgradesLabel" type="Label" parent="Upgrades"]
+top_level = true
+layout_mode = 0
+offset_left = 101.0
 offset_top = 170.0
-offset_right = 416.0
+offset_right = 289.0
+offset_bottom = 198.0
+theme_override_fonts/font = ExtResource("2_w6ogw")
+theme_override_font_sizes/font_size = 18
+text = "Upgrades collected: "
+horizontal_alignment = 2
+
+[node name="UpgradesCollected" type="Label" parent="Upgrades"]
+top_level = true
+layout_mode = 0
+offset_left = 290.0
+offset_top = 170.0
+offset_right = 450.0
 offset_bottom = 198.0
 theme_override_fonts/font = ExtResource("2_w6ogw")
 theme_override_font_sizes/font_size = 18

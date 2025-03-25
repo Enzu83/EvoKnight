@@ -199,7 +199,7 @@ position = Vector2(3053, -48)
 [node name="Items" type="Node2D" parent="."]
 
 [node name="Star4" parent="Items" instance=ExtResource("9_6kd0l")]
-position = Vector2(1068, -198)
+position = Vector2(1069, -198)
 
 [node name="Star5" parent="Items" instance=ExtResource("9_6kd0l")]
 position = Vector2(1748, -209)
