@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhhtl3v3cgayn"
-path="res://.godot/imported/spr_cherry_dark.png-f8f2e45f4d7d609ed7a6fba18afb9211.ctex"
+uid="uid://cbkxb5si52fyp"
+path="res://.godot/imported/spr_dark_cherry_spawn.png-737545a119de375db6f3212b5eab6e94.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/chars/player/spr_cherry_dark.png"
-dest_files=["res://.godot/imported/spr_cherry_dark.png-f8f2e45f4d7d609ed7a6fba18afb9211.ctex"]
+source_file="res://assets/sprites/chars/enemies/spr_dark_cherry_spawn.png"
+dest_files=["res://.godot/imported/spr_dark_cherry_spawn.png-737545a119de375db6f3212b5eab6e94.ctex"]
 
 [params]
 

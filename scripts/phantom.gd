@@ -9,7 +9,7 @@ func _ready() -> void:
 
 	# sprite
 	texture = Global.player_sprite
-	modulate = Global.player_color
+	modulate = Global.colors[Global.player_color]
 	
 	# phantom is blue if the player's dash is invicible
 	if player.blue_dash:

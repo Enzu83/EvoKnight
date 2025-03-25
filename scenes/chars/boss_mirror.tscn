@@ -1,10 +1,10 @@
 [gd_scene load_steps=25 format=3 uid="uid://bvd0y2way7av1"]
 
 [ext_resource type="Script" path="res://scripts/boss_mirror.gd" id="1_4dj4v"]
-[ext_resource type="Texture2D" uid="uid://d14lpsdoxjpba" path="res://assets/sprites/chars/player/spr_cherry_dark.png" id="2_lfobn"]
+[ext_resource type="Texture2D" uid="uid://d14lpsdoxjpba" path="res://assets/sprites/chars/enemies/spr_dark_cherry.png" id="2_lfobn"]
 [ext_resource type="AudioStream" uid="uid://kpryh7dxxy2y" path="res://assets/sfx/snd_teleport.wav" id="3_eswf0"]
 [ext_resource type="Texture2D" uid="uid://b6fexcfnjb43p" path="res://assets/sprites/fx/spr_jump_circle.png" id="3_g7adx"]
-[ext_resource type="Texture2D" uid="uid://cbkxb5si52fyp" path="res://assets/sprites/chars/player/spr_cherry_spawn_dark.png" id="3_sfu4y"]
+[ext_resource type="Texture2D" uid="uid://cbkxb5si52fyp" path="res://assets/sprites/chars/enemies/spr_dark_cherry_spawn.png" id="3_sfu4y"]
 [ext_resource type="AudioStream" uid="uid://xy35lwtkq2h4" path="res://assets/sfx/snd_cherry_jump.wav" id="4_x76s1"]
 [ext_resource type="Script" path="res://scripts/body_hurtbox.gd" id="5_ou6xc"]
 [ext_resource type="AudioStream" uid="uid://4hbwekryavdg" path="res://assets/sfx/snd_cherry_hurt.wav" id="6_n82m1"]

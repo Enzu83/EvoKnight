@@ -66,9 +66,9 @@ func _process(_delta: float) -> void:
 	
 	# dash threshold indicator
 	dash_threshold.position.x = dash_threshold_initial_position.x + (player.BLUE_DASH_MANA / float(player.max_mana)) * mana_bar.max_value
-	
+		
 	# dash icon displayed if it can be perfomed
-	if player.can_dash \
+	if player.dash_enabled and player.can_dash \
 	and (player.state == player.State.Default or player.state == player.State.Crouching) \
 	and player.mana >= player.BLUE_DASH_MANA:
 		dash_icon.visible = true
@@ -88,7 +88,7 @@ func _process(_delta: float) -> void:
 	
 	# get player mana
 	mana_bar.value = int((player.mana / float(player.max_mana)) * mana_bar.max_value)
-	
+		
 	hide_all() # hide all specific ui before make some of them visible
 
 	if display_collectable:
@@ -99,7 +99,7 @@ func _process(_delta: float) -> void:
 	
 	# make visible the main and mana UI after the bars update
 	main.visible = true
-	mana.visible = true
+	mana.visible = player.mana_enabled
 	
 func hide_all() -> void:
 	score.visible = false

@@ -34,6 +34,7 @@ extends CharacterBody2D
 @onready var death_timer: Timer = $DeathTimer
 
 @onready var basic_slash: Area2D = $BasicSlash
+@onready var charged_slash_effect: Sprite2D = $ChargedSlashEffect
 
 @onready var magic_slash: Area2D = $MagicSlash
 
@@ -95,12 +96,17 @@ var experience: int
 
 var level_stats_increase := {}
 
+var dash_enabled := true
+
+var mana_enabled := true
 var max_mana: int
 var mana: int
 var mana_recovery_rate := 0
 
 var strength: int
 var defense: int
+
+var ability_disabled := false # flag to check if the player had their abilities disabled by something
 
 # Allow grounded jump short after leaving the floor without jumping
 func jump_is_on_floor() -> bool:
@@ -197,7 +203,7 @@ func handle_jump() -> void:
 func handle_jump_height() -> void:
 	if not is_on_floor() and higher_jump_height > 0:
 		# increase the time where gravity is disabled
-		if Input.is_action_pressed("jump") and higher_jump_height < JUMP_FRAME_WINDOW:
+		if Input.is_action_pressed("jump") and higher_jump_height < JUMP_FRAME_WINDOW and velocity.y <= 0:
 			higher_jump_height += 1
 		# player stops jumping
 		elif state != State.Dashing and state != State.DashingAndAttacking:
@@ -253,7 +259,7 @@ func handle_slash() -> void:
 			basic_slash.start("right")
 	
 	# magic slash
-	elif Input.is_action_just_pressed("magic_slash") \
+	elif mana_enabled and Input.is_action_just_pressed("magic_slash") \
 	and (state == State.Default or state == State.Dashing) \
 	and not magic_slash.active \
 	and mana >= MAGIC_SLASH_MANA:
@@ -272,7 +278,7 @@ func handle_slash() -> void:
 			magic_slash.start("right")
 
 func handle_dash() -> void:
-	if Input.is_action_just_pressed("dash") \
+	if dash_enabled and Input.is_action_just_pressed("dash") \
 	and can_dash \
 	and (state == State.Default or state == State.Crouching or state == State.Crouching or state == State.Attacking or state == State.Bumped):
 		# dashing while attacking
@@ -295,7 +301,7 @@ func handle_dash() -> void:
 		handle_flip_h()
 		
 		# phantom trace
-		if mana >= BLUE_DASH_MANA:
+		if mana_enabled and mana >= BLUE_DASH_MANA:
 			blue_dash = true
 		else:
 			blue_dash = false
@@ -485,8 +491,8 @@ func animate() -> void:
 			play_animation("jump")
 
 func init_info() -> void:
-	# retrieve info for global
-	sprite.texture = Global.player_sprite
+	# retrieve info from global
+	update_sprite()
 	
 	max_health = Global.player_max_health
 	health = Global.player_health
@@ -497,6 +503,9 @@ func init_info() -> void:
 	
 	level_stats_increase = Global.player_level_stats_increase
 	
+	dash_enabled = Global.player_dash_enabled
+	
+	mana_enabled = Global.player_mana_enabled
 	max_mana = Global.player_max_mana
 	mana = Global.player_mana
 	mana_recovery_rate = Global.player_mana_recovery_rate
@@ -510,6 +519,12 @@ func init_info() -> void:
 	if health == 0:
 		health = max_health
 		mana = 0
+
+func update_sprite() -> void:
+	sprite.texture = Global.player_sprite
+	basic_slash.sprite.texture = Global.basic_slash_sprite
+	magic_slash.sprite.texture = Global.magic_slash_sprite
+	charged_slash_effect.texture = Global.charged_slash_effect_sprite
 
 func _ready() -> void:
 	add_to_group("players")

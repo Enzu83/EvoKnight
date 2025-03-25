@@ -54,26 +54,6 @@ var menu_options := {}
 var cursor_indexes := {}
 
 # skins
-var player_skin_list := [
-	"res://assets/sprites/chars/player/spr_cherry_red.png",
-	"res://assets/sprites/chars/player/spr_cherry_blue.png",
-	"res://assets/sprites/chars/player/spr_cherry_green.png",
-	"res://assets/sprites/chars/player/spr_cherry_purple.png",
-]
-
-var color_list := ["red", "blue", "green", "purple"]
-
-var colors := {
-	"red": Color(211 / 255.0, 47 / 255.0, 63 / 255.0, 1.0),
-	"blue": Color(91 / 255.0, 123 / 255.0, 227 / 255.0, 1.0),
-	"green": Color(47 / 255.0, 211 / 255.0, 66 / 255.0, 1.0),
-	"purple": Color(211 / 255.0, 47 / 255.0, 192 / 255.0, 1.0),
-}
-
-var player_sprite_path := "res://assets/sprites/chars/player/"
-var slash_sprite_path := "res://assets/sprites/fx/slash/"
-var ui_icon_path := "res://assets/sprites/ui/icons/"
-
 var selected_skin := 0
 var pending_selected_skin := 0
 
@@ -171,17 +151,17 @@ func handle_skin_selection() -> void:
 	# change skin
 	if cursor_indexes[state] == 0:
 		if Input.is_action_just_pressed("left") or Input.is_action_just_pressed("ui_left"):
-			pending_selected_skin = posmod(pending_selected_skin - 1, player_skin_list.size())
+			pending_selected_skin = posmod(pending_selected_skin - 1, Global.color_list.size())
 			select_sound.play()
 
 		elif Input.is_action_just_pressed("right") or Input.is_action_just_pressed("ui_right"):
-			pending_selected_skin = posmod(pending_selected_skin + 1, player_skin_list.size())
+			pending_selected_skin = posmod(pending_selected_skin + 1, Global.color_list.size())
 			select_sound.play()
 	
 	# update sprite and label
 	player_skin_sprite.frame = pending_selected_skin
-	skin_color_label.text = color_list[pending_selected_skin][0].to_upper() + color_list[pending_selected_skin].right(-1)
-	skin_color_label.set("theme_override_colors/font_color", colors[color_list[pending_selected_skin]])
+	skin_color_label.text = Global.color_list[pending_selected_skin][0].to_upper() + Global.color_list[pending_selected_skin].right(-1)
+	skin_color_label.set("theme_override_colors/font_color", Global.colors[Global.color_list[pending_selected_skin]])
 	
 	# click on a button
 	if Input.is_action_just_pressed("confirm") or Input.is_action_just_pressed("ui_accept"):
@@ -337,17 +317,8 @@ func handle_cursors() -> void:
 
 func start_game() -> void:
 	# apply skin
-	var color: String = color_list[selected_skin]
-	
-	Global.player_sprite = load(player_sprite_path + "spr_cherry_" + color + ".png")
-	Global.basic_slash_sprite = load(slash_sprite_path + "spr_basic_slash_" + color + ".png")
-	Global.charged_slash_effect_sprite = load(slash_sprite_path + "spr_charged_slash_effect_" + color + ".png")
-	Global.magic_slash_sprite = load(slash_sprite_path + "spr_magic_slash_" + color + ".png")
-	Global.magic_slash_icon = load(ui_icon_path + "spr_magic_slash_icon_" + color + ".png")
-	Global.dash_icon = load(ui_icon_path + "spr_dash_icon_" + color + ".png")
+	Global.set_player_color(Global.color_list[selected_skin])
 
-	Global.player_color = colors[color]
-	
 	# init game info
 	Global.init_stars()
 	Global.init_player_stats()

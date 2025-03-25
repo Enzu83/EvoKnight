@@ -12,14 +12,29 @@ var level_paths = [
 ]
 
 # player skin
-var player_sprite: Resource = load("res://assets/sprites/chars/player/spr_cherry_red.png")
-var basic_slash_sprite: Resource = load("res://assets/sprites/fx/slash/spr_basic_slash_red.png")
-var charged_slash_effect_sprite: Resource = load("res://assets/sprites/fx/slash/spr_charged_slash_effect_red.png")
-var magic_slash_sprite: Resource = load("res://assets/sprites/fx/slash/spr_magic_slash_red.png")
-var magic_slash_icon: Resource = load("res://assets/sprites/ui/icons/spr_magic_slash_icon_red.png")
-var dash_icon: Resource = load("res://assets/sprites/ui/icons/spr_dash_icon_red.png")
+var color_list := ["red", "blue", "green", "purple"]
 
-var player_color: Color
+var colors := {
+	"red": Color(211 / 255.0, 47 / 255.0, 63 / 255.0, 1.0),
+	"blue": Color(91 / 255.0, 123 / 255.0, 227 / 255.0, 1.0),
+	"green": Color(47 / 255.0, 211 / 255.0, 66 / 255.0, 1.0),
+	"purple": Color(211 / 255.0, 47 / 255.0, 192 / 255.0, 1.0),
+	"dark": Color(67 / 255.0, 67 / 255.0, 67 / 255.0),
+}
+
+var player_sprite_path := "res://assets/sprites/chars/player/"
+var slash_sprite_path := "res://assets/sprites/fx/slash/"
+var ui_icon_path := "res://assets/sprites/ui/icons/"
+
+
+var player_sprite: Resource
+var basic_slash_sprite: Resource
+var charged_slash_effect_sprite: Resource
+var magic_slash_sprite: Resource
+var magic_slash_icon: Resource
+var dash_icon: Resource
+
+var player_color: String
 
 # stars
 var pending_stars: Array # stars are not really collected until a checkpoint is gotten
@@ -63,6 +78,9 @@ var player_level_stats_increase := {
 	"defense": [0, 0, 0, 1, 1, 0]
 }
 
+var player_dash_enabled := true
+
+var player_mana_enabled := true
 var player_max_mana := 400
 var player_mana := 0
 var player_mana_recovery_rate := 0
@@ -100,7 +118,8 @@ func _ready() -> void:
 	add_child(end_recap)
 	init_stars()
 	init_player_stats()
-	
+	set_player_color(color_list[0]) # default skin: red
+
 	init_level_upgrade()
 	
 	init_auto_switch_electric_arc()
@@ -142,6 +161,9 @@ func init_player_stats() -> void:
 	player_level = 1
 	player_experience = 0
 
+	player_dash_enabled = true
+
+	player_mana_enabled = true
 	player_max_mana = 400
 	player_mana = 0
 	player_mana_recovery_rate = 0
@@ -244,6 +266,12 @@ func get_level_upgrade_state() -> bool:
 	return level_upgrade[current_level]
 
 func reset_level() -> void:
+	# reset player skin
+	if player != null and player.ability_disabled:
+		set_player_color(player_color)
+		player_dash_enabled = true
+		player_mana_enabled = true
+	
 	# reset specific level variables
 	electric_arc_enabled = true
 	electric_arc_auto_timer.start()
@@ -279,13 +307,27 @@ func previous_level() -> void:
 	if current_level > 0:
 		goto_level(current_level - 1)
 
+func set_player_color(color: String, temporary: bool = false) -> void:
+	if not temporary:
+		player_color = color
+	
+	player_sprite = load(player_sprite_path + "spr_cherry_" + color + ".png")
+	basic_slash_sprite = load(slash_sprite_path + "spr_basic_slash_" + color + ".png")
+	charged_slash_effect_sprite = load(slash_sprite_path + "spr_charged_slash_effect_" + color + ".png")
+	magic_slash_sprite = load(slash_sprite_path + "spr_magic_slash_" + color + ".png")
+	magic_slash_icon = load(ui_icon_path + "spr_magic_slash_icon_" + color + ".png")
+	dash_icon = load(ui_icon_path + "spr_dash_icon_" + color + ".png")
+
 func store_player_info() -> void:
 	player_max_health = player.max_health
 	player_health = player.health
 	
 	player_level = player.level
 	player_experience = player.experience
+	
+	player_dash_enabled = player.dash_enabled
 
+	player_mana_enabled = player.mana_enabled
 	player_max_mana = player.max_mana
 	player_mana = player.mana
 	player_mana_recovery_rate = player.mana_recovery_rate

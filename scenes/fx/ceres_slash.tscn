@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://bd1dhrll0vhoc"]
 
 [ext_resource type="Script" path="res://scripts/ceres_slash.gd" id="1_hv7qp"]
-[ext_resource type="Texture2D" uid="uid://bcqn2m0333rdn" path="res://assets/sprites/fx/spr_ceres_slash.png" id="2_k2cpv"]
+[ext_resource type="Texture2D" uid="uid://bcqn2m0333rdn" path="res://assets/sprites/fx/slash/spr_ceres_slash.png" id="2_k2cpv"]
 [ext_resource type="AudioStream" uid="uid://dqxu5pv7k6tdc" path="res://assets/sfx/snd_magic_slash.wav" id="3_c2esc"]
 [ext_resource type="Texture2D" uid="uid://cv02b1a8sn5in" path="res://assets/sprites/fx/spr_cross_aim.png" id="4_mp2i8"]
 
