@@ -34,6 +34,14 @@ func handle_sprite_offset() -> void:
 	# player is one frame late for collision : need to show the previous state of the block
 	sprite.position = position - delta_position
 
+func handle_light_point_animation() -> void:
+	if not activated:
+
+		end_light_point.frame = 0
+	else:
+		start_light_point.frame = 0
+
+
 func _ready() -> void:
 	start_position = position
 	
@@ -55,3 +63,4 @@ func _physics_process(delta: float) -> void:
 	handle_state()
 	handle_movement(delta)
 	handle_sprite_offset()
+	handle_light_point_animation()

@@ -1,0 +1,165 @@
+[gd_scene load_steps=20 format=3 uid="uid://da7hpi4illfj7"]
+
+[ext_resource type="Script" path="res://scripts/electric_arc_red_block.gd" id="1_54a68"]
+[ext_resource type="Texture2D" uid="uid://735r6bhs8jo0" path="res://assets/sprites/fx/spr_electric_arc_block.png" id="2_e7i33"]
+[ext_resource type="Script" path="res://scripts/static_body_hitbox.gd" id="3_j35bc"]
+[ext_resource type="AudioStream" uid="uid://dch38lv7y4owm" path="res://assets/sfx/snd_electric_arc.wav" id="4_dhksw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cta4d"]
+atlas = ExtResource("2_e7i33")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vm6rp"]
+atlas = ExtResource("2_e7i33")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b3i66"]
+atlas = ExtResource("2_e7i33")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rkai0"]
+atlas = ExtResource("2_e7i33")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37asc"]
+atlas = ExtResource("2_e7i33")
+region = Rect2(32, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_phmi3"]
+atlas = ExtResource("2_e7i33")
+region = Rect2(40, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sqkqm"]
+atlas = ExtResource("2_e7i33")
+region = Rect2(48, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3sn5"]
+atlas = ExtResource("2_e7i33")
+region = Rect2(56, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hh1gk"]
+atlas = ExtResource("2_e7i33")
+region = Rect2(64, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_72mi4"]
+atlas = ExtResource("2_e7i33")
+region = Rect2(72, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_411nx"]
+atlas = ExtResource("2_e7i33")
+region = Rect2(80, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4bec0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cta4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vm6rp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b3i66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rkai0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37asc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_phmi3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sqkqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s3sn5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hh1gk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_72mi4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_411nx")
+}],
+"loop": true,
+"name": &"5",
+"speed": 10.0
+}]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_c8kmv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jhxad"]
+size = Vector2(6, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ahvi"]
+size = Vector2(8, 8)
+
+[node name="ElectricArcRedBlock" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_54a68")
+solid = false
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+sprite_frames = SubResource("SpriteFrames_4bec0")
+animation = &"5"
+autoplay = "5"
+frame_progress = 0.974735
+
+[node name="SolidHitboxSprite" type="Sprite2D" parent="AnimatedSprite"]
+self_modulate = Color(1, 1, 1, 0.482353)
+show_behind_parent = true
+position = Vector2(-2.38419e-07, 2.38419e-07)
+scale = Vector2(6, 6)
+texture = SubResource("CanvasTexture_c8kmv")
+
+[node name="SubSpriteUp" type="Sprite2D" parent="AnimatedSprite/SolidHitboxSprite"]
+self_modulate = Color(1, 1, 1, 0.482353)
+show_behind_parent = true
+position = Vector2(0, -0.583)
+rotation = 1.5708
+scale = Vector2(0.167, 1)
+texture = SubResource("CanvasTexture_c8kmv")
+
+[node name="SubSpriteDown" type="Sprite2D" parent="AnimatedSprite/SolidHitboxSprite"]
+self_modulate = Color(1, 1, 1, 0.482353)
+show_behind_parent = true
+position = Vector2(0, 0.583)
+rotation = 1.5708
+scale = Vector2(0.167, 1)
+texture = SubResource("CanvasTexture_c8kmv")
+
+[node name="SubSpriteLeft" type="Sprite2D" parent="AnimatedSprite/SolidHitboxSprite"]
+self_modulate = Color(1, 1, 1, 0.482353)
+show_behind_parent = true
+position = Vector2(-0.583, 0)
+scale = Vector2(0.167, 1)
+texture = SubResource("CanvasTexture_c8kmv")
+
+[node name="SubSpriteRight" type="Sprite2D" parent="AnimatedSprite/SolidHitboxSprite"]
+self_modulate = Color(1, 1, 1, 0.482353)
+show_behind_parent = true
+position = Vector2(0.583, 0)
+scale = Vector2(0.167, 1)
+texture = SubResource("CanvasTexture_c8kmv")
+
+[node name="WallCollider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_jhxad")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("3_j35bc")
+
+[node name="Hitbox" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape2D_7ahvi")
+
+[node name="ElectricSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_dhksw")
+bus = &"SFX"
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
