@@ -422,6 +422,7 @@ libraries = {
 autoplay = "RESET"
 
 [node name="WallCollider" type="CollisionShape2D" parent="."]
+visible = false
 z_index = 1
 position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_iw4o0")

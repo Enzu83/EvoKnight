@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://d0skf7nkoxsut"]
 
-[ext_resource type="Script" path="res://scripts/health_upgrade.gd" id="1_aui4v"]
+[ext_resource type="Script" path="res://scripts/shield_upgrade.gd" id="1_aui4v"]
 [ext_resource type="Texture2D" uid="uid://c2ct4cr145qyp" path="res://assets/sprites/items/spr_big_heart.png" id="2_0k7s4"]
 [ext_resource type="AudioStream" uid="uid://cn7u0204ntghf" path="res://assets/sfx/snd_big_heart.wav" id="3_n2roo"]
 
@@ -200,7 +200,7 @@ _data = {
 "pickup": SubResource("Animation_kkw4f")
 }
 
-[node name="HealthUpgrade" type="Area2D"]
+[node name="ShieldUpgrade" type="Area2D"]
 collision_layer = 0
 collision_mask = 10
 script = ExtResource("1_aui4v")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dwitea1wpbdjp"]
+[gd_scene load_steps=34 format=3 uid="uid://dwitea1wpbdjp"]
 
 [ext_resource type="Texture2D" uid="uid://yx6p3eyombnl" path="res://assets/sprites/chars/player/spr_cherry_red.png" id="1_0563r"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kiiks"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cr7blsenyjqki" path="res://scenes/fx/charged_slash_effect.tscn" id="10_rajli"]
 [ext_resource type="AudioStream" uid="uid://bornuxk5r8gs4" path="res://assets/sfx/snd_blue_dash.wav" id="11_y42j7"]
 [ext_resource type="PackedScene" uid="uid://cenfhvybnahpy" path="res://scenes/fx/level_up_orbs.tscn" id="12_d7pnd"]
+[ext_resource type="PackedScene" uid="uid://dg7joh7fp6mdq" path="res://scenes/fx/shield.tscn" id="12_o5577"]
 
 [sub_resource type="Animation" id="Animation_u4cfc"]
 resource_name = "RESET"
@@ -1314,6 +1315,10 @@ position = Vector2(0, -14)
 [node name="MagicSlash" parent="." instance=ExtResource("8_pexea")]
 top_level = true
 position = Vector2(0, -11)
+
+[node name="Shield" parent="." instance=ExtResource("12_o5577")]
+z_index = 2
+position = Vector2(0, -15)
 
 [node name="Dash" type="Node2D" parent="."]
 

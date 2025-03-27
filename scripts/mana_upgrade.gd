@@ -9,6 +9,6 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.state != body.State.Fainted \
 	and body.state != body.State.Stop:
-		body.mana_recovery_rate = 10
+		body.mana_recovery_rate = 7
 		animation_player.play("pickup")
 		Global.collect_level_upgrade()

@@ -46,6 +46,8 @@ extends CharacterBody2D
 @onready var phantom_cooldown: Timer = $PhantomCooldown
 @onready var permanent_phantom_cooldown: Timer = $PermanentPhantomCooldown
 
+@onready var shield: Sprite2D = $Shield
+
 # Parameters
 const SPEED = 150.0
 const MAX_HORIZONTAL_VELOCITY = 600.0
@@ -82,10 +84,6 @@ var bump_direction := Vector2.ZERO
 
 var super_speed := false # increase speed and always create phantoms
 
-var bigger_slash := false # bigger slash ability flag
-var bigger_slash_count := 0 # count the number of frames where the slash button is pressed
-var bigger_slash_max := 90 # time needed for big slash activation
-
 # stats
 var max_health: int
 var health: int
@@ -105,6 +103,15 @@ var mana_recovery_rate := 0
 
 var strength: int
 var defense: int
+
+var shield_enabled := false # activate the shield by maintaining down
+var shield_count := 0 # count the number of frames where down button is pressed while crouched
+var shield_max := 60 # time needed for big slash activation
+var shield_mana_consumption := 15 # mana drained by shield each frame
+
+var bigger_slash := false # bigger slash ability flag
+var bigger_slash_count := 0 # count the number of frames where the slash button is pressed
+var bigger_slash_max := 90 # time needed for big slash activation
 
 var ability_disabled := false # flag to check if the player had their abilities disabled by something
 
@@ -147,6 +154,26 @@ func handle_crouch() -> void:
 	elif state == State.Crouching:
 		state = State.Default
 	
+func handle_shield() -> void:
+	if shield_enabled:
+		# count frames if down is pressed while crouching and player has enough mana for shield activation
+		if Input.is_action_pressed("down") \
+		and state == State.Crouching \
+		and mana >= shield_mana_consumption \
+		and not shield.active:
+			if shield_count < shield_max:
+				shield_count += 1
+			else:
+				shield.activate()
+		
+		# reset shield
+		else:
+			shield_count = 0
+	
+	# cancel shield if no more mana or deactivate it if player faints
+	if shield.active \
+	and (mana == 0 or state == State.Fainted):
+		shield.deactivate()
 
 func handle_jump() -> void:
 	# Restore jumps if grounded (slight margin for jumping few frames after leaving the floor).
@@ -202,7 +229,7 @@ func handle_jump() -> void:
 
 func handle_jump_height() -> void:
 	if not is_on_floor() and higher_jump_height > 0:
-		# increase the time where gravity is disabled
+		# increase when gravity is disabled
 		if Input.is_action_pressed("jump") and higher_jump_height < JUMP_FRAME_WINDOW and velocity.y <= 0:
 			higher_jump_height += 1
 		# player stops jumping
@@ -513,6 +540,8 @@ func init_info() -> void:
 	strength = Global.player_strength
 	defense = Global.player_defense
 	
+	shield_enabled = Global.player_shield_enabled
+	
 	bigger_slash = Global.player_bigger_slash
 	
 	# restore health of the player if the player fainted
@@ -539,6 +568,7 @@ func _physics_process(delta: float) -> void:
 				handle_flip_h() # flip sprite horizontally if the player is not attacking
 			
 			handle_crouch() # crouch animation
+			handle_shield() # attack protection
 			handle_dash() # can't dash while attacking
 			handle_jump() # left, right and jump
 			handle_jump_height() # different jump heights
@@ -550,7 +580,7 @@ func _physics_process(delta: float) -> void:
 
 	if state != State.Dashing \
 	and state != State.DashingAndAttacking:
-		handle_velocity(delta) # velocity update based on the above modification
+		handle_velocity(delta) # velocity update based on the above modifications
 
 	animate() # update the sprite animation if necessary
 	
@@ -578,8 +608,12 @@ func hurt(damage: int, ignore_defense: bool = false, through_blue_dash: bool = f
 	if not ignore_defense:
 		damage -= defense
 	
+	# shield absorbs hit if active
+	if shield.active:
+		shield.explode()
+	
 	# hit during blue dash: animation and mana cost
-	if blue_dash and not through_blue_dash:
+	elif blue_dash and not through_blue_dash:
 		if not blue_dash_hit:
 			blue_dash_hit = true
 			mana -= BLUE_DASH_MANA
@@ -593,7 +627,6 @@ func hurt(damage: int, ignore_defense: bool = false, through_blue_dash: bool = f
 		hurtbox.set_deferred("disabled", true)
 		hurt_invicibility_timer.start()
 		effects_player.play("blink")
-		basic_slash.reset()
 	
 	# player is dead
 	else:
@@ -640,8 +673,15 @@ func heal(amount: int) -> void:
 		health += amount
 
 func restore_mana(amount: int) -> void:
+	# full restore
 	if mana + amount > max_mana:
 		mana = max_mana
+		
+	# no more mana
+	elif mana + amount < 0:
+		mana = 0
+
+	# usual case
 	else:
 		mana += amount
 
@@ -696,7 +736,13 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 
 func _on_mana_recovery_timer_timeout() -> void:
 	if state != State.Fainted:
-		restore_mana(mana_recovery_rate)
+		# natural regeneration
+		if mana_recovery_rate > 0:
+			restore_mana(mana_recovery_rate)
+		
+		# drain mana if shield is active
+		if shield.active:
+			restore_mana(-shield_mana_consumption)
 
 func _on_phantom_cooldown_timeout() -> void:
 	# don't create more phantoms if the super speed already creates ones

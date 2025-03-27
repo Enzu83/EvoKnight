@@ -88,6 +88,8 @@ var player_mana_recovery_rate := 0
 var player_strength := 1
 var player_defense := 0
 
+var player_shield_enabled := false
+
 var player_bigger_slash := false
 
 # player upgrades per level - check for pick up
@@ -170,6 +172,8 @@ func init_player_stats() -> void:
 
 	player_strength = 1
 	player_defense = 0
+	
+	player_shield_enabled = false
 	
 	player_bigger_slash = false
 
@@ -347,6 +351,8 @@ func store_player_info() -> void:
 
 	player_strength = player.strength
 	player_defense = player.defense
+	
+	player_shield_enabled = player.shield_enabled
 	
 	player_bigger_slash = player.bigger_slash
 
