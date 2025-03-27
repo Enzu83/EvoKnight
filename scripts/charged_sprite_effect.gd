@@ -7,7 +7,8 @@ func _ready() -> void:
 	texture = Global.charged_slash_effect_sprite
 
 func _physics_process(_delta: float) -> void:
-	if player.bigger_slash and player.bigger_slash_count == player.bigger_slash_max:
+	if player.state != player.State.Stop and player.state != player.State.Fainted \
+	and player.bigger_slash and player.bigger_slash_count == player.bigger_slash_max:
 		if not visible:
 			charge_sound.play()
 			visible = true

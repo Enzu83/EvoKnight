@@ -157,8 +157,10 @@ func handle_crouch() -> void:
 func handle_shield() -> void:
 	if shield_enabled:
 		# count frames if down is pressed while crouching and player has enough mana for shield activation
-		if Input.is_action_pressed("down") \
+		if state != State.Stop and state != State.Fainted \
+		and Input.is_action_pressed("down") \
 		and state == State.Crouching \
+		and mana_enabled \
 		and mana >= shield_mana_consumption \
 		and not shield.active:
 			if shield_count < shield_max:
@@ -172,7 +174,7 @@ func handle_shield() -> void:
 	
 	# cancel shield if no more mana or deactivate it if player faints
 	if shield.active \
-	and (mana == 0 or state == State.Fainted):
+	and (mana == 0 or state == State.Fainted or not mana_enabled):
 		shield.deactivate()
 
 func handle_jump() -> void:
@@ -240,7 +242,8 @@ func handle_jump_height() -> void:
 func handle_charged_slash() -> void:
 	if bigger_slash:
 		# count frames
-		if Input.is_action_pressed("basic_slash"):
+		if state != State.Stop and state != State.Fainted \
+		and Input.is_action_pressed("basic_slash"):
 			if bigger_slash_count < bigger_slash_max:
 				bigger_slash_count += 1
 		
@@ -737,7 +740,7 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 func _on_mana_recovery_timer_timeout() -> void:
 	if state != State.Fainted:
 		# natural regeneration
-		if mana_recovery_rate > 0:
+		if mana_enabled and mana_recovery_rate > 0:
 			restore_mana(mana_recovery_rate)
 		
 		# drain mana if shield is active

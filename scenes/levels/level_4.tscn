@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=4 uid="uid://npva5mv5cam3"]
+[gd_scene load_steps=71 format=4 uid="uid://npva5mv5cam3"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_4.gd" id="1_u23an"]
 [ext_resource type="AudioStream" uid="uid://cjcn1gqvr8ywi" path="res://assets/musics/mus_barren_valley.mp3" id="2_hxhsr"]
@@ -28,6 +28,9 @@
 [ext_resource type="PackedScene" uid="uid://q1aarwp3gug1" path="res://scenes/fx/electric_arc/electric_arc_block.tscn" id="20_ub4d2"]
 [ext_resource type="PackedScene" uid="uid://dc16xujywkehp" path="res://scenes/other/ability_disabler.tscn" id="22_ereny"]
 [ext_resource type="PackedScene" uid="uid://c0ceditevl5ti" path="res://scenes/items/switch_coin.tscn" id="25_8gl6u"]
+[ext_resource type="PackedScene" uid="uid://d0skf7nkoxsut" path="res://scenes/items/shield_upgrade.tscn" id="29_y5uc7"]
+[ext_resource type="PackedScene" uid="uid://bt4ro6tgqfelv" path="res://scenes/items/mana_upgrade.tscn" id="30_frxcb"]
+[ext_resource type="PackedScene" uid="uid://cmvgap4pv4yl6" path="res://scenes/items/charged_slash_upgrade.tscn" id="31_8rw2c"]
 
 [sub_resource type="Animation" id="Animation_8w81k"]
 resource_name = "float"
@@ -1365,7 +1368,7 @@ disable = false
 [node name="Player" parent="." instance=ExtResource("13_u6tl7")]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(9540, -606)
+position = Vector2(9590, -625)
 
 [node name="PlayerCameraPoint" parent="Player" instance=ExtResource("14_0cuxu")]
 top_level = true
@@ -1386,3 +1389,12 @@ position = Vector2(-46, 71)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EndOfLevel"]
 shape = SubResource("RectangleShape2D_hsmr0")
+
+[node name="ShieldUpgrade" parent="." instance=ExtResource("29_y5uc7")]
+position = Vector2(9645, -613)
+
+[node name="ManaUpgrade" parent="." instance=ExtResource("30_frxcb")]
+position = Vector2(9623, -613)
+
+[node name="ChargedSlashUpgrade" parent="." instance=ExtResource("31_8rw2c")]
+position = Vector2(9666, -612)
