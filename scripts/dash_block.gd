@@ -36,11 +36,9 @@ func handle_sprite_offset() -> void:
 
 func handle_light_point_animation() -> void:
 	if not activated:
-
 		end_light_point.frame = 0
 	else:
 		start_light_point.frame = 0
-
 
 func _ready() -> void:
 	start_position = position

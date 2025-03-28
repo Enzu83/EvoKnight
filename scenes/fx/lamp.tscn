@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://bn0ro0gwfwveh"]
+
+[ext_resource type="Texture2D" uid="uid://dcv5syjm0fdcy" path="res://assets/sprites/fx/spr_lamp.png" id="1_rjq2m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0cy3"]
+atlas = ExtResource("1_rjq2m")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7d8ye"]
+atlas = ExtResource("1_rjq2m")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmxqt"]
+atlas = ExtResource("1_rjq2m")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jlqws"]
+atlas = ExtResource("1_rjq2m")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y6uw0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v0cy3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7d8ye")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmxqt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jlqws")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Lamp" type="AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_y6uw0")
+autoplay = "default"
+frame_progress = 0.778694
