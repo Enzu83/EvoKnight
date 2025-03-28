@@ -1,0 +1,101 @@
+[gd_scene load_steps=9 format=3 uid="uid://72pf8hw3rmdt"]
+
+[ext_resource type="Script" path="res://scripts/lever_timer.gd" id="1_yudsg"]
+[ext_resource type="Texture2D" uid="uid://7vn74y3g8kca" path="res://assets/sprites/items/spr_lever_yellow.png" id="2_05ebd"]
+[ext_resource type="AudioStream" uid="uid://dya2n54kadsdk" path="res://assets/sfx/snd_lever.wav" id="3_0aw8i"]
+
+[sub_resource type="Animation" id="Animation_3kxbp"]
+resource_name = "inactive"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_lx4wa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_rlbov"]
+resource_name = "active"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hkdyc"]
+_data = {
+"RESET": SubResource("Animation_lx4wa"),
+"active": SubResource("Animation_rlbov"),
+"inactive": SubResource("Animation_3kxbp")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vl2ty"]
+radius = 4.0
+height = 12.0
+
+[node name="LeverTimer" type="Area2D"]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_yudsg")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("2_05ebd")
+hframes = 2
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hkdyc")
+}
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_vl2ty")
+
+[node name="ActivationCooldown" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="ActivationSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_0aw8i")
+volume_db = -2.0
+bus = &"SFX"
+
+[node name="DeactivationTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="area_entered" from="." to="." method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="ActivationCooldown" to="." method="_on_activation_cooldown_timeout"]
+[connection signal="timeout" from="DeactivationTimer" to="." method="_on_deactivation_timer_timeout"]

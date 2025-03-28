@@ -247,13 +247,13 @@ autoplay = "default"
 [node name="VersionLabel" type="Label" parent="Title"]
 top_level = true
 layout_mode = 0
-offset_left = 387.0
+offset_left = 344.0
 offset_top = 223.0
-offset_right = 419.0
+offset_right = 418.0
 offset_bottom = 240.0
 theme_override_fonts/font = ExtResource("6_bnf46")
 theme_override_font_sizes/font_size = 14
-text = "v0.3"
+text = "v0.3-alpha"
 horizontal_alignment = 2
 
 [node name="Menu" type="Control" parent="."]
