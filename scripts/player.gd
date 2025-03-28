@@ -607,16 +607,16 @@ func is_hurtable() -> bool:
 	#	- in Stop state
 	return not effects_player.current_animation == "blink" and state != State.Fainted and state != State.Stop
 
-func hurt(damage: int, ignore_defense: bool = false, through_blue_dash: bool = false) -> void:
+func hurt(damage: int, ignore_defense: bool = false, through_everything: bool = false) -> void:
 	if not ignore_defense:
 		damage -= defense
 	
 	# shield absorbs hit if active
-	if shield.active:
+	if shield.active and not through_everything:
 		shield.explode()
 	
 	# hit during blue dash: animation and mana cost
-	elif blue_dash and not through_blue_dash:
+	elif blue_dash and not through_everything:
 		if not blue_dash_hit:
 			blue_dash_hit = true
 			mana -= BLUE_DASH_MANA
@@ -630,6 +630,9 @@ func hurt(damage: int, ignore_defense: bool = false, through_blue_dash: bool = f
 		hurtbox.set_deferred("disabled", true)
 		hurt_invicibility_timer.start()
 		effects_player.play("blink")
+		
+		if shield.active:
+			shield.explode()
 	
 	# player is dead
 	else:
@@ -646,6 +649,9 @@ func fainted() -> void:
 		hurtbox.set_deferred("disabled", true)
 		death_sound.play()
 		death_timer.start()
+		
+		if shield.active:
+			shield.explode()
 
 func create_phantom() -> void:
 	# create a phantom only if the player is moving or dashing
