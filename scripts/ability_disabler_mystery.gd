@@ -5,6 +5,10 @@ extends Area2D
 @onready var parent_handler: Area2D = $".."
 
 @onready var sprite: Sprite2D = $Sprite
+@onready var particles: Sprite2D = $Particles
+
+@onready var hitbox: CollisionShape2D = $Hitbox
+
 @onready var trigger_sound: AudioStreamPlayer = $TriggerSound
 
 @export var disable := true
@@ -41,6 +45,15 @@ func reset() -> void:
 func _ready() -> void:
 	default_disable = disable
 	default_color = sprite.modulate
+	
+	sprite.region_rect.size = 16 * Vector2(1, scale.y)
+	particles.region_rect.size = 16 * Vector2(9, scale.y)
+	
+	var hitbox_rect = RectangleShape2D.new()
+	hitbox_rect.size = 16 * Vector2(1, scale.y)
+	hitbox.set_shape(hitbox_rect)
+	
+	scale.y = 1
 
 func _on_area_entered(area: Area2D) -> void:
 	var body := area.get_parent()
