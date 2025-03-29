@@ -10,6 +10,8 @@ extends Area2D
 
 @onready var timer_block: StaticBody2D = $TimerBlock
 
+@export var duration := 1.0
+
 var active := false
 var can_change_state := true # slight cooldown before changing the state of the lever
 var direction: String # direction from which the level can't be activated
@@ -27,9 +29,8 @@ func _ready() -> void:
 	# left
 	elif posmod(round(rotation_degrees), 360) == 270:
 		direction = "left"
-
-func _process(_delta: float) -> void:
-	pass
+	
+	deactivation_timer.wait_time = duration
 
 func _on_hitbox_area_entered(basic_slash: Area2D) -> void:
 	# check if the slash is oriented toward the lever
