@@ -10,6 +10,8 @@ extends Area2D
 
 @onready var timer_block: StaticBody2D = $TimerBlock
 
+@onready var ticking_sound: AudioStreamPlayer = $TickingSound
+
 @export var duration := 1.0
 
 var active := false
@@ -47,6 +49,8 @@ func _on_hitbox_area_entered(basic_slash: Area2D) -> void:
 		activation_sound.play()
 		
 		deactivation_timer.start()
+		
+		ticking_sound.play()
 
 func _on_activation_cooldown_timeout() -> void:
 	can_change_state = true
@@ -57,3 +61,5 @@ func _on_deactivation_timer_timeout() -> void:
 	
 	animation_player.play("inactive")
 	timer_block.close()
+	
+	ticking_sound.stop()

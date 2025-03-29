@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://72pf8hw3rmdt"]
+[gd_scene load_steps=10 format=3 uid="uid://72pf8hw3rmdt"]
 
 [ext_resource type="Script" path="res://scripts/lever_timer.gd" id="1_yudsg"]
 [ext_resource type="Texture2D" uid="uid://7vn74y3g8kca" path="res://assets/sprites/items/spr_lever_yellow.png" id="2_05ebd"]
 [ext_resource type="AudioStream" uid="uid://dya2n54kadsdk" path="res://assets/sfx/snd_lever.wav" id="3_0aw8i"]
+[ext_resource type="AudioStream" uid="uid://biqt6obxin5if" path="res://assets/sfx/snd_ticking.wav" id="4_5myax"]
 
 [sub_resource type="Animation" id="Animation_3kxbp"]
 resource_name = "inactive"
@@ -95,6 +96,10 @@ bus = &"SFX"
 [node name="DeactivationTimer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
+
+[node name="TickingSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_5myax")
+bus = &"SFX"
 
 [connection signal="area_entered" from="." to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="ActivationCooldown" to="." method="_on_activation_cooldown_timeout"]
