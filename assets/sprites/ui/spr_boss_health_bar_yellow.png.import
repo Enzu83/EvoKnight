@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vkifsbrorbmk"
-path="res://.godot/imported/spr_boss_health_bar.png-39953a5edfa51aa5bd41c880332c97ee.ctex"
+uid="uid://ck3xikq5h3m2u"
+path="res://.godot/imported/spr_boss_health_bar_yellow.png-40077e46e5f59a6b806291d686ae0af6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/spr_boss_health_bar.png"
-dest_files=["res://.godot/imported/spr_boss_health_bar.png-39953a5edfa51aa5bd41c880332c97ee.ctex"]
+source_file="res://assets/sprites/ui/spr_boss_health_bar_yellow.png"
+dest_files=["res://.godot/imported/spr_boss_health_bar_yellow.png-40077e46e5f59a6b806291d686ae0af6.ctex"]
 
 [params]
 

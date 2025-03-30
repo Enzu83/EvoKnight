@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cvvewevudo2kf"]
+[gd_scene load_steps=24 format=3 uid="uid://cvvewevudo2kf"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_llsyg"]
 [ext_resource type="Texture2D" uid="uid://dfobe5bchkqus" path="res://assets/sprites/ui/spr_main_bar.png" id="2_5714a"]
@@ -12,9 +12,12 @@
 [ext_resource type="Texture2D" uid="uid://c0cboejd5sohi" path="res://assets/sprites/ui/spr_collectables_ui.png" id="10_aj2gh"]
 [ext_resource type="Texture2D" uid="uid://hpjnmb1knvbo" path="res://assets/sprites/items/spr_star.png" id="11_kx5sy"]
 [ext_resource type="Texture2D" uid="uid://dfhmehkjsmb5a" path="res://assets/sprites/ui/spr_boss_ui.png" id="12_6f7g8"]
-[ext_resource type="Texture2D" uid="uid://vkifsbrorbmk" path="res://assets/sprites/ui/spr_boss_health_bar.png" id="13_fhkyp"]
+[ext_resource type="Texture2D" uid="uid://vkifsbrorbmk" path="res://assets/sprites/ui/spr_boss_health_bar_red.png" id="13_fhkyp"]
 [ext_resource type="Texture2D" uid="uid://bwsxdaj1enfvn" path="res://assets/sprites/ui/icons/spr_boss_ui_icon.png" id="14_ar2xq"]
 [ext_resource type="FontFile" uid="uid://bs0e3kolxkpmn" path="res://assets/fonts/small.fnt" id="14_b67fq"]
+[ext_resource type="Texture2D" uid="uid://ck3xikq5h3m2u" path="res://assets/sprites/ui/spr_boss_health_bar_yellow.png" id="14_pkixr"]
+[ext_resource type="Texture2D" uid="uid://s0tujbemmc6r" path="res://assets/sprites/ui/spr_boss_health_bar_blue.png" id="15_f0ryd"]
+[ext_resource type="Texture2D" uid="uid://bylq58kqqdhcu" path="res://assets/sprites/ui/spr_boss_health_bar_purple.png" id="16_1vgb8"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_37i1y"]
 
@@ -232,7 +235,7 @@ offset_right = 220.0
 offset_bottom = 19.0
 texture = ExtResource("12_6f7g8")
 
-[node name="HealthBar" type="TextureProgressBar" parent="BossBar"]
+[node name="HealthBarRed" type="TextureProgressBar" parent="BossBar"]
 layout_mode = 0
 offset_left = 7.0
 offset_top = 3.0
@@ -240,6 +243,33 @@ offset_right = 103.0
 offset_bottom = 8.0
 max_value = 96.0
 texture_progress = ExtResource("13_fhkyp")
+
+[node name="HealthBarYellow" type="TextureProgressBar" parent="BossBar"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 3.0
+offset_right = 103.0
+offset_bottom = 8.0
+max_value = 96.0
+texture_progress = ExtResource("14_pkixr")
+
+[node name="HealthBarBlue" type="TextureProgressBar" parent="BossBar"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 3.0
+offset_right = 103.0
+offset_bottom = 8.0
+max_value = 96.0
+texture_progress = ExtResource("15_f0ryd")
+
+[node name="HealthBarPurple" type="TextureProgressBar" parent="BossBar"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 3.0
+offset_right = 103.0
+offset_bottom = 8.0
+max_value = 96.0
+texture_progress = ExtResource("16_1vgb8")
 
 [node name="BossName" type="Label" parent="BossBar"]
 layout_mode = 1

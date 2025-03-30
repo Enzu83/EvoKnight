@@ -1,7 +1,7 @@
 extends Area2D
 
 const STRENGTH = 4
-const MANA_RECOVERY_FACTOR = 10
+const MANA_RECOVERY_FACTOR = 25
 
 @onready var player: CharacterBody2D = $".."
 
@@ -110,7 +110,7 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemies"):
 		if area.hurt(ceil(multiplier * (STRENGTH + player.strength)), self):
 			# restore mana only if the slash hurt the enemy
-			player.restore_mana(MANA_RECOVERY_FACTOR * STRENGTH + player.strength)
+			player.restore_mana(MANA_RECOVERY_FACTOR)
 		
 		# make player bounce on the enemy
 		if direction == "down":

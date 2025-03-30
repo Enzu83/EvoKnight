@@ -70,7 +70,7 @@ func _ready() -> void:
 	sprite.visible = false
 	hurtbox.set_deferred("disabled", true)
 
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if player.position.x >= 4152 \
 	and player.position.x <= 4424:
 		handle_flip_h()

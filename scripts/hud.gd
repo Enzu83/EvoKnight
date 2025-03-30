@@ -20,11 +20,18 @@ extends CanvasLayer
 @onready var pending_score_label: Label = $Score/PendingScore/ScoreLabel
 
 @onready var boss_bar: TextureRect = $BossBar
-@onready var boss_health_bar: TextureProgressBar = $BossBar/HealthBar
+@onready var boss_health_bar_red: TextureProgressBar = $BossBar/HealthBarRed
+@onready var boss_health_bar_yellow: TextureProgressBar = $BossBar/HealthBarYellow
+@onready var boss_health_bar_blue: TextureProgressBar = $BossBar/HealthBarBlue
+@onready var boss_health_bar_purple: TextureProgressBar = $BossBar/HealthBarPurple
+
 @onready var boss_name: Label = $BossBar/BossName
 
 var display_collectable := false
 var display_boss := false
+
+var boss_health_bars: Array
+var current_boss_health_bar := 0
 
 var player: CharacterBody2D = null
 var boss: Node2D = null
@@ -33,14 +40,19 @@ var dash_threshold_initial_position: Vector2
 var magic_slash_threshold_initial_position: Vector2
 
 func _ready() -> void:
-	# for resolution 1280x720 => window scale is x3.0 and hud scale is 1.333
-	#scale = 1.5 * Vector2.ONE
-	
 	dash_threshold_initial_position = dash_threshold.position
 	magic_slash_threshold_initial_position = magic_slash_threshold.position
 	
 	dash_icon.texture = Global.dash_icon
 	magic_slash_icon.texture = Global.magic_slash_icon
+	
+	# boss health bars
+	boss_health_bars = [
+		boss_health_bar_red,
+		boss_health_bar_yellow,
+		boss_health_bar_blue,
+		boss_health_bar_purple
+	]
 
 func _process(_delta: float) -> void:
 	player = Global.player
@@ -105,6 +117,9 @@ func hide_all() -> void:
 	score.visible = false
 	pending_score.visible = false
 	boss_bar.visible = false
+	
+	for boss_health_bar in boss_health_bars:
+		boss_health_bar.visible = false
 
 func draw_collectable_ui() -> void:
 	score.visible = true
@@ -118,4 +133,11 @@ func draw_collectable_ui() -> void:
 
 func draw_boss_ui() -> void:
 	boss_bar.visible = true
-	boss_health_bar.value = int((boss.health / float(boss.MAX_HEALTH)) * boss_health_bar.max_value)
+	
+	for i in range(current_boss_health_bar+1):
+		boss_health_bars[i].visible = true
+		
+		if i == current_boss_health_bar:
+			boss_health_bars[i].value = int((boss.health / float(boss.MAX_HEALTH)) * boss_health_bars[i].max_value)
+		else:
+			boss_health_bars[i].value = boss_health_bars[i].max_value
