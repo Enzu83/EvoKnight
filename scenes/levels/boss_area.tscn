@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dwitea1wpbdjp" path="res://scenes/chars/player.tscn" id="7_cms48"]
 [ext_resource type="PackedScene" uid="uid://d2mxuksvqj1kw" path="res://scenes/items/heart.tscn" id="7_pjsma"]
 [ext_resource type="PackedScene" uid="uid://csup4pwrdhqok" path="res://scenes/platforms/large_platform.tscn" id="7_vt7rg"]
-[ext_resource type="PackedScene" uid="uid://bvd0y2way7av1" path="res://scenes/chars/boss_mirror.tscn" id="8_gf3ln"]
+[ext_resource type="PackedScene" uid="uid://bvd0y2way7av1" path="res://scenes/chars/dark_cherry.tscn" id="8_gf3ln"]
 [ext_resource type="PackedScene" uid="uid://cvvewevudo2kf" path="res://scenes/other/hud.tscn" id="8_ry3vd"]
 
 [node name="BossArea" type="Node2D"]
@@ -57,9 +57,10 @@ position = Vector2(-104, -64)
 [node name="Heart2" parent="Items" instance=ExtResource("7_pjsma")]
 position = Vector2(104, -64)
 
-[node name="BossMirror" parent="." instance=ExtResource("8_gf3ln")]
+[node name="DarkCherry" parent="." instance=ExtResource("8_gf3ln")]
 z_index = 1
 position = Vector2(134, 16)
+boss = true
 
 [node name="Player" parent="." instance=ExtResource("7_cms48")]
 unique_name_in_owner = true

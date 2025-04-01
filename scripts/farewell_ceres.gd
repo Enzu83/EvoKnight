@@ -5,6 +5,8 @@ extends CharacterBody2D
 @onready var sprite: Sprite2D = $Sprite
 @onready var wall_collider: CollisionShape2D = $WallCollider
 
+@onready var shield: AnimatedSprite2D = $Shield
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var effects_player: AnimationPlayer = $EffectsPlayer
 
@@ -13,12 +15,14 @@ extends CharacterBody2D
 @onready var hurt_sound: AudioStreamPlayer = $Hurtbox/HurtSound
 @onready var death_sound: AudioStreamPlayer = $Hurtbox/DeathSound
 
+@onready var teleport_sound: AudioStreamPlayer = $TeleportSound
+
 var target_orb_scene: Resource = preload("res://scenes/fx/ceres_target_orb.tscn")
 var impact_orb_scene: Resource = preload("res://scenes/fx/ceres_impact_orb.tscn")
 var magic_slash_scene: Resource = preload("res://scenes/fx/ceres_slash.tscn")
 var speed_orb_scene: Resource = preload("res://scenes/items/speed_orb.tscn")
 
-var phantom: Resource = preload("res://scenes/chars/farewell_ceres_phantom.tscn")
+var phantom_scene: Resource = preload("res://scenes/chars/farewell_ceres_phantom.tscn")
 
 
 const SPEED = 300.0
@@ -43,15 +47,16 @@ var active := false
 
 func _ready() -> void:
 	active = false
-	velocity.x = -80
-	velocity.y = -100
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	handle_flip_h()
-	velocity.x = move_toward(velocity.y, 0, 40 * delta)
-	velocity.y = move_toward(velocity.y, 0, 50 * delta)
+	
+	handle_shield()
 	
 	move_and_slide()
+
+func handle_shield() -> void:
+	shield.visible = state == State.Stall
 
 func handle_flip_h() -> void:
 	# flip the sprite to match the direction
@@ -67,33 +72,40 @@ func play_animation(anim_name: String) -> void:
 		anim = Anim.get(anim_name)
 
 func is_hurtable() -> bool:
-	return state != State.Stall and not effects_player.current_animation == "blink"
+	return not shield.visible and not effects_player.current_animation == "blink"
 
 func hurt(damage: int, _attack: Area2D) -> bool:
-	if is_hurtable():
-		# boss is still alive
+	var is_hurt := is_hurtable()
+	
+	if is_hurt:
+		# ceres still has hp
 		if health > damage:
 			health -= damage
-			velocity.x *= 0.5
 			hurt_sound.play()
 			hurtbox.set_deferred("disabled", true)
 			hurt_invicibility_timer.start()
 			effects_player.play("blink")
 		
-		# boss is dead
+		# ceres loses an health bar
 		else:
 			fainted()
 
-	return not is_hurtable()
+	return is_hurt
 
 func fainted() -> void:
 	if state != State.Defeated:
+		# some left health bars
 		if health_bar > 0:
 			health = MAX_HEALTH
 			health_bar -= 1
 			state = State.Stall
-			hurt_sound.play()
+			teleport_sound.play()
+
+			hurtbox.set_deferred("disabled", true)
+			hurt_invicibility_timer.start()
+			effects_player.play("blink")
 		
+		# no more health bars left
 		else:
 			health = 0
 			state = State.Defeated
@@ -116,9 +128,10 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		body.hurt(STRENGTH)
 
 func _on_hurt_invicibility_timer_timeout() -> void:
-	hurtbox.set_deferred("disabled", false)
+	if state != State.Stall:
+		hurtbox.set_deferred("disabled", false)
 	effects_player.stop()
 
 func _on_phantom_cooldown_timeout() -> void:
 	if velocity.length() > 0:
-		add_child(phantom.instantiate())
+		add_child(phantom_scene.instantiate())

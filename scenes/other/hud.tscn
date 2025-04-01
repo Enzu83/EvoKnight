@@ -229,9 +229,9 @@ text = "+0"
 
 [node name="BossBar" type="TextureRect" parent="."]
 visible = false
-offset_left = 110.0
+offset_left = 105.499
 offset_top = 8.0
-offset_right = 220.0
+offset_right = 215.499
 offset_bottom = 19.0
 texture = ExtResource("12_6f7g8")
 
@@ -278,7 +278,7 @@ anchor_left = 0.064
 anchor_top = 0.182
 anchor_right = 0.064
 anchor_bottom = 0.182
-offset_left = -0.0399928
+offset_left = -0.0399852
 offset_top = -0.00200009
 offset_right = 95.96
 offset_bottom = 7.998

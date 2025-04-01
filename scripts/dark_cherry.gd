@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
-@onready var music: AudioStreamPlayer = %Music
-@onready var hud: CanvasLayer = %HUD
+@onready var music: AudioStreamPlayer
+@onready var hud: CanvasLayer
 
-@onready var player: Player = %Player
+@onready var player: Player
 
 @onready var spawn_sprite: Sprite2D = $SpawnSprite
 
@@ -29,13 +29,17 @@ extends CharacterBody2D
 
 @onready var action_decision_cooldown: Timer = $ActionDecisionCooldown
 
+@export var boss := false
+@export var MAX_HEALTH = 120
+
+var flip_sprite_at_spawn := true
+
 const SPEED = 130.0
 const JUMP_VELOCITY = -280.0
 const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
 const STRENGTH = 3
 
-const MAX_HEALTH = 120
 const EXP_DROP_VALUE = 5
 
 enum State {Default, Fainted, Attacking, Dashing}
@@ -49,7 +53,7 @@ var direction: float # direction input
 var jumps := MAX_JUMPS # jumps left
 
 # stats
-var health := MAX_HEALTH
+var health: int
 
 # mirror boss specific variables
 
@@ -176,21 +180,34 @@ func animate() -> void:
 		play_animation("faint")
 
 func draw_health_bar() -> void:
-	hud.display_boss = true
-	hud.boss_name.text = "Dark Cherry"
+	if boss:
+		hud.display_boss = true
+		hud.boss_name.text = "Dark Cherry"
 
 func activate() -> void:
 	active = true
-	music.play()
-	player.state = player.State.Default
+	
+	if boss:
+		music.play()
+		player.state = player.State.Default
 
 func _ready() -> void:
 	add_to_group("enemies")
+
+	if boss:
+		music = %Music
+		hud = %HUD
+		player = %Player
+		music.stop()
+		player.state = player.State.Stop
+		flip_sprite_at_spawn = true
+
+	else:
+		player = Global.player
 	
-	spawn_sprite.flip_h = true
-	sprite.flip_h = true
-	music.stop()
-	player.state = player.State.Stop
+	health = MAX_HEALTH
+	spawn_sprite.flip_h = flip_sprite_at_spawn
+	sprite.flip_h = flip_sprite_at_spawn
 
 func _physics_process(delta: float) -> void:
 	if active:
@@ -291,16 +308,16 @@ func find_action() -> void:
 	# run toward if it's safe to do it and if the player is not too high
 	elif not (player.state == player.State.Attacking \
 	and player.state == player.State.Dashing \
+	#and abs(position.y - player.position.y) < 64 \
 	and (abs(position.x - player.position.x) > 96)) \
-	and abs(position.x - player.position.x) >= 28 \
-	and abs(position.y - player.position.y) < 64:
+	and abs(position.x - player.position.x) >= 28:
 		change_action(Action.RunToward)
 
 	# jump to reach the player that is above but not too far
 	elif action != Action.RunAway \
 	and abs(position.x - player.position.x) < 64 \
 	and position.y - player.get_middle_position().y > 32 \
-	and position.y - player.get_middle_position().y < 64 \
+	#and position.y - player.get_middle_position().y < 64 \
 	and can_jump:
 		change_action(Action.Jump)
 	
@@ -346,7 +363,8 @@ func fainted() -> void:
 		death_sound.play()
 		
 		# exp drops
-		Global.create_multiple_exp_drop(EXP_DROP_VALUE, position, 250)
+		if boss:
+			Global.create_multiple_exp_drop(EXP_DROP_VALUE, position, 250)
 
 		death_timer.start()
 
@@ -361,7 +379,10 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 	effects_player.stop()
 
 func _on_death_timer_timeout() -> void:
-	Global.next_level()
+	if boss:
+		Global.next_level()
+	else:
+		queue_free()
 
 func _on_basic_slash_cooldown_timeout() -> void:
 	can_attack = true

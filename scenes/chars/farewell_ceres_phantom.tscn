@@ -82,6 +82,7 @@ _data = {
 visible = false
 modulate = Color(1, 1, 1, 0)
 top_level = true
+z_index = -1
 position = Vector2(0, -16)
 texture = ExtResource("1_o63ar")
 hframes = 4

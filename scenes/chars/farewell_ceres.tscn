@@ -1,10 +1,12 @@
-[gd_scene load_steps=17 format=3 uid="uid://cvyxcdvny1nsi"]
+[gd_scene load_steps=24 format=3 uid="uid://cvyxcdvny1nsi"]
 
 [ext_resource type="Script" path="res://scripts/farewell_ceres.gd" id="1_tbq25"]
 [ext_resource type="Texture2D" uid="uid://c27jgnpkvfd3u" path="res://assets/sprites/chars/enemies/spr_ceres.png" id="2_u3ly1"]
+[ext_resource type="Texture2D" uid="uid://bytvc53j3lqbk" path="res://assets/sprites/fx/spr_ceres_shield.png" id="3_7j461"]
 [ext_resource type="Script" path="res://scripts/body_hurtbox.gd" id="3_xf30b"]
 [ext_resource type="AudioStream" uid="uid://ddtibw10i6qus" path="res://assets/sfx/snd_ceres_hurt.wav" id="4_as383"]
 [ext_resource type="AudioStream" uid="uid://8qw2745bfbro" path="res://assets/sfx/snd_ceres_death.wav" id="5_bclpw"]
+[ext_resource type="AudioStream" uid="uid://kpryh7dxxy2y" path="res://assets/sfx/snd_teleport.wav" id="7_uuhbs"]
 
 [sub_resource type="Animation" id="Animation_yxfbx"]
 length = 0.001
@@ -357,6 +359,42 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iw4o0"]
 size = Vector2(6, 18)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2va3"]
+atlas = ExtResource("3_7j461")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wt2f2"]
+atlas = ExtResource("3_7j461")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q4bf5"]
+atlas = ExtResource("3_7j461")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5a35v"]
+atlas = ExtResource("3_7j461")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ch7yb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u2va3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wt2f2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q4bf5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5a35v")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ffppv"]
 radius = 4.0
 height = 24.0
@@ -366,7 +404,6 @@ collision_layer = 0
 script = ExtResource("1_tbq25")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-z_index = 1
 position = Vector2(0, -16)
 texture = ExtResource("2_u3ly1")
 hframes = 4
@@ -391,7 +428,14 @@ z_index = 1
 position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_iw4o0")
 
+[node name="Shield" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(0, -18)
+sprite_frames = SubResource("SpriteFrames_ch7yb")
+autoplay = "default"
+
 [node name="Hurtbox" type="Area2D" parent="."]
+z_index = 1
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("3_xf30b")
@@ -410,6 +454,10 @@ bus = &"SFX"
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="Hurtbox"]
 stream = ExtResource("5_bclpw")
+bus = &"SFX"
+
+[node name="TeleportSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_uuhbs")
 bus = &"SFX"
 
 [node name="PhantomCooldown" type="Timer" parent="."]
