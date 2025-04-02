@@ -599,7 +599,7 @@ size = Vector2(6, 16)
 radius = 3.5
 height = 25.0
 
-[node name="DarkCherry" type="CharacterBody2D"]
+[node name="DarkCherry" type="CharacterBody2D" groups=["dark cherry"]]
 top_level = true
 collision_layer = 0
 script = ExtResource("1_wmiao")

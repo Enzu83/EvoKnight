@@ -24,11 +24,13 @@ const EXP_DROP_VALUE = 5
 
 @onready var player: CharacterBody2D = %Player
 
+@export var flip_sprite := false
+
 var health := MAX_HEALTH
 var hit := false # enemy stun if hit by an attack, can't chase during this period
 
 func _ready() -> void:
-	animated_sprite.flip_h = false
+	animated_sprite.flip_h = flip_sprite
 	velocity.x = SPEED
 	velocity.y = 0
 

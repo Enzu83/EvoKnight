@@ -23,7 +23,7 @@ const GAP_DISTANCE = 96 # from which distance from the target will the enemy cas
 @onready var initial_wait_before_firing: Timer = $InitialWaitBeforeFiring
 @onready var tornado: Area2D = $WindSpiritTornado
 
-@onready var player: CharacterBody2D = %Player
+@onready var player: CharacterBody2D
 
 
 var chase := false # enable chasing the player
@@ -33,11 +33,17 @@ var hit := false # enemy stun if hit by an attack, can't chase during this perio
 var target_position := Vector2.ZERO
 var can_fire = false
 
+@export var flip_sprite := false
+
 func _ready() -> void:
 	add_to_group("enemies")
 	can_fire = false
+	animated_sprite.flip_h = flip_sprite
 
 func _physics_process(delta: float) -> void:
+	if Global.player != null:
+		player = Global.player
+	
 	# flip the sprite to match the direction
 	if position.x < player.position.x:
 		animated_sprite.flip_h = false

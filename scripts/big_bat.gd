@@ -37,8 +37,11 @@ var attack_wait := false # can attack
 var health := MAX_HEALTH
 var hit := false # enemy stun if hit by an attack, can't chase during this period
 
+@export var flip_sprite := false
+
 func _ready() -> void:
 	add_to_group("enemies")
+	sprite.flip_h = flip_sprite
 
 func _physics_process(delta: float) -> void:
 	if Global.player != null:

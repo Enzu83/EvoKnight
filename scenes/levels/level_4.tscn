@@ -36,7 +36,7 @@
 [ext_resource type="PackedScene" uid="uid://c1p07qmxamegr" path="res://scenes/platforms/timer_block.tscn" id="28_d5hrb"]
 [ext_resource type="PackedScene" uid="uid://dc0vyw5sccqr7" path="res://scenes/items/big_heart.tscn" id="31_odemy"]
 [ext_resource type="PackedScene" uid="uid://72pf8hw3rmdt" path="res://scenes/items/lever_timer.tscn" id="34_n1f6i"]
-[ext_resource type="Script" path="res://scripts/farewell_ceres_trigger.gd" id="36_xdbpi"]
+[ext_resource type="Script" path="res://scripts/farewell_ceres_boss.gd" id="36_xdbpi"]
 [ext_resource type="PackedScene" uid="uid://cvyxcdvny1nsi" path="res://scenes/chars/farewell_ceres.tscn" id="37_m755m"]
 [ext_resource type="PackedScene" uid="uid://dajhqbi4b6b3o" path="res://scenes/platforms/fake_wall.tscn" id="38_hgh1n"]
 
@@ -2402,79 +2402,84 @@ position = Vector2(-46, 71)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EndOfLevel"]
 shape = SubResource("RectangleShape2D_hsmr0")
 
-[node name="FarewellCeresTrigger" type="Area2D" parent="."]
+[node name="FarewellCeresBoss" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("36_xdbpi")
 
-[node name="FarewellCeres" parent="FarewellCeresTrigger" instance=ExtResource("37_m755m")]
+[node name="FarewellCeres" parent="FarewellCeresBoss" instance=ExtResource("37_m755m")]
 position = Vector2(15794, -1579)
 
-[node name="StallPosition" type="Node2D" parent="FarewellCeresTrigger"]
+[node name="StallPosition" type="Node2D" parent="FarewellCeresBoss"]
 top_level = true
 position = Vector2(15788, -1690)
 
-[node name="Trigger" type="CollisionShape2D" parent="FarewellCeresTrigger"]
+[node name="Trigger" type="CollisionShape2D" parent="FarewellCeresBoss"]
 position = Vector2(15788, -1477)
 shape = SubResource("RectangleShape2D_gc3pd")
 
-[node name="FakeWall" parent="FarewellCeresTrigger" instance=ExtResource("38_hgh1n")]
+[node name="FakeWall" parent="FarewellCeresBoss" instance=ExtResource("38_hgh1n")]
 position = Vector2(16000, -1568)
 
-[node name="LowerLeftPlatform" parent="FarewellCeresTrigger" instance=ExtResource("11_44qdl")]
+[node name="LowerLeftPlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
 z_index = -1
 position = Vector2(15610, -1538)
 
-[node name="LowerMiddleLeftPlatform" parent="FarewellCeresTrigger" instance=ExtResource("11_44qdl")]
+[node name="LowerMiddleLeftPlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
 z_index = -1
 position = Vector2(15710, -1538)
 
-[node name="LowerMiddleRightPlatform" parent="FarewellCeresTrigger" instance=ExtResource("11_44qdl")]
+[node name="LowerMiddleRightPlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
 z_index = -1
 position = Vector2(15866, -1538)
 
-[node name="LowerRightPlatform" parent="FarewellCeresTrigger" instance=ExtResource("11_44qdl")]
+[node name="LowerRightPlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
 z_index = -1
 position = Vector2(15966, -1538)
 
-[node name="MiddleLeftPlatform" parent="FarewellCeresTrigger" instance=ExtResource("11_44qdl")]
+[node name="MiddleLeftPlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
 z_index = -1
 position = Vector2(15660, -1603)
 
-[node name="MiddleRightPlatform" parent="FarewellCeresTrigger" instance=ExtResource("11_44qdl")]
+[node name="MiddleRightPlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
 z_index = -1
 position = Vector2(15916, -1603)
 
-[node name="UpperLeftPlatform" parent="FarewellCeresTrigger" instance=ExtResource("11_44qdl")]
+[node name="UpperLeftPlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
 z_index = -1
 position = Vector2(15660, -1668)
 
-[node name="UpperRightPlatform" parent="FarewellCeresTrigger" instance=ExtResource("11_44qdl")]
+[node name="UpperRightPlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
 z_index = -1
 position = Vector2(15916, -1668)
 
-[node name="LeftSpike" parent="FarewellCeresTrigger" instance=ExtResource("11_b205r")]
+[node name="LeftSpike" parent="FarewellCeresBoss" instance=ExtResource("11_b205r")]
 process_mode = 4
 visible = false
 position = Vector2(15660, -1472)
 scale = Vector2(17, 1)
 
-[node name="MiddleSpike" parent="FarewellCeresTrigger" instance=ExtResource("11_b205r")]
+[node name="MiddleSpike" parent="FarewellCeresBoss" instance=ExtResource("11_b205r")]
 process_mode = 4
 visible = false
 position = Vector2(15788, -1472)
 scale = Vector2(15, 1)
 
-[node name="RightSpike" parent="FarewellCeresTrigger" instance=ExtResource("11_b205r")]
+[node name="RightSpike" parent="FarewellCeresBoss" instance=ExtResource("11_b205r")]
 process_mode = 4
 visible = false
 position = Vector2(15916, -1472)
 scale = Vector2(17, 1)
 
-[node name="MobList" type="Node2D" parent="FarewellCeresTrigger"]
+[node name="MobList" type="Node2D" parent="FarewellCeresBoss"]
 
-[node name="DarkCherrySpawnTimer" type="Timer" parent="FarewellCeresTrigger"]
+[node name="DarkCherrySpawnTimer" type="Timer" parent="FarewellCeresBoss"]
 wait_time = 5.0
 
-[connection signal="area_entered" from="FarewellCeresTrigger" to="FarewellCeresTrigger" method="_on_area_entered"]
-[connection signal="timeout" from="FarewellCeresTrigger/DarkCherrySpawnTimer" to="FarewellCeresTrigger" method="_on_dark_cherry_spawn_timer_timeout"]
+[node name="WavePhaseCooldown" type="Timer" parent="FarewellCeresBoss"]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="area_entered" from="FarewellCeresBoss" to="FarewellCeresBoss" method="_on_area_entered"]
+[connection signal="timeout" from="FarewellCeresBoss/DarkCherrySpawnTimer" to="FarewellCeresBoss" method="_on_dark_cherry_spawn_timer_timeout"]
+[connection signal="timeout" from="FarewellCeresBoss/WavePhaseCooldown" to="FarewellCeresBoss" method="_on_wave_phase_cooldown_timeout"]

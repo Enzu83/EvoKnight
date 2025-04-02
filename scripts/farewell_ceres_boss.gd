@@ -25,19 +25,69 @@ extends Area2D
 
 @onready var mob_list: Node2D = $MobList
 
+@onready var wave_phase_cooldown: Timer = $WavePhaseCooldown
 @onready var dark_cherry_spawn_timer: Timer = $DarkCherrySpawnTimer
-
-const MOB_SPAWNER = preload("res://scenes/other/mob_spawner.tscn")
-var dark_cherry_scene: Resource = preload("res://scenes/chars/dark_cherry.tscn")
-var dark_cherry_spawn_counter := 0
-
-var state := 0 # odd: classic fight, even: wave fight
-var wave_state := 0
 
 var camera_limit_left: int
 var camera_limit_right: int
 var camera_limit_top: int
 var camera_limit_bottom: int
+
+const MOB_SPAWNER = preload("res://scenes/other/mob_spawner.tscn")
+var dark_cherry_scene: Resource = preload("res://scenes/chars/dark_cherry.tscn")
+var dark_cherry_spawn_counter := 0
+var dark_cherry_next_position := "right"
+var can_spawn_dark_cherry := false
+
+var state := 0 # odd: classic fight, even: wave fight
+var wave_phase := 0
+var can_change_wave_phase := false
+
+# {
+#	state (2, 4, 6): {
+# 		wave_phase (0, 1, 2, 3): [spawns...]
+# 	}
+# }
+var wave_spawn = {
+	# first wave
+	2: {
+		0: [
+			[Vector2(15710, -1600), "bat", true],
+			[Vector2(15916, -1600), "bat", false],
+		],
+	
+		1: [
+			[Vector2(15710, -1600), "wind_spirit", true],
+			[Vector2(15916, -1600), "wind_spirit", false],
+		],
+	},
+	
+	# second wave
+	4: {
+		0: [
+			[Vector2(15710, -1600), "bat", true],
+			[Vector2(15916, -1600), "bat", false],
+		],
+	
+		1: [
+			[Vector2(15710, -1600), "wind_spirit", true],
+			[Vector2(15916, -1600), "wind_spirit", false],
+		],
+	},
+	
+	# third wave
+	6: {
+		0: [
+			[Vector2(15710, -1600), "bat", true],
+			[Vector2(15916, -1600), "bat", false],
+		],
+	
+		1: [
+			[Vector2(15710, -1600), "wind_spirit", true],
+			[Vector2(15916, -1600), "wind_spirit", false],
+		],
+	},
+}
 
 func _physics_process(_delta: float) -> void:
 	if state > 0:
@@ -45,18 +95,19 @@ func _physics_process(_delta: float) -> void:
 		hud.current_boss_health_bar = farewell_ceres.health_bar
 		
 		update_state()
-		
 		handle_platforms_with_state()
-		
 		handle_enemy_wave()
+		
+		#print(state, ", ", wave_phase, ", ", dark_cherry_spawn_counter, ", ", can_change_wave_phase)
 
 func update_state() -> void:
 	# advance to wave phase when ceres is stalling
 	if farewell_ceres.state == farewell_ceres.State.Stall \
 	and state % 2 == 1:
 		state += 1
-		wave_state = 0
+		wave_phase = 0
 		dark_cherry_spawn_timer.start()
+		wave_phase_cooldown.start()
 
 func handle_platforms_with_state() -> void:
 	if state == 1:
@@ -92,26 +143,62 @@ func set_platform_process(platform: Node2D, enable: bool) -> void:
 		platform.visible = false
 
 func handle_enemy_wave() -> void:
-	# set ceres position to the top of the room
-	if state > 0 and state % 2 == 0:
+	if state in [2, 4, 6]:
+		# set ceres position to the top of the room
 		farewell_ceres.position = stall_position.position
-	
-	# first wave
-	if state == 2:
-		pass
+		
+		# advance phase
+		if can_change_wave_phase and mob_list.get_child_count() == 0:
+			advance_wave_phase()
+			can_change_wave_phase = false
+			wave_phase_cooldown.start()
+			
+		# dark cherry spawn
+		if dark_cherry_spawn_counter == 0:
+			if dark_cherry_next_position == "right":
+				spawn_dark_cherry(Vector2(15660, -1472), false)
+				dark_cherry_next_position = "left"
+				
+			elif dark_cherry_next_position == "left":
+				spawn_dark_cherry(Vector2(15916, -1472), true)
+				dark_cherry_next_position = "right"
+				
+			dark_cherry_spawn_counter += 1
+			can_spawn_dark_cherry = false
 
-func spawn_enemy(spawn_position: Vector2, mob_name: String) -> void:
-	var mob_spawner = MOB_SPAWNER.instantiate()
-	mob_spawner.position = spawn_position
-	mob_spawner.set_mob("res://scenes/chars/" + mob_name + ".tscn")
-	mob_list.add_child(mob_spawner)
+func advance_wave_phase() -> void:
+	# remaining enemies
+	if wave_phase < wave_spawn[state].size():
+		for enemy_info in wave_spawn[state][wave_phase]:
+			spawn_enemy(enemy_info[0], enemy_info[1], enemy_info[2])
+		
+		wave_phase += 1
+		wave_phase_cooldown.start()
+
+	# end wave
+	else:
+		dark_cherry_spawn_timer.stop()
+		state += 1
+		farewell_ceres.state = farewell_ceres.State.Default
+		farewell_ceres.hurtbox.set_deferred("disabled", false)
+
+func spawn_enemy(spawn_position: Vector2, mob_name: String, flip_sprite: bool) -> void:
+	if mob_name == "dark_cherry":
+		spawn_dark_cherry(spawn_position, flip_sprite)
+	
+	else:
+		var mob_spawner = MOB_SPAWNER.instantiate()
+		mob_spawner.position = spawn_position
+		mob_spawner.flip_sprite = flip_sprite
+		mob_spawner.set_mob("res://scenes/chars/" + mob_name + ".tscn")
+		mob_list.add_child(mob_spawner)
 
 func spawn_dark_cherry(spawn_position: Vector2, flip_sprite: bool) -> void:
 	var dark_cherry = dark_cherry_scene.instantiate()
 	dark_cherry.position = spawn_position
 	dark_cherry.MAX_HEALTH = 1
 	dark_cherry.flip_sprite_at_spawn = flip_sprite
-	mob_list.add_child(dark_cherry)
+	add_child(dark_cherry)
 
 func _on_area_entered(_area: Area2D) -> void:
 	# init the fight
@@ -143,9 +230,7 @@ func _on_area_entered(_area: Area2D) -> void:
 		boss_music.play()
 
 func _on_dark_cherry_spawn_timer_timeout() -> void:
-	if dark_cherry_spawn_counter == 0:
-		spawn_dark_cherry(Vector2(15660, -1472), false)
-	else:
-		spawn_dark_cherry(Vector2(15916, -1472), true)
-		
-	dark_cherry_spawn_counter = posmod(dark_cherry_spawn_counter + 1, 2)
+	can_spawn_dark_cherry = true
+
+func _on_wave_phase_cooldown_timeout() -> void:
+	can_change_wave_phase = true

@@ -27,8 +27,10 @@ const EXP_DROP_VALUE = 6
 var health := MAX_HEALTH
 var hit := false # enemy stun if hit by an attack, can't chase during this period
 
+@export var flip_sprite := false
+
 func _ready() -> void:
-	animated_sprite.flip_h = false
+	animated_sprite.flip_h = flip_sprite
 	velocity.x = SPEED
 
 func handle_velocity(_delta: float) -> void:

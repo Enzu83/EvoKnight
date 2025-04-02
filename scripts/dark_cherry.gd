@@ -186,6 +186,8 @@ func draw_health_bar() -> void:
 
 func activate() -> void:
 	active = true
+	sprite.visible = true
+	hurtbox.set_deferred("disabled", false)
 	
 	if boss:
 		music.play()
@@ -231,7 +233,8 @@ func _physics_process(delta: float) -> void:
 		
 		animate() # update the sprite animation if necessary
 		move_and_slide()
-		#print(Action.find_key(action))
+		
+		print(sprite.visible, ", ", hurtbox.disabled)
 
 func change_action(new_action: Action) -> void:
 	if can_change_action:
@@ -365,6 +368,10 @@ func fainted() -> void:
 		# exp drops
 		if boss:
 			Global.create_multiple_exp_drop(EXP_DROP_VALUE, position, 250)
+		
+		# keep track of dark cherry clones
+		else:
+			get_parent().dark_cherry_spawn_counter -= 1
 
 		death_timer.start()
 

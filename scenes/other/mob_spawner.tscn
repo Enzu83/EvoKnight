@@ -3,6 +3,21 @@
 [ext_resource type="Script" path="res://scripts/mob_spawner.gd" id="1_c4x4m"]
 [ext_resource type="Texture2D" uid="uid://cdxjqgamxc61u" path="res://assets/sprites/fx/spr_dark_armor.png" id="2_i834u"]
 
+[sub_resource type="Animation" id="Animation_dls30"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BubbleSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_geybl"]
 resource_name = "spawning"
 tracks/0/type = "value"
@@ -24,27 +39,12 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.5),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
 "method": &"spawn"
 }]
-}
-
-[sub_resource type="Animation" id="Animation_dls30"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("BubbleSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_k2ioa"]
@@ -57,7 +57,6 @@ _data = {
 script = ExtResource("1_c4x4m")
 
 [node name="BubbleSprite" type="Sprite2D" parent="."]
-position = Vector2(0, -15)
 texture = ExtResource("2_i834u")
 hframes = 10
 

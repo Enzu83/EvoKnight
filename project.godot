@@ -34,6 +34,7 @@ window/stretch/scale=3.0
 enemies="Nodes hurting the player"
 players=""
 "one-way platforms"=""
+"dark cherry"=""
 
 [input]
 
