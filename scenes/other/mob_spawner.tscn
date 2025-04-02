@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://crkmyrxapjfop"]
+[gd_scene load_steps=7 format=3 uid="uid://crkmyrxapjfop"]
 
 [ext_resource type="Script" path="res://scripts/mob_spawner.gd" id="1_c4x4m"]
 [ext_resource type="Texture2D" uid="uid://cdxjqgamxc61u" path="res://assets/sprites/fx/spr_dark_armor.png" id="2_i834u"]
+[ext_resource type="AudioStream" uid="uid://kpryh7dxxy2y" path="res://assets/sfx/snd_teleport.wav" id="3_avp3l"]
 
 [sub_resource type="Animation" id="Animation_dls30"]
 length = 0.001
@@ -17,9 +18,34 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpawnSound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BubbleSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_geybl"]
 resource_name = "spawning"
+length = 1.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -39,12 +65,39 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.5),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.5, 1.3),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
 "method": &"spawn"
+}, {
+"args": [],
+"method": &"queue_free"
 }]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpawnSound:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.466667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BubbleSprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_k2ioa"]
@@ -57,6 +110,8 @@ _data = {
 script = ExtResource("1_c4x4m")
 
 [node name="BubbleSprite" type="Sprite2D" parent="."]
+visible = false
+z_index = 1
 texture = ExtResource("2_i834u")
 hframes = 10
 
@@ -64,4 +119,13 @@ hframes = 10
 libraries = {
 "": SubResource("AnimationLibrary_k2ioa")
 }
-autoplay = "spawning"
+autoplay = "RESET"
+
+[node name="SpawnSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_avp3l")
+bus = &"SFX"
+
+[node name="WaitTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]

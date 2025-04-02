@@ -2,7 +2,6 @@ extends Area2D
 
 const SPEED = 80
 const STRENGTH = 3 # damage caused by the enemy
-const MAX_HEALTH = 12
 
 const DROP_RATE = 1
 const HEAL_DROP_VALUE = 4
@@ -21,10 +20,13 @@ var player: CharacterBody2D
 
 var chase := false # enable chasing the player
 var target: CharacterBody2D = null # chase target
-var health := MAX_HEALTH
+var max_health := 12
+var health := max_health
 var hit := false # enemy stun if hit by an attack, can't chase during this period
 
 @export var flip_sprite := false
+
+var drop := true
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -74,7 +76,8 @@ func fainted() -> void:
 		death_sound.play()
 		
 		# chance to drop heart/exp
-		Global.create_drop(DROP_RATE, HEAL_DROP_VALUE, EXP_DROP_VALUE, position, Vector2.ZERO)
+		if drop:
+			Global.create_drop(DROP_RATE, HEAL_DROP_VALUE, EXP_DROP_VALUE, position, Vector2.ZERO)
 
 func _on_detector_body_entered(body: Node2D) -> void:
 	if body == player:

@@ -28,7 +28,6 @@ var phantom_scene: Resource = preload("res://scenes/chars/farewell_ceres_phantom
 const SPEED = 300.0
 const STRENGTH = 6
 
-const MAX_HEALTH = 20#250
 const HEALTH_BARS = 4
 
 enum State {Default, Defeated, Attacking, Stall}
@@ -39,7 +38,9 @@ var state := State.Default # handle all states of the boos
 var anim := Anim.idle # handle the current animation to be played
 
 # stats
-var health := MAX_HEALTH
+var max_health := 20#250
+
+var health := max_health
 var health_bar := HEALTH_BARS-1
 
 # variables
@@ -96,7 +97,7 @@ func fainted() -> void:
 	if state != State.Defeated:
 		# some left health bars
 		if health_bar > 0:
-			health = MAX_HEALTH
+			health = max_health
 			health_bar -= 1
 			state = State.Stall
 			teleport_sound.play()

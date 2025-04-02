@@ -614,7 +614,7 @@ vframes = 6
 libraries = {
 "": SubResource("AnimationLibrary_sfhba")
 }
-autoplay = "spawn"
+autoplay = "RESET"
 
 [node name="EffectsPlayer" type="AnimationPlayer" parent="."]
 libraries = {

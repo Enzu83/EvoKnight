@@ -3,7 +3,6 @@ extends Area2D
 const SPEED = 70
 const STRENGTH = 2 # on collision
 const MAGIC_STRENGTH = 5 # with magic attack
-const MAX_HEALTH = 8
 
 const DROP_RATE = 1
 const HEAL_DROP_VALUE = 4
@@ -28,12 +27,15 @@ const GAP_DISTANCE = 96 # from which distance from the target will the enemy cas
 
 var chase := false # enable chasing the player
 var target: CharacterBody2D = null # chase target
-var health := MAX_HEALTH
+var max_health := 8
+var health := max_health
 var hit := false # enemy stun if hit by an attack, can't chase during this period
 var target_position := Vector2.ZERO
 var can_fire = false
 
 @export var flip_sprite := false
+
+var drop := true
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -102,7 +104,8 @@ func fainted() -> void:
 		tornado.queue_free()
 		
 		# chance to drop heart/exp
-		Global.create_drop(DROP_RATE, HEAL_DROP_VALUE, EXP_DROP_VALUE, position, Vector2.ZERO)
+		if drop:
+			Global.create_drop(DROP_RATE, HEAL_DROP_VALUE, EXP_DROP_VALUE, position, Vector2.ZERO)
 
 func get_middle_position() -> Vector2:
 	return position - Vector2(0, hurtbox.shape.get_rect().size.y)

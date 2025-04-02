@@ -2473,13 +2473,14 @@ scale = Vector2(17, 1)
 
 [node name="MobList" type="Node2D" parent="FarewellCeresBoss"]
 
-[node name="DarkCherrySpawnTimer" type="Timer" parent="FarewellCeresBoss"]
-wait_time = 5.0
-
 [node name="WavePhaseCooldown" type="Timer" parent="FarewellCeresBoss"]
 wait_time = 3.0
 one_shot = true
 
+[node name="DarkCherrySpawnTimer" type="Timer" parent="FarewellCeresBoss"]
+wait_time = 5.0
+one_shot = true
+
 [connection signal="area_entered" from="FarewellCeresBoss" to="FarewellCeresBoss" method="_on_area_entered"]
-[connection signal="timeout" from="FarewellCeresBoss/DarkCherrySpawnTimer" to="FarewellCeresBoss" method="_on_dark_cherry_spawn_timer_timeout"]
 [connection signal="timeout" from="FarewellCeresBoss/WavePhaseCooldown" to="FarewellCeresBoss" method="_on_wave_phase_cooldown_timeout"]
+[connection signal="timeout" from="FarewellCeresBoss/DarkCherrySpawnTimer" to="FarewellCeresBoss" method="_on_dark_cherry_spawn_timer_timeout"]

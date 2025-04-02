@@ -30,12 +30,10 @@ extends CharacterBody2D
 @onready var action_decision_cooldown: Timer = $ActionDecisionCooldown
 
 @export var boss := false
-@export var MAX_HEALTH = 120
-
-var flip_sprite_at_spawn := true
+@export var max_health := 120
 
 const SPEED = 130.0
-const JUMP_VELOCITY = -280.0
+const JUMP_VELOCITY = -290.0
 const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
 const STRENGTH = 3
@@ -65,6 +63,9 @@ var can_change_action := true
 
 var can_jump := true
 var can_attack := true
+
+@export var flip_sprite := true
+var drop := true
 
 func handle_movement() -> void:
 	# Restore jumps if grounded.
@@ -202,14 +203,16 @@ func _ready() -> void:
 		player = %Player
 		music.stop()
 		player.state = player.State.Stop
-		flip_sprite_at_spawn = true
+		flip_sprite = true
+		animation_player.play("spawn")
 
 	else:
 		player = Global.player
+		activate()
 	
-	health = MAX_HEALTH
-	spawn_sprite.flip_h = flip_sprite_at_spawn
-	sprite.flip_h = flip_sprite_at_spawn
+	health = max_health
+	spawn_sprite.flip_h = flip_sprite
+	sprite.flip_h = flip_sprite
 
 func _physics_process(delta: float) -> void:
 	if active:
@@ -233,8 +236,6 @@ func _physics_process(delta: float) -> void:
 		
 		animate() # update the sprite animation if necessary
 		move_and_slide()
-		
-		print(sprite.visible, ", ", hurtbox.disabled)
 
 func change_action(new_action: Action) -> void:
 	if can_change_action:
@@ -366,12 +367,13 @@ func fainted() -> void:
 		death_sound.play()
 		
 		# exp drops
-		if boss:
+		if drop:
 			Global.create_multiple_exp_drop(EXP_DROP_VALUE, position, 250)
 		
 		# keep track of dark cherry clones
 		else:
 			get_parent().dark_cherry_spawn_counter -= 1
+			get_parent().can_spawn_dark_cherry = false
 
 		death_timer.start()
 

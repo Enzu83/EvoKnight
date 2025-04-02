@@ -3,7 +3,6 @@ extends CharacterBody2D
 const SPEED = 50
 const MAX_FALLING_VELOCITY = 0
 const STRENGTH = 3
-const MAX_HEALTH = 20
 
 const DROP_RATE = 1
 const HEAL_DROP_VALUE = 4
@@ -26,7 +25,10 @@ const EXP_DROP_VALUE = 5
 
 @export var flip_sprite := false
 
-var health := MAX_HEALTH
+var drop := true
+
+var max_health := 20
+var health := max_health
 var hit := false # enemy stun if hit by an attack, can't chase during this period
 
 func _ready() -> void:
@@ -94,7 +96,8 @@ func fainted() -> void:
 		death_sound.play()
 		
 		# chance to drop heart/exp
-		Global.create_drop(DROP_RATE, HEAL_DROP_VALUE, EXP_DROP_VALUE, position, Vector2.ZERO)
+		if drop:
+			Global.create_drop(DROP_RATE, HEAL_DROP_VALUE, EXP_DROP_VALUE, position, Vector2.ZERO)
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	var body := area.get_parent() # get the player

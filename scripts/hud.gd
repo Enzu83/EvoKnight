@@ -138,6 +138,6 @@ func draw_boss_ui() -> void:
 		boss_health_bars[i].visible = true
 		
 		if i == current_boss_health_bar:
-			boss_health_bars[i].value = int((boss.health / float(boss.MAX_HEALTH)) * boss_health_bars[i].max_value)
+			boss_health_bars[i].value = int((boss.health / float(boss.max_health)) * boss_health_bars[i].max_value)
 		else:
 			boss_health_bars[i].value = boss_health_bars[i].max_value

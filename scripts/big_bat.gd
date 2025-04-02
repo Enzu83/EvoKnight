@@ -2,7 +2,6 @@ extends Area2D
 
 const SPEED = 150
 const STRENGTH = 4 # damage caused by the enemy
-const MAX_HEALTH = 140
 
 const EXP_DROP_VALUE = 3
 
@@ -34,10 +33,13 @@ var attack_move := false # indicates if the bat moves toward the attack spot
 var wait := false # indicates if the bat can perform moves
 var attack_wait := false # can attack
 
-var health := MAX_HEALTH
+var max_health := 140
+var health := max_health
 var hit := false # enemy stun if hit by an attack, can't chase during this period
 
 @export var flip_sprite := false
+
+var drop := true
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -112,7 +114,8 @@ func fainted() -> void:
 		hud.display_boss = false
 		
 		# exp drops
-		Global.create_multiple_exp_drop(EXP_DROP_VALUE, position, 250)
+		if drop:
+			Global.create_multiple_exp_drop(EXP_DROP_VALUE, position, 250)
 
 func move_to_attack_spot() -> void:
 	attack_move = true

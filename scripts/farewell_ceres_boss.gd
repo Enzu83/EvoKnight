@@ -26,6 +26,7 @@ extends Area2D
 @onready var mob_list: Node2D = $MobList
 
 @onready var wave_phase_cooldown: Timer = $WavePhaseCooldown
+
 @onready var dark_cherry_spawn_timer: Timer = $DarkCherrySpawnTimer
 
 var camera_limit_left: int
@@ -52,39 +53,39 @@ var wave_spawn = {
 	# first wave
 	2: {
 		0: [
-			[Vector2(15710, -1600), "bat", true],
-			[Vector2(15916, -1600), "bat", false],
+			["bat", Vector2(15710, -1600), true],
+			["bat", Vector2(15916, -1600), false, 0, 0.2],
 		],
 	
 		1: [
-			[Vector2(15710, -1600), "wind_spirit", true],
-			[Vector2(15916, -1600), "wind_spirit", false],
+			["wind_spirit", Vector2(15710, -1600), true],
+			["wind_spirit", Vector2(15916, -1600), false],
 		],
 	},
 	
 	# second wave
 	4: {
 		0: [
-			[Vector2(15710, -1600), "bat", true],
-			[Vector2(15916, -1600), "bat", false],
+			["bat", Vector2(15710, -1600), true],
+			["bat", Vector2(15916, -1600), false],
 		],
 	
 		1: [
-			[Vector2(15710, -1600), "wind_spirit", true],
-			[Vector2(15916, -1600), "wind_spirit", false],
+			["wind_spirit", Vector2(15710, -1600), true],
+			["wind_spirit", Vector2(15916, -1600), false],
 		],
 	},
 	
 	# third wave
 	6: {
 		0: [
-			[Vector2(15710, -1600), "bat", true],
-			[Vector2(15916, -1600), "bat", false],
+			["bat", Vector2(15710, -1600), true],
+			["bat", Vector2(15916, -1600), false],
 		],
 	
 		1: [
-			[Vector2(15710, -1600), "wind_spirit", true],
-			[Vector2(15916, -1600), "wind_spirit", false],
+			["wind_spirit", Vector2(15710, -1600), true],
+			["wind_spirit", Vector2(15916, -1600), false],
 		],
 	},
 }
@@ -106,6 +107,8 @@ func update_state() -> void:
 	and state % 2 == 1:
 		state += 1
 		wave_phase = 0
+		can_change_wave_phase = false
+		can_spawn_dark_cherry = false
 		dark_cherry_spawn_timer.start()
 		wave_phase_cooldown.start()
 
@@ -154,51 +157,48 @@ func handle_enemy_wave() -> void:
 			wave_phase_cooldown.start()
 			
 		# dark cherry spawn
-		if dark_cherry_spawn_counter == 0:
+		if can_spawn_dark_cherry and dark_cherry_spawn_counter == 0:
+			
 			if dark_cherry_next_position == "right":
-				spawn_dark_cherry(Vector2(15660, -1472), false)
+				spawn_enemy("dark_cherry", Vector2(15660, -1488), false, 1)
 				dark_cherry_next_position = "left"
 				
 			elif dark_cherry_next_position == "left":
-				spawn_dark_cherry(Vector2(15916, -1472), true)
+				spawn_enemy("dark_cherry", Vector2(15916, -1488), true, 1)
 				dark_cherry_next_position = "right"
 				
 			dark_cherry_spawn_counter += 1
 			can_spawn_dark_cherry = false
+			dark_cherry_spawn_timer.start()
 
 func advance_wave_phase() -> void:
 	# remaining enemies
 	if wave_phase < wave_spawn[state].size():
 		for enemy_info in wave_spawn[state][wave_phase]:
-			spawn_enemy(enemy_info[0], enemy_info[1], enemy_info[2])
+			callv("spawn_enemy", enemy_info)
 		
 		wave_phase += 1
-		wave_phase_cooldown.start()
 
 	# end wave
 	else:
 		dark_cherry_spawn_timer.stop()
+		wave_phase_cooldown.stop()
 		state += 1
 		farewell_ceres.state = farewell_ceres.State.Default
 		farewell_ceres.hurtbox.set_deferred("disabled", false)
 
-func spawn_enemy(spawn_position: Vector2, mob_name: String, flip_sprite: bool) -> void:
-	if mob_name == "dark_cherry":
-		spawn_dark_cherry(spawn_position, flip_sprite)
+func spawn_enemy(mob_name: String, spawn_position: Vector2, flip_sprite: bool, max_health: int = 0, delay: float = 0.0) -> void:
+	var mob_spawner = MOB_SPAWNER.instantiate()
+	mob_spawner.position = spawn_position
+	mob_spawner.flip_sprite = flip_sprite
+	mob_spawner.max_health = max_health
+	mob_spawner.delay = delay
+	mob_spawner.set_mob("res://scenes/chars/" + mob_name + ".tscn")
 	
+	if mob_name == "dark_cherry":
+		add_child(mob_spawner)
 	else:
-		var mob_spawner = MOB_SPAWNER.instantiate()
-		mob_spawner.position = spawn_position
-		mob_spawner.flip_sprite = flip_sprite
-		mob_spawner.set_mob("res://scenes/chars/" + mob_name + ".tscn")
 		mob_list.add_child(mob_spawner)
-
-func spawn_dark_cherry(spawn_position: Vector2, flip_sprite: bool) -> void:
-	var dark_cherry = dark_cherry_scene.instantiate()
-	dark_cherry.position = spawn_position
-	dark_cherry.MAX_HEALTH = 1
-	dark_cherry.flip_sprite_at_spawn = flip_sprite
-	add_child(dark_cherry)
 
 func _on_area_entered(_area: Area2D) -> void:
 	# init the fight

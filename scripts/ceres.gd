@@ -34,7 +34,7 @@ var speed_orb_scene: Resource = preload("res://scenes/items/speed_orb.tscn")
 const SPEED = 300.0
 const STRENGTH = 5
 
-const MAX_HEALTH = 230
+
 const EXP_DROP_VALUE = 7
 
 enum State {Default, Defeated, Fainted, Attacking}
@@ -45,7 +45,8 @@ var state := State.Default # handle all states of the boos
 var anim := Anim.idle # handle the current animation to be played
 
 # stats
-var health := MAX_HEALTH
+var max_health := 230
+var health := max_health
 
 # variables
 var active := false
