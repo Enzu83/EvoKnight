@@ -25,7 +25,7 @@ func init(origin_node: Node2D, targeted_node: Node2D) -> Node2D:
 	
 	return self
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	# aim the target with the icon
 	target_icon.position = target.get_middle_position()
 	

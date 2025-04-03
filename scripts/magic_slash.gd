@@ -36,7 +36,7 @@ func start(orientation) -> void:
 func _ready() -> void:
 	sprite.texture = Global.magic_slash_sprite
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	# move the magic slash
 	if active:
 		position.x += direction * SPEED * delta

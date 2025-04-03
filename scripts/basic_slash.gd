@@ -99,7 +99,7 @@ func _ready() -> void:
 	reference_position = position
 	sprite.texture = Global.basic_slash_sprite
 
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if active:
 		handle_slash_direction()
 	

@@ -53,8 +53,8 @@ var wave_spawn = {
 	2: {
 		0: [
 			["bat", Vector2(15710, -1580), true],
-			["big_bat", Vector2(15788, -1604), false, 20, 0.1],
-			["bat", Vector2(15866, -1580), false, 0, 0.2],
+			["bat", Vector2(15866, -1580), false, 0, 0.1],
+			["big_bat", Vector2(15788, -1604), false, 20, 0.5],
 		],
 	
 		1: [
@@ -96,7 +96,6 @@ func _physics_process(_delta: float) -> void:
 		hud.current_boss_health_bar = farewell_ceres.health_bar
 		
 		update_state()
-		handle_platforms_with_state()
 		handle_enemy_wave()
 		
 		#print(state, ", ", wave_phase, ", ", dark_cherry_spawn_counter, ", ", can_change_wave_phase)
@@ -111,8 +110,10 @@ func update_state() -> void:
 		can_spawn_dark_cherry = false
 		dark_cherry_spawn_timer.start()
 		wave_phase_cooldown.start()
+		
+		update_platforms()
 
-func handle_platforms_with_state() -> void:
+func update_platforms() -> void:
 	if state == 1:
 		set_platform_process(lower_left_platform, true)
 		set_platform_process(lower_middle_left_platform, true)
@@ -224,7 +225,7 @@ func _on_area_entered(_area: Area2D) -> void:
 		# fix camera limit
 		camera.limit_left = 15576
 		camera.limit_right = 16002
-		camera.limit_top = -1760
+		camera.limit_top = -1776
 		camera.limit_bottom = -1456
 		
 		# musics

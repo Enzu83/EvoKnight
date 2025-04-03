@@ -25,7 +25,7 @@ func _ready() -> void:
 	
 	wait_timer.start()
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	# move the magic slash
 	if active:
 		position.x += direction * SPEED * delta

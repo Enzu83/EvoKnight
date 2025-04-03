@@ -28,7 +28,7 @@ func _ready() -> void:
 	# reduce the time before falling
 	wait_timer.start(wait_timer.wait_time - initial_skipped_time / 1000.0)
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	target_icon.position = target_position
 
 	# move toward the target position

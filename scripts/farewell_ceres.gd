@@ -24,6 +24,7 @@ var speed_orb_scene: Resource = preload("res://scenes/items/speed_orb.tscn")
 
 var phantom_scene: Resource = preload("res://scenes/chars/farewell_ceres_phantom.tscn")
 
+const CERES_ORB = preload("res://scenes/fx/ceres_orb.tscn")
 
 const SPEED = 300.0
 const STRENGTH = 6
@@ -116,6 +117,43 @@ func fainted() -> void:
 func get_middle_position() -> Vector2:
 	return position - Vector2(0, wall_collider.shape.get_rect().size.y)
 
+func circle_orb_attack() -> void:
+	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(14, 14), 0, true))
+	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(20, 0), 0, false))
+	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(14, -14), 0, false))
+	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(0, -20), 0, false))
+	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(-14, -14), 0, false))
+	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(-20, 0), 0, false))
+	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(-14, 14), 0, false))
+	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(0, 20), 0, false))
+
+func floor_orb_attack() -> void:
+	for i in range(13):
+		add_child(CERES_ORB.instantiate()
+						   .init(Vector2(15602 + 31 * i, -1788), Vector2(15602 + 31 * i, -1480), 0.15 * i)
+						   .second_target(Vector2(15602 + 31 * i, -1736)) # draw a target at the top of the area to indicate the spawn of falling orbs
+		)
+
+func left_horizontal_orb_attack(hole_begin: int, hole_end: int) -> void:
+	var fire := false
+	
+	for i in range(17):
+		# spawn orbs everywhere except the hole area
+		if i < hole_begin or i > hole_end:
+			# only the first orb makes a sound
+			add_child(CERES_ORB.instantiate().init(Vector2(15568, -1736 + 16 * i), Vector2(15600, -1736 + 16 * i), 0, not fire))
+			fire = true
+
+func right_horizontal_orb_attack(hole_begin: int, hole_end: int) -> void:
+	var fire := false
+	
+	for i in range(17):
+		# spawn orbs everywhere except the hole area
+		if i < hole_begin or i > hole_end:
+			# only the first orb makes a sound
+			add_child(CERES_ORB.instantiate().init(Vector2(16008, -1736 + 16 * i), Vector2(15976, -1736 + 16 * i), 0, not fire))
+			fire = true
+
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	var body := area.get_parent() # get the player
 
@@ -131,3 +169,9 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 func _on_phantom_cooldown_timeout() -> void:
 	if velocity.length() > 0:
 		add_child(phantom_scene.instantiate())
+
+func _on_test_orb_timeout() -> void:
+	circle_orb_attack()
+	floor_orb_attack()
+	left_horizontal_orb_attack(6, 9)
+	right_horizontal_orb_attack(12, 14)
