@@ -1,0 +1,127 @@
+[gd_scene load_steps=9 format=3 uid="uid://dmfmya5giulsw"]
+
+[ext_resource type="Script" path="res://scripts/farewell_ceres_clone.gd" id="1_7kk28"]
+[ext_resource type="Texture2D" uid="uid://c27jgnpkvfd3u" path="res://assets/sprites/chars/enemies/spr_ceres.png" id="1_jvdue"]
+[ext_resource type="Script" path="res://scripts/body_hurtbox.gd" id="3_uclbs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j368j"]
+size = Vector2(6, 18)
+
+[sub_resource type="Animation" id="Animation_dcmr6"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(0, -16), Vector2(0, -17), Vector2(0, -18), Vector2(0, -17), Vector2(0, -16)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hurtbox/Hurtbox:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(0, -14), Vector2(0, -15), Vector2(0, -16), Vector2(0, -15), Vector2(0, -14)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_a3fhv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hurtbox/Hurtbox:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -14)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a650b"]
+_data = {
+"RESET": SubResource("Animation_a3fhv"),
+"idle": SubResource("Animation_dcmr6")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jmutb"]
+radius = 4.0
+height = 24.0
+
+[node name="FarewellCeresClone" type="CharacterBody2D"]
+top_level = true
+z_index = -1
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_7kk28")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("1_jvdue")
+hframes = 4
+vframes = 3
+
+[node name="WallCollider" type="CollisionShape2D" parent="."]
+visible = false
+z_index = 1
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_j368j")
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_a650b")
+}
+
+[node name="CloneDuration" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("3_uclbs")
+
+[node name="Hurtbox" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -14)
+shape = SubResource("CapsuleShape2D_jmutb")
+
+[connection signal="timeout" from="CloneDuration" to="." method="_on_clone_duration_timeout"]

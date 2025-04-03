@@ -41,6 +41,9 @@ var pending_stars: Array # stars are not really collected until a checkpoint is 
 var collected_stars: Array
 var total_stars: Array
 
+# switch coins for last farewell room
+var collected_switch_coins: Array
+
 # entities
 var player: CharacterBody2D = null
 var respawn_position: Vector2 = Vector2.INF
@@ -127,6 +130,8 @@ func _ready() -> void:
 	init_auto_switch_electric_arc()
 	init_dash_block()
 	
+	init_switch_coins()
+	
 	# game rendering
 	init_screen_size()
 
@@ -139,7 +144,7 @@ func _process(_delta: float) -> void:
 	elif Input.is_action_just_pressed("next_level"):
 		next_level()
 	elif Input.is_action_pressed("exp") and player != null:
-		player.gain_exp(1)
+		player.gain_exp(1000)
 	
 	# pause tree
 	if pause_menu.visible or level_up.visible or end_recap.visible:
@@ -207,6 +212,9 @@ func init_dash_block() -> void:
 
 func toggle_dash_block() -> void:
 	dash_block_activated = !dash_block_activated
+
+func init_switch_coins() -> void:
+	collected_switch_coins = [false, false, false]
 
 func init_screen_size() -> void:
 	get_viewport().size = DisplayServer.screen_get_size()

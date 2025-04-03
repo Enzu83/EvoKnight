@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyih6aupbxrpw"]
+
+[ext_resource type="Texture2D" uid="uid://obqu5eutuahn" path="res://assets/sprites/fx/spr_light.png" id="1_1yr6y"]
+[ext_resource type="Script" path="res://scripts/coin_light.gd" id="2_pya8t"]
+
+[node name="CoinLight" type="Sprite2D"]
+top_level = true
+texture = ExtResource("1_1yr6y")
+hframes = 2
+script = ExtResource("2_pya8t")

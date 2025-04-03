@@ -19,6 +19,11 @@ func check_activation() -> bool:
 
 func _ready() -> void:
 	activated_position = position + end_point.position
+	
+	# if activated at the start of the level, don't make sound
+	if not activated and check_activation():
+		activated = true
+		coin_sprite.play("activated")
 
 func _physics_process(delta: float) -> void:
 	if not activated and check_activation():

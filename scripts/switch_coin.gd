@@ -6,11 +6,21 @@ extends Area2D
 
 var activated := false
 
+@export var global_switch_coin := -1 # -1 means its not global
+
+func _ready() -> void:
+	if global_switch_coin != -1 and Global.collected_switch_coins[global_switch_coin]:
+		activated = true
+		animated_sprite.play("activated")
+
 func activate() -> void:
 	if not activated:
 		activated = true
 		animated_sprite.play("activated")
 		activate_sound.play()
+		
+		if global_switch_coin != -1:
+			Global.collected_switch_coins[global_switch_coin] = true
 
 func _on_body_entered(_body: Node2D) -> void:
 	activate()

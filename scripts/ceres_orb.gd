@@ -45,10 +45,6 @@ func _ready() -> void:
 	position = initial_position
 	target_icon.position = target_position
 	initial_wait_timer.start(initial_wait_time + 0.01)
-	
-	if second_target_position != Vector2.ZERO:
-		target_icon_2.visible = true
-		target_icon_2.position = second_target_position
 
 func _physics_process(delta: float) -> void:
 	if active \
@@ -92,4 +88,9 @@ func _on_wait_timer_timeout() -> void:
 
 func _on_initial_wait_timer_timeout() -> void:
 	target_icon.visible = true
+	
+	if second_target_position != Vector2.ZERO:
+		target_icon_2.position = second_target_position
+		target_icon_2.visible = true
+	
 	wait_timer.start()

@@ -614,6 +614,9 @@ func hurt(damage: int, ignore_defense: bool = false, through_everything: bool = 
 	# shield absorbs hit if active
 	if shield.active and not through_everything:
 		shield.explode()
+		hurtbox.set_deferred("disabled", true)
+		hurt_invicibility_timer.start()
+		effects_player.play("blink")
 	
 	# hit during blue dash: animation and mana cost
 	elif blue_dash and not through_everything:

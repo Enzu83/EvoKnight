@@ -16,6 +16,7 @@ extends CharacterBody2D
 @onready var death_sound: AudioStreamPlayer = $Hurtbox/DeathSound
 
 @onready var teleport_sound: AudioStreamPlayer = $TeleportSound
+@onready var test_orb: Timer = $TestOrb
 
 var target_orb_scene: Resource = preload("res://scenes/fx/ceres_target_orb.tscn")
 var impact_orb_scene: Resource = preload("res://scenes/fx/ceres_impact_orb.tscn")
@@ -25,6 +26,7 @@ var speed_orb_scene: Resource = preload("res://scenes/items/speed_orb.tscn")
 var phantom_scene: Resource = preload("res://scenes/chars/farewell_ceres_phantom.tscn")
 
 const CERES_ORB = preload("res://scenes/fx/ceres_orb.tscn")
+const FAREWELL_CERES_CLONE = preload("res://scenes/chars/farewell_ceres_clone.tscn")
 
 const SPEED = 300.0
 const STRENGTH = 6
@@ -39,7 +41,7 @@ var state := State.Default # handle all states of the boos
 var anim := Anim.idle # handle the current animation to be played
 
 # stats
-var max_health := 1#250
+var max_health := 250
 
 var health := max_health
 var health_bar := HEALTH_BARS-1
@@ -127,8 +129,8 @@ func circle_orb_attack() -> void:
 	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(-14, 14), 0, false))
 	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(0, 20), 0, false))
 
-func floor_orb_attack() -> void:
-	for i in range(13):
+func floor_orb_attack(begin: int = 0, end: int = 13) -> void:
+	for i in range(begin, end):
 		add_child(CERES_ORB.instantiate()
 						   .init(Vector2(15602 + 31 * i, -1788), Vector2(15602 + 31 * i, -1480), 0.15 * i)
 						   .second_target(Vector2(15602 + 31 * i, -1736)) # draw a target at the top of the area to indicate the spawn of falling orbs
@@ -154,6 +156,9 @@ func right_horizontal_orb_attack(hole_begin: int, hole_end: int) -> void:
 			add_child(CERES_ORB.instantiate().init(Vector2(16008, -1736 + 16 * i), Vector2(15976, -1736 + 16 * i), 0, not fire))
 			fire = true
 
+func spawn_clone(clone_position: Vector2) -> void:
+	add_child(FAREWELL_CERES_CLONE.instantiate().init(clone_position))
+
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	var body := area.get_parent() # get the player
 
@@ -175,3 +180,6 @@ func _on_test_orb_timeout() -> void:
 	floor_orb_attack()
 	left_horizontal_orb_attack(6, 9)
 	right_horizontal_orb_attack(12, 14)
+	spawn_clone(Vector2(15710, -1544))
+	spawn_clone(Vector2(15866, -1544))
+	#spawn_clone(position)
