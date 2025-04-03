@@ -2408,11 +2408,7 @@ collision_mask = 2
 script = ExtResource("36_xdbpi")
 
 [node name="FarewellCeres" parent="FarewellCeresBoss" instance=ExtResource("37_m755m")]
-position = Vector2(15794, -1579)
-
-[node name="StallPosition" type="Node2D" parent="FarewellCeresBoss"]
-top_level = true
-position = Vector2(15788, -1690)
+position = Vector2(15788, -1580)
 
 [node name="Trigger" type="CollisionShape2D" parent="FarewellCeresBoss"]
 position = Vector2(15788, -1477)

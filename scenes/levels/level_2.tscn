@@ -829,6 +829,8 @@ script = ExtResource("19_bm2fh")
 
 [node name="BigBat" parent="BigBatBoss" instance=ExtResource("19_e782t")]
 position = Vector2(2780, -352)
+boss = true
+flip_sprite = true
 
 [node name="LeftSpot" type="Node2D" parent="BigBatBoss/BigBat"]
 top_level = true
@@ -840,7 +842,7 @@ position = Vector2(2860, -346)
 
 [node name="AttackSpot" type="Node2D" parent="BigBatBoss/BigBat"]
 top_level = true
-position = Vector2(2721, -279)
+position = Vector2(2720, -278)
 
 [node name="LeftBatSpawner" parent="BigBatBoss" instance=ExtResource("21_mhdyk")]
 position = Vector2(2760, -340)

@@ -9,7 +9,6 @@ extends Area2D
 @onready var boss_music: AudioStreamPlayer = %BossMusic
 
 @onready var farewell_ceres: CharacterBody2D = $FarewellCeres
-@onready var stall_position: Node2D = $StallPosition
 
 @onready var trigger: CollisionShape2D = $Trigger
 @onready var fake_wall: StaticBody2D = $FakeWall
@@ -53,8 +52,9 @@ var wave_spawn = {
 	# first wave
 	2: {
 		0: [
-			["bat", Vector2(15710, -1600), true],
-			["bat", Vector2(15916, -1600), false, 0, 0.2],
+			["bat", Vector2(15710, -1580), true],
+			["big_bat", Vector2(15788, -1604), false, 20, 0.1],
+			["bat", Vector2(15866, -1580), false, 0, 0.2],
 		],
 	
 		1: [
@@ -147,9 +147,6 @@ func set_platform_process(platform: Node2D, enable: bool) -> void:
 
 func handle_enemy_wave() -> void:
 	if state in [2, 4, 6]:
-		# set ceres position to the top of the room
-		farewell_ceres.position = stall_position.position
-		
 		# advance phase
 		if can_change_wave_phase and mob_list.get_child_count() == 0:
 			advance_wave_phase()
@@ -184,7 +181,12 @@ func advance_wave_phase() -> void:
 		dark_cherry_spawn_timer.stop()
 		wave_phase_cooldown.stop()
 		state += 1
+		
+		# resume fight against ceres
+		farewell_ceres.teleport_sound.play()
+		farewell_ceres.position.y += 300
 		farewell_ceres.state = farewell_ceres.State.Default
+		farewell_ceres.sprite.visible = true
 		farewell_ceres.hurtbox.set_deferred("disabled", false)
 
 func spawn_enemy(mob_name: String, spawn_position: Vector2, flip_sprite: bool, max_health: int = 0, delay: float = 0.0) -> void:

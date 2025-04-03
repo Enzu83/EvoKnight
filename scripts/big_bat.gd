@@ -5,7 +5,9 @@ const STRENGTH = 4 # damage caused by the enemy
 
 const EXP_DROP_VALUE = 3
 
-@onready var boss_music: AudioStreamPlayer = %BossMusic
+@onready var boss_music: AudioStreamPlayer
+
+@onready var hud: CanvasLayer
 
 @onready var sprite: Sprite2D = $Sprite
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -17,14 +19,14 @@ const EXP_DROP_VALUE = 3
 
 @onready var death_sound: AudioStreamPlayer = $DeathSound
 
-@onready var left_spot: Node2D = $LeftSpot
-@onready var right_spot: Node2D = $RightSpot
-@onready var attack_spot: Node2D = $AttackSpot
-
+@onready var start_fight_timer: Timer = $StartFightTimer
 @onready var wait_timer: Timer = $WaitTimer
 @onready var attack_wait_timer: Timer = $AttackWaitTimer
 
-@onready var hud: CanvasLayer = %HUD
+var left_spot: Vector2
+var right_spot: Vector2
+var attack_spot: Vector2
+
 var player: CharacterBody2D
 
 enum State {Sleep, LeftIdle, RightIdle, LeftAttack, RightAttack, Fainted}
@@ -37,13 +39,31 @@ var max_health := 140
 var health := max_health
 var hit := false # enemy stun if hit by an attack, can't chase during this period
 
+@export var boss := false
+
 @export var flip_sprite := false
 
 var drop := true
 
 func _ready() -> void:
 	add_to_group("enemies")
-	sprite.flip_h = flip_sprite
+
+	if boss:
+		boss_music = %BossMusic
+		hud = %HUD
+		
+		left_spot = $LeftSpot.position
+		right_spot = $RightSpot.position
+		attack_spot = $AttackSpot.position
+	
+	# regular enemy starts already wake up
+	else:
+		animation_player.play("idle")
+		start_fight_timer.start(0.01)
+		
+		left_spot = position + Vector2(-128, 0)
+		right_spot = position + Vector2(128, 0)
+		attack_spot = position + Vector2(0, 96)
 
 func _physics_process(delta: float) -> void:
 	if Global.player != null:
@@ -54,7 +74,7 @@ func _physics_process(delta: float) -> void:
 		if state == State.LeftIdle:
 			scale.x = 2
 			# check if the bat reached the left spot
-			if move_to(left_spot.position, delta * SPEED) \
+			if move_to(left_spot, delta * SPEED) \
 			and not attack_wait:
 				# attack from left to right
 				attack_wait = true
@@ -64,7 +84,7 @@ func _physics_process(delta: float) -> void:
 		elif state == State.RightIdle:
 			scale.x = -2
 			# check if the bat reached the right spot
-			if move_to(right_spot.position, delta * SPEED) \
+			if move_to(right_spot, delta * SPEED) \
 			and not attack_wait:
 				# attack from right to left
 				attack_wait = true
@@ -74,7 +94,7 @@ func _physics_process(delta: float) -> void:
 	if not attack_wait and \
 	(state == State.LeftAttack or state == State.RightAttack) \
 	and attack_move:
-		if move_to(attack_spot.position, 1.5 * delta * SPEED) \
+		if move_to(attack_spot, 1.5 * delta * SPEED) \
 		and animation_player.current_animation != "attack_end":
 			# bat is at attack spot
 			animation_player.play("attack_end")
@@ -111,7 +131,9 @@ func fainted() -> void:
 		animation_player.pause()
 		effects_player.play("death")
 		death_sound.play()
-		hud.display_boss = false
+		
+		if boss:
+			hud.display_boss = false
 		
 		# exp drops
 		if drop:
@@ -138,12 +160,14 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 
 func _on_start_fight_timer_timeout() -> void:
 	state = State.RightIdle
-	animation_player.play("idle")
-	Global.boss = self
-	hud.display_boss = true
-	hud.boss_name.text = "Big Bat"
-	player.state = player.State.Default
-	boss_music.play()
+	
+	if boss:
+		animation_player.play("idle")
+		Global.boss = self
+		hud.display_boss = true
+		hud.boss_name.text = "Big Bat"
+		player.state = player.State.Default
+		boss_music.play()
 	
 func _on_wait_timer_timeout() -> void:
 	wait = false

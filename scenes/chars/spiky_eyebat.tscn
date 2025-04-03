@@ -229,7 +229,6 @@ bus = &"SFX"
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="Hurtbox"]
 stream = ExtResource("5_00jrk")
-volume_db = 3.0
 bus = &"SFX"
 
 [node name="ClangSound" type="AudioStreamPlayer" parent="."]

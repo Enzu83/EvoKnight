@@ -38,7 +38,7 @@ var state := State.Default # handle all states of the boos
 var anim := Anim.idle # handle the current animation to be played
 
 # stats
-var max_health := 20#250
+var max_health := 1#250
 
 var health := max_health
 var health_bar := HEALTH_BARS-1
@@ -52,12 +52,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	handle_flip_h()
 	
-	handle_shield()
-	
 	move_and_slide()
-
-func handle_shield() -> void:
-	shield.visible = state == State.Stall
 
 func handle_flip_h() -> void:
 	# flip the sprite to match the direction
@@ -104,7 +99,7 @@ func fainted() -> void:
 
 			hurtbox.set_deferred("disabled", true)
 			hurt_invicibility_timer.start()
-			effects_player.play("blink")
+			position.y -= 300 # hide from the player
 		
 		# no more health bars left
 		else:
