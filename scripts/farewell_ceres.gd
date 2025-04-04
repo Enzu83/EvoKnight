@@ -26,6 +26,8 @@ var speed_orb_scene: Resource = preload("res://scenes/items/speed_orb.tscn")
 var phantom_scene: Resource = preload("res://scenes/chars/farewell_ceres_phantom.tscn")
 
 const CERES_ORB = preload("res://scenes/fx/ceres_orb.tscn")
+const CERES_FOLLOWING_ORB = preload("res://scenes/fx/ceres_following_orb.tscn")
+
 const FAREWELL_CERES_CLONE = preload("res://scenes/chars/farewell_ceres_clone.tscn")
 
 const SPEED = 300.0
@@ -56,6 +58,10 @@ func _physics_process(_delta: float) -> void:
 	handle_flip_h()
 	
 	move_and_slide()
+
+func start() -> void:
+	active = true
+	test_orb.start()
 
 func handle_flip_h() -> void:
 	# flip the sprite to match the direction
@@ -129,12 +135,19 @@ func circle_orb_attack() -> void:
 	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(-14, 14), 0, false))
 	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(0, 20), 0, false))
 
-func floor_orb_attack(begin: int = 0, end: int = 13) -> void:
+func spaced_floor_orb_attack(begin: int = 0, end: int = 9) -> void:
+	var fire := false
+	
 	for i in range(begin, end):
 		add_child(CERES_ORB.instantiate()
-						   .init(Vector2(15602 + 31 * i, -1788), Vector2(15602 + 31 * i, -1480), 0.15 * i)
-						   .second_target(Vector2(15602 + 31 * i, -1736)) # draw a target at the top of the area to indicate the spawn of falling orbs
+						   .init(Vector2(15600 + 47 * i, -1788), Vector2(15600 + 47 * i, -1480), 0, not fire)
+						   .second_target(Vector2(15600 + 47 * i, -1736)) # draw a target at the top of the area to indicate the spawn of falling orbs
 		)
+		
+		fire = true
+
+func following_orb_attack() -> void:
+	add_child(CERES_FOLLOWING_ORB.instantiate().init(get_middle_position(), player))
 
 func left_horizontal_orb_attack(hole_begin: int, hole_end: int) -> void:
 	var fire := false
@@ -176,10 +189,12 @@ func _on_phantom_cooldown_timeout() -> void:
 		add_child(phantom_scene.instantiate())
 
 func _on_test_orb_timeout() -> void:
-	circle_orb_attack()
-	floor_orb_attack()
-	left_horizontal_orb_attack(6, 9)
-	right_horizontal_orb_attack(12, 14)
-	spawn_clone(Vector2(15710, -1544))
-	spawn_clone(Vector2(15866, -1544))
+	pass
+	#circle_orb_attack()
+	#spaced_floor_orb_attack()
+	#left_horizontal_orb_attack(6, 9)
+	#right_horizontal_orb_attack(12, 14)
+	#spawn_clone(Vector2(15710, -1544))
+	#spawn_clone(Vector2(15866, -1544))
 	#spawn_clone(position)
+	following_orb_attack()

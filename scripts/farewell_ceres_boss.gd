@@ -209,7 +209,8 @@ func _on_area_entered(_area: Area2D) -> void:
 	if state == 0:
 		state = 1
 		#player.state = player.State.Stop
-		player.sprite.flip_h = false
+		#player.sprite.flip_h = false
+		farewell_ceres.start()
 		
 		# hud
 		Global.boss = farewell_ceres
