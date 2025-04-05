@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/levels/level_4.gd" id="1_u23an"]
 [ext_resource type="AudioStream" uid="uid://cjcn1gqvr8ywi" path="res://assets/musics/mus_barren_valley.mp3" id="2_hxhsr"]
 [ext_resource type="Texture2D" uid="uid://bvrcjluh36k70" path="res://assets/sprites/terrains/bg_sky_back.png" id="3_2bygq"]
-[ext_resource type="AudioStream" uid="uid://dfnlx8wvputuy" path="res://assets/musics/mus_boss.mp3" id="3_vcx1q"]
+[ext_resource type="AudioStream" uid="uid://dccpm1onag3qv" path="res://assets/musics/mus_final_boss.mp3" id="3_6o261"]
 [ext_resource type="Texture2D" uid="uid://corfckc5j16s5" path="res://assets/sprites/terrains/bg_big_star1.png" id="4_j4roe"]
 [ext_resource type="PackedScene" uid="uid://bggby2h6prvx3" path="res://scenes/terrains/ground.tscn" id="5_070dw"]
 [ext_resource type="Texture2D" uid="uid://dlton58j0qbx7" path="res://assets/sprites/terrains/bg_big_star2.png" id="5_u3vci"]
@@ -565,7 +565,8 @@ bus = &"Music"
 
 [node name="BossMusic" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
-stream = ExtResource("3_vcx1q")
+stream = ExtResource("3_6o261")
+volume_db = 6.0
 bus = &"Music"
 
 [node name="Background" type="Parallax2D" parent="."]

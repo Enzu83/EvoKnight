@@ -27,6 +27,7 @@ var phantom_scene: Resource = preload("res://scenes/chars/farewell_ceres_phantom
 
 const CERES_ORB = preload("res://scenes/fx/ceres_orb.tscn")
 const CERES_FOLLOWING_ORB = preload("res://scenes/fx/ceres_following_orb.tscn")
+const CERES_ROTATING_ORB = preload("res://scenes/fx/ceres_rotating_orb.tscn")
 
 const FAREWELL_CERES_CLONE = preload("res://scenes/chars/farewell_ceres_clone.tscn")
 
@@ -143,7 +144,6 @@ func spaced_floor_orb_attack(begin: int = 0, end: int = 9) -> void:
 						   .init(Vector2(15600 + 47 * i, -1788), Vector2(15600 + 47 * i, -1480), 0, not fire)
 						   .second_target(Vector2(15600 + 47 * i, -1736)) # draw a target at the top of the area to indicate the spawn of falling orbs
 		)
-		
 		fire = true
 
 func following_orb_attack() -> void:
@@ -168,6 +168,27 @@ func right_horizontal_orb_attack(hole_begin: int, hole_end: int) -> void:
 			# only the first orb makes a sound
 			add_child(CERES_ORB.instantiate().init(Vector2(16008, -1736 + 16 * i), Vector2(15976, -1736 + 16 * i), 0, not fire))
 			fire = true
+
+func rotating_orb_shield_attack(clockwise: bool) -> void:
+	add_child(CERES_ROTATING_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(0, 40), 0, 10, true, clockwise, 300))
+	add_child(CERES_ROTATING_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(-34, -20), 0, 10, true, clockwise, 300))
+	add_child(CERES_ROTATING_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(34, -20), 0, 10, true, clockwise, 300))
+
+
+func rotating_orb_attack(clockwise: bool, rotation_position: Vector2, rotation_increment_position: Vector2) -> void:
+	var fire := false
+	
+	for i in range(15):
+		add_child(CERES_ROTATING_ORB.instantiate().init(
+			get_middle_position(), # spawning position
+			get_middle_position() + rotation_position + i * rotation_increment_position, # rotation starting position
+			0.05 * i, 10, # wait time before moving at the start
+			not fire,  # sound or not
+			clockwise, # rotation direction
+			60, # speed of the rotation
+			2.0 - 0.05 * i) # wait before rotation (inverse of starting wait time to time all the orbs)
+		)
+		fire = true
 
 func spawn_clone(clone_position: Vector2) -> void:
 	add_child(FAREWELL_CERES_CLONE.instantiate().init(clone_position))
@@ -194,7 +215,11 @@ func _on_test_orb_timeout() -> void:
 	#spaced_floor_orb_attack()
 	#left_horizontal_orb_attack(6, 9)
 	#right_horizontal_orb_attack(12, 14)
+	rotating_orb_attack(false, Vector2(0, 32), Vector2(0, 16))
+	rotating_orb_attack(false, Vector2(0, -32), Vector2(0, -16))
+	rotating_orb_attack(false, Vector2(-32, 0), Vector2(-16, 0))
+	rotating_orb_attack(false, Vector2(32, 0), Vector2(16, 0))
 	#spawn_clone(Vector2(15710, -1544))
 	#spawn_clone(Vector2(15866, -1544))
 	#spawn_clone(position)
-	following_orb_attack()
+	#following_orb_attack()
