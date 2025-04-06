@@ -207,10 +207,6 @@ bus = &"SFX"
 [node name="InitialWaitTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="WaitTimer" type="Timer" parent="."]
-wait_time = 1.7
-one_shot = true
-
 [node name="TargetIcon" type="AnimatedSprite2D" parent="."]
 visible = false
 top_level = true
@@ -226,5 +222,4 @@ one_shot = true
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="DurationTimer" to="." method="_on_duration_timeout"]
 [connection signal="timeout" from="InitialWaitTimer" to="." method="_on_initial_wait_timer_timeout"]
-[connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]
 [connection signal="timeout" from="RotationWaitTimer" to="." method="_on_rotation_wait_timer_timeout"]

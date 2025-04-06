@@ -25,14 +25,16 @@ var initial_position: Vector2
 var target_position: Vector2
 var initial_wait_time: float
 var play_sound: bool
+var duration_time: float
 
 var second_target_position := Vector2.ZERO
 
-func init(initial_position_: Vector2, target_position_: Vector2, initial_wait_time_: float = 0.0, play_sound_: bool = true) -> Node2D:
+func init(initial_position_: Vector2, target_position_: Vector2, initial_wait_time_: float = 0.0, play_sound_: bool = true, duration_time_: float = 6.0) -> Node2D:
 	initial_position = initial_position_
 	target_position = target_position_
 	initial_wait_time = initial_wait_time_
 	play_sound = play_sound_
+	duration_time = duration_time_
 	
 	return self
 
@@ -53,7 +55,7 @@ func _physics_process(delta: float) -> void:
 		rotation += atan2(orientation.y, orientation.x)
 		direction = orientation
 		
-		duration.start()
+		duration.start(duration_time)
 		fire = true
 		animation_player.play("shoot")
 		

@@ -9,7 +9,6 @@ const STRENGTH = 7
 @onready var sprite: Sprite2D = $Sprite
 
 @onready var initial_wait_timer: Timer = $InitialWaitTimer
-@onready var wait_timer: Timer = $WaitTimer
 @onready var duration_timer: Timer = $DurationTimer
 @onready var rotation_wait_timer: Timer = $RotationWaitTimer
 
@@ -31,8 +30,9 @@ var clockwise: bool
 var rotation_distance: float
 var rotation_speed: float
 var rotation_wait_time: float
+var follow_ceres: bool
 
-func init(initial_position_: Vector2, target_position_: Vector2, initial_wait_time_: float = 0.0, duration_: float = 10.0, play_sound_: bool = true, clockwise_: bool = false, rotation_speed_: float = ROTATION_SPEED, rotation_wait_time_: float = 0.01) -> Node2D:
+func init(initial_position_: Vector2, target_position_: Vector2, initial_wait_time_: float = 1.7, duration_: float = 10.0, play_sound_: bool = true, clockwise_: bool = false, rotation_speed_: float = ROTATION_SPEED, rotation_wait_time_: float = 0.01, follow_ceres_: bool = false) -> Node2D:
 	initial_position = initial_position_
 	target_position = target_position_
 	initial_wait_time = initial_wait_time_
@@ -41,6 +41,7 @@ func init(initial_position_: Vector2, target_position_: Vector2, initial_wait_ti
 	clockwise = clockwise_
 	rotation_speed = rotation_speed_
 	rotation_wait_time = rotation_wait_time_
+	follow_ceres = follow_ceres_
 	
 	return self
 
@@ -49,11 +50,13 @@ func _ready() -> void:
 	target_icon.position = target_position
 	initial_wait_timer.start(initial_wait_time + 0.01)
 	duration_timer.start(duration)
+	target_icon.visible = true
 	
 	var initial_orientation := (target_icon.position - position).normalized()
 	rotation += atan2(initial_orientation.y, initial_orientation.x)
 
 func _physics_process(delta: float) -> void:
+	# initial wait time
 	if active \
 	and state == 0:
 		state = 1
@@ -76,15 +79,19 @@ func _physics_process(delta: float) -> void:
 			else:
 				sprite.rotation_degrees -= 90
 			
-			rotation_wait_timer.start(rotation_wait_time)
+			rotation_wait_timer.start(rotation_wait_time + 0.01)
 			rotation_distance = (position - initial_position).length()
-	
+		
 	# rotation movement
 	if state == 3:
 		if clockwise:
 			rotation_degrees += rotation_speed * delta
 		else:
 			rotation_degrees -= rotation_speed * delta
+		
+		# update rotation center if the orb follows ceres
+		if follow_ceres:
+			initial_position = ceres.get_middle_position()
 		
 		position = initial_position + Vector2(rotation_distance * cos(deg_to_rad(rotation_degrees)), rotation_distance * sin(deg_to_rad(rotation_degrees)))
 	
@@ -102,14 +109,8 @@ func _on_area_entered(area: Area2D) -> void:
 func _on_duration_timeout() -> void:
 	animation_player.play("fade_out")
 
-func _on_wait_timer_timeout() -> void:
-	# can shoot
-	active = true
-
 func _on_initial_wait_timer_timeout() -> void:
-	target_icon.visible = true
-	
-	wait_timer.start()
+	active = true # can shoot
 
 func _on_rotation_wait_timer_timeout() -> void:
 	state = 3
