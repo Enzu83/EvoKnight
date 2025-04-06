@@ -110,7 +110,6 @@ func update_state() -> void:
 		can_spawn_dark_cherry = false
 		dark_cherry_spawn_timer.start()
 		wave_phase_cooldown.start()
-		farewell_ceres.test_orb.stop()
 		
 		update_platforms()
 

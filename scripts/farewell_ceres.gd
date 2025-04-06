@@ -93,7 +93,6 @@ func _physics_process(_delta: float) -> void:
 
 func start() -> void:
 	active = true
-	test_orb.start()
 
 func handle_flip_h() -> void:
 	# flip the sprite to match the direction
@@ -164,27 +163,38 @@ func get_middle_position() -> Vector2:
 func handle_first_phase() -> void:
 	# choose an available action
 	var available_actions := []
-	
+
 	for i in range(0, 4):
 		if i != last_action:
 			available_actions.append(i)
 	
 	var action: int = available_actions[randi_range(0, available_actions.size()-1)]
 
-	# teleport at the center
-	# create orbs around ceres
+	# teleports at the center
+	# creates orbs around ceres
 	# moves toward one of the four corners
 	if action == 0:
-		action_teleport(Vector2(15788, -1580), 0.6, 0.2)
+		action_teleport(Vector2(15788, -1540), 0.6, 0.2)
 		action_list.append(["rotating_orb_shield_attack", true, 4.2])
 		action_list.append(["wait", 2.2])
 		action_move(250.0, 1.5)
 	
+	# disapears
+	# creates falling orbs
+	# appears at the center
 	elif action == 1:
-		pass
-		
+		action_list.append(["teleport_start"])
+		action_list.append(["wait", 0.5])
+		action_list.append(["spaced_floor_orb_attack"])
+		action_list.append(["wait", 3.5])
+		action_list.append(["teleport_end", Vector2(15788, -1580)])
+		action_list.append(["play_animation", "idle"])
+		action_list.append(["wait", 1.0])
+	
+	# creates rotating orbs in the whole area
 	elif action == 2:
-		pass
+		action_teleport(Vector2(15788, -1580), 0.6, 0.2)
+		action_rotating_orb_whole_area()
 		
 	elif action == 3:
 		pass
@@ -226,6 +236,13 @@ func action_teleport(teleport_position: Vector2, teleport_time: float, end_wait_
 	action_list.append(["play_animation", "idle"])
 	action_list.append(["wait", end_wait_time])
 
+func action_rotating_orb_whole_area() -> void:
+	action_list.append(["rotating_orb_attack", false, Vector2(0, 32), Vector2(0, 16)])
+	action_list.append(["rotating_orb_attack", false, Vector2(0, -32), Vector2(0, -16)])
+	action_list.append(["rotating_orb_attack", false, Vector2(-32, 0), Vector2(-16, 0)])
+	action_list.append(["rotating_orb_attack", false, Vector2(32, 0), Vector2(16, 0)])
+	action_list.append(["wait", 11.0])
+
 func wait(duration: float) -> void:
 	state = State.Action
 	wait_timer.start(duration)
@@ -263,22 +280,27 @@ func teleport_end(target_position: Vector2) -> void:
 	play_animation("teleport_end")
 	wait_timer.start(0.6) # time of the animation
 
-func circle_orb_attack() -> void:
-	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(14, 14), 0, true))
-	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(20, 0), 0, false))
-	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(14, -14), 0, false))
-	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(0, -20), 0, false))
-	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(-14, -14), 0, false))
-	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(-20, 0), 0, false))
-	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(-14, 14), 0, false))
-	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(0, 20), 0, false))
+func circle_orb_attack(number_of_orbs: int = 1) -> void:
+	var fire := false
+	
+	for i in range(number_of_orbs):
+		add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(14, 14), 0.0, not fire))
+		add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(20, 0), 0, false))
+		add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(14, -14), 0, false))
+		add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(0, -20), 0, false))
+		add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(-14, -14), 0, false))
+		add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(-20, 0), 0, false))
+		add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(-14, 14), 0, false))
+		add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(0, 20), 0, false))
+		
+		fire = true
 
 func spaced_floor_orb_attack(begin: int = 0, end: int = 9) -> void:
 	var fire := false
 	
 	for i in range(begin, end):
 		add_child(CERES_ORB.instantiate()
-						   .init(Vector2(15600 + 47 * i, -1788), Vector2(15600 + 47 * i, -1480), 0, not fire)
+						   .init(Vector2(15600 + 47 * i, -1788), Vector2(15600 + 47 * i, -1480), 0.0, not fire)
 						   .second_target(Vector2(15600 + 47 * i, -1736)) # draw a target at the top of the area to indicate the spawn of falling orbs
 		)
 		fire = true
@@ -318,7 +340,8 @@ func rotating_orb_attack(clockwise: bool, rotation_position: Vector2, rotation_i
 		add_child(CERES_ROTATING_ORB.instantiate().init(
 			get_middle_position(), # spawning position
 			get_middle_position() + rotation_position + i * rotation_increment_position, # rotation starting position
-			0.05 * i, 10, # wait time before moving at the start
+			1.5 + 0.05 * i, # wait time before moving at the beginning
+			10, # duration
 			not fire,  # sound or not
 			clockwise, # rotation direction
 			60, # speed of the rotation
@@ -351,10 +374,10 @@ func _on_test_orb_timeout() -> void:
 	#spaced_floor_orb_attack()
 	#left_horizontal_orb_attack(6, 9)
 	#right_horizontal_orb_attack(12, 14)
-	#rotating_orb_attack(false, Vector2(0, 32), Vector2(0, 16))
-	#rotating_orb_attack(false, Vector2(0, -32), Vector2(0, -16))
-	#rotating_orb_attack(false, Vector2(-32, 0), Vector2(-16, 0))
-	#rotating_orb_attack(false, Vector2(32, 0), Vector2(16, 0))
+	rotating_orb_attack(false, Vector2(0, 32), Vector2(0, 16))
+	rotating_orb_attack(false, Vector2(0, -32), Vector2(0, -16))
+	rotating_orb_attack(false, Vector2(-32, 0), Vector2(-16, 0))
+	rotating_orb_attack(false, Vector2(32, 0), Vector2(16, 0))
 	#spawn_clone(Vector2(15710, -1544))
 	#spawn_clone(Vector2(15866, -1544))
 	#spawn_clone(position)
