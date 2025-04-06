@@ -18,12 +18,10 @@ extends CharacterBody2D
 @onready var teleport_sound: AudioStreamPlayer = $TeleportSound
 @onready var test_orb: Timer = $TestOrb
 
-var target_orb_scene: Resource = preload("res://scenes/fx/ceres_target_orb.tscn")
-var impact_orb_scene: Resource = preload("res://scenes/fx/ceres_impact_orb.tscn")
-var magic_slash_scene: Resource = preload("res://scenes/fx/ceres_slash.tscn")
-var speed_orb_scene: Resource = preload("res://scenes/items/speed_orb.tscn")
+@onready var wait_timer: Timer = $WaitTimer
+@onready var move_timer: Timer = $MoveTimer
 
-var phantom_scene: Resource = preload("res://scenes/chars/farewell_ceres_phantom.tscn")
+const PHANTOM = preload("res://scenes/chars/farewell_ceres_phantom.tscn")
 
 const CERES_ORB = preload("res://scenes/fx/ceres_orb.tscn")
 const CERES_FOLLOWING_ORB = preload("res://scenes/fx/ceres_following_orb.tscn")
@@ -36,10 +34,10 @@ const STRENGTH = 6
 
 const HEALTH_BARS = 4
 
-enum State {Default, Defeated, Attacking, Stall}
+enum State {Default, Defeated, Attacking, Wait, Move, StartTeleport, EndTeleport, Stall}
 enum Anim {idle, defeated, teleport_start, teleport_end}
 
-# boss state and actions
+# boss state
 var state := State.Default # handle all states of the boos
 var anim := Anim.idle # handle the current animation to be played
 
@@ -49,16 +47,42 @@ var max_health := 250
 var health := max_health
 var health_bar := HEALTH_BARS-1
 
-# variables
+# boss variables
 var active := false
+var phase := 0
+
+var move_target_position: Vector2
+
+# actions
+var action_list = [] # list of remaining actions to perform
+var last_action := -1
 
 func _ready() -> void:
 	active = false
 
 func _physics_process(_delta: float) -> void:
-	handle_flip_h()
+	# choose next action
+	if state == State.Default:
+		# first phase : few orb attacks and clones
+		if phase == 0:
+			handle_first_phase()
+			
+		elif phase == 1:
+			handle_second_phase()
+			
+		elif phase == 2:
+			handle_third_phase()
+			
+		elif phase == 3:
+			handle_fourth_phase()
 	
+		if action_list.size() > 0:
+			perform_action() # do the next action in the list
+	
+	
+	handle_flip_h()
 	move_and_slide()
+
 
 func start() -> void:
 	active = true
@@ -126,6 +150,76 @@ func fainted() -> void:
 func get_middle_position() -> Vector2:
 	return position - Vector2(0, wall_collider.shape.get_rect().size.y)
 
+func handle_first_phase() -> void:
+	# choose an attack
+	var action := randi_range(0, 5)
+	
+	if action == last_action:
+		action = posmod(action + 1, 5)
+	
+	last_action = action
+	
+	# creates orb around and rushes 
+	if action == 0:
+		action_list.append(["move", Vector2(15660, -1678), 300.0])
+		action_list.append(["move", Vector2(15916, -1612), 300.0])
+		action_list.append(["move", Vector2(15660, -1612), 300.0])
+		action_list.append(["wait", 2.0])
+		
+	elif action == 1:
+		action_list.append(["move", Vector2(15660, -1678), 300.0])
+		action_list.append(["wait", 2.0])
+		
+	elif action == 2:
+		action_list.append(["move", Vector2(15916, -1678), 300.0])
+		action_list.append(["wait", 2.0])
+		
+	elif action == 3:
+		action_list.append(["move", Vector2(15660, -1612), 300.0])
+		action_list.append(["wait", 2.0])
+		
+	elif action == 4:
+		action_list.append(["move", Vector2(15788, -1580), 300.0])
+		action_list.append(["wait", 2.0])
+
+
+func handle_second_phase() -> void:
+	pass
+
+func handle_third_phase() -> void:
+	pass
+
+func handle_fourth_phase() -> void:
+	pass
+
+func perform_action() -> void:
+	var action = action_list.pop_front()
+	callv(action[0], action.slice(1))
+	
+func wait(duration: float) -> void:
+	state = State.Wait
+	play_animation("idle")
+	
+	wait_timer.start(duration)
+
+func move(target_position: Vector2, speed: float) -> void:
+	var delta_position := target_position - position
+	var duration := delta_position.length() / speed
+	var move_angle := atan2(delta_position.y, delta_position.x)
+	
+	if duration > 0:
+		velocity.x = speed * cos(move_angle)
+		velocity.y = speed * sin(move_angle)
+		
+		state = State.Move
+		move_target_position = target_position
+		move_timer.start(duration)
+	
+		play_animation("idle")
+	
+func teleport(target_position: Vector2, wait_time: float) -> void:
+	pass
+
 func circle_orb_attack() -> void:
 	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(14, 14), 0, true))
 	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(20, 0), 0, false))
@@ -169,11 +263,10 @@ func right_horizontal_orb_attack(hole_begin: int, hole_end: int) -> void:
 			add_child(CERES_ORB.instantiate().init(Vector2(16008, -1736 + 16 * i), Vector2(15976, -1736 + 16 * i), 0, not fire))
 			fire = true
 
-func rotating_orb_shield_attack(clockwise: bool) -> void:
-	add_child(CERES_ROTATING_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(0, 40), 0, 10, true, clockwise, 300))
-	add_child(CERES_ROTATING_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(-34, -20), 0, 10, true, clockwise, 300))
-	add_child(CERES_ROTATING_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(34, -20), 0, 10, true, clockwise, 300))
-
+func rotating_orb_shield_attack(clockwise: bool, duration: float) -> void:
+	add_child(CERES_ROTATING_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(0, 40), 0, duration, true, clockwise, 300))
+	add_child(CERES_ROTATING_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(-34, -20), 0, duration, true, clockwise, 300))
+	add_child(CERES_ROTATING_ORB.instantiate().init(get_middle_position(), get_middle_position() + Vector2(34, -20), 0, duration, true, clockwise, 300))
 
 func rotating_orb_attack(clockwise: bool, rotation_position: Vector2, rotation_increment_position: Vector2) -> void:
 	var fire := false
@@ -206,8 +299,8 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 	effects_player.stop()
 
 func _on_phantom_cooldown_timeout() -> void:
-	if velocity.length() > 0:
-		add_child(phantom_scene.instantiate())
+	if velocity.length() > 1:
+		add_child(PHANTOM.instantiate())
 
 func _on_test_orb_timeout() -> void:
 	pass
@@ -215,11 +308,22 @@ func _on_test_orb_timeout() -> void:
 	#spaced_floor_orb_attack()
 	#left_horizontal_orb_attack(6, 9)
 	#right_horizontal_orb_attack(12, 14)
-	rotating_orb_attack(false, Vector2(0, 32), Vector2(0, 16))
-	rotating_orb_attack(false, Vector2(0, -32), Vector2(0, -16))
-	rotating_orb_attack(false, Vector2(-32, 0), Vector2(-16, 0))
-	rotating_orb_attack(false, Vector2(32, 0), Vector2(16, 0))
+	#rotating_orb_attack(false, Vector2(0, 32), Vector2(0, 16))
+	#rotating_orb_attack(false, Vector2(0, -32), Vector2(0, -16))
+	#rotating_orb_attack(false, Vector2(-32, 0), Vector2(-16, 0))
+	#rotating_orb_attack(false, Vector2(32, 0), Vector2(16, 0))
 	#spawn_clone(Vector2(15710, -1544))
 	#spawn_clone(Vector2(15866, -1544))
 	#spawn_clone(position)
 	#following_orb_attack()
+	#rotating_orb_shield_attack(true, 5)
+
+func _on_wait_timer_timeout() -> void:
+	if state == State.Wait:
+		state = State.Default
+
+func _on_move_timer_timeout() -> void:
+	if state == State.Move:
+		state = State.Default
+		velocity = Vector2.ZERO
+		position = move_target_position

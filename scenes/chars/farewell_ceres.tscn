@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cvyxcdvny1nsi"]
+[gd_scene load_steps=25 format=3 uid="uid://cvyxcdvny1nsi"]
 
 [ext_resource type="Script" path="res://scripts/farewell_ceres.gd" id="1_tbq25"]
 [ext_resource type="Texture2D" uid="uid://c27jgnpkvfd3u" path="res://assets/sprites/chars/enemies/spr_ceres.png" id="2_u3ly1"]
@@ -20,7 +20,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [1]
+"values": [0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -310,10 +310,64 @@ tracks/3/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_uj816"]
+resource_name = "front"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(0, -16), Vector2(0, -17), Vector2(0, -18), Vector2(0, -17)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hurtbox:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(0, 0), Vector2(0, -1), Vector2(0, -2), Vector2(0, -1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dif70"]
 _data = {
 "RESET": SubResource("Animation_yxfbx"),
 "defeated": SubResource("Animation_ci6rv"),
+"front": SubResource("Animation_uj816"),
 "idle": SubResource("Animation_q7lty"),
 "teleport_end": SubResource("Animation_5vbcg"),
 "teleport_start": SubResource("Animation_abg16")
@@ -401,14 +455,15 @@ height = 24.0
 
 [node name="FarewellCeres" type="CharacterBody2D"]
 collision_layer = 0
+collision_mask = 0
+slide_on_ceiling = false
 script = ExtResource("1_tbq25")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(0, -16)
 texture = ExtResource("2_u3ly1")
 hframes = 4
-vframes = 3
-frame = 1
+vframes = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -467,7 +522,16 @@ autostart = true
 [node name="TestOrb" type="Timer" parent="."]
 wait_time = 7.0
 
+[node name="WaitTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="MoveTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="timeout" from="Hurtbox/HurtInvicibilityTimer" to="." method="_on_hurt_invicibility_timer_timeout"]
 [connection signal="timeout" from="PhantomCooldown" to="." method="_on_phantom_cooldown_timeout"]
 [connection signal="timeout" from="TestOrb" to="." method="_on_test_orb_timeout"]
+[connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]
+[connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]

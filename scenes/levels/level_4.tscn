@@ -2501,15 +2501,12 @@ collision_layer = 0
 collision_mask = 2
 script = ExtResource("36_xdbpi")
 
-[node name="FarewellCeres" parent="FarewellCeresBoss" instance=ExtResource("37_m755m")]
-position = Vector2(15788, -1580)
+[node name="FakeWall" parent="FarewellCeresBoss" instance=ExtResource("38_hgh1n")]
+position = Vector2(16000, -1568)
 
 [node name="Trigger" type="CollisionShape2D" parent="FarewellCeresBoss"]
 position = Vector2(15788, -1477)
 shape = SubResource("RectangleShape2D_gc3pd")
-
-[node name="FakeWall" parent="FarewellCeresBoss" instance=ExtResource("38_hgh1n")]
-position = Vector2(16000, -1568)
 
 [node name="LowerLeftPlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
 z_index = -1
@@ -2570,6 +2567,9 @@ one_shot = true
 [node name="DarkCherrySpawnTimer" type="Timer" parent="FarewellCeresBoss"]
 wait_time = 5.0
 one_shot = true
+
+[node name="FarewellCeres" parent="FarewellCeresBoss" instance=ExtResource("37_m755m")]
+position = Vector2(15788, -1580)
 
 [node name="ChargedSlashUpgrade" parent="FarewellCeresBoss" instance=ExtResource("40_rchqj")]
 position = Vector2(15787, -1486)

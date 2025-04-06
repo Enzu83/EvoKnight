@@ -185,6 +185,7 @@ func advance_wave_phase() -> void:
 		state += 1
 		
 		# resume fight against ceres
+		farewell_ceres.phase += 1
 		farewell_ceres.teleport_sound.play()
 		farewell_ceres.position.y += 300
 		farewell_ceres.state = farewell_ceres.State.Default

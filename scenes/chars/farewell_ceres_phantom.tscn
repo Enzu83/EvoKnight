@@ -86,7 +86,7 @@ z_index = -1
 position = Vector2(0, -16)
 texture = ExtResource("1_o63ar")
 hframes = 4
-vframes = 3
+vframes = 4
 script = ExtResource("2_x7dmu")
 
 [node name="Vanish" type="AnimationPlayer" parent="."]
