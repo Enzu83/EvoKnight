@@ -1,6 +1,5 @@
 extends Area2D
 
-const SPEED = 300
 const STRENGTH = 7
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -26,15 +25,17 @@ var target_position: Vector2
 var initial_wait_time: float
 var play_sound: bool
 var duration_time: float
+var speed: float
 
 var second_target_position := Vector2.ZERO
 
-func init(initial_position_: Vector2, target_position_: Vector2, initial_wait_time_: float = 0.0, play_sound_: bool = true, duration_time_: float = 6.0) -> Node2D:
+func init(initial_position_: Vector2, target_position_: Vector2, initial_wait_time_: float = 0.0, play_sound_: bool = true, duration_time_: float = 6.0, speed_: float = 300.0) -> Node2D:
 	initial_position = initial_position_
 	target_position = target_position_
 	initial_wait_time = initial_wait_time_
 	play_sound = play_sound_
 	duration_time = duration_time_
+	speed = speed_
 	
 	return self
 
@@ -64,8 +65,8 @@ func _physics_process(delta: float) -> void:
 		
 	# move toward the target
 	if fire:
-		current_speed.x = move_toward(current_speed.x, direction.x * SPEED, abs(direction.x) * 20)
-		current_speed.y = move_toward(current_speed.y, direction.y * SPEED, abs(direction.y) * 20)
+		current_speed.x = move_toward(current_speed.x, direction.x * speed, abs(direction.x) * 20)
+		current_speed.y = move_toward(current_speed.y, direction.y * speed, abs(direction.y) * 20)
 		
 		position += current_speed * delta
 	

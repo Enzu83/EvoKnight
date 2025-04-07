@@ -747,7 +747,8 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 	effects_player.stop()
 
 func _on_mana_recovery_timer_timeout() -> void:
-	if state != State.Fainted:
+	if state != State.Fainted \
+	and state != State.Stop:
 		# natural regeneration
 		if mana_enabled and mana_recovery_rate > 0:
 			restore_mana(mana_recovery_rate)

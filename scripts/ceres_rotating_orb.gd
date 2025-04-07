@@ -7,6 +7,7 @@ const STRENGTH = 7
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var slash_sound: AudioStreamPlayer = $SlashSound
 @onready var sprite: Sprite2D = $Sprite
+@onready var hitbox: CollisionShape2D = $Hitbox
 
 @onready var initial_wait_timer: Timer = $InitialWaitTimer
 @onready var duration_timer: Timer = $DurationTimer
@@ -73,11 +74,14 @@ func _physics_process(delta: float) -> void:
 		if position == target_position:
 			state = 2
 			sprite.visible = true
+			hitbox.disabled = false
 			
 			if clockwise:
 				sprite.rotation_degrees += 90
+				hitbox.position = Vector2(0, 7)
 			else:
 				sprite.rotation_degrees -= 90
+				hitbox.position = Vector2(0, -7)
 			
 			rotation_wait_timer.start(rotation_wait_time + 0.01)
 			rotation_distance = (position - initial_position).length()
@@ -93,8 +97,8 @@ func _physics_process(delta: float) -> void:
 		if follow_ceres:
 			initial_position = ceres.get_middle_position()
 		
-		position = initial_position + Vector2(rotation_distance * cos(deg_to_rad(rotation_degrees)), rotation_distance * sin(deg_to_rad(rotation_degrees)))
-	
+		position = initial_position + rotation_distance * Vector2(cos(deg_to_rad(rotation_degrees)), sin(deg_to_rad(rotation_degrees)))
+		
 	# stop attacking if ceres is defeated
 	if ceres.state == ceres.State.Defeated:
 		queue_free()
