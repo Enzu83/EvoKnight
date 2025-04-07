@@ -21,7 +21,6 @@ func _physics_process(_delta: float) -> void:
 
 func spawn_heart() -> void:
 	can_spawn_heart = false
-	respawn_cooldown.start()
 	
 	var heart := HEART.instantiate()
 	heart.heal_value = heal_value

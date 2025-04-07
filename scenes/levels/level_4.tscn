@@ -2754,10 +2754,10 @@ position = Vector2(15787, -1486)
 position = Vector2(15787, -1486)
 
 [node name="HeartSpawner" parent="FarewellCeresBoss" instance=ExtResource("45_8bdsu")]
-position = Vector2(15660, -1710)
+position = Vector2(15660, -1722)
 
 [node name="HeartSpawner2" parent="FarewellCeresBoss" instance=ExtResource("45_8bdsu")]
-position = Vector2(15916, -1710)
+position = Vector2(15916, -1722)
 
 [connection signal="area_entered" from="FarewellCeresBoss" to="FarewellCeresBoss" method="_on_area_entered"]
 [connection signal="timeout" from="FarewellCeresBoss/WavePhaseCooldown" to="FarewellCeresBoss" method="_on_wave_phase_cooldown_timeout"]

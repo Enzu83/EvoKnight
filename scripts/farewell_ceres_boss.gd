@@ -216,8 +216,13 @@ func advance_wave_phase() -> void:
 		update_platforms()
 		
 		# resume fight against ceres
-		farewell_ceres.action_queue.append(["teleport_end", Vector2(15788, -1580)])
 		farewell_ceres.state = farewell_ceres.State.Default
+		farewell_ceres.action_queue.append(["teleport_end", Vector2(15788, -1580)]) # teleportation at the center
+		farewell_ceres.action_queue.append(["play_animation", "idle"])
+		
+		# add spining orb around ceres for phase 3 and 4
+		if farewell_ceres.phase >= 2:
+			farewell_ceres.action_queue.append(["rotating_orb_shield_attack", true, 1, 28, 0.0, 0.0, -1.0, 350.0])
 
 func spawn_enemy(mob_name: String, spawn_position: Vector2, flip_sprite: bool, max_health: int, strength: int, delay: float) -> void:
 	var mob_spawner = MOB_SPAWNER.instantiate()

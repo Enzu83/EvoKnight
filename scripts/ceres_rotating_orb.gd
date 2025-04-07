@@ -50,7 +50,11 @@ func _ready() -> void:
 	position = initial_position
 	target_icon.position = target_position
 	initial_wait_timer.start(initial_wait_time + 0.01)
-	duration_timer.start(duration)
+	
+	# the orb doesn't disapear if the duration if negative
+	if duration >= 0.0:
+		duration_timer.start(duration)
+	
 	target_icon.visible = true
 	
 	var initial_orientation := (target_icon.position - position).normalized()

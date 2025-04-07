@@ -42,7 +42,7 @@ var state := State.Default # handle all states of the boos
 var anim := Anim.idle # handle the current animation to be played
 
 # stats
-var max_health := 275
+var max_health := 1#275
 
 var health := max_health
 var health_bar := HEALTH_BARS-1
@@ -172,7 +172,7 @@ func handle_first_phase() -> void:
 	# moves toward one of the four corners
 	if action == 0:
 		action_teleport(Vector2(15788, -1540), 0.6, 0.2)
-		action_queue.append(["rotating_orb_shield_attack", true, 4.2, 400.0])
+		action_queue.append(["rotating_orb_shield_attack", true, 3, 28, 0.0, 1.0, 4.2, 400.0])
 		action_queue.append(["wait", 2.2])
 		action_move(250.0, 1.5)
 	
@@ -368,10 +368,14 @@ func right_horizontal_orb_attack(hole_begin: int, hole_end: int, duration: float
 			add_child(CERES_ORB.instantiate().init(Vector2(16008, -1736 + 16 * i), Vector2(15976, -1736 + 16 * i), 0, not fire, duration, speed))
 			fire = true
 
-func rotating_orb_shield_attack(clockwise: bool, duration: float, rotation_speed: float = 300.0) -> void:
-	add_child(CERES_ROTATING_ORB.instantiate().init(get_middle_position(), get_middle_position() + 0.7 * Vector2(0, 40), 1.5, duration, true, clockwise, rotation_speed, 0.0, true))
-	add_child(CERES_ROTATING_ORB.instantiate().init(get_middle_position(), get_middle_position() + 0.7 * Vector2(-34, -20), 1.5, duration, true, clockwise, rotation_speed, 0.0, true))
-	add_child(CERES_ROTATING_ORB.instantiate().init(get_middle_position(), get_middle_position() + 0.7 * Vector2(34, -20), 1.5, duration, true, clockwise, rotation_speed, 0.0, true))
+func rotating_orb_shield_attack(clockwise: bool, number_of_orbs: int = 3, distance: float = 20.0, angle_offset: float = 0.0, initial_wait_time: float = 0.0, duration: float = 6.0, rotation_speed: float = 300.0) -> void:
+	var fire := false
+	
+	for i in range(number_of_orbs):
+		var angle := angle_offset + i * 2 * PI / number_of_orbs - PI / 2
+		add_child(CERES_ROTATING_ORB.instantiate().init(get_middle_position(), get_middle_position() + distance * Vector2(cos(angle_offset + angle), sin(angle_offset + angle)), initial_wait_time, duration, not fire, clockwise, rotation_speed, 0.0, true))
+
+		fire = true
 
 func rotating_orb_attack(clockwise: bool, rotation_position: Vector2, rotation_increment_position: Vector2) -> void:
 	var fire := false
