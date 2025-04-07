@@ -1,7 +1,6 @@
 extends Area2D
 
 const SPEED = 130
-const STRENGTH = 4
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var effects_player: AnimationPlayer = $EffectsPlayer
@@ -12,6 +11,7 @@ const STRENGTH = 4
 
 var active: bool = false
 var direction := 0
+var strength := 4
 
 func stop_animation() -> void:
 	animation_player.play("RESET")
@@ -54,4 +54,4 @@ func _on_area_entered(area: Area2D) -> void:
 	var body := area.get_parent() # get the player
 	
 	if body == wind_spirit.player and wind_spirit.player.is_hurtable():
-		wind_spirit.player.hurt(STRENGTH)
+		wind_spirit.player.hurt(strength)

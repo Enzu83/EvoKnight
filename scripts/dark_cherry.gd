@@ -36,7 +36,6 @@ const SPEED = 130.0
 const JUMP_VELOCITY = -290.0
 const MAX_FALLING_VELOCITY = 450
 const MAX_JUMPS = 2 # Multiple jumps
-const STRENGTH = 3
 
 const EXP_DROP_VALUE = 5
 
@@ -52,6 +51,8 @@ var jumps := MAX_JUMPS # jumps left
 
 # stats
 var health: int
+var strength := 3
+
 
 # mirror boss specific variables
 
@@ -401,4 +402,4 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 
 	# hurt the player
 	if body == player and player.is_hurtable():
-		body.hurt(STRENGTH)
+		body.hurt(strength)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=4 uid="uid://npva5mv5cam3"]
+[gd_scene load_steps=101 format=4 uid="uid://npva5mv5cam3"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_4.gd" id="1_u23an"]
 [ext_resource type="AudioStream" uid="uid://cjcn1gqvr8ywi" path="res://assets/musics/mus_barren_valley.mp3" id="2_hxhsr"]
@@ -44,6 +44,7 @@
 [ext_resource type="PackedScene" uid="uid://cmvgap4pv4yl6" path="res://scenes/items/charged_slash_upgrade.tscn" id="40_rchqj"]
 [ext_resource type="PackedScene" uid="uid://bt4ro6tgqfelv" path="res://scenes/items/mana_upgrade.tscn" id="41_sonfl"]
 [ext_resource type="PackedScene" uid="uid://d0skf7nkoxsut" path="res://scenes/items/shield_upgrade.tscn" id="42_88bhc"]
+[ext_resource type="PackedScene" uid="uid://bvfb7w8s6wk0w" path="res://scenes/other/heart_spawner.tscn" id="45_8bdsu"]
 
 [sub_resource type="Animation" id="Animation_8w81k"]
 resource_name = "float"
@@ -553,6 +554,158 @@ size = Vector2(40, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gc3pd"]
 size = Vector2(28, 10)
+
+[sub_resource type="Animation" id="Animation_0p5so"]
+resource_name = "move"
+length = 3.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(15610, -1466), Vector2(15610, -1603)]
+}
+
+[sub_resource type="Animation" id="Animation_4bx7p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(15610, -1538)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sjf0w"]
+_data = {
+"RESET": SubResource("Animation_4bx7p"),
+"move": SubResource("Animation_0p5so")
+}
+
+[sub_resource type="Animation" id="Animation_37d35"]
+resource_name = "move"
+length = 3.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(15710, -1603), Vector2(15710, -1466)]
+}
+
+[sub_resource type="Animation" id="Animation_gn2d5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(15710, -1538)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q4bmv"]
+_data = {
+"RESET": SubResource("Animation_gn2d5"),
+"move": SubResource("Animation_37d35")
+}
+
+[sub_resource type="Animation" id="Animation_i6c0n"]
+resource_name = "move"
+length = 3.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(15866, -1603), Vector2(15866, -1466)]
+}
+
+[sub_resource type="Animation" id="Animation_4ibo3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(15866, -1538)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yahbs"]
+_data = {
+"RESET": SubResource("Animation_4ibo3"),
+"move": SubResource("Animation_i6c0n")
+}
+
+[sub_resource type="Animation" id="Animation_4m7j5"]
+resource_name = "move"
+length = 3.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(15966, -1466), Vector2(15966, -1603)]
+}
+
+[sub_resource type="Animation" id="Animation_hsygb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(15966, -1538)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_navdl"]
+_data = {
+"RESET": SubResource("Animation_hsygb"),
+"move": SubResource("Animation_4m7j5")
+}
 
 [node name="Level4" type="Node2D"]
 script = ExtResource("1_u23an")
@@ -2512,17 +2665,37 @@ shape = SubResource("RectangleShape2D_gc3pd")
 z_index = -1
 position = Vector2(15610, -1538)
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FarewellCeresBoss/LowerLeftPlatform"]
+libraries = {
+"": SubResource("AnimationLibrary_sjf0w")
+}
+
 [node name="LowerMiddleLeftPlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
 z_index = -1
 position = Vector2(15710, -1538)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FarewellCeresBoss/LowerMiddleLeftPlatform"]
+libraries = {
+"": SubResource("AnimationLibrary_q4bmv")
+}
 
 [node name="LowerMiddleRightPlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
 z_index = -1
 position = Vector2(15866, -1538)
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FarewellCeresBoss/LowerMiddleRightPlatform"]
+libraries = {
+"": SubResource("AnimationLibrary_yahbs")
+}
+
 [node name="LowerRightPlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
 z_index = -1
 position = Vector2(15966, -1538)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FarewellCeresBoss/LowerRightPlatform"]
+libraries = {
+"": SubResource("AnimationLibrary_navdl")
+}
 
 [node name="MiddleLeftPlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
 z_index = -1
@@ -2579,6 +2752,12 @@ position = Vector2(15787, -1486)
 
 [node name="ShieldUpgrade" parent="FarewellCeresBoss" instance=ExtResource("42_88bhc")]
 position = Vector2(15787, -1486)
+
+[node name="HeartSpawner" parent="FarewellCeresBoss" instance=ExtResource("45_8bdsu")]
+position = Vector2(15660, -1710)
+
+[node name="HeartSpawner2" parent="FarewellCeresBoss" instance=ExtResource("45_8bdsu")]
+position = Vector2(15916, -1710)
 
 [connection signal="area_entered" from="FarewellCeresBoss" to="FarewellCeresBoss" method="_on_area_entered"]
 [connection signal="timeout" from="FarewellCeresBoss/WavePhaseCooldown" to="FarewellCeresBoss" method="_on_wave_phase_cooldown_timeout"]

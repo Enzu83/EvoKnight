@@ -25,13 +25,15 @@ var initial_position: Vector2
 var target_position: Vector2
 var initial_wait_time: float
 var play_sound: bool
+var duration_time: float
 
 
-func init(initial_position_: Vector2, target_: Node2D, initial_wait_time_: float = 0.0, play_sound_: bool = true) -> Node2D:
+func init(initial_position_: Vector2, target_: Node2D, initial_wait_time_: float = 0.0, play_sound_: bool = true, duration_time_: float = 10.0) -> Node2D:
 	initial_position = initial_position_
 	target = target_
 	initial_wait_time = initial_wait_time_
 	play_sound = play_sound_
+	duration_time = duration_time_
 	
 	return self
 
@@ -46,7 +48,7 @@ func _physics_process(delta: float) -> void:
 	# fire only if ceres is in idle animation
 	if active \
 	and not fire:
-		duration.start()
+		duration.start(duration_time)
 		fire = true
 		animation_player.play("shoot")
 		slash_sound.play()
@@ -64,8 +66,9 @@ func _physics_process(delta: float) -> void:
 		
 		position += current_speed * delta
 	
-	# stop attacking if ceres is defeated
-	if ceres.state == ceres.State.Defeated:
+	# stop attacking if ceres is defeated or stalling
+	if ceres.state == ceres.State.Defeated \
+	or ceres.state == ceres.State.Stall:
 		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:

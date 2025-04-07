@@ -70,8 +70,9 @@ func _physics_process(delta: float) -> void:
 		
 		position += current_speed * delta
 	
-	# stop attacking if ceres is defeated
-	if ceres.state == ceres.State.Defeated:
+	# stop attacking if ceres is defeated or stalling
+	if ceres.state == ceres.State.Defeated \
+	or ceres.state == ceres.State.Stall:
 		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:

@@ -42,7 +42,7 @@ var state := State.Default # handle all states of the boos
 var anim := Anim.idle # handle the current animation to be played
 
 # stats
-var max_health := 250
+var max_health := 275
 
 var health := max_health
 var health_bar := HEALTH_BARS-1
@@ -136,10 +136,7 @@ func fainted() -> void:
 			health_bar -= 1
 			state = State.Stall
 			teleport_sound.play()
-
-			hurtbox.set_deferred("disabled", true)
-			hurt_invicibility_timer.start()
-			position.y -= 300 # hide from the player
+			position = Vector2(15788, -1850) # hide from the player
 			
 			phase += 1
 			last_action = -1
@@ -169,9 +166,9 @@ func handle_first_phase() -> void:
 			available_actions.append(i)
 	
 	var action: int = available_actions[randi_range(0, available_actions.size()-1)]
-	action = 2
+
 	# teleports at the center
-	# creates orbs around ceres
+	# shoots orbs around ceres
 	# moves toward one of the four corners
 	if action == 0:
 		action_teleport(Vector2(15788, -1540), 0.6, 0.2)
@@ -180,7 +177,7 @@ func handle_first_phase() -> void:
 		action_move(250.0, 1.5)
 	
 	# disapears
-	# creates falling orbs
+	# shoots falling orbs
 	# appears at the center
 	elif action == 1:
 		action_queue.append(["teleport_start"])
@@ -191,20 +188,67 @@ func handle_first_phase() -> void:
 		action_queue.append(["play_animation", "idle"])
 		action_queue.append(["wait", 1.5])
 	
-	# creates rotating orbs in the whole area
+	# shoots rotating orbs in the whole area
 	elif action == 2:
 		action_teleport(Vector2(15788, -1580), 0.6, 0.2)
 		action_rotating_orb_whole_area()
-		
+	
+	# shoots orbs around ceres
 	elif action == 3:
 		action_teleport(Vector2(15788, -1580), 0.6, 0.2)
-		action_queue.append(["circle_orb_attack", 6, 350.0])
+		action_queue.append(["circle_orb_attack", 11, 20.0, 0.0, 0.0, 350.0])
 		action_queue.append(["wait", 4.0])
 	
 	last_action = action
 
 func handle_second_phase() -> void:
-	pass
+	# choose an available action
+	var available_actions := []
+
+	for i in range(0, 4):
+		if i != last_action:
+			available_actions.append(i)
+	
+	var action: int = available_actions[randi_range(0, available_actions.size()-1)]
+
+	# shoots several series of orbs at the player
+	if action == 0:
+		action_teleport(Vector2(15788, -1580), 0.6, 0.2)
+		action_queue.append(["target_orbs_attack", 3, 32, 350.0, 0.0])
+		action_queue.append(["target_orbs_attack", 3, 48, 350.0, 0.05])
+		action_queue.append(["target_orbs_attack", 3, 64, 350.0, 0.1])
+		action_queue.append(["wait", 0.5])
+		action_queue.append(["target_orbs_attack", 3, 32.0, 350.0, 0.0])
+		action_queue.append(["target_orbs_attack", 3, 48.0, 350.0, 0.05])
+		action_queue.append(["target_orbs_attack", 3, 64.0, 350.0, 0.1])
+		action_queue.append(["wait", 0.5])
+		action_queue.append(["target_orbs_attack", 3, 32.0, 350.0, 0.0])
+		action_queue.append(["target_orbs_attack", 3, 48.0, 350.0, 0.05])
+		action_queue.append(["target_orbs_attack", 3, 64.0, 350.0, 0.1])
+		action_queue.append(["wait", 3.0])
+	
+	# shoots three circle orbs
+	# the second one has an angle offset
+	elif action == 1:
+		action_teleport(Vector2(15788, -1616), 0.6, 0.2)
+		action_queue.append(["circle_orb_attack", 12, 20.0, 0.0, 0.0, 300.0])
+		action_queue.append(["circle_orb_attack", 12, 36.0, PI / 24, 0.6, 300.0])
+		action_queue.append(["circle_orb_attack", 12, 52.0, 0.0, 1.2, 300.0])
+		action_queue.append(["wait", 5.3])
+	
+	elif action == 2:
+		action_teleport(Vector2(15788, -1680), 0.6, 0.2)
+		action_queue.append(["following_orb_attack", 0.0, 9.0])
+		action_queue.append(["wait", 2.5])
+		
+	elif action == 3:
+		action_teleport(Vector2(15788, -1616), 0.6, 0.2)
+		action_queue.append(["circle_orb_attack", 10, 20.0, 0.0, 0.0, 350.0])
+		action_queue.append(["left_horizontal_orb_attack", 7, 11, 6.0, 160.0])
+		action_queue.append(["right_horizontal_orb_attack", 7, 11, 6.0, 160.0])
+		action_queue.append(["wait", 5.0])
+	
+	last_action = action
 
 func handle_third_phase() -> void:
 	pass
@@ -282,12 +326,12 @@ func teleport_end(target_position: Vector2) -> void:
 	play_animation("teleport_end")
 	wait_timer.start(0.6) # time of the animation
 
-func circle_orb_attack(number_of_orbs: int = 1, speed: float = 300.0) -> void:
+func circle_orb_attack(number_of_orbs: int = 1, distance: float = 20.0, angle_offset: float = 0.0, initial_wait_time: float = 0.0, speed: float = 300.0) -> void:
 	var fire := false
 	
 	for i in range(number_of_orbs):
-		var angle := i * 2 * PI / number_of_orbs
-		add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + 20 * Vector2(cos(angle), sin(angle)), 0.0, not fire, 6.0, speed))
+		var angle := angle_offset + i * 2 * PI / number_of_orbs - PI / 2
+		add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + distance * Vector2(cos(angle_offset + angle), sin(angle_offset + angle)), initial_wait_time, not fire, 6.0, speed))
 
 		fire = true
 
@@ -301,27 +345,27 @@ func spaced_floor_orb_attack(begin: int = 0, end: int = 9) -> void:
 		)
 		fire = true
 
-func following_orb_attack() -> void:
-	add_child(CERES_FOLLOWING_ORB.instantiate().init(get_middle_position(), player))
+func following_orb_attack(initial_time: float, duration: float = 10.0) -> void:
+	add_child(CERES_FOLLOWING_ORB.instantiate().init(get_middle_position(), player, initial_time, true, duration))
 
-func left_horizontal_orb_attack(hole_begin: int, hole_end: int) -> void:
+func left_horizontal_orb_attack(hole_begin: int, hole_end: int, duration: float = 6.0, speed: float = 300.0) -> void:
 	var fire := false
 	
 	for i in range(17):
 		# spawn orbs everywhere except the hole area
 		if i < hole_begin or i > hole_end:
 			# only the first orb makes a sound
-			add_child(CERES_ORB.instantiate().init(Vector2(15568, -1736 + 16 * i), Vector2(15600, -1736 + 16 * i), 0, not fire))
+			add_child(CERES_ORB.instantiate().init(Vector2(15568, -1736 + 16 * i), Vector2(15600, -1736 + 16 * i), 0, not fire, duration, speed))
 			fire = true
 
-func right_horizontal_orb_attack(hole_begin: int, hole_end: int) -> void:
+func right_horizontal_orb_attack(hole_begin: int, hole_end: int, duration: float = 6.0, speed: float = 300.0) -> void:
 	var fire := false
 	
 	for i in range(17):
 		# spawn orbs everywhere except the hole area
 		if i < hole_begin or i > hole_end:
 			# only the first orb makes a sound
-			add_child(CERES_ORB.instantiate().init(Vector2(16008, -1736 + 16 * i), Vector2(15976, -1736 + 16 * i), 0, not fire))
+			add_child(CERES_ORB.instantiate().init(Vector2(16008, -1736 + 16 * i), Vector2(15976, -1736 + 16 * i), 0, not fire, duration, speed))
 			fire = true
 
 func rotating_orb_shield_attack(clockwise: bool, duration: float, rotation_speed: float = 300.0) -> void:
@@ -336,7 +380,7 @@ func rotating_orb_attack(clockwise: bool, rotation_position: Vector2, rotation_i
 		add_child(CERES_ROTATING_ORB.instantiate().init(
 			get_middle_position(), # spawning position
 			get_middle_position() + rotation_position + i * rotation_increment_position, # rotation starting position
-			1.5 + 0.05 * i, # wait time before moving at the beginning
+			1.0 + 0.05 * i, # wait time before moving at the beginning
 			10, # duration
 			not fire,  # sound or not
 			clockwise, # rotation direction
@@ -344,6 +388,43 @@ func rotating_orb_attack(clockwise: bool, rotation_position: Vector2, rotation_i
 			2.0 - 0.05 * i) # wait before rotation (inverse of starting wait time to time all the orbs)
 		)
 		fire = true
+
+func target_orbs_attack(semi_length: int, max_distance: float = 40.0, speed: float = 300.0, initial_wait_time: float = 0.0) -> void:
+	# delta_position length is bounded
+	var delta_position := player.get_middle_position() - get_middle_position()
+	
+	if delta_position.length() > max_distance:
+		delta_position = max_distance * delta_position.normalized()
+	
+	# angle of the orb targeting directly the player
+	var default_angle := atan2(delta_position.y, delta_position.x)
+	
+	# middle orb
+	add_child(CERES_ORB.instantiate().init(get_middle_position(), get_middle_position() + delta_position, initial_wait_time, true, 6.0, speed))
+	
+	# side orbs
+	for i in range(semi_length):
+		var angle := (i + 1) * PI / 18
+		
+		add_child(CERES_ORB.instantiate().init(
+			get_middle_position(),
+			# position + orientatation
+			get_middle_position() + delta_position.length() * Vector2(cos(default_angle - angle), sin(default_angle - angle)), 
+			initial_wait_time, # initial_wait_time
+			false, # no sound
+			6.0, # duration
+			speed) # orb speed
+		)
+		
+		add_child(CERES_ORB.instantiate().init(
+			get_middle_position(),
+			# position + orientatation
+			get_middle_position() + delta_position.length() * Vector2(cos(default_angle + angle), sin(default_angle + angle)),
+			initial_wait_time, # initial_wait_time
+			false, # no sound
+			6.0, # duration
+			speed) # orb speed
+		)
 
 func spawn_clone(clone_position: Vector2) -> void:
 	add_child(FAREWELL_CERES_CLONE.instantiate().init(clone_position))
@@ -366,6 +447,7 @@ func _on_phantom_cooldown_timeout() -> void:
 
 func _on_test_orb_timeout() -> void:
 	pass
+	#target_orbs_attack(3)
 	#circle_orb_attack()
 	#spaced_floor_orb_attack()
 	#left_horizontal_orb_attack(6, 9)

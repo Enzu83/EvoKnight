@@ -2,7 +2,6 @@ extends CharacterBody2D
 
 const SPEED = 35
 const MAX_FALLING_VELOCITY = 450
-const STRENGTH = 4
 
 const DROP_RATE = 1
 const HEAL_DROP_VALUE = 4
@@ -25,6 +24,7 @@ const EXP_DROP_VALUE = 6
 
 var max_health := 10
 var health := max_health
+var strength := 4
 var hit := false # enemy stun if hit by an attack, can't chase during this period
 
 @export var flip_sprite := false
@@ -103,7 +103,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 
 	# hurt the player
 	if body == player and player.is_hurtable():
-		body.hurt(STRENGTH)
+		body.hurt(strength)
 
 func _on_hurt_invicibility_timer_timeout() -> void:
 	hit = false

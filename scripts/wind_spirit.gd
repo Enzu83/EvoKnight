@@ -1,8 +1,6 @@
 extends Area2D
 
 const SPEED = 70
-const STRENGTH = 2 # on collision
-const MAGIC_STRENGTH = 5 # with magic attack
 
 const DROP_RATE = 1
 const HEAL_DROP_VALUE = 4
@@ -29,6 +27,8 @@ var chase := false # enable chasing the player
 var target: CharacterBody2D = null # chase target
 var max_health := 8
 var health := max_health
+var strength = 2 # on collision
+
 var hit := false # enemy stun if hit by an attack, can't chase during this period
 var target_position := Vector2.ZERO
 var can_fire = false
@@ -41,6 +41,7 @@ func _ready() -> void:
 	add_to_group("enemies")
 	can_fire = false
 	animated_sprite.flip_h = flip_sprite
+	tornado.strength = 2 * strength
 
 func _physics_process(delta: float) -> void:
 	if Global.player != null:
@@ -63,7 +64,7 @@ func _physics_process(delta: float) -> void:
 			if position.x >= target_position.x:
 				target_position.x += GAP_DISTANCE
 			else:
-				target_position.x -= GAP_DISTANCE	
+				target_position.x -= GAP_DISTANCE
 			
 			# cast the spell if the positioning is correct
 			if (position - target_position).length() < 16:
@@ -81,7 +82,7 @@ func _on_area_entered(area: Area2D) -> void:
 
 	# hurt the player
 	if body == player and player.is_hurtable():
-		body.hurt(STRENGTH)
+		body.hurt(strength)
 
 func hurt(damage: int, _attack: Area2D) -> bool:
 	if health > damage:

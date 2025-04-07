@@ -1,7 +1,6 @@
 extends Area2D
 
 const SPEED = 80
-const STRENGTH = 3 # damage caused by the enemy
 
 const DROP_RATE = 1
 const HEAL_DROP_VALUE = 4
@@ -22,6 +21,8 @@ var chase := false # enable chasing the player
 var target: CharacterBody2D = null # chase target
 var max_health := 12
 var health := max_health
+var strength := 3 # damage caused by the enemy
+
 var hit := false # enemy stun if hit by an attack, can't chase during this period
 
 @export var flip_sprite := false
@@ -54,7 +55,7 @@ func _on_area_entered(area: Area2D) -> void:
 
 	# hurt the player
 	if body == player and player.is_hurtable():
-		body.hurt(STRENGTH)
+		body.hurt(strength)
 
 func hurt(damage: int, _attack: Area2D) -> bool:
 	if health > damage:

@@ -1,7 +1,6 @@
 extends Area2D
 
 const SPEED = 150
-const STRENGTH = 4 # damage caused by the enemy
 
 const EXP_DROP_VALUE = 3
 
@@ -37,6 +36,7 @@ var attack_wait := false # can attack
 
 var max_health := 140
 var health := max_health
+var strength = 4 # damage caused by the enemy
 var hit := false # enemy stun if hit by an attack, can't chase during this period
 
 @export var boss := false
@@ -110,7 +110,7 @@ func _on_area_entered(area: Area2D) -> void:
 
 	# hurt the player
 	if body == player and player.is_hurtable():
-		body.hurt(STRENGTH)
+		body.hurt(strength)
 
 func hurt(damage: int, _attack: Area2D) -> bool:
 	if health > damage:
