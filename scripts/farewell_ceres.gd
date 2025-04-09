@@ -42,7 +42,7 @@ var state := State.Default # handle all states of the boos
 var anim := Anim.idle # handle the current animation to be played
 
 # stats
-var max_health := 1#275
+var max_health := 230
 
 var health := max_health
 var health_bar := HEALTH_BARS-1
@@ -210,7 +210,7 @@ func handle_second_phase() -> void:
 			available_actions.append(i)
 	
 	var action: int = available_actions[randi_range(0, available_actions.size()-1)]
-
+	
 	# shoots several series of orbs at the player
 	if action == 0:
 		action_teleport(Vector2(15788, -1580), 0.6, 0.2)
@@ -251,7 +251,53 @@ func handle_second_phase() -> void:
 	last_action = action
 
 func handle_third_phase() -> void:
-	pass
+	# choose an available action
+	var available_actions := []
+
+	for i in range(0, 4):
+		if i != last_action:
+			available_actions.append(i)
+	
+	var action: int = available_actions[randi_range(0, available_actions.size()-1)]
+
+	# shoots several series of orbs at the player
+	if action == 0:
+		action_teleport(Vector2(15788, -1580), 0.6, 0.2)
+		action_queue.append(["target_orbs_attack", 3, 32, 350.0, 0.0])
+		action_queue.append(["target_orbs_attack", 3, 48, 350.0, 0.05])
+		action_queue.append(["target_orbs_attack", 3, 64, 350.0, 0.1])
+		action_queue.append(["wait", 0.5])
+		action_queue.append(["target_orbs_attack", 3, 32.0, 350.0, 0.0])
+		action_queue.append(["target_orbs_attack", 3, 48.0, 350.0, 0.05])
+		action_queue.append(["target_orbs_attack", 3, 64.0, 350.0, 0.1])
+		action_queue.append(["wait", 0.5])
+		action_queue.append(["target_orbs_attack", 3, 32.0, 350.0, 0.0])
+		action_queue.append(["target_orbs_attack", 3, 48.0, 350.0, 0.05])
+		action_queue.append(["target_orbs_attack", 3, 64.0, 350.0, 0.1])
+		action_queue.append(["wait", 3.0])
+	
+	# shoots three circle orbs
+	# the second one has an angle offset
+	elif action == 1:
+		action_teleport(Vector2(15788, -1616), 0.6, 0.2)
+		action_queue.append(["circle_orb_attack", 12, 20.0, 0.0, 0.0, 300.0])
+		action_queue.append(["circle_orb_attack", 12, 36.0, PI / 24, 0.6, 300.0])
+		action_queue.append(["circle_orb_attack", 12, 52.0, 0.0, 1.2, 300.0])
+		action_queue.append(["wait", 5.3])
+	
+	elif action == 2:
+		action_teleport(Vector2(15788, -1680), 0.6, 0.2)
+		action_queue.append(["following_orb_attack", 0.0, 9.0])
+		action_queue.append(["wait", 2.5])
+		
+	elif action == 3:
+		action_teleport(Vector2(15788, -1616), 0.6, 0.2)
+		action_queue.append(["circle_orb_attack", 10, 20.0, 0.0, 0.0, 350.0])
+		action_queue.append(["left_horizontal_orb_attack", 7, 11, 6.0, 160.0])
+		action_queue.append(["right_horizontal_orb_attack", 7, 11, 6.0, 160.0])
+		action_queue.append(["wait", 5.0])
+	
+	last_action = action
 
 func handle_fourth_phase() -> void:
 	pass
@@ -388,7 +434,7 @@ func rotating_orb_attack(clockwise: bool, rotation_position: Vector2, rotation_i
 			10, # duration
 			not fire,  # sound or not
 			clockwise, # rotation direction
-			60, # speed of the rotation
+			50, # speed of the rotation
 			2.0 - 0.05 * i) # wait before rotation (inverse of starting wait time to time all the orbs)
 		)
 		fire = true

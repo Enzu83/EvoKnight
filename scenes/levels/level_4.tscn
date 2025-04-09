@@ -41,9 +41,9 @@
 [ext_resource type="Script" path="res://scripts/farewell_ceres_boss.gd" id="36_xdbpi"]
 [ext_resource type="PackedScene" uid="uid://cvyxcdvny1nsi" path="res://scenes/chars/farewell_ceres.tscn" id="37_m755m"]
 [ext_resource type="PackedScene" uid="uid://dajhqbi4b6b3o" path="res://scenes/platforms/fake_wall.tscn" id="38_hgh1n"]
-[ext_resource type="PackedScene" uid="uid://cmvgap4pv4yl6" path="res://scenes/items/charged_slash_upgrade.tscn" id="40_rchqj"]
+[ext_resource type="PackedScene" uid="uid://cmvgap4pv4yl6" path="res://scenes/items/charge_upgrade.tscn" id="40_rchqj"]
 [ext_resource type="PackedScene" uid="uid://bt4ro6tgqfelv" path="res://scenes/items/mana_upgrade.tscn" id="41_sonfl"]
-[ext_resource type="PackedScene" uid="uid://d0skf7nkoxsut" path="res://scenes/items/shield_upgrade.tscn" id="42_88bhc"]
+[ext_resource type="PackedScene" uid="uid://d0skf7nkoxsut" path="res://scenes/items/upgrade.tscn" id="42_88bhc"]
 [ext_resource type="PackedScene" uid="uid://bvfb7w8s6wk0w" path="res://scenes/other/heart_spawner.tscn" id="45_8bdsu"]
 
 [sub_resource type="Animation" id="Animation_8w81k"]
@@ -555,6 +555,21 @@ size = Vector2(40, 30)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gc3pd"]
 size = Vector2(28, 10)
 
+[sub_resource type="Animation" id="Animation_4bx7p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(15610, -1538)]
+}
+
 [sub_resource type="Animation" id="Animation_0p5so"]
 resource_name = "move"
 length = 3.0
@@ -572,7 +587,13 @@ tracks/0/keys = {
 "values": [Vector2(15610, -1466), Vector2(15610, -1603)]
 }
 
-[sub_resource type="Animation" id="Animation_4bx7p"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sjf0w"]
+_data = {
+"RESET": SubResource("Animation_4bx7p"),
+"move": SubResource("Animation_0p5so")
+}
+
+[sub_resource type="Animation" id="Animation_gn2d5"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -584,13 +605,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(15610, -1538)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_sjf0w"]
-_data = {
-"RESET": SubResource("Animation_4bx7p"),
-"move": SubResource("Animation_0p5so")
+"values": [Vector2(15710, -1538)]
 }
 
 [sub_resource type="Animation" id="Animation_37d35"]
@@ -610,7 +625,13 @@ tracks/0/keys = {
 "values": [Vector2(15710, -1603), Vector2(15710, -1466)]
 }
 
-[sub_resource type="Animation" id="Animation_gn2d5"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q4bmv"]
+_data = {
+"RESET": SubResource("Animation_gn2d5"),
+"move": SubResource("Animation_37d35")
+}
+
+[sub_resource type="Animation" id="Animation_4ibo3"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -622,13 +643,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(15710, -1538)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_q4bmv"]
-_data = {
-"RESET": SubResource("Animation_gn2d5"),
-"move": SubResource("Animation_37d35")
+"values": [Vector2(15866, -1538)]
 }
 
 [sub_resource type="Animation" id="Animation_i6c0n"]
@@ -648,7 +663,13 @@ tracks/0/keys = {
 "values": [Vector2(15866, -1603), Vector2(15866, -1466)]
 }
 
-[sub_resource type="Animation" id="Animation_4ibo3"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yahbs"]
+_data = {
+"RESET": SubResource("Animation_4ibo3"),
+"move": SubResource("Animation_i6c0n")
+}
+
+[sub_resource type="Animation" id="Animation_hsygb"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -660,13 +681,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(15866, -1538)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_yahbs"]
-_data = {
-"RESET": SubResource("Animation_4ibo3"),
-"move": SubResource("Animation_i6c0n")
+"values": [Vector2(15966, -1538)]
 }
 
 [sub_resource type="Animation" id="Animation_4m7j5"]
@@ -684,21 +699,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(15966, -1466), Vector2(15966, -1603)]
-}
-
-[sub_resource type="Animation" id="Animation_hsygb"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(15966, -1538)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_navdl"]
@@ -2750,7 +2750,7 @@ position = Vector2(15787, -1486)
 [node name="ManaUpgrade" parent="FarewellCeresBoss" instance=ExtResource("41_sonfl")]
 position = Vector2(15787, -1486)
 
-[node name="ShieldUpgrade" parent="FarewellCeresBoss" instance=ExtResource("42_88bhc")]
+[node name="Upgrade" parent="FarewellCeresBoss" instance=ExtResource("42_88bhc")]
 position = Vector2(15787, -1486)
 
 [node name="HeartSpawner" parent="FarewellCeresBoss" instance=ExtResource("45_8bdsu")]

@@ -96,18 +96,20 @@ var level_stats_increase := {}
 
 var dash_enabled := true
 
-var mana_enabled := true
-var max_mana: int
-var mana: int
-var mana_recovery_rate := 0
-
 var strength: int
 var defense: int
 
+var mana_enabled := false
+var max_mana: int
+var mana: int
+var mana_recovery_rate := 4
+
+var magic_slash_enabled := false
+
 var shield_enabled := false # activate the shield by maintaining down
 var shield_count := 0 # count the number of frames where down button is pressed while crouched
-var shield_max := 60 # time needed for big slash activation
-var shield_mana_consumption := 15 # mana drained by shield each frame
+var shield_max := 45 # time needed for big slash activation
+var shield_mana_consumption := 20 # mana drained by shield each frame
 
 var bigger_slash := false # bigger slash ability flag
 var bigger_slash_count := 0 # count the number of frames where the slash button is pressed
@@ -270,7 +272,7 @@ func handle_slash() -> void:
 		# check for bigger slash
 		if bigger_slash and bigger_slash_count == bigger_slash_max:
 			basic_slash.size = 2
-			basic_slash.multiplier = 1.5
+			basic_slash.multiplier = 3
 
 		# direction based slash
 		if Input.is_action_pressed("up"):
@@ -289,7 +291,7 @@ func handle_slash() -> void:
 			basic_slash.start("right")
 	
 	# magic slash
-	elif mana_enabled and Input.is_action_just_pressed("magic_slash") \
+	elif mana_enabled and magic_slash_enabled and Input.is_action_just_pressed("magic_slash") \
 	and (state == State.Default or state == State.Dashing) \
 	and not magic_slash.active \
 	and mana >= MAGIC_SLASH_MANA:
@@ -540,12 +542,16 @@ func init_info() -> void:
 	mana = Global.player_mana
 	mana_recovery_rate = Global.player_mana_recovery_rate
 	
+	magic_slash_enabled = Global.player_magic_slash_enabled
+	
 	strength = Global.player_strength
 	defense = Global.player_defense
 	
 	shield_enabled = Global.player_shield_enabled
+	shield_max = Global.player_shield_max
 	
 	bigger_slash = Global.player_bigger_slash
+	bigger_slash_max = Global.player_bigger_slash_max
 	
 	# restore health of the player if the player fainted
 	if health == 0:

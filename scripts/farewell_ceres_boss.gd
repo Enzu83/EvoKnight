@@ -118,7 +118,6 @@ func _physics_process(_delta: float) -> void:
 		update_state()
 		handle_enemy_wave()
 		
-		print(state)
 		#print(state, ", ", wave_phase, ", ", dark_cherry_spawn_counter, ", ", can_change_wave_phase)
 
 func update_state() -> void:
@@ -222,7 +221,7 @@ func advance_wave_phase() -> void:
 		
 		# add spining orb around ceres for phase 3 and 4
 		if farewell_ceres.phase >= 2:
-			farewell_ceres.action_queue.append(["rotating_orb_shield_attack", true, 1, 28, 0.0, 0.0, -1.0, 350.0])
+			farewell_ceres.action_queue.append(["rotating_orb_shield_attack", true, 1, 28, 0.0, 0.0, -1.0, 300.0])
 
 func spawn_enemy(mob_name: String, spawn_position: Vector2, flip_sprite: bool, max_health: int, strength: int, delay: float) -> void:
 	var mob_spawner = MOB_SPAWNER.instantiate()

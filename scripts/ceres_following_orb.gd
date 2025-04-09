@@ -1,7 +1,7 @@
 extends Area2D
 
 const SPEED = 300
-const STRENGTH = 6
+const STRENGTH = 5
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var slash_sound: AudioStreamPlayer = $SlashSound

@@ -25,7 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://cvx745hhmp0k6" path="res://scenes/other/kill_zone.tscn" id="15_2ddn1"]
 [ext_resource type="PackedScene" uid="uid://cvvewevudo2kf" path="res://scenes/other/hud.tscn" id="16_yluep"]
 [ext_resource type="PackedScene" uid="uid://cvmw3fdnu5d7w" path="res://scenes/other/end_of_level.tscn" id="17_0d8ml"]
-[ext_resource type="PackedScene" uid="uid://d0skf7nkoxsut" path="res://scenes/items/shield_upgrade.tscn" id="18_6keif"]
+[ext_resource type="PackedScene" uid="uid://ehpirw61curi" path="res://scenes/items/health_upgrade.tscn" id="18_efw3h"]
 [ext_resource type="PackedScene" uid="uid://ci5kax7l6j67m" path="res://scenes/items/winged_golden_strawberry.tscn" id="18_eudrs"]
 [ext_resource type="PackedScene" uid="uid://dc0vyw5sccqr7" path="res://scenes/items/big_heart.tscn" id="19_5nanb"]
 [ext_resource type="PackedScene" uid="uid://b1qsksiagp7rj" path="res://scenes/fx/electric_arc/electric_arc.tscn" id="19_a7tjk"]
@@ -714,7 +714,7 @@ position = Vector2(4724, -1008)
 [node name="BigHeart" parent="Items" instance=ExtResource("19_5nanb")]
 position = Vector2(3797, -210)
 
-[node name="ShieldUpgrade" parent="Items" instance=ExtResource("18_6keif")]
+[node name="HealthUpgrade" parent="Items" instance=ExtResource("18_efw3h")]
 position = Vector2(4321, -502)
 
 [node name="Enemies" type="Node2D" parent="."]

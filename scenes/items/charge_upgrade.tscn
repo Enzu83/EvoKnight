@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://cmvgap4pv4yl6"]
 
-[ext_resource type="Script" path="res://scripts/charged_slash_upgrade.gd" id="1_cpicj"]
+[ext_resource type="Script" path="res://scripts/charge_upgrade.gd" id="1_cpicj"]
 [ext_resource type="Texture2D" uid="uid://c2ct4cr145qyp" path="res://assets/sprites/items/spr_big_heart.png" id="2_a774h"]
 [ext_resource type="AudioStream" uid="uid://cn7u0204ntghf" path="res://assets/sfx/snd_big_heart.wav" id="3_jww5q"]
 
@@ -200,7 +200,7 @@ _data = {
 "pickup": SubResource("Animation_kkw4f")
 }
 
-[node name="ChargedSlashUpgrade" type="Area2D"]
+[node name="ChargeUpgrade" type="Area2D"]
 collision_layer = 0
 collision_mask = 10
 script = ExtResource("1_cpicj")

@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://ocxwwmisw783" path="res://assets/sfx/snd_mana_orb.wav" id="3_ss6ai"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dl5l4"]
-radius = 8.0
+radius = 6.0
 
 [sub_resource type="Animation" id="Animation_owfc3"]
 length = 0.001
@@ -31,7 +31,31 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [8.0]
+"values": [6.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_11b41"]

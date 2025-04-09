@@ -48,7 +48,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemies"):
-		area.hurt(2 * (STRENGTH + player.strength), self)
+		area.hurt(3 * (STRENGTH + player.strength), self)
 
 func _on_duration_timeout() -> void:
 	animation_player.play("fade_out")

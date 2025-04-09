@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://bxocq63khh627"]
+
+[ext_resource type="Script" path="res://scripts/body_hurtbox.gd" id="1_ftgql"]
+[ext_resource type="AudioStream" uid="uid://ddtibw10i6qus" path="res://assets/sfx/snd_ceres_hurt.wav" id="2_o2t1t"]
+[ext_resource type="AudioStream" uid="uid://8qw2745bfbro" path="res://assets/sfx/snd_ceres_death.wav" id="3_7pnfa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_884ub"]
+size = Vector2(6, 16)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mpufq"]
+radius = 4.0
+height = 24.0
+
+[node name="Reno" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="WallCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_884ub")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+z_index = 1
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_ftgql")
+
+[node name="Hurtbox" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -14)
+shape = SubResource("CapsuleShape2D_mpufq")
+
+[node name="HurtInvicibilityTimer" type="Timer" parent="Hurtbox"]
+wait_time = 0.4
+one_shot = true
+
+[node name="HurtSound" type="AudioStreamPlayer" parent="Hurtbox"]
+stream = ExtResource("2_o2t1t")
+bus = &"SFX"
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="Hurtbox"]
+stream = ExtResource("3_7pnfa")
+bus = &"SFX"

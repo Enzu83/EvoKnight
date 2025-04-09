@@ -88,12 +88,16 @@ var player_max_mana := 400
 var player_mana := 0
 var player_mana_recovery_rate := 0
 
+var player_magic_slash_enabled := false
+
 var player_strength := 1
 var player_defense := 0
 
 var player_shield_enabled := false
+var player_shield_max := 45
 
 var player_bigger_slash := false
+var player_bigger_slash_max := 90
 
 # player upgrades per level - check for pick up
 var level_upgrade: Array
@@ -116,6 +120,9 @@ var dash_block_activated := false
 # boss defeated
 var big_bat_defeated := false
 var ceres_defeated := false
+
+# mana orb collected
+var mana_orb_collected := false
 
 func _ready() -> void:
 	add_child(pause_menu)
@@ -170,17 +177,21 @@ func init_player_stats() -> void:
 
 	player_dash_enabled = true
 
-	player_mana_enabled = true
+	player_mana_enabled = false
 	player_max_mana = 400
 	player_mana = 0
-	player_mana_recovery_rate = 0
+	player_mana_recovery_rate = 4
+	
+	player_magic_slash_enabled = false
 
 	player_strength = 1
 	player_defense = 0
 	
 	player_shield_enabled = false
+	player_shield_max = 45
 	
 	player_bigger_slash = false
+	player_bigger_slash_max = 90
 
 func init_level_upgrade() -> void:
 	level_upgrade.resize(level_paths.size())
@@ -281,8 +292,8 @@ func get_collected_upgrades() -> int:
 	return collected_upgrades
 
 func get_total_upgrades() -> int:
-	# one per level - 4 levels in total
-	return 4
+	# one per level - 3 levels in total (excluding farewell)
+	return 3
 
 func collect_level_upgrade() -> void:
 	level_upgrade[current_level] = true
@@ -356,13 +367,17 @@ func store_player_info() -> void:
 	player_max_mana = player.max_mana
 	player_mana = player.mana
 	player_mana_recovery_rate = player.mana_recovery_rate
+	
+	player_magic_slash_enabled = player.magic_slash_enabled
 
 	player_strength = player.strength
 	player_defense = player.defense
 	
 	player_shield_enabled = player.shield_enabled
+	player_shield_max = player.shield_max
 	
 	player_bigger_slash = player.bigger_slash
+	player_bigger_slash_max = player.bigger_slash_max
 
 func create_heart_drop(heal_value: int,initial_position: Vector2, initial_velocity: Vector2) -> void:
 	var heart_drop: CharacterBody2D = heart_drop_scene.instantiate().init(heal_value, initial_position, initial_velocity)

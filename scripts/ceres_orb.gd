@@ -1,6 +1,6 @@
 extends Area2D
 
-const STRENGTH = 7
+const STRENGTH = 6
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var slash_sound: AudioStreamPlayer = $SlashSound
