@@ -94,7 +94,7 @@ var player_strength := 1
 var player_defense := 0
 
 var player_shield_enabled := false
-var player_shield_max := 45
+var player_shield_max := 60
 
 var player_bigger_slash := false
 var player_bigger_slash_max := 90

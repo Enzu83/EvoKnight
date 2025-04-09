@@ -1,4 +1,4 @@
-[gd_scene load_steps=101 format=4 uid="uid://npva5mv5cam3"]
+[gd_scene load_steps=103 format=4 uid="uid://npva5mv5cam3"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_4.gd" id="1_u23an"]
 [ext_resource type="AudioStream" uid="uid://cjcn1gqvr8ywi" path="res://assets/musics/mus_barren_valley.mp3" id="2_hxhsr"]
@@ -45,6 +45,8 @@
 [ext_resource type="PackedScene" uid="uid://bt4ro6tgqfelv" path="res://scenes/items/mana_upgrade.tscn" id="41_sonfl"]
 [ext_resource type="PackedScene" uid="uid://d0skf7nkoxsut" path="res://scenes/items/upgrade.tscn" id="42_88bhc"]
 [ext_resource type="PackedScene" uid="uid://bvfb7w8s6wk0w" path="res://scenes/other/heart_spawner.tscn" id="45_8bdsu"]
+[ext_resource type="PackedScene" uid="uid://bl5lwkiegxvn6" path="res://scenes/items/mana_orb.tscn" id="46_j620j"]
+[ext_resource type="PackedScene" uid="uid://ehpirw61curi" path="res://scenes/items/health_upgrade.tscn" id="47_idhmt"]
 
 [sub_resource type="Animation" id="Animation_8w81k"]
 resource_name = "float"
@@ -2751,13 +2753,27 @@ position = Vector2(15787, -1486)
 position = Vector2(15787, -1486)
 
 [node name="Upgrade" parent="FarewellCeresBoss" instance=ExtResource("42_88bhc")]
-position = Vector2(15787, -1486)
+position = Vector2(15787, -1485.98)
+
+[node name="Upgrade2" parent="FarewellCeresBoss" instance=ExtResource("42_88bhc")]
+position = Vector2(15787, -1485.98)
+upgrade = 1
+
+[node name="Upgrade3" parent="FarewellCeresBoss" instance=ExtResource("42_88bhc")]
+position = Vector2(15787, -1485.98)
+upgrade = 2
 
 [node name="HeartSpawner" parent="FarewellCeresBoss" instance=ExtResource("45_8bdsu")]
 position = Vector2(15660, -1722)
 
 [node name="HeartSpawner2" parent="FarewellCeresBoss" instance=ExtResource("45_8bdsu")]
 position = Vector2(15916, -1722)
+
+[node name="ManaOrb" parent="FarewellCeresBoss" instance=ExtResource("46_j620j")]
+position = Vector2(15787, -1486)
+
+[node name="HealthUpgrade" parent="FarewellCeresBoss" instance=ExtResource("47_idhmt")]
+position = Vector2(15788, -1486)
 
 [connection signal="area_entered" from="FarewellCeresBoss" to="FarewellCeresBoss" method="_on_area_entered"]
 [connection signal="timeout" from="FarewellCeresBoss/WavePhaseCooldown" to="FarewellCeresBoss" method="_on_wave_phase_cooldown_timeout"]

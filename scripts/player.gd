@@ -108,12 +108,12 @@ var magic_slash_enabled := false
 
 var shield_enabled := false # activate the shield by maintaining down
 var shield_count := 0 # count the number of frames where down button is pressed while crouched
-var shield_max := 45 # time needed for big slash activation
+var shield_max: int # time needed for big slash activation
 var shield_mana_consumption := 20 # mana drained by shield each frame
 
 var bigger_slash := false # bigger slash ability flag
 var bigger_slash_count := 0 # count the number of frames where the slash button is pressed
-var bigger_slash_max := 90 # time needed for big slash activation
+var bigger_slash_max: int # time needed for big slash activation
 
 var ability_disabled := false # flag to check if the player had their abilities disabled by something
 

@@ -42,14 +42,14 @@ var state := State.Default # handle all states of the boos
 var anim := Anim.idle # handle the current animation to be played
 
 # stats
-var max_health := 230
+var max_health := 250
 
 var health := max_health
 var health_bar := HEALTH_BARS-1
 
 # boss variables
 var active := false
-var phase := 0
+var phase := 1
 
 var move_positions := [
 	Vector2(15916, -1614),
@@ -197,7 +197,7 @@ func handle_first_phase() -> void:
 	elif action == 3:
 		action_teleport(Vector2(15788, -1580), 0.6, 0.2)
 		action_queue.append(["circle_orb_attack", 11, 20.0, 0.0, 0.0, 350.0])
-		action_queue.append(["wait", 4.0])
+		action_queue.append(["wait", 3.0])
 	
 	last_action = action
 
@@ -246,7 +246,7 @@ func handle_second_phase() -> void:
 		action_queue.append(["circle_orb_attack", 10, 20.0, 0.0, 0.0, 350.0])
 		action_queue.append(["left_horizontal_orb_attack", 7, 11, 6.0, 160.0])
 		action_queue.append(["right_horizontal_orb_attack", 7, 11, 6.0, 160.0])
-		action_queue.append(["wait", 5.0])
+		action_queue.append(["wait", 4.0])
 	
 	last_action = action
 
@@ -333,7 +333,7 @@ func action_rotating_orb_whole_area() -> void:
 	action_queue.append(["rotating_orb_attack", false, Vector2(0, -32), Vector2(0, -16)])
 	action_queue.append(["rotating_orb_attack", false, Vector2(-32, 0), Vector2(-16, 0)])
 	action_queue.append(["rotating_orb_attack", false, Vector2(32, 0), Vector2(16, 0)])
-	action_queue.append(["wait", 11.5])
+	action_queue.append(["wait", 10.5])
 
 func wait(duration: float) -> void:
 	state = State.Action
@@ -439,12 +439,9 @@ func rotating_orb_attack(clockwise: bool, rotation_position: Vector2, rotation_i
 		)
 		fire = true
 
-func target_orbs_attack(semi_length: int, max_distance: float = 40.0, speed: float = 300.0, initial_wait_time: float = 0.0) -> void:
+func target_orbs_attack(semi_length: int, distance: float = 40.0, speed: float = 300.0, initial_wait_time: float = 0.0) -> void:
 	# delta_position length is bounded
-	var delta_position := player.get_middle_position() - get_middle_position()
-	
-	if delta_position.length() > max_distance:
-		delta_position = max_distance * delta_position.normalized()
+	var delta_position := distance *(player.get_middle_position() - get_middle_position()).normalized()
 	
 	# angle of the orb targeting directly the player
 	var default_angle := atan2(delta_position.y, delta_position.x)
