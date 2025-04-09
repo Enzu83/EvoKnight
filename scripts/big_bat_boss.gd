@@ -16,6 +16,8 @@ extends Area2D
 
 @onready var large_platform: AnimatableBody2D = $LargePlatform
 
+const UPGRADE = preload("res://scenes/items/upgrade.tscn")
+
 func _process(_delta: float) -> void:
 	# remove the node if big bat is killed
 	if not is_instance_valid(big_bat):
@@ -23,6 +25,7 @@ func _process(_delta: float) -> void:
 		boss_music.stop()
 		music.play()
 		Global.big_bat_defeated = true
+		get_parent().add_child(UPGRADE.instantiate().init(0, Vector2(2720, -300), Vector2(2720, -320))) # spell
 	
 	if Global.big_bat_defeated:
 		queue_free()

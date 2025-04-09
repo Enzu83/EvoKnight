@@ -49,7 +49,7 @@ var health_bar := HEALTH_BARS-1
 
 # boss variables
 var active := false
-var phase := 1
+var phase := 0
 
 var move_positions := [
 	Vector2(15916, -1614),

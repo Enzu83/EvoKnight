@@ -16,8 +16,8 @@
 [ext_resource type="PackedScene" uid="uid://c27tot3rib7r5" path="res://scenes/chars/cloporte.tscn" id="11_ugrj7"]
 [ext_resource type="PackedScene" uid="uid://cf8j7ywt5hk2k" path="res://scenes/chars/bat.tscn" id="12_c1aet"]
 [ext_resource type="PackedScene" uid="uid://dc0vyw5sccqr7" path="res://scenes/items/big_heart.tscn" id="12_kjekj"]
+[ext_resource type="PackedScene" uid="uid://bt4ro6tgqfelv" path="res://scenes/items/mana_upgrade.tscn" id="13_6yfrs"]
 [ext_resource type="PackedScene" uid="uid://dwitea1wpbdjp" path="res://scenes/chars/player.tscn" id="13_xt3i8"]
-[ext_resource type="PackedScene" uid="uid://cmvgap4pv4yl6" path="res://scenes/items/charge_upgrade.tscn" id="13_ypv0m"]
 [ext_resource type="PackedScene" uid="uid://c0q4ajyur6afq" path="res://scenes/other/player_camera_point.tscn" id="14_0vafh"]
 [ext_resource type="PackedScene" uid="uid://cvx745hhmp0k6" path="res://scenes/other/kill_zone.tscn" id="15_dl75w"]
 [ext_resource type="PackedScene" uid="uid://cvvewevudo2kf" path="res://scenes/other/hud.tscn" id="16_b4pl7"]
@@ -736,7 +736,7 @@ position = Vector2(3705, -842)
 [node name="BigHeart" parent="Items" instance=ExtResource("12_kjekj")]
 position = Vector2(2812, -505)
 
-[node name="ChargeUpgrade" parent="Items" instance=ExtResource("13_ypv0m")]
+[node name="ManaUpgrade" parent="Items" instance=ExtResource("13_6yfrs")]
 position = Vector2(3264, -396)
 
 [node name="Enemies" type="Node2D" parent="."]

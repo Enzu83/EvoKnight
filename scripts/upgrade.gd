@@ -5,17 +5,21 @@ extends Area2D
 @onready var hitbox: CollisionShape2D = $Hitbox
 
 @export var upgrade: int
+@export var initial_position: Vector2
 @export var target_position := Vector2.INF
 
 var pickable := false
 
-func init(upgrade_: int, target_position_: Vector2) -> Node2D:
+func init(upgrade_: int, initial_position_: Vector2, target_position_: Vector2) -> Node2D:
 	upgrade = upgrade_
+	initial_position = initial_position_
 	target_position = target_position_
 	return self
 
 func _ready() -> void:
 	sprite.frame = upgrade
+	
+	position = initial_position
 	
 	if target_position == Vector2.INF:
 		target_position = position
@@ -40,6 +44,7 @@ func _on_body_entered(body: Node2D) -> void:
 		
 		# select the correct upgrade
 		if upgrade == 0:
+			body.mana_enabled = true
 			body.magic_slash_enabled = true
 			
 		elif upgrade == 1:

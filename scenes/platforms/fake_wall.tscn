@@ -1,15 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://dajhqbi4b6b3o"]
 
-[ext_resource type="Texture2D" uid="uid://b7m6u0mkcbjto" path="res://assets/sprites/platforms/spr_fake_wall.png" id="1_8q4fo"]
+[ext_resource type="Texture2D" uid="uid://bpaj0atmgc7se" path="res://assets/sprites/platforms/spr_fake_wall_rock.png" id="1_apodc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kxtkg"]
-size = Vector2(32, 64)
+size = Vector2(64, 64)
 
 [node name="FakeWall" type="StaticBody2D"]
 collision_mask = 0
 
 [node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_8q4fo")
+texture = ExtResource("1_apodc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_kxtkg")

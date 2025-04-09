@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7m6u0mkcbjto"
-path="res://.godot/imported/spr_fake_wall.png-868174f712f88d56c02ea7e496f2814c.ctex"
+uid="uid://bpaj0atmgc7se"
+path="res://.godot/imported/spr_fake_wall_rock.png-4aec63d94e82a5ba31c09f03246dd652.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/platforms/spr_fake_wall.png"
-dest_files=["res://.godot/imported/spr_fake_wall.png-868174f712f88d56c02ea7e496f2814c.ctex"]
+source_file="res://assets/sprites/platforms/spr_fake_wall_rock.png"
+dest_files=["res://.godot/imported/spr_fake_wall_rock.png-4aec63d94e82a5ba31c09f03246dd652.ctex"]
 
 [params]
 

@@ -109,8 +109,9 @@ func _physics_process(_delta: float) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemies"):
 		if area.hurt(ceil(multiplier * (STRENGTH + player.strength)), self):
-			# restore mana only if the slash hurt the enemy
-			player.restore_mana(MANA_RECOVERY_FACTOR)
+			# restore mana only if the slash hurt the enemy and player has mana
+			if player.mana_enabled:
+				player.restore_mana(MANA_RECOVERY_FACTOR)
 		
 		# make player bounce on the enemy
 		if direction == "down":
