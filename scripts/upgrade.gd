@@ -5,7 +5,7 @@ extends Area2D
 @onready var hitbox: CollisionShape2D = $Hitbox
 
 @export var upgrade: int
-@export var initial_position: Vector2
+@export var initial_position := Vector2.INF
 @export var target_position := Vector2.INF
 
 var pickable := false
@@ -19,7 +19,8 @@ func init(upgrade_: int, initial_position_: Vector2, target_position_: Vector2) 
 func _ready() -> void:
 	sprite.frame = upgrade
 	
-	position = initial_position
+	if initial_position != Vector2.INF:
+		position = initial_position
 	
 	if target_position == Vector2.INF:
 		target_position = position
@@ -40,7 +41,6 @@ func _on_body_entered(body: Node2D) -> void:
 	if pickable \
 	and body.state != body.State.Fainted \
 	and body.state != body.State.Stop:
-		animation_player.play("pickup")
 		
 		# select the correct upgrade
 		if upgrade == 0:
@@ -52,3 +52,6 @@ func _on_body_entered(body: Node2D) -> void:
 			
 		elif upgrade == 2:
 			body.shield_enabled = true
+		
+		Global.prompt_upgrade_text(upgrade)
+		queue_free()

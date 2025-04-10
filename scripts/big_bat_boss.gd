@@ -19,15 +19,17 @@ extends Area2D
 const UPGRADE = preload("res://scenes/items/upgrade.tscn")
 
 func _process(_delta: float) -> void:
-	# remove the node if big bat is killed
-	if not is_instance_valid(big_bat):
+	# spawn the mana orb of the boss is defeated
+	if not is_instance_valid(big_bat) and not Global.big_bat_defeated:
 		camera.limit_bottom = -32
 		boss_music.stop()
 		music.play()
 		Global.big_bat_defeated = true
+		left_bat_spawner.stop()
+		right_bat_spawner.stop()
 		get_parent().add_child(UPGRADE.instantiate().init(0, Vector2(2720, -300), Vector2(2720, -320))) # spell
 	
-	if Global.big_bat_defeated:
+	if Global.big_bat_defeated and player.mana_enabled:
 		queue_free()
 
 func _on_body_entered(body: Node2D) -> void:

@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://ca142mdx7tv6c"]
+
+[ext_resource type="Script" path="res://scripts/vanish_text.gd" id="1_vgmha"]
+[ext_resource type="FontFile" uid="uid://camhtmnphwiu5" path="res://assets/fonts/8bit.fnt" id="2_cx0w7"]
+
+[node name="VanishText" type="Control"]
+z_index = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vgmha")
+
+[node name="Message" type="Label" parent="."]
+layout_mode = 0
+offset_left = -84.0
+offset_top = -28.0
+offset_right = 84.0
+theme_override_fonts/font = ExtResource("2_cx0w7")
+theme_override_font_sizes/font_size = 14
+text = "Lorem ipsum"
+horizontal_alignment = 1
+autowrap_mode = 2

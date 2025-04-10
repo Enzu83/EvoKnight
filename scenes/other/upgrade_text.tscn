@@ -1,0 +1,86 @@
+[gd_scene load_steps=10 format=3 uid="uid://cdjyhm6pghq4j"]
+
+[ext_resource type="Script" path="res://scripts/upgrade_text.gd" id="1_rtp1c"]
+[ext_resource type="FontFile" uid="uid://camhtmnphwiu5" path="res://assets/fonts/8bit.fnt" id="2_6f4wp"]
+[ext_resource type="AudioStream" uid="uid://b5cje2rh5tugm" path="res://assets/sfx/snd_upgrade.wav" id="3_jblm2"]
+[ext_resource type="Texture2D" uid="uid://yx6p3eyombnl" path="res://assets/sprites/chars/player/spr_cherry_red.png" id="3_rbuos"]
+[ext_resource type="Texture2D" uid="uid://cwldd3b7thdo4" path="res://assets/sprites/fx/slash/spr_magic_slash_red.png" id="4_u6c2m"]
+[ext_resource type="Texture2D" uid="uid://carepxrqrhy5m" path="res://assets/sprites/fx/slash/spr_charged_slash_effect_red.png" id="5_joyi1"]
+[ext_resource type="Texture2D" uid="uid://bupawpd57bpjq" path="res://assets/sprites/fx/slash/spr_basic_slash_red.png" id="6_u7w5w"]
+[ext_resource type="Texture2D" uid="uid://b8d1eickmoq70" path="res://assets/sprites/fx/spr_shield.png" id="7_v13aw"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ad5af"]
+
+[node name="UpgradeText" type="CanvasLayer"]
+process_mode = 3
+layer = 2
+visible = false
+scale = Vector2(1.333, 1.333)
+transform = Transform2D(1.333, 0, 0, 1.333, 0, 0)
+script = ExtResource("1_rtp1c")
+
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(0, 0, 0, 0.784314)
+offset_right = 320.0
+offset_bottom = 180.0
+texture = SubResource("PlaceholderTexture2D_ad5af")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 41.0
+offset_top = 106.0
+offset_right = 280.0
+offset_bottom = 166.0
+theme_override_constants/line_spacing = -1
+theme_override_fonts/font = ExtResource("2_6f4wp")
+theme_override_font_sizes/font_size = 10
+text = "TEXT
+"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="PickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_jblm2")
+volume_db = -3.0
+bus = &"SFX"
+
+[node name="DurationTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="Sprites" type="Node2D" parent="."]
+position = Vector2(136, 54)
+
+[node name="Player" type="Sprite2D" parent="Sprites"]
+visible = false
+texture = ExtResource("3_rbuos")
+hframes = 9
+vframes = 6
+frame = 18
+
+[node name="MagicSlash" type="Sprite2D" parent="Sprites"]
+visible = false
+position = Vector2(44, 3)
+texture = ExtResource("4_u6c2m")
+hframes = 4
+
+[node name="ChargedSlashEffect" type="Sprite2D" parent="Sprites"]
+visible = false
+texture = ExtResource("5_joyi1")
+hframes = 4
+
+[node name="BasicSlash" type="Sprite2D" parent="Sprites"]
+visible = false
+position = Vector2(26, -8.5)
+scale = Vector2(2, 2)
+texture = ExtResource("6_u7w5w")
+hframes = 6
+frame = 2
+
+[node name="Shield" type="Sprite2D" parent="Sprites"]
+visible = false
+position = Vector2(24, 4)
+texture = ExtResource("7_v13aw")
+hframes = 4
+vframes = 2
+
+[connection signal="timeout" from="DurationTimer" to="." method="_on_duration_timer_timeout"]

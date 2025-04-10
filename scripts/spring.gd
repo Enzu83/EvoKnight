@@ -11,8 +11,9 @@ var orientation: String
 var launch_direction: Vector2
 
 func spring(body: Node2D) -> void:
-	animation_player.stop()
-	animation_player.play("spring")
+	hitbox.set_deferred("disabled", true)
+	animation_player.call_deferred("stop")
+	animation_player.call_deferred("play", "spring")
 	body.bumped(SPRING_FORCE, launch_direction)
 
 func _ready() -> void:

@@ -55,6 +55,7 @@ var paused := false
 var pause_menu: CanvasLayer = load("res://scenes/other/pause.tscn").instantiate()
 var level_up: CanvasLayer = load("res://scenes/other/level_up.tscn").instantiate()
 var end_recap: CanvasLayer = load("res://scenes/other/end_recap.tscn").instantiate()
+var upgrade_text: CanvasLayer = load("res://scenes/other/upgrade_text.tscn").instantiate()
 
 # screen fade out animation
 var fade_out_scene: Resource = preload("res://scenes/other/fade_out.tscn")
@@ -128,6 +129,7 @@ func _ready() -> void:
 	add_child(pause_menu)
 	add_child(level_up)
 	add_child(end_recap)
+	add_child(upgrade_text)
 	init_stars()
 	init_player_stats()
 	set_player_color(color_list[0]) # default skin: red
@@ -154,7 +156,7 @@ func _process(_delta: float) -> void:
 		player.gain_exp(1000)
 	
 	# pause tree
-	if pause_menu.visible or level_up.visible or end_recap.visible:
+	if pause_menu.visible or level_up.visible or end_recap.visible or upgrade_text.visible:
 		get_tree().paused = true
 	else:
 		get_tree().paused = false
@@ -217,6 +219,9 @@ func toggle_electric_arc_auto_switch() -> void:
 func _on_electric_arc_auto_timer_timeout() -> void:
 	electric_arc_sound.play()
 	electric_arc_auto_enabled = !electric_arc_auto_enabled
+
+func prompt_upgrade_text(upgrade: int) -> void:
+	upgrade_text.start(upgrade)
 
 func init_dash_block() -> void:
 	dash_block_activated = false
