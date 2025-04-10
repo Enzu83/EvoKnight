@@ -367,6 +367,9 @@ func fainted() -> void:
 		velocity.y = 0
 		death_sound.play()
 		
+		if not boss:
+			death_timer.start()
+		
 		# exp drops
 		if drop:
 			Global.create_multiple_exp_drop(EXP_DROP_VALUE, position, 250)
@@ -387,10 +390,7 @@ func _on_hurt_invicibility_timer_timeout() -> void:
 	effects_player.stop()
 
 func _on_death_timer_timeout() -> void:
-	if boss:
-		Global.next_level()
-	else:
-		queue_free()
+	queue_free()
 
 func _on_basic_slash_cooldown_timeout() -> void:
 	can_attack = true
