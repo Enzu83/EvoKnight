@@ -11,7 +11,6 @@ extends Area2D
 @onready var farewell_ceres: CharacterBody2D = $FarewellCeres
 
 @onready var trigger: CollisionShape2D = $Trigger
-@onready var fake_wall: StaticBody2D = $FakeWall
 
 @onready var lower_left_platform: AnimatableBody2D = $LowerLeftPlatform
 @onready var lower_middle_left_platform: AnimatableBody2D = $LowerMiddleLeftPlatform

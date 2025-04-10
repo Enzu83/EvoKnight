@@ -120,6 +120,7 @@ var dash_block_activated := false
 
 # boss defeated
 var big_bat_defeated := false
+var reno_defeated := false
 var ceres_defeated := false
 
 # mana orb collected

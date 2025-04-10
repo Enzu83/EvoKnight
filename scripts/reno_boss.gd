@@ -6,16 +6,15 @@ extends Area2D
 @onready var player: Player = %Player
 @onready var camera: Camera2D = %Camera
 
-@onready var ceres: CharacterBody2D = $Ceres
+@onready var reno: CharacterBody2D = $Reno
 
 @onready var electric_sound: AudioStreamPlayer = $ElectricSound
 
 @onready var wait_before_camera_timer: Timer = $WaitBeforeCameraTimer
-@onready var end_fight_timer: Timer = $EndFightTimer
 
-@onready var electric_arcs: Node2D = $ElectricArcs
+const UPGRADE = preload("res://scenes/items/upgrade.tscn")
 
-enum State {None, Wait, BossSpawn, Fight, FightEnd, Finish}
+enum State {None, Wait, BossSpawn, Fight, FightEnd}
 
 var state: State
 
@@ -26,32 +25,41 @@ var camera_limit_bottom: int
 
 func _ready() -> void:
 	state = State.None
-	
-	if Global.ceres_defeated:
-		electric_arcs.queue_free()
 
 func _physics_process(_delta: float) -> void:
 	# initiate the fight
-	if state == State.BossSpawn and ceres.active:
+	if state == State.BossSpawn and reno.active:
 		state = State.Fight
 		boss_music.play()
 		player.state = player.State.Default
 	
 	# end fight animation
-	elif state == State.Fight and ceres.state == ceres.State.Defeated:
+	elif state == State.Fight and reno.state == reno.State.Defeated:
 		state = State.FightEnd
 		boss_music.stop()
+		get_parent().add_child(UPGRADE.instantiate().init(2, reno.position, Vector2(4288, -244))) # shield
 	
 	# free the room
-	elif state == State.FightEnd and ceres.state == ceres.State.Fainted:
-		state = State.Finish
-		end_fight_timer.start()
+	elif state == State.FightEnd and reno.state == reno.State.Defeated and player.shield_enabled:
+		Global.reno_defeated = true
+		music.play()
+		Global.electric_arc_enabled = false
+		electric_sound.play()
+		
+		player.state = player.State.Default
+		
+		# previous camera view
+		camera.limit_left = camera_limit_left
+		camera.limit_right = camera_limit_right
+		camera.limit_top = camera_limit_top
+		camera.limit_bottom = camera_limit_bottom
+		
+		queue_free()
 
 func _on_area_entered(_area: Area2D) -> void:
 	# start the fight
 	if state == State.None \
-	and not Global.ceres_defeated \
-	and player.shield_enabled:
+	and not Global.reno_defeated:
 		state = State.Wait
 		Global.electric_arc_enabled = true
 		electric_sound.play()
@@ -81,10 +89,10 @@ func _on_wait_before_camera_timer_timeout() -> void:
 	camera.limit_top = -416
 	camera.limit_bottom = -136
 	
-	ceres.spawn()
+	reno.spawn()
 
 func _on_end_fight_timer_timeout() -> void:
-	Global.ceres_defeated = true
+	Global.reno_defeated = true
 	music.play()
 	Global.electric_arc_enabled = false
 	electric_sound.play()

@@ -18,7 +18,7 @@ extends Area2D
 
 const UPGRADE = preload("res://scenes/items/upgrade.tscn")
 
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# spawn the mana orb of the boss is defeated
 	if not is_instance_valid(big_bat) and not Global.big_bat_defeated:
 		camera.limit_bottom = -32

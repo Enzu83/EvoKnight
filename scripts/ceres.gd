@@ -33,8 +33,6 @@ var speed_orb_scene: Resource = preload("res://scenes/items/speed_orb.tscn")
 
 const SPEED = 300.0
 const STRENGTH = 5
-
-
 const EXP_DROP_VALUE = 7
 
 enum State {Default, Defeated, Fainted, Attacking}
