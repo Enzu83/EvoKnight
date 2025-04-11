@@ -28,7 +28,7 @@ func _ready() -> void:
 	state = State.None
 	
 	if Global.ceres_defeated:
-		electric_arcs.queue_free()
+		queue_free()
 
 func _physics_process(_delta: float) -> void:
 	# initiate the fight
@@ -54,6 +54,8 @@ func _on_area_entered(_area: Area2D) -> void:
 	and player.shield_enabled:
 		state = State.Wait
 		Global.electric_arc_enabled = true
+		electric_arcs.visible = true
+		electric_arcs.process_mode = Node.PROCESS_MODE_INHERIT
 		electric_sound.play()
 		music.stop()
 		

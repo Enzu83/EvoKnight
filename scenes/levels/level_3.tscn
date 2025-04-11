@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://doqatuh36ah4u"]
+[gd_scene load_steps=50 format=4 uid="uid://doqatuh36ah4u"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_3.gd" id="1_7ykpr"]
 [ext_resource type="AudioStream" uid="uid://b1qtb8fncq3iv" path="res://assets/musics/mus_chasm_cave.mp3" id="2_l85tu"]
@@ -147,7 +147,10 @@ _data = {
 size = Vector2(40, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1a5m2"]
-size = Vector2(12, 216)
+size = Vector2(10, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ni4yl"]
+size = Vector2(28, 9)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7r80f"]
 size = Vector2(12, 40)
@@ -233,46 +236,46 @@ position = Vector2(3364, -440)
 position = Vector2(3820, -378)
 
 [node name="LargePlatform9" parent="Platforms" instance=ExtResource("5_4kyrx")]
-position = Vector2(4154, -242)
+position = Vector2(4154, -246)
 
 [node name="LargePlatform10" parent="Platforms" instance=ExtResource("5_4kyrx")]
-position = Vector2(4190, -242)
+position = Vector2(4190, -246)
 
 [node name="LargePlatform11" parent="Platforms" instance=ExtResource("5_4kyrx")]
-position = Vector2(4226, -242)
+position = Vector2(4226, -246)
 
 [node name="LargePlatform12" parent="Platforms" instance=ExtResource("5_4kyrx")]
-position = Vector2(4350, -242)
+position = Vector2(4350, -246)
 
 [node name="LargePlatform13" parent="Platforms" instance=ExtResource("5_4kyrx")]
-position = Vector2(4386, -242)
+position = Vector2(4386, -246)
 
 [node name="LargePlatform14" parent="Platforms" instance=ExtResource("5_4kyrx")]
-position = Vector2(4422, -242)
+position = Vector2(4422, -246)
 
 [node name="LargePlatform15" parent="Platforms" instance=ExtResource("5_4kyrx")]
-position = Vector2(4288, -208)
+position = Vector2(4288, -206)
 
 [node name="LargePlatform16" parent="Platforms" instance=ExtResource("5_4kyrx")]
-position = Vector2(4154, -312)
+position = Vector2(4154, -316)
 
 [node name="LargePlatform17" parent="Platforms" instance=ExtResource("5_4kyrx")]
-position = Vector2(4190, -312)
+position = Vector2(4190, -316)
 
 [node name="LargePlatform18" parent="Platforms" instance=ExtResource("5_4kyrx")]
-position = Vector2(4226, -312)
+position = Vector2(4226, -316)
 
 [node name="LargePlatform19" parent="Platforms" instance=ExtResource("5_4kyrx")]
-position = Vector2(4350, -312)
+position = Vector2(4350, -316)
 
 [node name="LargePlatform20" parent="Platforms" instance=ExtResource("5_4kyrx")]
-position = Vector2(4386, -312)
+position = Vector2(4386, -316)
 
 [node name="LargePlatform21" parent="Platforms" instance=ExtResource("5_4kyrx")]
-position = Vector2(4422, -312)
+position = Vector2(4422, -316)
 
 [node name="LargePlatform22" parent="Platforms" instance=ExtResource("5_4kyrx")]
-position = Vector2(4288, -278)
+position = Vector2(4288, -282)
 
 [node name="SmallPlatform2" parent="Platforms" instance=ExtResource("7_6gpwm")]
 position = Vector2(4724, -242)
@@ -505,8 +508,8 @@ position = Vector2(3590, -484)
 reversed = true
 
 [node name="Lever9" parent="ElectricArcs" instance=ExtResource("7_7wf14")]
-position = Vector2(4032, -232)
-rotation = 3.14159
+position = Vector2(3720, -192)
+rotation = 1.5708
 
 [node name="ReverseElectricArc9" parent="ElectricArcs" instance=ExtResource("19_a7tjk")]
 position = Vector2(4752, -908)
@@ -643,10 +646,10 @@ position = Vector2(4196, -168)
 position = Vector2(4380, -168)
 
 [node name="Spring23" parent="Items" instance=ExtResource("5_oqwlh")]
-position = Vector2(4196, -248)
+position = Vector2(4196, -252)
 
 [node name="Spring24" parent="Items" instance=ExtResource("5_oqwlh")]
-position = Vector2(4380, -248)
+position = Vector2(4380, -252)
 
 [node name="Spring27" parent="Items" instance=ExtResource("5_oqwlh")]
 position = Vector2(4724, -248)
@@ -749,7 +752,7 @@ position = Vector2(3781, -484)
 
 [node name="Player" parent="." instance=ExtResource("13_gcqkt")]
 unique_name_in_owner = true
-position = Vector2(3906, -172)
+position = Vector2(32, 8)
 
 [node name="PlayerCameraPoint" parent="Player" instance=ExtResource("14_wu1ns")]
 top_level = true
@@ -779,11 +782,15 @@ collision_mask = 2
 script = ExtResource("28_a1qyw")
 
 [node name="Trigger" type="CollisionShape2D" parent="RenoBoss"]
-position = Vector2(4288, -276)
+position = Vector2(4159, -193)
 shape = SubResource("RectangleShape2D_1a5m2")
 
+[node name="Trigger2" type="CollisionShape2D" parent="RenoBoss"]
+position = Vector2(4150, -213.5)
+shape = SubResource("RectangleShape2D_ni4yl")
+
 [node name="Reno" parent="RenoBoss" instance=ExtResource("33_82ivj")]
-position = Vector2(4411, -168)
+position = Vector2(4288, -212)
 
 [node name="ElectricSound" type="AudioStreamPlayer" parent="RenoBoss"]
 stream = ExtResource("27_diuai")
@@ -792,6 +799,93 @@ bus = &"SFX"
 [node name="WaitBeforeCameraTimer" type="Timer" parent="RenoBoss"]
 wait_time = 1.5
 one_shot = true
+
+[node name="ElectricArcs" type="Node2D" parent="RenoBoss"]
+process_mode = 4
+visible = false
+
+[node name="ElectricArc13" parent="RenoBoss/ElectricArcs" instance=ExtResource("19_a7tjk")]
+modulate = Color(0, 1, 1, 1)
+position = Vector2(4128, -188)
+
+[node name="ReverseElectricArc16" parent="RenoBoss/ElectricArcs" instance=ExtResource("19_a7tjk")]
+modulate = Color(0, 1, 1, 1)
+position = Vector2(4128, -188)
+reversed = true
+
+[node name="ElectricArc14" parent="RenoBoss/ElectricArcs" instance=ExtResource("19_a7tjk")]
+modulate = Color(0, 1, 1, 1)
+position = Vector2(4448, -188)
+
+[node name="ReverseElectricArc17" parent="RenoBoss/ElectricArcs" instance=ExtResource("19_a7tjk")]
+modulate = Color(0, 1, 1, 1)
+position = Vector2(4448, -188)
+reversed = true
+
+[node name="FightElectricArcs" type="Node2D" parent="RenoBoss"]
+process_mode = 4
+visible = false
+
+[node name="Lever10" parent="RenoBoss/FightElectricArcs" instance=ExtResource("7_7wf14")]
+position = Vector2(4136, -282)
+rotation = 1.5708
+
+[node name="Lever11" parent="RenoBoss/FightElectricArcs" instance=ExtResource("7_7wf14")]
+position = Vector2(4440, -282)
+rotation = -1.5708
+
+[node name="Lever12" parent="RenoBoss/FightElectricArcs" instance=ExtResource("7_7wf14")]
+position = Vector2(4252, -160)
+
+[node name="Lever13" parent="RenoBoss/FightElectricArcs" instance=ExtResource("7_7wf14")]
+position = Vector2(4324, -160)
+
+[node name="ReverseElectricArc15" parent="RenoBoss/FightElectricArcs" instance=ExtResource("19_a7tjk")]
+modulate = Color(0, 1, 1, 1)
+position = Vector2(4288, -364)
+reversed = true
+solid = false
+
+[node name="ReverseElectricArc18" parent="RenoBoss/FightElectricArcs" instance=ExtResource("19_a7tjk")]
+modulate = Color(0, 1, 1, 1)
+position = Vector2(4288, -324)
+reversed = true
+solid = false
+
+[node name="ReverseElectricArc19" parent="RenoBoss/FightElectricArcs" instance=ExtResource("19_a7tjk")]
+modulate = Color(0, 1, 1, 1)
+position = Vector2(4288, -296)
+scale = Vector2(1, 0.4)
+reversed = true
+solid = false
+
+[node name="ReverseElectricArc22" parent="RenoBoss/FightElectricArcs" instance=ExtResource("19_a7tjk")]
+modulate = Color(0, 1, 1, 1)
+position = Vector2(4288, -184)
+scale = Vector2(1, 0.8)
+reversed = true
+solid = false
+
+[node name="ElectricArc15" parent="RenoBoss/FightElectricArcs" instance=ExtResource("19_a7tjk")]
+modulate = Color(0, 1, 1, 1)
+position = Vector2(4260, -246)
+rotation = 1.5708
+scale = Vector2(1, 0.8)
+solid = false
+
+[node name="ElectricArc16" parent="RenoBoss/FightElectricArcs" instance=ExtResource("19_a7tjk")]
+modulate = Color(0, 1, 1, 1)
+position = Vector2(4288, -246)
+rotation = 1.5708
+scale = Vector2(1, 0.6)
+solid = false
+
+[node name="ElectricArc17" parent="RenoBoss/FightElectricArcs" instance=ExtResource("19_a7tjk")]
+modulate = Color(0, 1, 1, 1)
+position = Vector2(4316, -246)
+rotation = 1.5708
+scale = Vector2(1, 0.8)
+solid = false
 
 [node name="CeresBoss" type="Area2D" parent="."]
 collision_layer = 0
@@ -818,6 +912,8 @@ wait_time = 0.5
 one_shot = true
 
 [node name="ElectricArcs" type="Node2D" parent="CeresBoss"]
+process_mode = 4
+visible = false
 
 [node name="ElectricArc9" parent="CeresBoss/ElectricArcs" instance=ExtResource("19_a7tjk")]
 modulate = Color(0, 1, 1, 1)

@@ -9,6 +9,8 @@ extends Area2D
 @onready var reno: CharacterBody2D = $Reno
 
 @onready var electric_sound: AudioStreamPlayer = $ElectricSound
+@onready var electric_arcs: Node2D = $ElectricArcs
+@onready var fight_electric_arcs: Node2D = $FightElectricArcs
 
 @onready var wait_before_camera_timer: Timer = $WaitBeforeCameraTimer
 
@@ -25,6 +27,9 @@ var camera_limit_bottom: int
 
 func _ready() -> void:
 	state = State.None
+	
+	if Global.reno_defeated:
+		queue_free()
 
 func _physics_process(_delta: float) -> void:
 	# initiate the fight
@@ -37,7 +42,8 @@ func _physics_process(_delta: float) -> void:
 	elif state == State.Fight and reno.state == reno.State.Defeated:
 		state = State.FightEnd
 		boss_music.stop()
-		get_parent().add_child(UPGRADE.instantiate().init(2, reno.position, Vector2(4288, -244))) # shield
+		fight_electric_arcs.queue_free()
+		get_parent().add_child(UPGRADE.instantiate().init(2, reno.position, Vector2(4288, -248))) # shield
 	
 	# free the room
 	elif state == State.FightEnd and reno.state == reno.State.Defeated and player.shield_enabled:
@@ -61,7 +67,13 @@ func _on_area_entered(_area: Area2D) -> void:
 	if state == State.None \
 	and not Global.reno_defeated:
 		state = State.Wait
-		Global.electric_arc_enabled = true
+		Global.electric_arc_enabled = false
+		
+		fight_electric_arcs.visible = true
+		electric_arcs.visible = true
+		fight_electric_arcs.process_mode = Node.PROCESS_MODE_INHERIT
+		electric_arcs.process_mode = Node.PROCESS_MODE_INHERIT
+		
 		electric_sound.play()
 		music.stop()
 		
@@ -71,24 +83,23 @@ func _on_area_entered(_area: Area2D) -> void:
 		player.direction = 0
 		player.phantom_cooldown.stop()
 		
-		# camera moves to the center of the room
+		# store current camera limit
+		camera_limit_left = camera.limit_left
+		camera_limit_right = camera.limit_right
+		camera_limit_top = camera.limit_top
+		camera_limit_bottom = camera.limit_bottom
+		
+		# fix camera limit
+		camera.limit_left = 4181
+		camera.limit_right = 4501
+		camera.limit_top = -416
+		camera.limit_bottom = -136
+		
 		wait_before_camera_timer.start()
 
 func _on_wait_before_camera_timer_timeout() -> void:
 	state = State.BossSpawn
-	
-	# store current camera limit
-	camera_limit_left = camera.limit_left
-	camera_limit_right = camera.limit_right
-	camera_limit_top = camera.limit_top
-	camera_limit_bottom = camera.limit_bottom
-	
-	# fix camera limit
-	camera.limit_left = 4181
-	camera.limit_right = 4501
-	camera.limit_top = -416
-	camera.limit_bottom = -136
-	
+	player.state = player.State.Default
 	reno.spawn()
 
 func _on_end_fight_timer_timeout() -> void:

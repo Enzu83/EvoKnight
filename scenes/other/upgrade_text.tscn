@@ -44,7 +44,7 @@ volume_db = -3.0
 bus = &"SFX"
 
 [node name="DurationTimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 2.0
 one_shot = true
 
 [node name="Sprites" type="Node2D" parent="."]
