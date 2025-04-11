@@ -101,13 +101,13 @@ offset_bottom = 1.0
 [node name="UpgradesLabel" type="Label" parent="Upgrades"]
 top_level = true
 layout_mode = 0
-offset_left = 101.0
+offset_left = 92.0
 offset_top = 170.0
-offset_right = 289.0
+offset_right = 292.0
 offset_bottom = 198.0
 theme_override_fonts/font = ExtResource("2_w6ogw")
 theme_override_font_sizes/font_size = 18
-text = "Upgrades collected: "
+text = "Big Hearts collected: "
 horizontal_alignment = 2
 
 [node name="UpgradesCollected" type="Label" parent="Upgrades"]

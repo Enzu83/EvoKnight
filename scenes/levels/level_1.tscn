@@ -216,16 +216,19 @@ position = Vector2(344, -448)
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Bat" parent="Enemies" instance=ExtResource("6_ekgmc")]
-position = Vector2(1038, -112)
+position = Vector2(998, -163)
 
 [node name="Bat2" parent="Enemies" instance=ExtResource("6_ekgmc")]
 position = Vector2(1127, -164)
+flip_sprite = true
 
 [node name="Bat3" parent="Enemies" instance=ExtResource("6_ekgmc")]
 position = Vector2(1068, -308)
+flip_sprite = true
 
 [node name="Bat6" parent="Enemies" instance=ExtResource("6_ekgmc")]
 position = Vector2(1441, -113)
+flip_sprite = true
 
 [node name="Cloporte" parent="Enemies" instance=ExtResource("7_eafeb")]
 position = Vector2(1074, -94)
@@ -235,12 +238,15 @@ position = Vector2(1557, -14)
 
 [node name="WindSpirit" parent="Enemies" instance=ExtResource("12_8w2sx")]
 position = Vector2(2038, -66)
+flip_sprite = true
 
 [node name="Bat4" parent="Enemies" instance=ExtResource("6_ekgmc")]
 position = Vector2(2466, -84)
+flip_sprite = true
 
 [node name="Bat5" parent="Enemies" instance=ExtResource("6_ekgmc")]
 position = Vector2(2924, -143)
+flip_sprite = true
 
 [node name="Cloporte3" parent="Enemies" instance=ExtResource("7_eafeb")]
 position = Vector2(1636, -14)
@@ -256,12 +262,15 @@ position = Vector2(3381, -110)
 
 [node name="Bat7" parent="Enemies" instance=ExtResource("6_ekgmc")]
 position = Vector2(3398, -153)
+flip_sprite = true
 
 [node name="Bat8" parent="Enemies" instance=ExtResource("6_ekgmc")]
 position = Vector2(3396, -233)
+flip_sprite = true
 
 [node name="WindSpirit2" parent="Enemies" instance=ExtResource("12_8w2sx")]
 position = Vector2(3636, -372)
+flip_sprite = true
 
 [node name="Player" parent="." instance=ExtResource("5_rgud7")]
 unique_name_in_owner = true

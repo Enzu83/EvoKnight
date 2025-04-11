@@ -746,6 +746,7 @@ position = Vector2(250, -299)
 
 [node name="WindSpirit2" parent="Enemies" instance=ExtResource("8_jfvkj")]
 position = Vector2(475, -298)
+flip_sprite = true
 
 [node name="SpikyEyebat" parent="Enemies" instance=ExtResource("9_8n1sd")]
 position = Vector2(359, -255)
@@ -761,12 +762,15 @@ position = Vector2(1217, -342)
 
 [node name="Bat" parent="Enemies" instance=ExtResource("12_c1aet")]
 position = Vector2(1550, -364)
+flip_sprite = true
 
 [node name="Bat2" parent="Enemies" instance=ExtResource("12_c1aet")]
 position = Vector2(1738, -362)
+flip_sprite = true
 
 [node name="Bat3" parent="Enemies" instance=ExtResource("12_c1aet")]
 position = Vector2(2570, -523)
+flip_sprite = true
 
 [node name="SpikyEyebat4" parent="Enemies" instance=ExtResource("9_8n1sd")]
 position = Vector2(3568, -378)

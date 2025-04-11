@@ -17,8 +17,8 @@ const EXP_DROP_VALUE = 3
 
 var player: CharacterBody2D
 
+var home_position: Vector2
 var chase := false # enable chasing the player
-var target: CharacterBody2D = null # chase target
 var max_health := 12
 var health := max_health
 var strength := 3 # damage caused by the enemy
@@ -32,23 +32,34 @@ var drop := true
 func _ready() -> void:
 	add_to_group("enemies")
 	animated_sprite.flip_h = flip_sprite
+	home_position = position
 
 func _physics_process(delta: float) -> void:
 	if Global.player != null:
 		player = Global.player
 	
-	# flip the sprite to match the direction
-	if position.x < player.position.x:
-		animated_sprite.flip_h = false
-	elif position.x > player.position.x:
-		animated_sprite.flip_h = true
-	
 	# go toward the target
-	if chase and target != null:
-		
+	if chase and player != null:
 		# move toward the middle of the target's hurtbox
 		if not hit:
-			position += position.direction_to(target.get_middle_position()) * SPEED * delta
+			position = position.move_toward(player.get_middle_position(), SPEED * delta)
+
+	# go back to home
+	elif not chase:
+		position = position.move_toward(home_position, SPEED * delta)
+		
+	# flip the sprite to match the direction
+	if not chase and (position - home_position).length() > 0:
+		if position.x < home_position.x:
+			animated_sprite.flip_h = false
+		elif position.x > home_position.x:
+			animated_sprite.flip_h = true
+	
+	elif player != null:
+		if position.x < player.position.x:
+			animated_sprite.flip_h = false
+		elif position.x > player.position.x:
+			animated_sprite.flip_h = true
 
 func _on_area_entered(area: Area2D) -> void:
 	var body := area.get_parent() # get the player
@@ -83,12 +94,10 @@ func fainted() -> void:
 func _on_detector_body_entered(body: Node2D) -> void:
 	if body == player:
 		chase = true
-		target = body
 
 func _on_detector_body_exited(body: Node2D) -> void:
 	if body == player:
 		chase = false
-		target = null
 
 func _on_hurt_invicibility_timer_timeout() -> void:
 	hit = false

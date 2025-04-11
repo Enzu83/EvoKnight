@@ -23,8 +23,8 @@ const GAP_DISTANCE = 96 # from which distance from the target will the enemy cas
 @onready var player: CharacterBody2D
 
 
+var home_position: Vector2
 var chase := false # enable chasing the player
-var target: CharacterBody2D = null # chase target
 var max_health := 8
 var health := max_health
 var strength = 2 # on collision
@@ -42,22 +42,17 @@ func _ready() -> void:
 	can_fire = false
 	animated_sprite.flip_h = flip_sprite
 	tornado.strength = 2 * strength
+	home_position = position
 
 func _physics_process(delta: float) -> void:
 	if Global.player != null:
 		player = Global.player
 	
-	# flip the sprite to match the direction
-	if position.x < player.position.x:
-		animated_sprite.flip_h = false
-	elif position.x > player.position.x:
-		animated_sprite.flip_h = true
-	
 	# go toward the target	
-	if chase and target != null and tornado != null and not tornado.active:
+	if chase and player != null and tornado != null and not tornado.active:
 		# move toward the middle of the target's hurtbox with an offset on x
 		if not hit:
-			target_position = target.position # target position
+			target_position = player.position # target position
 			target_position.y -= 2 # adjustement to be in the middle 
 			
 			# desired position is the same for y but the enemy keeps a space with the target position
@@ -69,13 +64,29 @@ func _physics_process(delta: float) -> void:
 			# cast the spell if the positioning is correct
 			if (position - target_position).length() < 16:
 				if can_fire:
-					if position.x > target.position.x:
+					if position.x > player.position.x:
 						tornado.start("left")
-					elif position.x < target.position.x:
+					elif position.x < player.position.x:
 						tornado.start("right")
 			
-			else:			
-				position += position.direction_to(target_position) * SPEED * delta
+			else:
+				position = position.move_toward(target_position, SPEED * delta)
+	
+	# go back to home
+	elif not chase:
+		position = position.move_toward(home_position, SPEED * delta)
+		
+	# flip the sprite to match the direction
+	if not chase and (position - home_position).length() > 0:
+		if position.x < home_position.x:
+			animated_sprite.flip_h = false
+		elif position.x > home_position.x:
+			animated_sprite.flip_h = true
+	else:
+		if position.x < player.position.x:
+			animated_sprite.flip_h = false
+		elif position.x > player.position.x:
+			animated_sprite.flip_h = true
 
 func _on_area_entered(area: Area2D) -> void:
 	var body := area.get_parent() # get the player
@@ -114,13 +125,11 @@ func get_middle_position() -> Vector2:
 func _on_detector_body_entered(body: Node2D) -> void:
 	if body == player:
 		chase = true
-		target = body
 		initial_wait_before_firing.start()
 
 func _on_detector_body_exited(body: Node2D) -> void:
 	if body == player:
 		chase = false
-		target = null
 		can_fire = false
 
 func _on_hurt_invicibility_timer_timeout() -> void:

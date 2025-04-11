@@ -55,6 +55,7 @@ func elapsed_time_to_text() -> String:
 	var minutes: int = (elapsed_time / 60000) % 60
 	
 	return "{0}m{1}s{2}ms".format([str(minutes), str(seconds), str(milliseconds)])
+
 func _process(_delta: float) -> void:
 	if state == 4 and Input.is_action_just_pressed("confirm"):
 		state = 0
