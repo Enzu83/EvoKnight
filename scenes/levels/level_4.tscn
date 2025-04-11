@@ -2707,6 +2707,10 @@ position = Vector2(15916, -1603)
 z_index = -1
 position = Vector2(15660, -1668)
 
+[node name="UpperMiddlePlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
+z_index = -1
+position = Vector2(15788, -1668)
+
 [node name="UpperRightPlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
 z_index = -1
 position = Vector2(15916, -1668)

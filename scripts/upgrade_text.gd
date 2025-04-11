@@ -72,6 +72,7 @@ func start(upgrade: int) -> void:
 	
 
 func stop() -> void:
+	state = 0
 	pick_sound.stop()
 	
 	visible = false
@@ -80,7 +81,8 @@ func stop() -> void:
 	charged_slash_effect.visible = false
 	basic_slash.visible = false
 	shield.visible = false
-	
+	duration_timer.stop()
+
 	get_tree().paused = false
 
 func get_event_list(action: String) -> Array:

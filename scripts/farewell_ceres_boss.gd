@@ -19,6 +19,7 @@ extends Area2D
 @onready var middle_left_platform: AnimatableBody2D = $MiddleLeftPlatform
 @onready var middle_right_platform: AnimatableBody2D = $MiddleRightPlatform
 @onready var upper_left_platform: AnimatableBody2D = $UpperLeftPlatform
+@onready var upper_middle_platform: AnimatableBody2D = $UpperMiddlePlatform
 @onready var upper_right_platform: AnimatableBody2D = $UpperRightPlatform
 
 @onready var mob_list: Node2D = $MobList
@@ -94,19 +95,20 @@ var platform_list := {}
 func _ready() -> void:
 	platform_list["upper"] = [
 		upper_left_platform,
-		upper_right_platform
+		upper_middle_platform,
+		upper_right_platform,
 	]
 	
 	platform_list["middle"] = [
 		middle_left_platform,
-		middle_right_platform
+		middle_right_platform,
 	]
 	
 	platform_list["lower"] = [
 		lower_left_platform,
 		lower_middle_left_platform,
 		lower_middle_right_platform,
-		lower_right_platform
+		lower_right_platform,
 	]
 
 func _physics_process(_delta: float) -> void:

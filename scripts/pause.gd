@@ -27,7 +27,7 @@ func _physics_process(_delta: float) -> void:
 	# and can't pause while leveling up
 	if Input.is_action_just_pressed("pause") \
 	and Global.current_level != 0 \
-	and not Global.level_up.visible and not Global.end_recap.visible:
+	and not Global.level_up.visible and not Global.end_recap.visible and not Global.upgrade_text.visible:
 		toggle_pause()
 	
 	# pause menu is active
