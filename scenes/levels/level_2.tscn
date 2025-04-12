@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=4 uid="uid://bxrur8c6y3ntc"]
+[gd_scene load_steps=39 format=4 uid="uid://bxrur8c6y3ntc"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_2.gd" id="1_ev3sv"]
 [ext_resource type="AudioStream" uid="uid://cer7bmtanymj3" path="res://assets/musics/mus_amp_plains.mp3" id="2_aptwx"]
@@ -25,6 +25,7 @@
 [ext_resource type="Script" path="res://scripts/big_bat_boss.gd" id="19_bm2fh"]
 [ext_resource type="PackedScene" uid="uid://b1wqo2tp6tr0x" path="res://scenes/chars/big_bat.tscn" id="19_e782t"]
 [ext_resource type="PackedScene" uid="uid://caoykk5g0hmxj" path="res://scenes/chars/bat_spawner.tscn" id="21_mhdyk"]
+[ext_resource type="PackedScene" uid="uid://dajhqbi4b6b3o" path="res://scenes/platforms/fake_wall.tscn" id="26_3cvpr"]
 
 [sub_resource type="Animation" id="Animation_74l74"]
 length = 0.001
@@ -769,7 +770,11 @@ position = Vector2(1738, -362)
 flip_sprite = true
 
 [node name="Bat3" parent="Enemies" instance=ExtResource("12_c1aet")]
-position = Vector2(2570, -523)
+position = Vector2(2384, -544)
+flip_sprite = true
+
+[node name="Bat4" parent="Enemies" instance=ExtResource("12_c1aet")]
+position = Vector2(2480, -488)
 flip_sprite = true
 
 [node name="SpikyEyebat4" parent="Enemies" instance=ExtResource("9_8n1sd")]
@@ -869,6 +874,11 @@ rotation = 1.5708
 [node name="LargePlatform" parent="BigBatBoss" instance=ExtResource("7_2hpn8")]
 position = Vector2(2902, -300)
 rotation = -1.5708
+
+[node name="FakeWall" parent="BigBatBoss" instance=ExtResource("26_3cvpr")]
+process_mode = 4
+visible = false
+position = Vector2(2720, -424)
 
 [connection signal="body_entered" from="BigBatBoss" to="BigBatBoss" method="_on_body_entered"]
 [connection signal="timeout" from="BigBatBoss/StartTimer" to="BigBatBoss" method="_on_start_timer_timeout"]

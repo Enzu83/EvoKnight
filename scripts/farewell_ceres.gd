@@ -21,6 +21,8 @@ extends CharacterBody2D
 @onready var wait_timer: Timer = $WaitTimer
 @onready var move_timer: Timer = $MoveTimer
 
+@onready var clones: Node2D = $Clones
+
 const PHANTOM = preload("res://scenes/chars/farewell_ceres_phantom.tscn")
 
 const CERES_ORB = preload("res://scenes/fx/ceres_orb.tscn")
@@ -49,7 +51,7 @@ var health_bar := HEALTH_BARS-1
 
 # boss variables
 var active := false
-var phase := 0
+var phase := 3
 
 var move_positions := [
 	Vector2(15916, -1614),
@@ -66,6 +68,9 @@ var last_action := -1
 
 func _ready() -> void:
 	active = false
+	
+	# reduce health bar for testing if not starting in first phase
+	health_bar -= phase
 
 func _physics_process(_delta: float) -> void:
 	# choose next action
@@ -300,7 +305,52 @@ func handle_third_phase() -> void:
 	last_action = action
 
 func handle_fourth_phase() -> void:
-	pass
+	# choose an available action
+	var available_actions := []
+
+	for i in range(0, 4):
+		if i != last_action:
+			available_actions.append(i)
+	
+	var action: int = available_actions[randi_range(0, available_actions.size()-1)]
+
+	# shoots several series of orbs at the player
+	if action == 0:
+		var teleport_positions := [
+			Vector2(15660, -1609),
+			Vector2(15788, -1648),
+			Vector2(15916, -1609),
+		]
+		
+		var teleport_index := randi_range(0, 2)
+
+		action_queue.append(["teleport_start"])
+		action_queue.append(["wait", 0.6])
+		
+		for i in range(teleport_positions.size()):
+			if i != teleport_index:
+				action_queue.append(["spawn_clone", teleport_positions[i]])
+		
+		action_queue.append(["teleport_end", teleport_positions[teleport_index]])
+		action_queue.append(["play_animation", "idle"])
+		action_queue.append(["wait", 2.0])
+
+		action_queue.append(["target_orbs_attack", 3, 32, 350.0, 0.0])
+		action_queue.append(["target_orbs_attack", 3, 48, 350.0, 0.05])
+		action_queue.append(["target_orbs_attack", 3, 64, 350.0, 0.1])
+		action_queue.append(["wait", 3.5])
+		action_queue.append(["delete_clones"])
+	
+	elif action == 1:
+		pass
+	
+	elif action == 2:
+		pass
+		
+	elif action == 3:
+		pass
+	
+	last_action = action
 
 func perform_action() -> void:
 	var action = action_queue.pop_front()
@@ -308,9 +358,18 @@ func perform_action() -> void:
 	# call with arguments
 	if action.size() > 1:
 		callv(action[0], action.slice(1))
+		
+		# clones perform the same action
+		for clone in clones.get_children():
+			clone.callv(action[0], action.slice(1))
+	
 	# no arguments for the action
 	else:
 		call(action[0])
+		
+		# clones perform the same action
+		for clone in clones.get_children():
+			clone.call(action[0])
 
 func action_move(speed: float, end_wait_time: float) -> void:
 	var move_position: Vector2 = move_positions[randi_range(0, move_positions.size()-1)]
@@ -474,7 +533,11 @@ func target_orbs_attack(semi_length: int, distance: float = 40.0, speed: float =
 		)
 
 func spawn_clone(clone_position: Vector2) -> void:
-	add_child(FAREWELL_CERES_CLONE.instantiate().init(clone_position))
+	clones.add_child(FAREWELL_CERES_CLONE.instantiate().init(clone_position))
+
+func delete_clones() -> void:
+	for clone in clones.get_children():
+		clone.queue_free()
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	var body := area.get_parent() # get the player

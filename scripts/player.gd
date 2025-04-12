@@ -460,7 +460,7 @@ func handle_velocity(delta: float) -> void:
 		velocity.y = MAX_JUMPING_VELOCITY
 
 func handle_bounce() -> void:
-	if not is_on_floor() and state != State.DashingAndAttacking:
+	if not is_on_floor() and state != State.DashingAndAttacking and velocity.y >= 0:
 		velocity.y = JUMP_VELOCITY * 0.8
 		jumps = MAX_JUMPS - 1
 

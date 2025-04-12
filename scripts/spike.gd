@@ -21,7 +21,6 @@ func _ready() -> void:
 	var hitbox_rect = RectangleShape2D.new()
 	hitbox_rect.size = Vector2(8 * abs(scale.x) - 1, 3)
 	hitbox.set_shape(hitbox_rect)
-	
 	scale.x = sign(scale.x)
 
 # spike don't get hurt

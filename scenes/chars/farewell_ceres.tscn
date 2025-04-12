@@ -563,6 +563,8 @@ one_shot = true
 wait_time = 0.05
 one_shot = true
 
+[node name="Clones" type="Node2D" parent="."]
+
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="timeout" from="Hurtbox/HurtInvicibilityTimer" to="." method="_on_hurt_invicibility_timer_timeout"]
 [connection signal="timeout" from="PhantomCooldown" to="." method="_on_phantom_cooldown_timeout"]

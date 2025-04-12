@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=4 uid="uid://npva5mv5cam3"]
+[gd_scene load_steps=111 format=4 uid="uid://npva5mv5cam3"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_4.gd" id="1_u23an"]
 [ext_resource type="AudioStream" uid="uid://cjcn1gqvr8ywi" path="res://assets/musics/mus_barren_valley.mp3" id="2_hxhsr"]
@@ -708,6 +708,192 @@ _data = {
 "move": SubResource("Animation_4m7j5")
 }
 
+[sub_resource type="Animation" id="Animation_pg355"]
+resource_name = "move"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 3.83333, 3.86667, 3.9, 3.93333, 3.96667, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(15660, -1464), Vector2(15660, -1465), Vector2(15660, -1466), Vector2(15660, -1467), Vector2(15660, -1467), Vector2(15660, -1467), Vector2(15660, -1469), Vector2(15660, -1470), Vector2(15660, -1471), Vector2(15660, -1472)]
+}
+
+[sub_resource type="Animation" id="Animation_jgp8s"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(15660, -1464)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qwei4"]
+_data = {
+"RESET": SubResource("Animation_jgp8s"),
+"move": SubResource("Animation_pg355")
+}
+
+[sub_resource type="Animation" id="Animation_y82oi"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(15788, -1464)]
+}
+
+[sub_resource type="Animation" id="Animation_jkkgo"]
+resource_name = "move"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 3.86667, 3.9, 3.93333, 3.96667, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(15788, -1464), Vector2(15788, -1465), Vector2(15788, -1466), Vector2(15788, -1467), Vector2(15788, -1467), Vector2(15788, -1469), Vector2(15788, -1470), Vector2(15788, -1471), Vector2(15788, -1472)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_micxh"]
+_data = {
+"RESET": SubResource("Animation_y82oi"),
+"move": SubResource("Animation_jkkgo")
+}
+
+[sub_resource type="Animation" id="Animation_cae6v"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(15916, -1464)]
+}
+
+[sub_resource type="Animation" id="Animation_a6hcl"]
+resource_name = "move"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 3.86667, 3.9, 3.93333, 3.96667, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(15916, -1464), Vector2(15916, -1465), Vector2(15916, -1466), Vector2(15916, -1467), Vector2(15916, -1467), Vector2(15916, -1469), Vector2(15916, -1470), Vector2(15916, -1471), Vector2(15916, -1472)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_477e6"]
+_data = {
+"RESET": SubResource("Animation_cae6v"),
+"move": SubResource("Animation_a6hcl")
+}
+
 [node name="Level4" type="Node2D"]
 script = ExtResource("1_u23an")
 
@@ -724,7 +910,7 @@ volume_db = 6.0
 bus = &"Music"
 
 [node name="Background" type="Parallax2D" parent="."]
-z_index = -2
+z_index = -3
 scale = Vector2(1.333, 1.333)
 scroll_scale = Vector2(0, 0)
 
@@ -2715,23 +2901,44 @@ position = Vector2(15788, -1668)
 z_index = -1
 position = Vector2(15916, -1668)
 
-[node name="LeftSpike" parent="FarewellCeresBoss" instance=ExtResource("11_b205r")]
+[node name="AdditionalLowerMiddlePlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
 process_mode = 4
 visible = false
-position = Vector2(15660, -1472)
+z_index = -1
+position = Vector2(15788, -1538)
+
+[node name="LeftSpike" parent="FarewellCeresBoss" instance=ExtResource("11_b205r")]
+process_mode = 4
+z_index = -2
+position = Vector2(15660, -1464)
 scale = Vector2(17, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FarewellCeresBoss/LeftSpike"]
+libraries = {
+"": SubResource("AnimationLibrary_qwei4")
+}
 
 [node name="MiddleSpike" parent="FarewellCeresBoss" instance=ExtResource("11_b205r")]
 process_mode = 4
-visible = false
-position = Vector2(15788, -1472)
+z_index = -2
+position = Vector2(15788, -1464)
 scale = Vector2(15, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FarewellCeresBoss/MiddleSpike"]
+libraries = {
+"": SubResource("AnimationLibrary_micxh")
+}
 
 [node name="RightSpike" parent="FarewellCeresBoss" instance=ExtResource("11_b205r")]
 process_mode = 4
-visible = false
-position = Vector2(15916, -1472)
+z_index = -2
+position = Vector2(15916, -1464)
 scale = Vector2(17, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FarewellCeresBoss/RightSpike"]
+libraries = {
+"": SubResource("AnimationLibrary_477e6")
+}
 
 [node name="MobList" type="Node2D" parent="FarewellCeresBoss"]
 

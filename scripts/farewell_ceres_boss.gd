@@ -22,6 +22,14 @@ extends Area2D
 @onready var upper_middle_platform: AnimatableBody2D = $UpperMiddlePlatform
 @onready var upper_right_platform: AnimatableBody2D = $UpperRightPlatform
 
+@onready var additional_lower_middle_platform: AnimatableBody2D = $AdditionalLowerMiddlePlatform
+
+
+@onready var left_spike: StaticBody2D = $LeftSpike
+@onready var middle_spike: StaticBody2D = $MiddleSpike
+@onready var right_spike: StaticBody2D = $RightSpike
+
+
 @onready var mob_list: Node2D = $MobList
 
 @onready var wave_phase_cooldown: Timer = $WavePhaseCooldown
@@ -126,14 +134,18 @@ func update_state() -> void:
 	if farewell_ceres.state == farewell_ceres.State.Stall \
 	and state % 2 == 1:
 		state += 1
-		update_platforms()
+		update_terrain()
 		wave_phase = 0
 		can_change_wave_phase = false
 		can_spawn_dark_cherry = false
-		dark_cherry_spawn_timer.start()
+		
+		# dark cherry spawn only during the first wave
+		if state < 4:
+			dark_cherry_spawn_timer.start()
+			
 		wave_phase_cooldown.start()
 
-func update_platforms() -> void:
+func update_terrain() -> void:
 	# first fight
 	if state == 1:
 		set_multiple_platforms_process("upper", true)
@@ -153,7 +165,30 @@ func update_platforms() -> void:
 		set_multiple_platforms_process("lower", true)
 		
 		set_multiple_platforms_movement("lower", true)
-
+	
+	# second wave
+	elif state == 4:
+		set_multiple_platforms_movement("lower", false)
+		
+		set_spike_movement(left_spike, true)
+		set_spike_movement(right_spike, true)
+	
+	# third fight
+	elif state == 5:
+		pass
+	
+	# third wave
+	elif state == 6:
+		set_spike_movement(middle_spike, true)
+	
+	# fourth fight
+	elif state == 7:
+		set_spike_movement(left_spike, true)
+		set_spike_movement(middle_spike, true)
+		set_spike_movement(right_spike, true)
+		
+		set_multiple_platforms_process("upper", false)
+		set_platform_process(additional_lower_middle_platform, true)
 
 func set_multiple_platforms_process(id: String, enable: bool) -> void:
 	for platform in platform_list[id]:
@@ -175,7 +210,15 @@ func set_platform_movement(platform: Node2D, enable: bool) -> void:
 	if enable:
 		platform.get_child(2).play("move")
 	else:
-		platform.get_child(2).stop()
+		platform.get_child(2).play("RESET")
+
+func set_spike_movement(spike: Node2D, enable: bool) -> void:
+	if enable:
+		spike.process_mode = Node.PROCESS_MODE_INHERIT
+		spike.get_child(4).play("move")
+	else:
+		spike.process_mode = Node.PROCESS_MODE_DISABLED
+		spike.get_child(4).play("RESET")
 
 func handle_enemy_wave() -> void:
 	if state in [2, 4, 6]:
@@ -213,7 +256,7 @@ func advance_wave_phase() -> void:
 		dark_cherry_spawn_timer.stop()
 		wave_phase_cooldown.stop()
 		state += 1
-		update_platforms()
+		update_terrain()
 		
 		# resume fight against ceres
 		farewell_ceres.state = farewell_ceres.State.Default
@@ -221,7 +264,7 @@ func advance_wave_phase() -> void:
 		farewell_ceres.action_queue.append(["play_animation", "idle"])
 		
 		# add spining orb around ceres for phase 3 and 4
-		if farewell_ceres.phase >= 2:
+		if farewell_ceres.phase == 3:
 			farewell_ceres.action_queue.append(["rotating_orb_shield_attack", true, 1, 28, 0.0, 0.0, -1.0, 300.0])
 
 func spawn_enemy(mob_name: String, spawn_position: Vector2, flip_sprite: bool, max_health: int, strength: int, delay: float) -> void:
@@ -242,7 +285,7 @@ func _on_area_entered(_area: Area2D) -> void:
 	# init the fight
 	if state == 0:
 		state = 1 + 2 * farewell_ceres.phase
-		update_platforms()
+		update_terrain()
 		#player.state = player.State.Stop
 		#player.sprite.flip_h = false
 		farewell_ceres.start()
