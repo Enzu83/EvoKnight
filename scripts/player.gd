@@ -369,7 +369,10 @@ func handle_dash() -> void:
 		velocity = DASH_SPEED * dash_direction
 
 func handle_flip_h() -> void:
-	if state != State.Crouching:
+	# don't change orientation if crouching
+	# don't change orientation if no direction key is pressed and state is different that bumped
+	if state != State.Crouching \
+	and not (state != State.Bumped and not Input.is_action_pressed("left") and not Input.is_action_pressed("right")):
 		if velocity.x > 0:
 			sprite.flip_h = false
 		elif velocity.x < 0:
@@ -739,6 +742,8 @@ func bumped(bump_force: float, direction_of_bump: Vector2) -> void:
 	
 	velocity = bump_force * direction_of_bump
 	bump_direction = direction_of_bump
+	
+	handle_flip_h()
 	
 	# restore a jump if player has none
 	if jumps == 0:

@@ -40,7 +40,7 @@ autowrap_mode = 2
 
 [node name="PickSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_jblm2")
-volume_db = -3.0
+volume_db = -6.0
 bus = &"SFX"
 
 [node name="DurationTimer" type="Timer" parent="."]

@@ -220,10 +220,10 @@ func _on_attack_timer_timeout() -> void:
 	
 	else:
 		for i in range(2):
-			var impact_orb: Area2D = impact_orb_scene.instantiate().init(Vector2(4280 + 16 * i, -284), 0)
+			var impact_orb: Area2D = impact_orb_scene.instantiate().init(Vector2(4280 + 16 * i, -288), 0)
 			add_child(impact_orb)
 			
-			var impact_orb_2: Area2D = impact_orb_scene.instantiate().init(Vector2(4280 + 16 * i, -214), 0)
+			var impact_orb_2: Area2D = impact_orb_scene.instantiate().init(Vector2(4280 + 16 * i, -212), 0)
 			add_child(impact_orb_2)
 	
 	# attack some time after teleporting

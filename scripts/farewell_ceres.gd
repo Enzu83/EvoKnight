@@ -44,14 +44,14 @@ var state := State.Default # handle all states of the boos
 var anim := Anim.idle # handle the current animation to be played
 
 # stats
-var max_health := 250
+var max_health := 1#250
 
 var health := max_health
 var health_bar := HEALTH_BARS-1
 
 # boss variables
 var active := false
-var phase := 3
+var phase := 0
 
 var move_positions := [
 	Vector2(15916, -1614),
@@ -202,7 +202,7 @@ func handle_first_phase() -> void:
 	elif action == 3:
 		action_teleport(Vector2(15788, -1580), 0.6, 0.2)
 		action_queue.append(["circle_orb_attack", 11, 20.0, 0.0, 0.0, 350.0])
-		action_queue.append(["wait", 3.0])
+		action_queue.append(["wait", 4.0])
 	
 	last_action = action
 
@@ -413,7 +413,7 @@ func action_rotating_orb_whole_area() -> void:
 	action_queue.append(["rotating_orb_attack", false, Vector2(0, -32), Vector2(0, -16)])
 	action_queue.append(["rotating_orb_attack", false, Vector2(-32, 0), Vector2(-16, 0)])
 	action_queue.append(["rotating_orb_attack", false, Vector2(32, 0), Vector2(16, 0)])
-	action_queue.append(["wait", 10.5])
+	action_queue.append(["wait", 11.5])
 
 func wait(duration: float) -> void:
 	state = State.Action

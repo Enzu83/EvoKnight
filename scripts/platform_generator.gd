@@ -14,6 +14,13 @@ var platform_list: Array
 func _ready() -> void:
 	# leave a gap between each platform that has the length of a platform
 	new_platform_timer.start(72.0 / speed)
+	
+	# fill the array with platforms
+	for i in range(total_platforms):
+		var new_platform = LARGE_PLATFORM.instantiate()
+		new_platform.position += direction * speed * 72 * (total_platforms -  1 - i)
+		platform_list.append(new_platform)
+		add_child(new_platform)
 
 func _physics_process(delta: float) -> void:
 	for platform in platform_list:

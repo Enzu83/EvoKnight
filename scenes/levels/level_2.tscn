@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=4 uid="uid://bxrur8c6y3ntc"]
+[gd_scene load_steps=40 format=4 uid="uid://bxrur8c6y3ntc"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_2.gd" id="1_ev3sv"]
 [ext_resource type="AudioStream" uid="uid://cer7bmtanymj3" path="res://assets/musics/mus_amp_plains.mp3" id="2_aptwx"]
@@ -25,7 +25,7 @@
 [ext_resource type="Script" path="res://scripts/big_bat_boss.gd" id="19_bm2fh"]
 [ext_resource type="PackedScene" uid="uid://b1wqo2tp6tr0x" path="res://scenes/chars/big_bat.tscn" id="19_e782t"]
 [ext_resource type="PackedScene" uid="uid://caoykk5g0hmxj" path="res://scenes/chars/bat_spawner.tscn" id="21_mhdyk"]
-[ext_resource type="PackedScene" uid="uid://dajhqbi4b6b3o" path="res://scenes/platforms/fake_wall.tscn" id="26_3cvpr"]
+[ext_resource type="Texture2D" uid="uid://bpaj0atmgc7se" path="res://assets/sprites/platforms/spr_fake_wall_rock.png" id="26_m487t"]
 
 [sub_resource type="Animation" id="Animation_74l74"]
 length = 0.001
@@ -152,6 +152,9 @@ size = Vector2(56, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_87eoo"]
 size = Vector2(32, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_agno3"]
+size = Vector2(48, 80)
 
 [node name="Level2" type="Node2D"]
 script = ExtResource("1_ev3sv")
@@ -875,10 +878,18 @@ rotation = 1.5708
 position = Vector2(2902, -300)
 rotation = -1.5708
 
-[node name="FakeWall" parent="BigBatBoss" instance=ExtResource("26_3cvpr")]
+[node name="FakeWall" type="StaticBody2D" parent="BigBatBoss"]
 process_mode = 4
 visible = false
-position = Vector2(2720, -424)
+position = Vector2(2712, -424)
+
+[node name="Sprite2D" type="Sprite2D" parent="BigBatBoss/FakeWall"]
+position = Vector2(8, 0)
+texture = ExtResource("26_m487t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BigBatBoss/FakeWall"]
+position = Vector2(8, 0)
+shape = SubResource("RectangleShape2D_agno3")
 
 [connection signal="body_entered" from="BigBatBoss" to="BigBatBoss" method="_on_body_entered"]
 [connection signal="timeout" from="BigBatBoss/StartTimer" to="BigBatBoss" method="_on_start_timer_timeout"]

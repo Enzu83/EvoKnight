@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://d3cpr3qecdtqv"]
+[gd_scene load_steps=15 format=4 uid="uid://d3cpr3qecdtqv"]
 
 [ext_resource type="Script" path="res://scripts/levels/boss_area.gd" id="1_lbe6e"]
 [ext_resource type="AudioStream" uid="uid://dfnlx8wvputuy" path="res://assets/musics/mus_boss.mp3" id="2_c21o5"]
@@ -10,11 +10,14 @@
 [ext_resource type="PackedScene" uid="uid://csup4pwrdhqok" path="res://scenes/platforms/large_platform.tscn" id="7_vt7rg"]
 [ext_resource type="PackedScene" uid="uid://bvd0y2way7av1" path="res://scenes/chars/dark_cherry.tscn" id="8_gf3ln"]
 [ext_resource type="PackedScene" uid="uid://cvvewevudo2kf" path="res://scenes/other/hud.tscn" id="8_ry3vd"]
-[ext_resource type="PackedScene" uid="uid://dajhqbi4b6b3o" path="res://scenes/platforms/fake_wall.tscn" id="11_eayc4"]
+[ext_resource type="Texture2D" uid="uid://cqkauitldkhhm" path="res://assets/sprites/platforms/spr_fake_wall_rock_bis.png" id="12_bwj74"]
 [ext_resource type="PackedScene" uid="uid://cvmw3fdnu5d7w" path="res://scenes/other/end_of_level.tscn" id="13_ovv16"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bxs0q"]
 size = Vector2(20, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aerh2"]
+size = Vector2(32, 64)
 
 [node name="BossArea" type="Node2D"]
 script = ExtResource("1_lbe6e")
@@ -82,11 +85,19 @@ limit_bottom = 48
 [node name="HUD" parent="." instance=ExtResource("8_ry3vd")]
 unique_name_in_owner = true
 
-[node name="FakeWall" parent="." instance=ExtResource("11_eayc4")]
-position = Vector2(216, -32)
-
 [node name="EndOfLevel" parent="." instance=ExtResource("13_ovv16")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EndOfLevel"]
 position = Vector2(406, -32)
 shape = SubResource("RectangleShape2D_bxs0q")
+
+[node name="FakeWall" type="StaticBody2D" parent="."]
+position = Vector2(194, -49)
+
+[node name="Sprite2D" type="Sprite2D" parent="FakeWall"]
+position = Vector2(6, 17)
+texture = ExtResource("12_bwj74")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FakeWall"]
+position = Vector2(6, 17)
+shape = SubResource("RectangleShape2D_aerh2")

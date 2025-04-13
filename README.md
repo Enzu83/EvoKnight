@@ -46,11 +46,10 @@ I then pursued its development.
 
 - `Left Joystick`: Movement
 - `Button A`: Jump/Confirm
-- `Button B`: Confirm
 - `Start`: Pause
 - `Button X`: Basic Slash
 - `Right Trigger`: Dash
-- `Left Trigger`: Magic Slash
+- `Button B`: Magic Slash
 
 ## Resources & Inspirations
 

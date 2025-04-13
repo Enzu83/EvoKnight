@@ -16,6 +16,7 @@ extends CharacterBody2D
 @onready var death_sound: AudioStreamPlayer = $Hurtbox/DeathSound
 
 @onready var attack_hitbox: Area2D = $AttackHitbox
+@onready var attack_sound: AudioStreamPlayer = $AttackSound
 
 @onready var teleport_timer: Timer = $TeleportTimer
 @onready var teleport_wait_timer: Timer = $TeleportWaitTimer
@@ -210,6 +211,7 @@ func _on_attack_phantom_timer_timeout() -> void:
 
 func _on_attack_timer_timeout() -> void:
 	state = State.Attacking
+	attack_sound.play()
 	play_animation("attack")
 	attack_duration.start()
 

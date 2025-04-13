@@ -377,7 +377,6 @@ func fainted() -> void:
 		# keep track of dark cherry clones
 		else:
 			get_parent().dark_cherry_spawn_counter -= 1
-			get_parent().can_spawn_dark_cherry = false
 
 func _on_jump_cooldown_timeout() -> void:
 	can_jump = true

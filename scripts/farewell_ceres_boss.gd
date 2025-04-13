@@ -61,41 +61,48 @@ var wave_spawn = {
 	# first wave
 	2: {
 		0: [
-			["bat", Vector2(15710, -1580), true, 0, 4, 0.0],
-			["bat", Vector2(15866, -1580), false, 0, 4, 0.1],
-			["big_bat", Vector2(15788, -1604), false, 20, 6, 0.5],
+			["bat", Vector2(15710, -1600), true, 16, 5, 0.0],
+			["bat", Vector2(15866, -1600), false, 16, 5, 0.1],
 		],
 	
 		1: [
-			["wind_spirit", Vector2(15710, -1600), true, 0, 4, 0.0],
-			["wind_spirit", Vector2(15916, -1600), false, 0, 4, 0.0],
+			["wind_spirit", Vector2(15710, -1600), true, 12, 4, 0.0],
+			["wind_spirit", Vector2(15866, -1600), false, 12, 4, 0.1],
 		],
 	},
 	
 	# second wave
 	4: {
 		0: [
-			["bat", Vector2(15710, -1600), true, 0, 4, 0.0],
-			["bat", Vector2(15916, -1600), false, 0, 4, 0.0],
+			["bat", Vector2(15710, -1600), true, 16, 5, 0.0],
+			["bat", Vector2(15788, -1600), false, 16, 5, 0.1],
+			["bat", Vector2(15866, -1600), true, 16, 5, 0.2],
 		],
 	
 		1: [
-			["wind_spirit", Vector2(15710, -1600), true, 0, 4, 0.0],
-			["wind_spirit", Vector2(15916, -1600), false, 0, 4, 0.0],
+			["wind_spirit", Vector2(15660, -1600), true, 12, 4, 0.0],
+			["wind_spirit", Vector2(15916, -1600), false, 12, 4, 0.1],
+		],
+		
+		2: [
+			["bat", Vector2(15710, -1600), true, 16, 5, 0.0],
+			["bat", Vector2(15866, -1600), false, 16, 5, 0.1],
+			["big_bat", Vector2(15788, -1600), false, 25, 6, 0.5],
 		],
 	},
 	
 	# third wave
 	6: {
 		0: [
-			["bat", Vector2(15710, -1600), true, 0, 4, 0.0],
-			["bat", Vector2(15916, -1600), false, 0, 4, 0.0],
+			["bat", Vector2(15710, -1680), true, 16, 5, 0.0],
+			["bat", Vector2(15866, -1680), false, 16, 5, 0.1],
 		],
-	
+		
 		1: [
-			["wind_spirit", Vector2(15710, -1600), true, 0, 4, 0.0],
-			["wind_spirit", Vector2(15916, -1600), false, 0, 4, 0.0],
-		],
+			["wind_spirit", Vector2(15710, -1680), true, 12, 4, 0.0],
+			["wind_spirit", Vector2(15866, -1680), false, 12, 4, 0.1],
+			["big_bat", Vector2(15788, -1668), false, 25, 6, 0.5],
+		]
 	},
 }
 
@@ -124,11 +131,9 @@ func _physics_process(_delta: float) -> void:
 	if state > 0:
 		# update hud current health bar
 		hud.current_boss_health_bar = farewell_ceres.health_bar
-		
+
 		update_state()
 		handle_enemy_wave()
-		
-		#print(state, ", ", wave_phase, ", ", dark_cherry_spawn_counter, ", ", can_change_wave_phase)
 
 func update_state() -> void:
 	# advance to wave phase when ceres is stalling
@@ -142,7 +147,7 @@ func update_state() -> void:
 		
 		# dark cherry spawn only during the first wave
 		if state < 4:
-			dark_cherry_spawn_timer.start()
+			can_spawn_dark_cherry = true
 			
 		wave_phase_cooldown.start()
 
@@ -202,7 +207,7 @@ func update_terrain() -> void:
 		
 		set_platform_process(lower_platform_generator, true)
 		set_platform_process(middle_platform_generator, true)
-		#set_platform_process(upper_platform_generator, true)
+		set_platform_process(upper_platform_generator, false)
 		
 		set_spike_movement(left_spike, false)
 		set_spike_movement(middle_spike, false)
@@ -233,10 +238,12 @@ func set_platform_movement(platform: Node2D, enable: bool) -> void:
 func set_spike_movement(spike: Node2D, enable: bool) -> void:
 	if enable:
 		spike.process_mode = Node.PROCESS_MODE_INHERIT
+		spike.visible = true
 		spike.get_child(4).play("move")
 	else:
-		spike.process_mode = Node.PROCESS_MODE_DISABLED
+		spike.visible = false
 		spike.get_child(4).play("RESET")
+		spike.process_mode = Node.PROCESS_MODE_DISABLED
 
 func handle_enemy_wave() -> void:
 	if state in [2, 4, 6]:
@@ -248,17 +255,7 @@ func handle_enemy_wave() -> void:
 			
 		# dark cherry spawn
 		if can_spawn_dark_cherry and dark_cherry_spawn_counter == 0:
-			
-			if dark_cherry_next_position == "right":
-				spawn_enemy("dark_cherry", Vector2(15660, -1488), false, 1, 6, 0.0)
-				dark_cherry_next_position = "left"
-				
-			elif dark_cherry_next_position == "left":
-				spawn_enemy("dark_cherry", Vector2(15916, -1488), true, 1, 6, 0.0)
-				dark_cherry_next_position = "right"
-				
 			dark_cherry_spawn_counter += 1
-			can_spawn_dark_cherry = false
 			dark_cherry_spawn_timer.start()
 
 func advance_wave_phase() -> void:
@@ -281,8 +278,8 @@ func advance_wave_phase() -> void:
 		farewell_ceres.action_queue.append(["teleport_end", Vector2(15788, -1580)]) # teleportation at the center
 		farewell_ceres.action_queue.append(["play_animation", "idle"])
 		
-		# add spining orb around ceres for phase 3 and 4
-		if farewell_ceres.phase == 3:
+		# add spining orb around ceres for phase 3
+		if farewell_ceres.phase == 2:
 			farewell_ceres.action_queue.append(["rotating_orb_shield_attack", true, 1, 28, 0.0, 0.0, -1.0, 300.0])
 
 func spawn_enemy(mob_name: String, spawn_position: Vector2, flip_sprite: bool, max_health: int, strength: int, delay: float) -> void:
@@ -331,7 +328,13 @@ func _on_area_entered(_area: Area2D) -> void:
 		boss_music.play()
 
 func _on_dark_cherry_spawn_timer_timeout() -> void:
-	can_spawn_dark_cherry = true
+	if dark_cherry_next_position == "right":
+		spawn_enemy("dark_cherry", Vector2(15660, -1488), false, 1, 6, 0.0)
+		dark_cherry_next_position = "left"
+		
+	elif dark_cherry_next_position == "left":
+		spawn_enemy("dark_cherry", Vector2(15916, -1488), true, 1, 6, 0.0)
+		dark_cherry_next_position = "right"
 
 func _on_wave_phase_cooldown_timeout() -> void:
 	can_change_wave_phase = true
