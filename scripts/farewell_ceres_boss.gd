@@ -22,8 +22,9 @@ extends Area2D
 @onready var upper_middle_platform: AnimatableBody2D = $UpperMiddlePlatform
 @onready var upper_right_platform: AnimatableBody2D = $UpperRightPlatform
 
-@onready var additional_lower_middle_platform: AnimatableBody2D = $AdditionalLowerMiddlePlatform
-
+@onready var lower_platform_generator: Node2D = $LowerPlatformGenerator
+@onready var middle_platform_generator: Node2D = $MiddlePlatformGenerator
+@onready var upper_platform_generator: Node2D = $UpperPlatformGenerator
 
 @onready var left_spike: StaticBody2D = $LeftSpike
 @onready var middle_spike: StaticBody2D = $MiddleSpike
@@ -175,20 +176,37 @@ func update_terrain() -> void:
 	
 	# third fight
 	elif state == 5:
-		pass
+		set_spike_movement(left_spike, false)
+		set_spike_movement(middle_spike, false)
+		set_spike_movement(right_spike, false)
 	
 	# third wave
 	elif state == 6:
-		set_spike_movement(middle_spike, true)
-	
-	# fourth fight
-	elif state == 7:
+		set_multiple_platforms_process("upper", false)
+		set_multiple_platforms_process("middle", false)
+		set_multiple_platforms_process("lower", false)
+		
+		set_platform_process(lower_platform_generator, true)
+		set_platform_process(middle_platform_generator, true)
+		set_platform_process(upper_platform_generator, true)
+		
 		set_spike_movement(left_spike, true)
 		set_spike_movement(middle_spike, true)
 		set_spike_movement(right_spike, true)
-		
+	
+	# fourth fight
+	elif state == 7:
 		set_multiple_platforms_process("upper", false)
-		set_platform_process(additional_lower_middle_platform, true)
+		set_multiple_platforms_process("middle", false)
+		set_multiple_platforms_process("lower", false)
+		
+		set_platform_process(lower_platform_generator, true)
+		set_platform_process(middle_platform_generator, true)
+		#set_platform_process(upper_platform_generator, true)
+		
+		set_spike_movement(left_spike, false)
+		set_spike_movement(middle_spike, false)
+		set_spike_movement(right_spike, false)
 
 func set_multiple_platforms_process(id: String, enable: bool) -> void:
 	for platform in platform_list[id]:

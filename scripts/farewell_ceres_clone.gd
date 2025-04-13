@@ -145,7 +145,7 @@ func spaced_floor_orb_attack(begin: int = 0, end: int = 9) -> void:
 		)
 
 func following_orb_attack(initial_time: float, duration: float = 10.0) -> void:
-	add_child(CERES_FOLLOWING_ORB.instantiate().init(get_middle_position(), player, initial_time, true, duration))
+	add_child(CERES_FOLLOWING_ORB.instantiate().init(get_middle_position(), player, initial_time, false, duration))
 
 func left_horizontal_orb_attack(hole_begin: int, hole_end: int, duration: float = 6.0, speed: float = 300.0) -> void:
 	

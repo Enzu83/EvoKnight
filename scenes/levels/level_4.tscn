@@ -1,4 +1,4 @@
-[gd_scene load_steps=111 format=4 uid="uid://npva5mv5cam3"]
+[gd_scene load_steps=112 format=4 uid="uid://npva5mv5cam3"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_4.gd" id="1_u23an"]
 [ext_resource type="AudioStream" uid="uid://cjcn1gqvr8ywi" path="res://assets/musics/mus_barren_valley.mp3" id="2_hxhsr"]
@@ -45,6 +45,7 @@
 [ext_resource type="PackedScene" uid="uid://d0skf7nkoxsut" path="res://scenes/items/upgrade.tscn" id="42_88bhc"]
 [ext_resource type="PackedScene" uid="uid://bvfb7w8s6wk0w" path="res://scenes/other/heart_spawner.tscn" id="45_8bdsu"]
 [ext_resource type="PackedScene" uid="uid://bl5lwkiegxvn6" path="res://scenes/items/mana_orb.tscn" id="46_j620j"]
+[ext_resource type="PackedScene" uid="uid://dwenudeyc2m22" path="res://scenes/platforms/platform_generator.tscn" id="47_1tmna"]
 [ext_resource type="PackedScene" uid="uid://ehpirw61curi" path="res://scenes/items/health_upgrade.tscn" id="47_idhmt"]
 
 [sub_resource type="Animation" id="Animation_8w81k"]
@@ -2901,11 +2902,21 @@ position = Vector2(15788, -1668)
 z_index = -1
 position = Vector2(15916, -1668)
 
-[node name="AdditionalLowerMiddlePlatform" parent="FarewellCeresBoss" instance=ExtResource("11_44qdl")]
+[node name="LowerPlatformGenerator" parent="FarewellCeresBoss" instance=ExtResource("47_1tmna")]
 process_mode = 4
 visible = false
-z_index = -1
-position = Vector2(15788, -1538)
+position = Vector2(16016, -1536)
+
+[node name="MiddlePlatformGenerator" parent="FarewellCeresBoss" instance=ExtResource("47_1tmna")]
+process_mode = 4
+visible = false
+position = Vector2(15560, -1576)
+direction = Vector2(1, 0)
+
+[node name="UpperPlatformGenerator" parent="FarewellCeresBoss" instance=ExtResource("47_1tmna")]
+process_mode = 4
+visible = false
+position = Vector2(16016, -1616)
 
 [node name="LeftSpike" parent="FarewellCeresBoss" instance=ExtResource("11_b205r")]
 process_mode = 4

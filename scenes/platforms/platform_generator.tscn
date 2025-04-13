@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwenudeyc2m22"]
+
+[ext_resource type="Script" path="res://scripts/platform_generator.gd" id="1_offhs"]
+
+[node name="PlatformGenerator" type="Node2D"]
+z_index = -1
+script = ExtResource("1_offhs")
+total_platforms = 7
+
+[node name="NewPlatformTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="NewPlatformTimer" to="." method="_on_new_platform_timer_timeout"]

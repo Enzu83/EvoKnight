@@ -342,7 +342,28 @@ func handle_fourth_phase() -> void:
 		action_queue.append(["delete_clones"])
 	
 	elif action == 1:
-		pass
+		var teleport_positions := [
+			Vector2(15660, -1674),
+			Vector2(15788, -1674),
+			Vector2(15916, -1674),
+		]
+		
+		var teleport_index := randi_range(0, 2)
+
+		action_queue.append(["teleport_start"])
+		action_queue.append(["wait", 0.6])
+		
+		for i in range(teleport_positions.size()):
+			if i != teleport_index:
+				action_queue.append(["spawn_clone", teleport_positions[i]])
+		
+		action_queue.append(["teleport_end", teleport_positions[teleport_index]])
+		action_queue.append(["play_animation", "idle"])
+		action_queue.append(["wait", 2.0])
+
+		action_queue.append(["following_orb_attack", 0.0, 5.0])
+		action_queue.append(["wait", 6.0])
+		action_queue.append(["delete_clones"])
 	
 	elif action == 2:
 		pass
