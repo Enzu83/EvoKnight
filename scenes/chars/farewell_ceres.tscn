@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cvyxcdvny1nsi"]
+[gd_scene load_steps=32 format=3 uid="uid://cvyxcdvny1nsi"]
 
 [ext_resource type="Script" path="res://scripts/farewell_ceres.gd" id="1_tbq25"]
 [ext_resource type="Texture2D" uid="uid://c27jgnpkvfd3u" path="res://assets/sprites/chars/enemies/spr_ceres.png" id="2_u3ly1"]
@@ -7,8 +7,9 @@
 [ext_resource type="AudioStream" uid="uid://ddtibw10i6qus" path="res://assets/sfx/snd_ceres_hurt.wav" id="4_as383"]
 [ext_resource type="AudioStream" uid="uid://8qw2745bfbro" path="res://assets/sfx/snd_ceres_death.wav" id="5_bclpw"]
 [ext_resource type="AudioStream" uid="uid://kpryh7dxxy2y" path="res://assets/sfx/snd_teleport.wav" id="7_uuhbs"]
+[ext_resource type="Texture2D" uid="uid://cv02b1a8sn5in" path="res://assets/sprites/fx/spr_cross_aim.png" id="8_1nxoc"]
 [ext_resource type="AudioStream" uid="uid://h2fvblbvc103" path="res://assets/sfx/snd_final_boss_death.wav" id="8_sq66v"]
-[ext_resource type="Texture2D" uid="uid://fwcrdaq56dmu" path="res://assets/sprites/fx/spr_glow_orb.png" id="9_4mnhl"]
+[ext_resource type="Texture2D" uid="uid://fwcrdaq56dmu" path="res://assets/sprites/fx/spr_light_orb.png" id="9_4mnhl"]
 
 [sub_resource type="Animation" id="Animation_yxfbx"]
 length = 0.001
@@ -543,6 +544,42 @@ animations = [{
 radius = 4.0
 height = 24.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_pxy5x"]
+atlas = ExtResource("8_1nxoc")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qvdpe"]
+atlas = ExtResource("8_1nxoc")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2qtpl"]
+atlas = ExtResource("8_1nxoc")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6j8ky"]
+atlas = ExtResource("8_1nxoc")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2vc11"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pxy5x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qvdpe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2qtpl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6j8ky")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
 [node name="FarewellCeres" type="CharacterBody2D"]
 collision_layer = 0
 collision_mask = 0
@@ -620,6 +657,15 @@ wait_time = 0.05
 one_shot = true
 
 [node name="Clones" type="Node2D" parent="."]
+
+[node name="TargetIcon" type="AnimatedSprite2D" parent="."]
+visible = false
+top_level = true
+z_index = 4
+sprite_frames = SubResource("SpriteFrames_2vc11")
+autoplay = "default"
+frame = 1
+frame_progress = 0.46848
 
 [node name="DeathExplosionSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_sq66v")

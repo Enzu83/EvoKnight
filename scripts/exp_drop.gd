@@ -36,5 +36,6 @@ func pick_up_body(body: CharacterBody2D) -> void:
 	if body == player \
 	and player.state != player.State.Fainted \
 	and player.state != player.State.Stop:
+		visible = false
 		animation_player.play("pickup")
 		player.gain_exp(exp_value)

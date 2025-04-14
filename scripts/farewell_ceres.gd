@@ -23,6 +23,8 @@ extends CharacterBody2D
 
 @onready var clones: Node2D = $Clones
 
+@onready var target_icon: AnimatedSprite2D = $TargetIcon
+
 @onready var death_star_spawn_timer: Timer = $DeathStarSpawnTimer
 
 const PHANTOM = preload("res://scenes/chars/farewell_ceres_phantom.tscn")
@@ -32,6 +34,8 @@ const CERES_FOLLOWING_ORB = preload("res://scenes/fx/ceres_following_orb.tscn")
 const CERES_ROTATING_ORB = preload("res://scenes/fx/ceres_rotating_orb.tscn")
 
 const FAREWELL_CERES_CLONE = preload("res://scenes/chars/farewell_ceres_clone.tscn")
+
+const GROWING_ORB = preload("res://scenes/fx/growing_orb.tscn")
 
 const DEATH_STAR = preload("res://scenes/fx/death_star.tscn")
 
@@ -55,7 +59,7 @@ var health_bar := HEALTH_BARS-1
 
 # boss variables
 var active := false
-var phase := 0
+var phase := 2
 
 var move_positions := [
 	Vector2(15916, -1614),
@@ -65,6 +69,8 @@ var move_positions := [
 ]
 
 var move_target_position: Vector2
+
+var target_icon_follow: bool
 
 # actions
 var action_queue = [] # list of remaining actions to perform
@@ -96,10 +102,13 @@ func _physics_process(_delta: float) -> void:
 			elif phase == 3:
 				handle_fourth_phase()
 			
+		# move the target icon
+		if target_icon_follow:
+			target_icon.position = player.get_middle_position()
 		
 		handle_flip_h()
 		move_and_slide()
-
+		
 func start() -> void:
 	active = true
 
@@ -256,11 +265,14 @@ func handle_second_phase() -> void:
 		action_queue.append(["circle_orb_attack", 12, 52.0, 0.0, 1.2, 300.0])
 		action_queue.append(["wait", 5.3])
 	
+	# shoots an orb chasing the player
 	elif action == 2:
 		action_teleport(Vector2(15788, -1680), 0.6, 0.2)
 		action_queue.append(["following_orb_attack", 0.0, 9.0])
 		action_queue.append(["wait", 2.5])
 		
+	# creates vertical orb walls going to the center
+	# shoots circle orbs during the firstr movement
 	elif action == 3:
 		action_teleport(Vector2(15788, -1616), 0.6, 0.2)
 		action_queue.append(["circle_orb_attack", 10, 20.0, 0.0, 0.0, 350.0])
@@ -280,42 +292,62 @@ func handle_third_phase() -> void:
 	
 	var action: int = available_actions[randi_range(0, available_actions.size()-1)]
 
-	# shoots several series of orbs at the player
+	# disables dash and rushes toward the player before re-enables the dash
 	if action == 0:
 		action_teleport(Vector2(15788, -1580), 0.6, 0.2)
-		action_queue.append(["target_orbs_attack", 3, 32, 350.0, 0.0])
-		action_queue.append(["target_orbs_attack", 3, 48, 350.0, 0.05])
-		action_queue.append(["target_orbs_attack", 3, 64, 350.0, 0.1])
-		action_queue.append(["wait", 0.5])
-		action_queue.append(["target_orbs_attack", 3, 32.0, 350.0, 0.0])
-		action_queue.append(["target_orbs_attack", 3, 48.0, 350.0, 0.05])
-		action_queue.append(["target_orbs_attack", 3, 64.0, 350.0, 0.1])
-		action_queue.append(["wait", 0.5])
-		action_queue.append(["target_orbs_attack", 3, 32.0, 350.0, 0.0])
-		action_queue.append(["target_orbs_attack", 3, 48.0, 350.0, 0.05])
-		action_queue.append(["target_orbs_attack", 3, 64.0, 350.0, 0.1])
-		action_queue.append(["wait", 3.0])
+		action_queue.append(["wait", 1.0])
+		action_player_abilities(false)
+		action_queue.append(["wait", 1.0])
+		
+		action_queue.append(["rotating_orb_shield_attack", true, 3, 28, 0.0, 1.0, 5.0, 500.0])
+		action_queue.append(["wait", 1.0])
+		
+		action_lock_player_and_rush()
+		action_lock_player_and_rush()
+		action_lock_player_and_rush()
+		action_lock_player_and_rush()
+		
+		action_queue.append(["wait", 1.5])
+		action_player_abilities(true)
 	
-	# shoots three circle orbs
-	# the second one has an angle offset
+	# shoots two orbs chasing the player
 	elif action == 1:
-		action_teleport(Vector2(15788, -1616), 0.6, 0.2)
+		action_teleport(Vector2(15788, -1644), 0.6, 0.2)
+		action_queue.append(["following_orb_attack", 0.0, 6.0, Vector2(-300, -150)])
+		action_queue.append(["following_orb_attack", 0.0, 6.0, Vector2(300, -150)])
+		action_queue.append(["wait", 3.0])
 		action_queue.append(["circle_orb_attack", 12, 20.0, 0.0, 0.0, 300.0])
-		action_queue.append(["circle_orb_attack", 12, 36.0, PI / 24, 0.6, 300.0])
-		action_queue.append(["circle_orb_attack", 12, 52.0, 0.0, 1.2, 300.0])
-		action_queue.append(["wait", 5.3])
+		action_queue.append(["circle_orb_attack", 12, 36.0, PI / 24, 0.45, 300.0])
+		action_queue.append(["circle_orb_attack", 12, 52.0, 0.0, 0.9, 300.0])
+		action_queue.append(["wait", 6.0])
 	
+	# creates clones
+	# shoots circle orbs
 	elif action == 2:
-		action_teleport(Vector2(15788, -1680), 0.6, 0.2)
-		action_queue.append(["following_orb_attack", 0.0, 9.0])
+		var teleport_positions := [
+			Vector2(15660, -1609),
+			Vector2(15788, -1652),
+			Vector2(15916, -1609),
+		]
+		
+		var teleport_index := randi_range(0, 2)
+
+		action_queue.append(["teleport_start"])
+		action_queue.append(["wait", 0.6])
+		
+		for i in range(teleport_positions.size()):
+			if i != teleport_index:
+				action_queue.append(["spawn_clone", teleport_positions[i]])
+		
+		action_queue.append(["teleport_end", teleport_positions[teleport_index]])
+		action_queue.append(["play_animation", "idle"])
 		action_queue.append(["wait", 2.5])
+		action_queue.append(["circle_orb_attack", 12, 20.0, 0.0, 0.0, 300.0])
+		action_queue.append(["wait", 6.0])
+		action_queue.append(["delete_clones"])
 		
 	elif action == 3:
-		action_teleport(Vector2(15788, -1616), 0.6, 0.2)
-		action_queue.append(["circle_orb_attack", 10, 20.0, 0.0, 0.0, 350.0])
-		action_queue.append(["left_horizontal_orb_attack", 7, 11, 6.0, 160.0])
-		action_queue.append(["right_horizontal_orb_attack", 7, 11, 6.0, 160.0])
-		action_queue.append(["wait", 5.0])
+		pass
 	
 	last_action = action
 
@@ -329,7 +361,7 @@ func handle_fourth_phase() -> void:
 	
 	var action: int = available_actions[randi_range(0, available_actions.size()-1)]
 
-	# shoots several series of orbs at the player
+	# shoots several series of orbs at the player with clones
 	if action == 0:
 		var teleport_positions := [
 			Vector2(15660, -1609),
@@ -416,6 +448,13 @@ func action_move(speed: float, end_wait_time: float) -> void:
 	action_queue.append(["move", move_position, speed])
 	action_queue.append(["wait", end_wait_time])
 
+func action_lock_player_and_rush() -> void:
+	action_queue.append(["toggle_target_icon", true, true])
+	action_queue.append(["toggle_target_icon", true, false])
+	action_queue.append(["wait", 0.5])
+	action_queue.append(["toggle_target_icon", false, false])
+	action_queue.append(["move_target_icon", 300.0])
+
 func action_teleport(teleport_position: Vector2, teleport_time: float, end_wait_time: float) -> void:
 	action_queue.append(["teleport_start"])
 	action_queue.append(["wait", teleport_time])
@@ -445,6 +484,8 @@ func move(target_position: Vector2, speed: float) -> void:
 	var duration := delta_position.length() / speed
 	var move_angle := atan2(delta_position.y, delta_position.x)
 
+	print(target_position , ", ", move_angle)
+
 	if duration > 0:
 		state = State.Action
 		
@@ -455,7 +496,10 @@ func move(target_position: Vector2, speed: float) -> void:
 		move_timer.start(duration)
 	
 		play_animation("idle")
-	
+
+func move_target_icon(speed: float) -> void:
+	move(target_icon.position + Vector2(0, 16), speed)
+
 func teleport_start() -> void:
 	state = State.Action
 	play_animation("teleport_start")
@@ -466,6 +510,13 @@ func teleport_end(target_position: Vector2) -> void:
 	position = target_position
 	play_animation("teleport_end")
 	wait_timer.start(0.6) # time of the animation
+
+func toggle_target_icon(enable: bool, follow_player: bool) -> void:
+	target_icon.visible = enable
+	target_icon_follow = follow_player
+	
+	if follow_player:
+		target_icon.position = player.get_middle_position()
 
 func circle_orb_attack(number_of_orbs: int = 1, distance: float = 20.0, angle_offset: float = 0.0, initial_wait_time: float = 0.0, speed: float = 300.0) -> void:
 	var fire := false
@@ -486,8 +537,8 @@ func spaced_floor_orb_attack(begin: int = 0, end: int = 9) -> void:
 		)
 		fire = true
 
-func following_orb_attack(initial_time: float, duration: float = 10.0) -> void:
-	add_child(CERES_FOLLOWING_ORB.instantiate().init(get_middle_position(), player, initial_time, true, duration))
+func following_orb_attack(initial_time: float, duration: float = 10.0, initial_velocity: Vector2 = Vector2.ZERO) -> void:
+	add_child(CERES_FOLLOWING_ORB.instantiate().init(get_middle_position(), player, initial_time, true, duration, initial_velocity))
 
 func left_horizontal_orb_attack(hole_begin: int, hole_end: int, duration: float = 6.0, speed: float = 300.0) -> void:
 	var fire := false
@@ -574,6 +625,30 @@ func spawn_clone(clone_position: Vector2) -> void:
 func delete_clones() -> void:
 	for clone in clones.get_children():
 		clone.queue_free()
+
+func action_player_abilities(enable: bool) -> void:
+	if enable:
+		action_queue.append(["draw_growing_orb", "light"])
+	else:
+		action_queue.append(["draw_growing_orb", "dark"])
+		
+	action_queue.append(["wait", 0.3])
+	action_queue.append(["set_player_abilities", enable])
+
+func draw_growing_orb(color: String) -> void:
+	add_child(GROWING_ORB.instantiate().init(get_middle_position(), color))
+
+func set_player_abilities(enable: bool) -> void:
+	player.dash_enabled = enable
+	player.mana_enabled = enable
+	player.ability_disabled = enable
+	
+	if enable:
+		Global.set_player_color(Global.player_color)
+	else:
+		Global.set_player_color("dark", true)
+	
+	player.update_sprite()
 
 func end_fight() -> void:
 	state = State.Fainted

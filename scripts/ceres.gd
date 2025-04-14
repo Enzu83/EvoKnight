@@ -35,7 +35,7 @@ const SPEED = 300.0
 const STRENGTH = 5
 const EXP_DROP_VALUE = 7
 
-enum State {Default, Defeated, Fainted, Attacking}
+enum State {Default, Defeated, Fainted, Attacking, Stall}
 enum Anim {idle, defeated, teleport_start, teleport_end}
 
 # boss state and actions

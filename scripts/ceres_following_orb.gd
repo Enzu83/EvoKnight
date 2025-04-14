@@ -28,12 +28,13 @@ var play_sound: bool
 var duration_time: float
 
 
-func init(initial_position_: Vector2, target_: Node2D, initial_wait_time_: float = 0.0, play_sound_: bool = true, duration_time_: float = 10.0) -> Node2D:
+func init(initial_position_: Vector2, target_: Node2D, initial_wait_time_: float = 0.0, play_sound_: bool = true, duration_time_: float = 10.0, initial_velocity: Vector2 = Vector2.ZERO) -> Node2D:
 	initial_position = initial_position_
 	target = target_
 	initial_wait_time = initial_wait_time_
 	play_sound = play_sound_
 	duration_time = duration_time_
+	current_speed = initial_velocity
 	
 	return self
 

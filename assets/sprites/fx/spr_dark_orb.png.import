@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fwcrdaq56dmu"
-path="res://.godot/imported/spr_glow_orb.png-76d9793c5260b7f693d04e8985d67a44.ctex"
+uid="uid://dfi7218mmg5do"
+path="res://.godot/imported/spr_dark_orb.png-f2208c9b621646ba17c0311309407dcf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/fx/spr_glow_orb.png"
-dest_files=["res://.godot/imported/spr_glow_orb.png-76d9793c5260b7f693d04e8985d67a44.ctex"]
+source_file="res://assets/sprites/fx/spr_dark_orb.png"
+dest_files=["res://.godot/imported/spr_dark_orb.png-f2208c9b621646ba17c0311309407dcf.ctex"]
 
 [params]
 
