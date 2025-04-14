@@ -328,6 +328,7 @@ func start_game() -> void:
 	
 	# init boss defeated state
 	Global.big_bat_defeated = false
+	Global.reno_defeated = false
 	Global.ceres_defeated = false
 	
 	# go to the next scene

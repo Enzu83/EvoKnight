@@ -23,6 +23,8 @@ extends CharacterBody2D
 
 @onready var clones: Node2D = $Clones
 
+@onready var death_star_spawn_timer: Timer = $DeathStarSpawnTimer
+
 const PHANTOM = preload("res://scenes/chars/farewell_ceres_phantom.tscn")
 
 const CERES_ORB = preload("res://scenes/fx/ceres_orb.tscn")
@@ -31,12 +33,14 @@ const CERES_ROTATING_ORB = preload("res://scenes/fx/ceres_rotating_orb.tscn")
 
 const FAREWELL_CERES_CLONE = preload("res://scenes/chars/farewell_ceres_clone.tscn")
 
+const DEATH_STAR = preload("res://scenes/fx/death_star.tscn")
+
 const SPEED = 300.0
 const STRENGTH = 6
 
 const HEALTH_BARS = 4
 
-enum State {Default, Defeated, Attacking, Action, Stall}
+enum State {Default, Fainted, Defeated, Attacking, Action, Stall}
 enum Anim {idle, defeated, teleport_start, teleport_end}
 
 # boss state
@@ -44,7 +48,7 @@ var state := State.Default # handle all states of the boos
 var anim := Anim.idle # handle the current animation to be played
 
 # stats
-var max_health := 1#250
+var max_health := 250
 
 var health := max_health
 var health_bar := HEALTH_BARS-1
@@ -73,28 +77,28 @@ func _ready() -> void:
 	health_bar -= phase
 
 func _physics_process(_delta: float) -> void:
-	# choose next action
-	if state == State.Default:
-		if action_queue.size() > 0:
-			perform_action() # do the next action in the list
+	if active:
+		# choose next action
+		if state == State.Default or state == State.Fainted:
+			if action_queue.size() > 0:
+				perform_action() # do the next action in the list
+			
+			# first phase : few orb attacks and clones
+			elif phase == 0:
+				handle_first_phase()
+			
+			elif phase == 1:
+				handle_second_phase()
+			
+			elif phase == 2:
+				handle_third_phase()
+			
+			elif phase == 3:
+				handle_fourth_phase()
+			
 		
-		# first phase : few orb attacks and clones
-		elif phase == 0:
-			handle_first_phase()
-		
-		elif phase == 1:
-			handle_second_phase()
-		
-		elif phase == 2:
-			handle_third_phase()
-		
-		elif phase == 3:
-			handle_fourth_phase()
-		
-	
-	handle_flip_h()
-	move_and_slide()
-	
+		handle_flip_h()
+		move_and_slide()
 
 func start() -> void:
 	active = true
@@ -150,8 +154,19 @@ func fainted() -> void:
 		# no more health bars left
 		else:
 			health = 0
-			state = State.Defeated
 			death_sound.play()
+			
+			phase += 1
+			last_action = -1
+			action_queue = []
+			
+			delete_clones()
+			state = State.Default
+			action_queue.append(["end_fight"])
+			action_queue.append(["teleport_start"])
+			action_queue.append(["wait", 0.6])
+			action_queue.append(["teleport_end", Vector2(15788, -1580)])
+			action_queue.append(["play_animation", "defeated"])
 			
 			# boss defeated: end of fight animation
 			player.state = player.State.Stop
@@ -560,6 +575,20 @@ func delete_clones() -> void:
 	for clone in clones.get_children():
 		clone.queue_free()
 
+func end_fight() -> void:
+	state = State.Fainted
+
+func start_death_star_spawn() -> void:
+	death_star_spawn_timer.start()
+
+func end_death_star_spawn() -> void:
+	death_star_spawn_timer.stop()
+
+
+func defeated() -> void:
+	visible = false
+	state = State.Defeated
+
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	var body := area.get_parent() # get the player
 
@@ -602,3 +631,7 @@ func _on_move_timer_timeout() -> void:
 		state = State.Default
 		velocity = Vector2.ZERO
 		position = move_target_position
+
+func _on_death_star_spawn_timer_timeout() -> void:
+	var angle := randi_range(0, 359)
+	add_child(DEATH_STAR.instantiate().init(Vector2(cos(deg_to_rad(angle)), sin(deg_to_rad(angle))), 100))

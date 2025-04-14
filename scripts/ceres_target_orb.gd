@@ -52,7 +52,8 @@ func _physics_process(delta: float) -> void:
 	
 	# stop attacking if ceres is defeated
 	if ceres.state == ceres.State.Defeated \
-	or ceres.state == ceres.State.Fainted:
+	or ceres.state == ceres.State.Stall \
+	or ceres.health == 0:
 		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:

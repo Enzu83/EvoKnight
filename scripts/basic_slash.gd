@@ -14,6 +14,7 @@ const MANA_RECOVERY_FACTOR = 25
 var active: bool = false
 var direction: String
 var reference_position: Vector2
+var can_bounce := true # flag to know if the current slash has already bounced on something
 
 var size := 1 # global scale of slash
 var multiplier := 1.0 # damage multiplier
@@ -29,6 +30,7 @@ func start(orientation: String) -> void:
 	direction = orientation
 	
 	active = true
+	can_bounce = true
 	animation_player.play("active")
 	
 	# different slash sounds based on size
@@ -114,5 +116,6 @@ func _on_area_entered(area: Area2D) -> void:
 				player.restore_mana(MANA_RECOVERY_FACTOR)
 		
 		# make player bounce on the enemy
-		if direction == "down":
+		if direction == "down" and can_bounce:
 			player.handle_bounce()
+			can_bounce = false

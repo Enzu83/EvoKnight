@@ -30,6 +30,8 @@ var initial_position: Vector2
 
 var move_target_position: Vector2
 
+var health := 1
+
 # actions
 var action_queue = [] # list of remaining actions to perform
 var last_action := -1
@@ -130,6 +132,9 @@ func delete_clones() -> void:
 	# clones don't delete themselves
 	pass
 
+func end_fight() -> void:
+	pass
+	
 func circle_orb_attack(number_of_orbs: int = 1, distance: float = 20.0, angle_offset: float = 0.0, initial_wait_time: float = 0.0, speed: float = 300.0) -> void:
 	for i in range(number_of_orbs):
 		var angle := angle_offset + i * 2 * PI / number_of_orbs - PI / 2

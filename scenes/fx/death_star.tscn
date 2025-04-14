@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0kr4u84fwknt"]
+
+[ext_resource type="Texture2D" uid="uid://dvg3sfpw45nhe" path="res://assets/sprites/fx/spr_star.png" id="1_ijjqq"]
+[ext_resource type="Script" path="res://scripts/death_star.gd" id="2_k7wdp"]
+
+[node name="DeathStar" type="Sprite2D"]
+texture = ExtResource("1_ijjqq")
+hframes = 2
+script = ExtResource("2_k7wdp")
+
+[node name="ChangeSpriteTimer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[connection signal="timeout" from="ChangeSpriteTimer" to="." method="_on_change_sprite_timer_timeout"]

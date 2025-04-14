@@ -37,10 +37,14 @@ extends Area2D
 
 @onready var dark_cherry_spawn_timer: Timer = $DarkCherrySpawnTimer
 
+const WINGED_GOLDEN_STRAWBERRY = preload("res://scenes/items/winged_golden_strawberry.tscn")
+
 var camera_limit_left: int
 var camera_limit_right: int
 var camera_limit_top: int
 var camera_limit_bottom: int
+
+var farewell_ceres_defeated := false
 
 const MOB_SPAWNER = preload("res://scenes/other/mob_spawner.tscn")
 var dark_cherry_scene: Resource = preload("res://scenes/chars/dark_cherry.tscn")
@@ -94,8 +98,8 @@ var wave_spawn = {
 	# third wave
 	6: {
 		0: [
-			["bat", Vector2(15710, -1680), true, 16, 5, 0.0],
-			["bat", Vector2(15866, -1680), false, 16, 5, 0.1],
+			["bat", Vector2(15710, -1680), true, 16, 5, 2.0],
+			["bat", Vector2(15866, -1680), false, 16, 5, 2.1],
 		],
 		
 		1: [
@@ -141,6 +145,7 @@ func update_state() -> void:
 	and state % 2 == 1:
 		state += 1
 		update_terrain()
+
 		wave_phase = 0
 		can_change_wave_phase = false
 		can_spawn_dark_cherry = false
@@ -150,6 +155,23 @@ func update_state() -> void:
 			can_spawn_dark_cherry = true
 			
 		wave_phase_cooldown.start()
+	
+	elif state != 8 and farewell_ceres.state == farewell_ceres.State.Fainted:
+		state = 8
+		update_terrain()
+		boss_music.stop()
+	
+	# spawn the winged golden strawberry after ceres is defeated
+	elif not farewell_ceres_defeated and farewell_ceres.state == farewell_ceres.State.Defeated:
+		farewell_ceres_defeated = true
+		
+		var winged_golden_strawberry := WINGED_GOLDEN_STRAWBERRY.instantiate()
+		winged_golden_strawberry.position = Vector2(15788, -1596)
+		get_parent().add_child(winged_golden_strawberry)
+		
+		player.state = player.State.Default
+		
+		hud.display_boss = false
 
 func update_terrain() -> void:
 	# first fight
@@ -212,6 +234,11 @@ func update_terrain() -> void:
 		set_spike_movement(left_spike, false)
 		set_spike_movement(middle_spike, false)
 		set_spike_movement(right_spike, false)
+	
+	# end of fight
+	elif state == 8:
+		set_platform_process(lower_platform_generator, false)
+		set_platform_process(middle_platform_generator, false)
 
 func set_multiple_platforms_process(id: String, enable: bool) -> void:
 	for platform in platform_list[id]:
