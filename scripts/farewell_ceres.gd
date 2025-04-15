@@ -32,6 +32,7 @@ const PHANTOM = preload("res://scenes/chars/farewell_ceres_phantom.tscn")
 const CERES_ORB = preload("res://scenes/fx/ceres_orb.tscn")
 const CERES_FOLLOWING_ORB = preload("res://scenes/fx/ceres_following_orb.tscn")
 const CERES_ROTATING_ORB = preload("res://scenes/fx/ceres_rotating_orb.tscn")
+const CERES_ZIGZAG_ORB = preload("res://scenes/fx/ceres_zigzag_orb.tscn")
 
 const FAREWELL_CERES_CLONE = preload("res://scenes/chars/farewell_ceres_clone.tscn")
 
@@ -52,14 +53,14 @@ var state := State.Default # handle all states of the boos
 var anim := Anim.idle # handle the current animation to be played
 
 # stats
-var max_health := 250
+var max_health := 210
 
 var health := max_health
 var health_bar := HEALTH_BARS-1
 
 # boss variables
 var active := false
-var phase := 2
+var phase := 0
 
 var move_positions := [
 	Vector2(15916, -1614),
@@ -159,6 +160,8 @@ func fainted() -> void:
 			phase += 1
 			last_action = -1
 			action_queue = []
+			
+			set_player_abilities(true)
 		
 		# no more health bars left
 		else:
@@ -169,6 +172,7 @@ func fainted() -> void:
 			last_action = -1
 			action_queue = []
 			
+			set_player_abilities(true)
 			delete_clones()
 			state = State.Default
 			action_queue.append(["end_fight"])
@@ -221,6 +225,7 @@ func handle_first_phase() -> void:
 	elif action == 2:
 		action_teleport(Vector2(15788, -1580), 0.6, 0.2)
 		action_rotating_orb_whole_area()
+		action_queue.append(["wait", 11.5])
 	
 	# shoots orbs around ceres
 	elif action == 3:
@@ -268,8 +273,8 @@ func handle_second_phase() -> void:
 	# shoots an orb chasing the player
 	elif action == 2:
 		action_teleport(Vector2(15788, -1680), 0.6, 0.2)
-		action_queue.append(["following_orb_attack", 0.0, 9.0])
-		action_queue.append(["wait", 2.5])
+		action_queue.append(["following_orb_attack", 0.0, 8.0])
+		action_queue.append(["wait", 6.0])
 		
 	# creates vertical orb walls going to the center
 	# shoots circle orbs during the firstr movement
@@ -313,8 +318,7 @@ func handle_third_phase() -> void:
 	# shoots two orbs chasing the player
 	elif action == 1:
 		action_teleport(Vector2(15788, -1644), 0.6, 0.2)
-		action_queue.append(["following_orb_attack", 0.0, 6.0, Vector2(-300, -150)])
-		action_queue.append(["following_orb_attack", 0.0, 6.0, Vector2(300, -150)])
+		action_queue.append(["following_orb_attack", 0.0, 6.0, Vector2(0, -150)])
 		action_queue.append(["wait", 3.0])
 		action_queue.append(["circle_orb_attack", 12, 20.0, 0.0, 0.0, 300.0])
 		action_queue.append(["circle_orb_attack", 12, 36.0, PI / 24, 0.45, 300.0])
@@ -345,9 +349,22 @@ func handle_third_phase() -> void:
 		action_queue.append(["circle_orb_attack", 12, 20.0, 0.0, 0.0, 300.0])
 		action_queue.append(["wait", 6.0])
 		action_queue.append(["delete_clones"])
-		
+	
+	# zig-zaging orbs 
 	elif action == 3:
-		pass
+		action_queue.append(["teleport_start"])
+		action_queue.append(["wait", 0.6])
+		for i in range(7):
+			for j in range(70):
+				add_child(CERES_ZIGZAG_ORB.instantiate()
+							   .init(Vector2(15596 + 64 * i, -1788), Vector2(15596 + 64 * i, -1480), 0.1 * j, false, 10.0, 132.0)
+							   .second_target(Vector2(15596 + 64 * i, -1736))
+				)
+		
+		action_queue.append(["wait", 10.0])
+		action_queue.append(["teleport_end", Vector2(15788, -1620)])
+		action_queue.append(["play_animation", "idle"])
+		action_queue.append(["wait", 2.5])
 	
 	last_action = action
 
@@ -360,7 +377,7 @@ func handle_fourth_phase() -> void:
 			available_actions.append(i)
 	
 	var action: int = available_actions[randi_range(0, available_actions.size()-1)]
-
+	
 	# shoots several series of orbs at the player with clones
 	if action == 0:
 		var teleport_positions := [
@@ -412,11 +429,47 @@ func handle_fourth_phase() -> void:
 		action_queue.append(["wait", 6.0])
 		action_queue.append(["delete_clones"])
 	
+	# rain of orbs randomly placed
 	elif action == 2:
-		pass
+		action_teleport(Vector2(15788, -1624), 0.6, 0.2)
+		action_queue.append(["teleport_start"])
 		
+		# number of waves of orbs
+		for i in range(20): 
+			# number of orbs per wave
+			for j in range(7):
+				var random_x_position := randi_range(15600, 15976)
+				
+				add_child(CERES_ORB.instantiate()
+							   .init(Vector2(random_x_position, -1788), Vector2(random_x_position, -1480), 5.0 + 0.4 * i + 0.05 * j, false, 10.0, 200.0)
+							   .second_target(Vector2(random_x_position, -1736))
+				)
+				
+		action_queue.append(["wait", 5.0])
+		action_queue.append(["teleport_end", Vector2(15788, -1612)])
+		action_queue.append(["play_animation", "idle"])
+		action_queue.append(["wait", 11.0])
+		
+	# horizontal wall with hole at the top, then bottom, finally middle
+	# without dash
 	elif action == 3:
-		pass
+		action_queue.append(["wait", 1.0])
+		action_player_abilities(false)
+		action_queue.append(["wait", 1.0])
+		
+		action_queue.append(["teleport_start"])
+		
+		for i in range(5):
+			var random_hole_begin := randi_range(3, 11)
+			action_queue.append(["left_horizontal_orb_attack", random_hole_begin, random_hole_begin + 2, 6.0, 200.0])
+			action_queue.append(["wait", 2.5])
+		
+		action_queue.append(["wait", 1.0])
+		action_queue.append(["teleport_end", Vector2(15788, -1632)])
+		action_queue.append(["play_animation", "idle"])
+		action_queue.append(["wait", 1.5])
+		action_player_abilities(true)
+
 	
 	last_action = action
 
@@ -467,7 +520,6 @@ func action_rotating_orb_whole_area() -> void:
 	action_queue.append(["rotating_orb_attack", false, Vector2(0, -32), Vector2(0, -16)])
 	action_queue.append(["rotating_orb_attack", false, Vector2(-32, 0), Vector2(-16, 0)])
 	action_queue.append(["rotating_orb_attack", false, Vector2(32, 0), Vector2(16, 0)])
-	action_queue.append(["wait", 11.5])
 
 func wait(duration: float) -> void:
 	state = State.Action
@@ -483,8 +535,6 @@ func move(target_position: Vector2, speed: float) -> void:
 	var delta_position := target_position - position
 	var duration := delta_position.length() / speed
 	var move_angle := atan2(delta_position.y, delta_position.x)
-
-	print(target_position , ", ", move_angle)
 
 	if duration > 0:
 		state = State.Action

@@ -6,7 +6,7 @@
 script = ExtResource("1_elysn")
 
 [node name="RespawnCooldown" type="Timer" parent="."]
-wait_time = 30.0
+wait_time = 20.0
 one_shot = true
 
 [connection signal="timeout" from="RespawnCooldown" to="." method="_on_respawn_cooldown_timeout"]

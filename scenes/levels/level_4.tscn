@@ -709,34 +709,6 @@ _data = {
 "move": SubResource("Animation_4m7j5")
 }
 
-[sub_resource type="Animation" id="Animation_pg355"]
-resource_name = "move"
-length = 4.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 3.83333, 3.86667, 3.9, 3.93333, 3.96667, 4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [Vector2(15660, -1464), Vector2(15660, -1465), Vector2(15660, -1466), Vector2(15660, -1467), Vector2(15660, -1467), Vector2(15660, -1467), Vector2(15660, -1469), Vector2(15660, -1470), Vector2(15660, -1471), Vector2(15660, -1472)]
-}
-
 [sub_resource type="Animation" id="Animation_jgp8s"]
 resource_name = "RESET"
 length = 0.001
@@ -763,6 +735,34 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(15660, -1464)]
+}
+
+[sub_resource type="Animation" id="Animation_pg355"]
+resource_name = "move"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 3.83333, 3.86667, 3.9, 3.93333, 3.96667, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(15660, -1464), Vector2(15660, -1465), Vector2(15660, -1466), Vector2(15660, -1467), Vector2(15660, -1467), Vector2(15660, -1467), Vector2(15660, -1469), Vector2(15660, -1470), Vector2(15660, -1471), Vector2(15660, -1472)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qwei4"]
@@ -2810,7 +2810,7 @@ position = Vector2(16068, -544)
 [node name="Player" parent="." instance=ExtResource("13_u6tl7")]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(15790, -1474)
+position = Vector2(15788, -496)
 
 [node name="PlayerCameraPoint" parent="Player" instance=ExtResource("14_0cuxu")]
 top_level = true
@@ -2901,18 +2901,18 @@ position = Vector2(15916, -1668)
 [node name="LowerPlatformGenerator" parent="FarewellCeresBoss" instance=ExtResource("47_1tmna")]
 process_mode = 4
 visible = false
-position = Vector2(16016, -1536)
+position = Vector2(16016, -1538)
 
 [node name="MiddlePlatformGenerator" parent="FarewellCeresBoss" instance=ExtResource("47_1tmna")]
 process_mode = 4
 visible = false
-position = Vector2(15560, -1576)
+position = Vector2(15560, -1580)
 direction = Vector2(1, 0)
 
 [node name="UpperPlatformGenerator" parent="FarewellCeresBoss" instance=ExtResource("47_1tmna")]
 process_mode = 4
 visible = false
-position = Vector2(16016, -1616)
+position = Vector2(16016, -1620)
 
 [node name="LeftSpike" parent="FarewellCeresBoss" instance=ExtResource("11_b205r")]
 process_mode = 4
@@ -2962,34 +2962,32 @@ position = Vector2(15788, -1580)
 
 [node name="HeartSpawner" parent="FarewellCeresBoss" instance=ExtResource("45_8bdsu")]
 position = Vector2(15660, -1722)
-heal_value = 5
 
 [node name="HeartSpawner2" parent="FarewellCeresBoss" instance=ExtResource("45_8bdsu")]
 position = Vector2(15916, -1722)
-heal_value = 5
 
 [node name="ChargedSlashUpgrade" parent="FarewellCeresBoss" instance=ExtResource("40_rchqj")]
-position = Vector2(15788, -1486)
+position = Vector2(16081, -1379)
 
 [node name="ManaUpgrade" parent="FarewellCeresBoss" instance=ExtResource("41_sonfl")]
-position = Vector2(15788, -1486)
+position = Vector2(16081, -1379)
 
 [node name="Upgrade" parent="FarewellCeresBoss" instance=ExtResource("42_88bhc")]
-position = Vector2(15788, -1485.98)
+position = Vector2(16081, -1378.98)
 
 [node name="Upgrade2" parent="FarewellCeresBoss" instance=ExtResource("42_88bhc")]
-position = Vector2(15788, -1485.98)
+position = Vector2(16081, -1378.98)
 upgrade = 1
 
 [node name="Upgrade3" parent="FarewellCeresBoss" instance=ExtResource("42_88bhc")]
-position = Vector2(15788, -1485.98)
+position = Vector2(16081, -1378.98)
 upgrade = 2
 
 [node name="ManaOrb" parent="FarewellCeresBoss" instance=ExtResource("46_j620j")]
-position = Vector2(15788, -1486)
+position = Vector2(16081, -1379)
 
 [node name="HealthUpgrade" parent="FarewellCeresBoss" instance=ExtResource("47_idhmt")]
-position = Vector2(15789, -1486)
+position = Vector2(16082, -1379)
 
 [connection signal="area_entered" from="FarewellCeresBoss" to="FarewellCeresBoss" method="_on_area_entered"]
 [connection signal="timeout" from="FarewellCeresBoss/WavePhaseCooldown" to="FarewellCeresBoss" method="_on_wave_phase_cooldown_timeout"]

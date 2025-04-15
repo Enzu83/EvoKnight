@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://ciyd36cw1nd21"]
 
 [ext_resource type="Texture2D" uid="uid://dfi7218mmg5do" path="res://assets/sprites/fx/spr_dark_orb.png" id="1_dff6k"]
-[ext_resource type="Script" path="res://scenes/fx/growing_orb.gd" id="2_ynbyu"]
+[ext_resource type="Script" path="res://scripts/growing_orb.gd" id="2_ynbyu"]
 
 [sub_resource type="Animation" id="Animation_gmt8n"]
 resource_name = "grow"
