@@ -2,56 +2,34 @@
 
 EvoKnight is an action-platformer game mainly inspired by Celeste and Hollow Knight.
 
-## Context
+It's the first game I made in Godot, in order to learn this game engine.
 
-Initially a 2-weeks challenge I did with friends to learn Godot.
-I then pursued its development.
+Click below to see the demo :
 
-## Game features
+[![EvoKnight Demo](https://github.com/user-attachments/assets/3a4ff455-6153-46d2-90cc-393baaef1bcf)](https://www.youtube.com/watch?v=i0eUJ_8CSEQ)
 
-- Stats
-	- HP
-	- Strength
-	- Defense
-	- EXP
-	- Mana
+## Game overview
 
-- Abilities
-	- Double Jump
-	- Basic Slash (4-directions)
-	- Magic Slash (Left/Right)
-	- Dash (8-directions)
+### Abilities
 
-- Enemies
-	- Bat
-	- Grounded spiky enemy
-	- Flying spirit
-	- Flying spiky enemy
-	- Bigger bat with minions
-	- Boss with similar abilities
+- Double Jump
+- Slash (4-directions)
+- Dash (8-directions)
+- Spell
+- Charged Slash
+- Shield
 
-## Controls
+### Levels
 
-### Keyboard (QWERTY)
+![levels](https://github.com/user-attachments/assets/5c4787ce-51d9-4a0f-b582-0c653a71d823)
 
-- `WASD`: Movement
-- `SPACE`: Jump/Confirm
-- `I`: Confirm
-- `P`: Pause
-- `J`: Basic Slash
-- `K`: Dash
-- `L`: Magic Slash
+### Bosses
 
-### Controller (XBOX)
-
-- `Left Joystick`: Movement
-- `Button A`: Jump/Confirm
-- `Start`: Pause
-- `Button X`: Basic Slash
-- `Left Trigger / Left Button`: Dash
-- `Button B`: Magic Slash
+![bosses](https://github.com/user-attachments/assets/668774d3-4bcc-4305-94a5-8c3d559038c6)
 
 ## Resources & Inspirations
+
+All the assets (Sprites, SFX, Musics) are not mine. You can find below their sources.
 
 - Celeste: Platformer mechanics, tilesets, few sprites and SFX
 - Hollow Knight: Combat system
