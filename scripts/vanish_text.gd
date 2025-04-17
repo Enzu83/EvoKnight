@@ -1,12 +1,17 @@
-extends Control
+extends Node2D
 
 @onready var message: Label = $Message
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-# Called when the node enters the scene tree for the first time.
+var text: String
+
+func init(text_: String) -> Node2D:
+	text = text_
+	return self
+
 func _ready() -> void:
-	message.text = "OJFOJZOFNFON OZ OZJF ZAJO PZJ AZPAJ PAOPJE "
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	message.position.y -= 24
+	message.text = text
+	
+func _on_duration_timer_timeout() -> void:
+	animation_player.play("vanish")
