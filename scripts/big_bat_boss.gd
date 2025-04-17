@@ -35,8 +35,8 @@ func _physics_process(_delta: float) -> void:
 		boss_music.stop()
 		music.play()
 		Global.big_bat_defeated = true
-		left_bat_spawner.stop_spawn()
-		right_bat_spawner.stop_spawn()
+		left_bat_spawner.queue_free()
+		right_bat_spawner.queue_free()
 		get_parent().add_child(UPGRADE.instantiate().init(0, Vector2(2720, -300), Vector2(2720, -320))) # spell
 	
 	if Global.big_bat_defeated and player.mana_enabled:

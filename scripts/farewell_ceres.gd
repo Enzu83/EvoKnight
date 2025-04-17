@@ -127,7 +127,7 @@ func play_animation(anim_name: String) -> void:
 		anim = Anim.get(anim_name)
 
 func is_hurtable() -> bool:
-	return not shield.visible and not effects_player.current_animation == "blink"
+	return not shield.visible and not effects_player.current_animation == "blink" and sprite.visible
 
 func hurt(damage: int, _attack: Area2D) -> bool:
 	var is_hurt := is_hurtable()
@@ -273,7 +273,7 @@ func handle_second_phase() -> void:
 	# shoots an orb chasing the player
 	elif action == 2:
 		action_teleport(Vector2(15788, -1680), 0.6, 0.2)
-		action_queue.append(["following_orb_attack", 0.0, 8.0])
+		action_queue.append(["following_orb_attack", 0.0, 5.0])
 		action_queue.append(["wait", 6.0])
 		
 	# creates vertical orb walls going to the center
@@ -355,13 +355,13 @@ func handle_third_phase() -> void:
 		action_queue.append(["teleport_start"])
 		action_queue.append(["wait", 0.6])
 		for i in range(7):
-			for j in range(70):
+			for j in range(50):
 				add_child(CERES_ZIGZAG_ORB.instantiate()
 							   .init(Vector2(15596 + 64 * i, -1788), Vector2(15596 + 64 * i, -1480), 0.1 * j, false, 10.0, 132.0)
 							   .second_target(Vector2(15596 + 64 * i, -1736))
 				)
 		
-		action_queue.append(["wait", 10.0])
+		action_queue.append(["wait", 8.0])
 		action_queue.append(["teleport_end", Vector2(15788, -1620)])
 		action_queue.append(["play_animation", "idle"])
 		action_queue.append(["wait", 2.5])

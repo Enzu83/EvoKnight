@@ -48,7 +48,7 @@ I then pursued its development.
 - `Button A`: Jump/Confirm
 - `Start`: Pause
 - `Button X`: Basic Slash
-- `Right Trigger`: Dash
+- `Left Trigger / Left Button`: Dash
 - `Button B`: Magic Slash
 
 ## Resources & Inspirations

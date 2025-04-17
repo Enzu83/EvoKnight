@@ -44,6 +44,10 @@ extends Node2D
 @onready var spell: Control = $Menu/Keyboard/Spell
 @onready var keyboard_save_button: Label = $Menu/Keyboard/SaveButton
 
+@onready var controller_menu: Control = $Menu/Controller
+@onready var controller_back_button: Label = $Menu/Controller/BackButton
+
+
 # states of the menu
 var state := 0
 
@@ -240,16 +244,19 @@ func handle_controls() -> void:
 			state = 5
 			select_sound.play()
 		
+		# controller
+		elif cursor_indexes[state] == 1:
+			state = 6
+			select_sound.play()
+		
 		# go back
-		if cursor_indexes[state] == 2:
+		elif cursor_indexes[state] == 2:
 			cursor_indexes[state] = 0
 			
 			state = 1
 			select_sound.play()
 
 func handle_keyboard_mapping() -> void:
-	version_label.visible = true
-	
 	keyboard_menu.visible = true
 	right_cursor.visible = false
 	
@@ -274,7 +281,15 @@ func handle_keyboard_mapping() -> void:
 			var key: Node = menu_options[state][cursor_indexes[state]]
 			key.reset_event_list()
 			
-		
+
+func handle_controller_mapping() -> void:
+	controller_menu.visible = true
+	
+	# click on a button
+	if Input.is_action_just_pressed("confirm") or Input.is_action_just_pressed("ui_accept"):
+		state = 4
+		select_sound.play()
+
 func handle_cursors() -> void:
 	left_cursor.visible = true
 	right_cursor.visible = true
@@ -346,6 +361,7 @@ func _ready() -> void:
 		3: [resolution_label, resolution_confirm_button, resolution_back_button],
 		4: [controls_keyboard_button, controls_controller_button, controls_back_button],
 		5: [confirm, left, right, up, down, jump, dash, slash, spell, keyboard_save_button],
+		6: [controller_back_button],
 	}
 	
 	cursor_indexes = {
@@ -355,6 +371,7 @@ func _ready() -> void:
 		3: 0,
 		4: 0,
 		5: 0,
+		6: 0,
 	}
 	
 	# changed title screen if the game is cleared
@@ -414,8 +431,9 @@ func hide_all() -> void:
 	controls_back_button.visible = false
 	
 	keyboard_menu.visible = false
+	controller_menu.visible = false
 
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# hide all labels
 	hide_all()
 	
@@ -449,3 +467,8 @@ func _process(_delta: float) -> void:
 		if not input_handler.active:
 			handle_cursors()
 		handle_keyboard_mapping()
+	
+	# controller mapping
+	elif state == 6:
+		handle_cursors()
+		handle_controller_mapping()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://dt10hsybag1bs"]
+[gd_scene load_steps=36 format=3 uid="uid://dt10hsybag1bs"]
 
 [ext_resource type="Texture2D" uid="uid://c3ruqeec58wyr" path="res://assets/sprites/terrains/bg_mushroom_back.png" id="1_vvf2q"]
 [ext_resource type="Texture2D" uid="uid://21swlqu61mh1" path="res://assets/sprites/other/spr_title.png" id="1_x6j3q"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://d0iyx0ggjm4dv" path="res://assets/sprites/items/spr_winged_golden_strawberry.png" id="10_wikbu"]
 [ext_resource type="Script" path="res://scripts/input_key_mapping.gd" id="11_73qt1"]
 [ext_resource type="PackedScene" uid="uid://bi0veelo2gpwt" path="res://scenes/other/input_handler.tscn" id="11_lxgxm"]
+[ext_resource type="Texture2D" uid="uid://8a576gtthk15" path="res://assets/sprites/other/spr_controller.png" id="13_hlp1w"]
 
 [sub_resource type="Animation" id="Animation_apgp8"]
 length = 0.001
@@ -800,12 +801,135 @@ theme_override_font_sizes/font_size = 24
 text = "Save"
 horizontal_alignment = 1
 
+[node name="MoveInfo" type="Label" parent="Menu/Keyboard"]
+top_level = true
+layout_mode = 0
+offset_left = 5.0
+offset_top = 217.0
+offset_right = 123.0
+offset_bottom = 245.0
+theme_override_constants/line_spacing = -5
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 12
+text = "Move with 
+directional arrows"
+
+[node name="SelectionInfo" type="Label" parent="Menu/Keyboard"]
+top_level = true
+layout_mode = 0
+offset_left = 230.0
+offset_top = 217.0
+offset_right = 422.0
+offset_bottom = 245.0
+theme_override_constants/line_spacing = -5
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 12
+text = "Add with [Return]
+Remove with [Backspace]"
+horizontal_alignment = 2
+
 [node name="InputHandler" parent="Menu/Keyboard" instance=ExtResource("11_lxgxm")]
 visible = false
 top_level = true
 layout_mode = 1
 
 [node name="Controller" type="Control" parent="Menu"]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="ControllerSprite" type="TextureRect" parent="Menu/Controller"]
+layout_mode = 0
+offset_left = 117.0
+offset_top = 48.0
+offset_right = 309.0
+offset_bottom = 188.0
+texture = ExtResource("13_hlp1w")
+
+[node name="Move" type="Label" parent="Menu/Controller"]
+top_level = true
+offset_left = 71.0
+offset_top = 111.0
+offset_right = 121.0
+offset_bottom = 128.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 14
+text = "	Move
+"
+horizontal_alignment = 2
+
+[node name="MovePad" type="Label" parent="Menu/Controller"]
+top_level = true
+offset_left = 166.0
+offset_top = 162.0
+offset_right = 216.0
+offset_bottom = 179.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 14
+text = "	Move
+"
+horizontal_alignment = 2
+
+[node name="Dash" type="Label" parent="Menu/Controller"]
+top_level = true
+offset_left = 145.0
+offset_top = 35.0
+offset_right = 195.0
+offset_bottom = 52.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 14
+text = "Dash"
+horizontal_alignment = 1
+
+[node name="Pause" type="Label" parent="Menu/Controller"]
+top_level = true
+offset_left = 186.0
+offset_top = 53.0
+offset_right = 236.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 14
+text = "Pause
+"
+horizontal_alignment = 1
+
+[node name="Slash" type="Label" parent="Menu/Controller"]
+top_level = true
+offset_left = 243.0
+offset_top = 53.0
+offset_right = 293.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 14
+text = "	Slash"
+
+[node name="Spell" type="Label" parent="Menu/Controller"]
+top_level = true
+offset_left = 302.0
+offset_top = 89.0
+offset_right = 352.0
+offset_bottom = 106.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 14
+text = "Spell"
+
+[node name="Jump" type="Label" parent="Menu/Controller"]
+top_level = true
+offset_left = 293.0
+offset_top = 117.0
+offset_right = 343.0
+offset_bottom = 134.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 14
+text = "Jump"
+
+[node name="BackButton" type="Label" parent="Menu/Controller"]
+offset_left = 185.0
+offset_top = 208.0
+offset_right = 241.0
+offset_bottom = 236.0
+theme_override_fonts/font = ExtResource("6_bnf46")
+theme_override_font_sizes/font_size = 24
+text = "Back"
+horizontal_alignment = 1

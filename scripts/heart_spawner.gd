@@ -5,11 +5,13 @@ extends Node2D
 const HEART = preload("res://scenes/items/heart.tscn")
 
 @export var heal_value := 4
+@export var cooldown := 20.0
 
 var can_spawn_heart := true
 
 func _ready() -> void:
 	spawn_heart()
+	respawn_cooldown.wait_time = cooldown
 
 func _physics_process(_delta: float) -> void:
 	if can_spawn_heart:
