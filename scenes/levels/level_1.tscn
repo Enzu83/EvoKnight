@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://d1ndtnjybdaoa"]
+[gd_scene load_steps=26 format=4 uid="uid://d1ndtnjybdaoa"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_1.gd" id="1_6qo60"]
 [ext_resource type="AudioStream" uid="uid://dhxu30whe2x6i" path="res://assets/musics/mus_quicksand_cave.mp3" id="1_503x6"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://bus5n18gsp1ad" path="res://scenes/chars/wind_spirit.tscn" id="12_8w2sx"]
 [ext_resource type="PackedScene" uid="uid://cvmw3fdnu5d7w" path="res://scenes/other/end_of_level.tscn" id="12_y7177"]
 [ext_resource type="PackedScene" uid="uid://ehpirw61curi" path="res://scenes/items/health_upgrade.tscn" id="13_ist3q"]
+[ext_resource type="FontFile" uid="uid://camhtmnphwiu5" path="res://assets/fonts/8bit.fnt" id="18_2n044"]
 
 [sub_resource type="Animation" id="Animation_gibnw"]
 length = 0.001
@@ -108,7 +109,7 @@ autoplay = true
 bus = &"Music"
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
-scroll_scale = Vector2(0.1, 0)
+scroll_scale = Vector2(0, 0)
 
 [node name="Background" type="TextureRect" parent="Parallax2D"]
 offset_top = -287.0
@@ -297,3 +298,13 @@ position = Vector2(1291, -90)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EndOfLevel"]
 position = Vector2(2457, 161)
 shape = SubResource("RectangleShape2D_hsmr0")
+
+[node name="ControlsInfo" type="Label" parent="."]
+top_level = true
+offset_left = 21.0
+offset_top = -116.0
+offset_right = 310.0
+offset_bottom = 25.0
+theme_override_constants/line_spacing = -2
+theme_override_fonts/font = ExtResource("18_2n044")
+theme_override_font_sizes/font_size = 14

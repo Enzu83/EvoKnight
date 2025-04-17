@@ -52,10 +52,10 @@ var active := false
 var teleport_position := [
 	Vector2(4288, -168),
 	Vector2(4288, -168),
-	Vector2(4144, -168),
-	Vector2(4144, -252),
-	Vector2(4432, -168),
-	Vector2(4432, -252),
+	Vector2(4152, -168),
+	Vector2(4152, -252),
+	Vector2(4424, -168),
+	Vector2(4424, -252),
 ]
 
 # cycles before launching a slash
