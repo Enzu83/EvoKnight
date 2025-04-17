@@ -147,14 +147,14 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	# debug inputs
-	if Input.is_action_just_pressed("reset"):
-		reset_level()
-	elif Input.is_action_just_pressed("previous_level"):
-		previous_level()
-	elif Input.is_action_just_pressed("next_level"):
-		next_level()
-	elif Input.is_action_pressed("exp") and player != null:
-		player.gain_exp(1000)
+	#if Input.is_action_just_pressed("reset"):
+		#reset_level()
+	#elif Input.is_action_just_pressed("previous_level"):
+		#previous_level()
+	#elif Input.is_action_just_pressed("next_level"):
+		#next_level()
+	#elif Input.is_action_pressed("exp") and player != null:
+		#player.gain_exp(1000)
 	
 	# pause tree
 	if pause_menu.visible or level_up.visible or end_recap.visible or upgrade_text.visible:
