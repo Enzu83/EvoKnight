@@ -29,7 +29,7 @@ Click below to see the demo :
 
 ## Resources & Inspirations
 
-All the assets (Sprites, SFX, Musics) are not mine. You can find below their sources.
+All the assets (Sprites, SFX, Musics) are not mine. You can find their sources below.
 
 - Celeste: Platformer mechanics, tilesets, few sprites and SFX
 - Hollow Knight: Combat system

@@ -234,7 +234,7 @@ func init_switch_coins() -> void:
 	collected_switch_coins = [false, false, false]
 
 func init_screen_size() -> void:
-	get_viewport().size = DisplayServer.screen_get_size()
+	#get_viewport().size = DisplayServer.screen_get_size()
 	get_window().move_to_center()
 
 func set_elapsed_time_reference() -> void:

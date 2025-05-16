@@ -59,7 +59,7 @@ func _physics_process(_delta: float) -> void:
 	or Input.is_action_just_pressed("basic_slash") \
 	or Input.is_action_just_pressed("dash") \
 	or Input.is_action_just_pressed("magic_slash")):
-		stop()
+		call_deferred("stop")
 
 func _on_animation_timer_timeout() -> void:
 	state = 1
